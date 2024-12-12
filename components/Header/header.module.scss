@@ -1,0 +1,130 @@
+// Variables
+$primary-color: #1c1e26;
+$text-light: #fff;
+$highlight-color: #ff5a5f;
+$secondary-color: #622774;
+
+.header {
+  background-color: $primary-color;
+  color: $text-light;
+  padding: 1rem 2rem;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      a {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: $text-light;
+        text-decoration: none;
+      }
+    }
+
+    // Desktop Navigation
+    .nav {
+      display: flex;
+      align-items: center;
+
+      ul {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          margin: 0 1rem;
+
+          a {
+            text-decoration: none;
+            color: $text-light;
+            font-weight: 500;
+            transition: color 0.3s ease;
+
+            &:hover {
+              color: $highlight-color;
+            }
+          }
+        }
+      }
+
+      .authButtons {
+        display: flex;
+        align-items: center;
+
+        .signIn {
+          text-decoration: none;
+          color: $text-light;
+          margin-right: 1rem;
+        }
+
+        .startBusiness {
+          text-decoration: none;
+          background: linear-gradient(
+            45deg,
+            $highlight-color,
+            $secondary-color
+          );
+          color: $text-light;
+          padding: 0.5rem 1rem;
+          border-radius: 20px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    // Mobile Menu
+    .mobileMenu {
+      display: none;
+      cursor: pointer;
+
+      .burger {
+        width: 25px;
+        height: 3px;
+        background-color: #fff;
+        margin: 5px 0;
+      }
+    }
+  }
+
+  // Responsive Styles
+  @media (max-width: 768px) {
+    .nav {
+      display: none;
+      position: absolute;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background-color: $primary-color;
+      flex-direction: column;
+      text-align: center;
+      padding: 1rem 0;
+
+      ul {
+        flex-direction: column;
+
+        li {
+          margin: 1rem 0;
+        }
+      }
+
+      .authButtons {
+        flex-direction: column;
+
+        .signIn {
+          margin-bottom: 1rem;
+        }
+      }
+
+      &.active {
+        display: flex;
+      }
+    }
+
+    .mobileMenu {
+      display: block;
+    }
+  }
+}

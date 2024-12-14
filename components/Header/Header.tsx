@@ -1,56 +1,53 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./header.module.scss";
-import { Button, Drawer, DrawerProps, Space } from "antd";
+import { Drawer} from "antd";
+import Link from "next/link";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         {/* Logo Section */}
         <div className={styles.logo}>
-          <a href="/">firstbase</a>
+          <Link href="/">firstbase</Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className={`${styles.nav} ${styles.desktopNav}`}>
           <ul>
             <li>
-              <a href="#products">Products</a>
+              <Link href="#products">Products</Link>
             </li>
             <li>
-              <a href="#pricing">Pricing</a>
+              <Link href="#pricing">Pricing</Link>
             </li>
             <li>
-              <a href="#rewards">Rewards</a>
+              <Link href="#rewards">Rewards</Link>
             </li>
             <li>
-              <a href="#partners">Partners</a>
+              <Link href="#partners">Partners</Link>
             </li>
             <li>
-              <a href="#resources">Resources</a>
+              <Link href="#resources">Resources</Link>
             </li>
             <li>
-              <a href="#company">Company</a>
+              <Link href="#company">Company</Link>
             </li>
           </ul>
           <div className={styles.authButtons}>
-            <a href="#signin" className={styles.signIn}>
+            <Link href="#signin" className={styles.signIn}>
               Sign in
-            </a>
-            <a href="#start" className={styles.startBusiness}>
+            </Link>
+            <Link href="#start" className={styles.startBusiness}>
               Start my business
-            </a>
+            </Link>
           </div>
         </nav>
 

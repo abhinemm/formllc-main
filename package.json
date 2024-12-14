@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "antd": "^5.22.4",
+<<<<<<< HEAD
     "buisness-register": "file:",
+=======
+    "framer-motion": "^11.14.4",
+>>>>>>> c33962e2dd03a5d45c90e4fda9ab9466a2d7ea22
     "next": "15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

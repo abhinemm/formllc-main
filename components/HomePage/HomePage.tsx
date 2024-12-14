@@ -233,10 +233,10 @@ const HomePage = () => {
         <div className={styles.header}>
           <h2>Wyoming vs. Delaware: Which to Choose?</h2>
           <p>
-            State selection can shape your business. With Wyoming's
-            cost-effectiveness and Delaware's investor appeal, choose wisely to
-            set your business on its path. Assess each state's benefits to find
-            where your company fits best.
+            State selection can shape your business. With Wyoming&apos;s
+            cost-effectiveness and Delaware&apos;s investor appeal, choose
+            wisely to set your business on its path. Assess each state&apos;s
+            benefits to find where your company fits best.
           </p>
         </div>
         <div className={styles.cards}>
@@ -262,7 +262,7 @@ const HomePage = () => {
           ))}
         </div>
         <p className={styles.contact}>
-          Can’t decide? Let us help you! <a href="#contact">Contact us</a>
+          Can&apos;t decide? Let us help you! <a href="#contact">Contact us</a>
         </p>
       </section>
 

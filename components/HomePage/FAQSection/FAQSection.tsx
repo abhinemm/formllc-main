@@ -48,7 +48,7 @@ const FAQSection = () => {
         "Yes, Clemta offers various services such as bookkeeping, tax filing, and compliance management to support your business.",
     },
   ];
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toggleFAQ = (index: any) => {
     setActiveIndex(activeIndex === index ? null : index);
   };

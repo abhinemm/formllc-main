@@ -11,10 +11,12 @@
   "dependencies": {
     "antd": "^5.22.4",
     "buisness-register": "file:",
+    "formik": "^2.4.6",
     "framer-motion": "^11.14.4",
     "next": "15.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "yup": "^1.6.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -4,9 +4,9 @@ import styles from "./HomePage.module.scss";
 import { motion } from "framer-motion";
 import FAQSection from "./FAQSection/FAQSection";
 import Image from "next/image";
-import { style } from "framer-motion/client";
 
 const HomePage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const steps: any = [
     {
       icon: "/images/icon-company-type.png",
@@ -26,7 +26,7 @@ const HomePage = () => {
             stroke="#622774"
             strokeWidth="2.5"
             strokeLinecap="round"
-            stroke-linejoin="round"
+            strokeLinejoin="round"
           ></path>
         </svg>
       ),
@@ -132,9 +132,9 @@ const HomePage = () => {
           <path
             d="M19.25 25V20C19.25 18.6193 18.1307 17.5 16.75 17.5H14.25C12.8693 17.5 11.75 18.6193 11.75 20V25M10.5 5V8.75M10.5 8.75C10.5 10.1307 9.38071 11.25 8 11.25C6.61929 11.25 5.5 10.1307 5.5 8.75M10.5 8.75C10.5 10.1307 11.6193 11.25 13 11.25C14.3807 11.25 15.5 10.1307 15.5 8.75M15.5 5V8.75M15.5 8.75C15.5 10.1307 16.6193 11.25 18 11.25C19.3807 11.25 20.5 10.1307 20.5 8.75M20.5 5V8.75M20.5 8.75C20.5 10.1307 21.6193 11.25 23 11.25C24.3807 11.25 25.5 10.1307 25.5 8.75M5.5 7.5V22.5C5.5 23.8807 6.61929 25 8 25H23C24.3807 25 25.5 23.8807 25.5 22.5V7.5C25.5 6.11929 24.3807 5 23 5H8C6.61929 5 5.5 6.11929 5.5 7.5Z"
             stroke="#622774"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           ></path>
         </svg>
       ),
@@ -159,9 +159,9 @@ const HomePage = () => {
           <path
             d="M19.25 25V20C19.25 18.6193 18.1307 17.5 16.75 17.5H14.25C12.8693 17.5 11.75 18.6193 11.75 20V25M10.5 5V8.75M10.5 8.75C10.5 10.1307 9.38071 11.25 8 11.25C6.61929 11.25 5.5 10.1307 5.5 8.75M10.5 8.75C10.5 10.1307 11.6193 11.25 13 11.25C14.3807 11.25 15.5 10.1307 15.5 8.75M15.5 5V8.75M15.5 8.75C15.5 10.1307 16.6193 11.25 18 11.25C19.3807 11.25 20.5 10.1307 20.5 8.75M20.5 5V8.75M20.5 8.75C20.5 10.1307 21.6193 11.25 23 11.25C24.3807 11.25 25.5 10.1307 25.5 8.75M5.5 7.5V22.5C5.5 23.8807 6.61929 25 8 25H23C24.3807 25 25.5 23.8807 25.5 22.5V7.5C25.5 6.11929 24.3807 5 23 5H8C6.61929 5 5.5 6.11929 5.5 7.5Z"
             stroke="#622774"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           ></path>
         </svg>
       ),
@@ -190,7 +190,7 @@ const HomePage = () => {
           <path
             d="M12.2148 17.4001V10.4001M12.2148 10.4001L18.2148 6.90015L12.2148 3.40015V10.4001ZM9.21484 14.5993C5.71927 15.0798 3.21484 16.3762 3.21484 17.9001C3.21484 19.8331 7.24428 21.4001 12.2148 21.4001C17.1854 21.4001 21.2148 19.8331 21.2148 17.9001C21.2148 16.3762 18.7104 15.0798 15.2148 14.5993"
             stroke="#622774"
-            stroke-width="2"
+            strokeWidth="2"
           ></path>
         </svg>
       ),
@@ -216,7 +216,7 @@ const HomePage = () => {
           <path
             d="M12.2148 17.4001V10.4001M12.2148 10.4001L18.2148 6.90015L12.2148 3.40015V10.4001ZM9.21484 14.5993C5.71927 15.0798 3.21484 16.3762 3.21484 17.9001C3.21484 19.8331 7.24428 21.4001 12.2148 21.4001C17.1854 21.4001 21.2148 19.8331 21.2148 17.9001C21.2148 16.3762 18.7104 15.0798 15.2148 14.5993"
             stroke="#622774"
-            stroke-width="2"
+            strokeWidth="2"
           ></path>
         </svg>
       ),
@@ -264,7 +264,7 @@ const HomePage = () => {
             <div className={styles.mapSection}>
               <div className={styles.map}>
                 <Image
-                  src="/images/homepage.webp" // Replace with your image path
+                  src="/images/main dash.jpg" // Replace with your image path
                   alt="Description of the image"
                   layout="responsive" // Responsive layout
                   width={16} // Proportional width
@@ -288,6 +288,7 @@ const HomePage = () => {
               </p>
             </div>
             <div className={styles.steps}>
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {steps.map((step: any, index: number) => (
                 <motion.div
                   key={index}
@@ -321,9 +322,16 @@ const HomePage = () => {
             </div>
             <div className={styles.features}>
               {features.map((feature, index) => (
-                <div key={index} className={styles.feature}>
+                <motion.div
+                  key={index}
+                  className={styles.feature}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.3 }}
+                >
                   • {feature}
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -424,34 +432,42 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className={styles.manageBusinessSection}>
-        <div className={styles.content}>
-          {/* Text Section */}
-          <div className={styles.text}>
-            <h2>Easily Manage Your Business with Clemta</h2>
-            <p>
-              Start your company, register trademarks, navigate US taxes,
-              streamline accounting, and access banking—all from one platform.
-              Dive into a hassle-free US business experience online wherever you
-              are in the world.
-            </p>
-            <a href="#get-started" className={styles.button}>
-              Get Started →
-            </a>
-          </div>
-
-          {/* Features Section */}
-          <div className={styles.features}>
-            {featuresSecSix.map((feature, index) => (
-              <div
-                key={index}
-                className={`${styles.feature} ${
-                  styles[`animationDelay${index}`]
-                }`}
-              >
-                • {feature}
+      <section>
+        <div className="container">
+          <div className={styles.manageBusinessSection}>
+            <div className={styles.content}>
+              {/* Text Section */}
+              <div className={styles.text}>
+                <h2>Easily Manage Your Business with Clemta</h2>
+                <p>
+                  Start your company, register trademarks, navigate US taxes,
+                  streamline accounting, and access banking—all from one
+                  platform. Dive into a hassle-free US business experience
+                  online wherever you are in the world.
+                </p>
+                <a href="#get-started" className={styles.button}>
+                  Get Started →
+                </a>
               </div>
-            ))}
+
+              {/* Features Section */}
+              <div className={styles.features}>
+                {featuresSecSix.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    className={`${styles.feature} ${
+                      styles[`animationDelay${index}`]
+                    }`}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.3 }}
+                  >
+                    • {feature}
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>

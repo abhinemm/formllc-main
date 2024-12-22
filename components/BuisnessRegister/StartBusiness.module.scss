@@ -1,0 +1,109 @@
+$bg-color: #0b0c10;
+$primary-text: #ffffff;
+$sub-text: #aaa;
+$card-bg: #1b1d29;
+$highlight-color: #ff5a5f;
+
+.container {
+  display: flex;
+  background-color: $bg-color;
+  color: $primary-text;
+  padding: 2rem;
+  gap: 2rem;
+
+  /* Tabs Section */
+  .tabs {
+    flex: 1;
+
+    .heading {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .tabsList {
+      list-style: none;
+      padding: 0;
+
+      .tab {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: height 0.3s ease;
+
+        &:hover {
+          background: rgba(255, 90, 95, 0.1);
+        }
+
+        &.active {
+          background: $card-bg;
+          border-left: 3px solid $highlight-color;
+        }
+
+        .stepNumber {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+          text-align: center;
+          line-height: 2rem;
+          background-color: #444;
+          color: $primary-text;
+          margin-right: 1rem;
+        }
+
+        .stepNumberActive {
+          @extend .stepNumber;
+          background-color: $highlight-color;
+          color: $primary-text;
+        }
+
+        h3 {
+          margin: 0;
+          font-size: 1rem;
+        }
+
+        p {
+          margin: 0.2rem 0 0;
+          font-size: 0.9rem;
+          color: $sub-text;
+        }
+      }
+    }
+  }
+
+  /* Content Section */
+  .content {
+    flex: 2;
+    background: $card-bg;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    .contentHeading {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: $highlight-color;
+    }
+
+    .contentDescription {
+      font-size: 1rem;
+      color: $sub-text;
+    }
+
+    .continueButton {
+      margin-top: 1.5rem;
+      background: $highlight-color;
+      border: none;
+      color: $primary-text;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: darken($highlight-color, 10%);
+      }
+    }
+  }
+}

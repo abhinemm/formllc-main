@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./Faqsection.module.scss";
+import { motion } from "framer-motion";
 
 const FAQSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -64,8 +65,12 @@ const FAQSection = () => {
       </div>
       <div className={styles.faqList}>
         {faqs.map((faq, index) => (
-          <div
+          <motion.div
             key={index}
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: index * 0.3 }}
             className={`${styles.faqItem} ${
               activeIndex === index ? styles.active : ""
             }`}
@@ -84,7 +89,7 @@ const FAQSection = () => {
             >
               {faq.answer}
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

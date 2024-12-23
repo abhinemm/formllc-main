@@ -145,8 +145,12 @@ $highlight-color: #ff5a5f;
     padding: 20px;
 
     .leftContetTabs {
-      padding-top: 62px;
+      padding-top: 60px;
       width: 100%;
+
+      @media screen and (max-width:992px) {
+        display: none;
+      }
       .leftHeaderWrapper {
         margin-bottom: 40px;
         h2 {
@@ -272,7 +276,7 @@ $highlight-color: #ff5a5f;
     .rightContet {
       display: flex;
       flex-direction: column;
-      padding: 124px 55px 85px;
+      padding: 60px 55px 60px;
       background-color: #090a15;
       position: relative;
       z-index: 1;
@@ -290,6 +294,7 @@ $highlight-color: #ff5a5f;
       border-radius: 4px;
 
       .tableDropdownWrapper {
+        width: 100%;
         .rightHeaderWrapper {
           text-align: center;
           margin-bottom: 30px;
@@ -309,6 +314,16 @@ $highlight-color: #ff5a5f;
             letter-spacing: -0.25px;
             text-align: center;
             color: #f1f1ff99;
+            a{
+              font-style: inherit;
+              font-weight: inherit;
+              font-size: inherit;
+              line-height: inherit;
+              letter-spacing: inherit;
+              color: #d64431;
+              text-decoration: none;
+          
+            }
           }
         }
       }
@@ -362,6 +377,8 @@ $highlight-color: #ff5a5f;
   :global {
     .ant-collapse-expand-icon {
       display: none !important;
+     
+
     }
     .ant-collapse-header {
       padding: 0 !important;
@@ -380,7 +397,9 @@ $highlight-color: #ff5a5f;
       }
     }
     .ant-collapse {
-      border: none !important;
+     
+      border: 1px solid #8279a8 !important;
+      background: #181429 !important;
     }
     .ant-collapse-content {
       border: none !important;
@@ -392,10 +411,7 @@ $highlight-color: #ff5a5f;
     width: 100%;
     min-height: 96px;
     padding: 16px;
-    background: #181429;
-    border: 1px solid #181429;
-
-    border: 1px solid #8279a8;
+    
     border-radius: 4px;
     position: relative;
     cursor: pointer;

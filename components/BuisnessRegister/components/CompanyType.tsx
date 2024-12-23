@@ -15,7 +15,7 @@ const CompanyType = () => {
     <Space direction="vertical">
       <Collapse
         collapsible="header"
-        defaultActiveKey={["1"]}
+        
         items={[
           {
             key: "1",
@@ -30,7 +30,7 @@ const CompanyType = () => {
       />
       <Collapse
         collapsible="header"
-        defaultActiveKey={["1"]}
+      
         items={[
           {
             key: "1",

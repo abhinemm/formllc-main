@@ -5,6 +5,7 @@ import styles from "./StartBusiness.module.scss";
 import CompanyType from "./components/CompanyType";
 import RegistrationState from "./components/RegistrationState";
 import ReviewandPay from "./components/ReviewandPay";
+import CreateAccount from "../CreateAccount/CreateAccount";
 
 const StartBusinessTabs: React.FC = () => {
   // State to track the active tab
@@ -196,6 +197,13 @@ const StartBusinessTabs: React.FC = () => {
                 Please review your information and proceed to payment.</p>
               </div>
             )}
+            {activeTabNumber == 4 && (
+              <div className={styles.rightHeaderWrapper}>
+                <h1>Create an account </h1>
+                <p> Already have an account? <a>sign in</a>
+               </p>
+              </div>
+            )}
 
 
             
@@ -213,6 +221,11 @@ const StartBusinessTabs: React.FC = () => {
             {activeTabNumber == 3 && (
               <div className={styles.accordionStyles}>
                 <ReviewandPay />
+              </div>
+            )}
+            {activeTabNumber == 4 && (
+              <div className={styles.accordionStyles}>
+                <CreateAccount />
               </div>
             )}
 

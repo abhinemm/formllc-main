@@ -9,46 +9,46 @@ import CreateAccount from "../CreateAccount/CreateAccount";
 
 const StartBusinessTabs: React.FC = () => {
   // State to track the active tab
-  const [activeTab, setActiveTab] = useState<number>(1);
+  // const [activeTab, setActiveTab] = useState<number>(1);
 
   const [activeTabNumber, setActiveTabNumber] = useState<number>(1);
 
-  const tabs = [
-    {
-      id: 1,
-      title: "Company Type",
-      description:
-        "Choose your business entity. Unsure? We’ll help you choose.",
-      content: (
-        <p>
-          Choose between <strong>LLC</strong> or <strong>C-corporation</strong>.
-          LLC offers flexibility, while C-corp is ideal for external funding.
-        </p>
-      ),
-    },
-    {
-      id: 2,
-      title: "Registration State",
-      description: "Select the state for your company registration.",
-      content: (
-        <p>
-          Choose states like <strong>Wyoming</strong> for tax efficiency or{" "}
-          <strong>Delaware</strong> for investor appeal.
-        </p>
-      ),
-    },
-    {
-      id: 3,
-      title: "Review and Pay",
-      description: "Review your details and proceed with the payment.",
-      content: (
-        <p>
-          Finalize the details and pay to get started with your business
-          registration process.
-        </p>
-      ),
-    },
-  ];
+  // const tabs = [
+  //   {
+  //     id: 1,
+  //     title: "Company Type",
+  //     description:
+  //       "Choose your business entity. Unsure? We’ll help you choose.",
+  //     content: (
+  //       <p>
+  //         Choose between <strong>LLC</strong> or <strong>C-corporation</strong>.
+  //         LLC offers flexibility, while C-corp is ideal for external funding.
+  //       </p>
+  //     ),
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Registration State",
+  //     description: "Select the state for your company registration.",
+  //     content: (
+  //       <p>
+  //         Choose states like <strong>Wyoming</strong> for tax efficiency or{" "}
+  //         <strong>Delaware</strong> for investor appeal.
+  //       </p>
+  //     ),
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Review and Pay",
+  //     description: "Review your details and proceed with the payment.",
+  //     content: (
+  //       <p>
+  //         Finalize the details and pay to get started with your business
+  //         registration process.
+  //       </p>
+  //     ),
+  //   },
+  // ];
 
   return (
     // <div className="container">
@@ -181,7 +181,7 @@ const StartBusinessTabs: React.FC = () => {
             {activeTabNumber == 1 && (
               <div className={styles.rightHeaderWrapper}>
                 <h1> Company Structure </h1>
-                <p> Choose the entity type that's right for your business. </p>
+                <p> Choose the entity type that&apos;s right for your business. </p>
               </div>
             )}
             {activeTabNumber == 2 && (

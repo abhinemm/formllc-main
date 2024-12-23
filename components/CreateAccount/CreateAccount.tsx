@@ -94,6 +94,10 @@ const CreateAccount = () => {
           </label>
         </div>
       </form>
+
+      <div className={styles.signUpOptions}>
+        
+      </div>
     </div>
   );
 };

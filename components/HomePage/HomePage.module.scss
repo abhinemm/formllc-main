@@ -52,7 +52,7 @@ $secondary-color: #622774;
             background-color: var(--white-color);
             color: var(--text-dark);
             transition: background-color 0.3s ease;
-            transition: background-color 0.3s ease;
+            transition: color 0.3s ease;
 
             &:hover {
               background: linear-gradient(
@@ -509,8 +509,8 @@ $secondary-color: #622774;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 3rem 1.5rem;
-  background-color: #f9fafc;
+  padding: 3rem 0;
+  background: transparent;
 
   .content {
     display: flex;
@@ -520,13 +520,11 @@ $secondary-color: #622774;
 
     .text {
       flex: 1;
-      max-width: 500px;
-
       h2 {
         font-size: 2rem;
         font-weight: bold;
         margin-bottom: 1rem;
-        color: #1c1e21;
+        color: var(--white-color);
       }
 
       p {
@@ -537,25 +535,29 @@ $secondary-color: #622774;
       }
 
       .button {
-        background-color: #007bff;
-        color: white;
         padding: 0.75rem 1.5rem;
         text-decoration: none;
         border-radius: 5px;
-        font-size: 1rem;
-        font-weight: bold;
         transition: all 0.3s ease;
+        font-weight: 600;
+        background-color: var(--white-color);
+        color: var(--text-dark);
+        transition: background-color 0.3s ease;
+        transition: color 0.3s ease;
 
         &:hover {
-          background-color: #0056b3;
-          box-shadow: 0 5px 15px rgba(0, 91, 187, 0.3);
+          background: linear-gradient(
+            45deg,
+            $highlight-color,
+            $secondary-color
+          );
+          color: var(--white-color);
         }
       }
     }
 
     .features {
       flex: 1;
-      max-width: 400px;
       display: flex;
       flex-direction: column;
       gap: 1rem;

@@ -8,4 +8,11 @@ export default class CompanyService {
   static async findOne(where: any) {
     return Company.findOne({ where });
   }
+  static async update(id: number, data: any) {
+    return Company.update(data, { where: { id } });
+  }
+  static async delete(id:number){
+    return Company.destroy({where:{id}});
+
+  }
 }

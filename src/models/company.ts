@@ -7,6 +7,7 @@ export interface CompanyAttributes {
   type?: string;
   registrationState: string;
   userId?: number;
+  document?: string;
 }
 export interface CompanyWithUserAttributes
   extends UserAttributes,
@@ -24,6 +25,7 @@ class Company
   public type!: string;
   public registrationState!: string;
   public userId?: number;
+  public document?: string;
 
   public user?: User;
 }
@@ -43,6 +45,10 @@ Company.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    document: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: true,
@@ -52,6 +58,7 @@ Company.init(
     sequelize,
     modelName: "Company",
     tableName: "companies",
+    paranoid:true
   }
 );
 

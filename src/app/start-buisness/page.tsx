@@ -1,6 +1,5 @@
 import React from "react";
 import StartBusinessTabs from "../../../components/BuisnessRegister/StartBuisness";
-
 const page = () => {
   return (
     <div>

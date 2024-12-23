@@ -86,6 +86,8 @@ export const authOptions: AuthOptions = {
       });
       if (userExist) {
         session.user.id = userExist.id;
+        session.user = userExist.dataValues
+        delete session.user.password;
       }
       return session;
     },

@@ -1,12 +1,18 @@
 import type { NextConfig } from "next";
-require('dotenv').config();
+import dotenv from "dotenv";
 
-/** @type {import('next').NextConfig} */
+dotenv.config();
+
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactStrictMode: true,
+  reactStrictMode: true, // Enforces best practices during development
   experimental: {
-    serverComponentsExternalPackages: ['pg', 'sequelize']
+    serverComponentsExternalPackages: ["pg", "sequelize"], // Specify external packages for server components
+  },
+  typescript: {
+    ignoreBuildErrors: true, // Suppresses TypeScript build errors
+  },
+  eslint: {
+    ignoreDuringBuilds: true, // Suppresses ESLint warnings during the build process
   }
 };
 

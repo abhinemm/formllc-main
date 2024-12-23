@@ -1,11 +1,13 @@
 import UserService from "@/services/user.model.service";
-import NextAuth from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { validatePassword } from "@/utils/helper";
 import { NextResponse } from "next/server";
+import { NextApiHandler } from "next";
 
-export const authOptions: any = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const authOptions: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -17,7 +19,7 @@ export const authOptions: any = {
         email: { label: "Email", type: "text", placeholder: "you@example.com" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials):Promise<any> {
         const { email, password } = credentials!;
         // Find the user in your database
         const user = await UserService.findOne({ email });
@@ -45,7 +47,7 @@ export const authOptions: any = {
     signIn: "/auth/signin", // Optional custom sign-in page
   },
   callbacks: {
-    async signIn(data: any) {
+    async signIn(data: any):Promise<any> {
       const { user, account, profile } = data;
       // For Google Sign-In
       if (account?.provider === "google") {
@@ -63,7 +65,7 @@ export const authOptions: any = {
       }
       return true; // For credentials login, simply allow sign-in
     },
-    async jwt(data: any) {
+    async jwt(data: any):Promise<any> {
       const { token, account, user } = data;
       if (account) {
         token.accessToken = account.access_token;
@@ -73,7 +75,7 @@ export const authOptions: any = {
       }
       return token;
     },
-    async session(data: any) {
+    async session(data: any):Promise<any> {
       console.log("session data",data);
       
       const { session, token } = data;
@@ -90,6 +92,6 @@ export const authOptions: any = {
   },
 };
 
-const handler = NextAuth(authOptions);
+const handler:NextApiHandler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

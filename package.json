@@ -15,6 +15,7 @@
     "bcrypt": "^5.1.1",
     "buisness-register": "file:",
     "dotenv": "^16.4.7",
+    "formidable": "^3.5.2",
     "formik": "^2.4.6",
     "framer-motion": "^11.14.4",
     "joi": "^17.13.3",
@@ -26,6 +27,7 @@
     "react-dom": "^19.0.0",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2",
+    "uuid": "^11.0.3",
     "yup": "^1.6.0"
   },
   "devDependencies": {

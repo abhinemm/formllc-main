@@ -8,92 +8,10 @@ import ReviewandPay from "./components/ReviewandPay";
 import CreateAccount from "../CreateAccount/CreateAccount";
 
 const StartBusinessTabs: React.FC = () => {
-  // State to track the active tab
-  // const [activeTab, setActiveTab] = useState<number>(1);
-
   const [activeTabNumber, setActiveTabNumber] = useState<number>(1);
-
-  // const tabs = [
-  //   {
-  //     id: 1,
-  //     title: "Company Type",
-  //     description:
-  //       "Choose your business entity. Unsure? We’ll help you choose.",
-  //     content: (
-  //       <p>
-  //         Choose between <strong>LLC</strong> or <strong>C-corporation</strong>.
-  //         LLC offers flexibility, while C-corp is ideal for external funding.
-  //       </p>
-  //     ),
-  //   },
-  //   {
-  //     id: 2,
-  //     title: "Registration State",
-  //     description: "Select the state for your company registration.",
-  //     content: (
-  //       <p>
-  //         Choose states like <strong>Wyoming</strong> for tax efficiency or{" "}
-  //         <strong>Delaware</strong> for investor appeal.
-  //       </p>
-  //     ),
-  //   },
-  //   {
-  //     id: 3,
-  //     title: "Review and Pay",
-  //     description: "Review your details and proceed with the payment.",
-  //     content: (
-  //       <p>
-  //         Finalize the details and pay to get started with your business
-  //         registration process.
-  //       </p>
-  //     ),
-  //   },
-  // ];
+  const [companyType, setCompanyType] = useState<any>();
 
   return (
-    // <div className="container">
-    //   <div className={styles.container}>
-    //     {/* Tabs Section */}
-    //     <div className={styles.tabs}>
-    //       <h2 className={styles.heading}>Start your US company in minutes.</h2>
-    //       <ul className={styles.tabsList}>
-    //         {tabs.map((tab) => (
-    //           <li
-    //             key={tab.id}
-    //             className={`${styles.tab} ${
-    //               activeTab === tab.id ? styles.active : ""
-    //             }`}
-    //             onClick={() => setActiveTab(tab.id)}
-    //           >
-    //             <div
-    //               className={
-    //                 activeTab === tab.id
-    //                   ? styles.stepNumberActive
-    //                   : styles.stepNumber
-    //               }
-    //             >
-    //               {tab.id}
-    //             </div>
-    //             <div>
-    //               <h3>{tab.title}</h3>
-    //               <p>{tab.description}</p>
-    //             </div>
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     </div>
-
-    //     {/* Content Section */}
-    //     <div className={styles.content}>
-    //       <h2 className={styles.contentHeading}>{tabs[activeTab - 1].title}</h2>
-    //       <div className={styles.contentDescription}>
-    //         {tabs[activeTab - 1].content}
-    //       </div>
-    //       <button className={styles.continueButton}>Continue</button>
-    //     </div>
-    //   </div>
-    // </div>
-
     <div className={styles.startBusinessMainWrapper}>
       <div className={styles.contentWrapperMain}>
         <div className={styles.leftContetTabs}>
@@ -176,12 +94,16 @@ const StartBusinessTabs: React.FC = () => {
             </div>
           </div>
         </div>
+
         <div className={styles.rightContet}>
           <div className={styles.tableDropdownWrapper}>
             {activeTabNumber == 1 && (
               <div className={styles.rightHeaderWrapper}>
                 <h1> Company Structure </h1>
-                <p> Choose the entity type that&apos;s right for your business. </p>
+                <p>
+                  {" "}
+                  Choose the entity type that&apos;s right for your business.{" "}
+                </p>
               </div>
             )}
             {activeTabNumber == 2 && (
@@ -193,24 +115,29 @@ const StartBusinessTabs: React.FC = () => {
             {activeTabNumber == 3 && (
               <div className={styles.rightHeaderWrapper}>
                 <h1>Review and Pay </h1>
-                <p> You’re almost done. 🎉 <br/>
-                Please review your information and proceed to payment.</p>
+                <p>
+                  {" "}
+                  You’re almost done. 🎉 <br />
+                  Please review your information and proceed to payment.
+                </p>
               </div>
             )}
             {activeTabNumber == 4 && (
               <div className={styles.rightHeaderWrapper}>
                 <h1>Create an account </h1>
-                <p> Already have an account? <a>sign in</a>
-               </p>
+                <p>
+                  {" "}
+                  Already have an account? <a>sign in</a>
+                </p>
               </div>
             )}
 
-
-            
-
             {activeTabNumber == 1 && (
               <div className={styles.accordionStyles}>
-                <CompanyType />
+                <CompanyType
+                  companyType={companyType}
+                  setCompanyType={setCompanyType}
+                />
               </div>
             )}
             {activeTabNumber == 2 && (

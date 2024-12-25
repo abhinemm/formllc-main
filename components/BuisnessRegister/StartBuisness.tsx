@@ -6,10 +6,23 @@ import CompanyType from "./components/CompanyType";
 import RegistrationState from "./components/RegistrationState";
 import ReviewandPay from "./components/ReviewandPay";
 import CreateAccount from "../CreateAccount/CreateAccount";
+import { useSession } from "next-auth/react";
 
 const StartBusinessTabs: React.FC = () => {
   const [activeTabNumber, setActiveTabNumber] = useState<number>(1);
-  const [companyType, setCompanyType] = useState<any>();
+  const [companyType, setCompanyType] = useState<any>("LLC");
+  const [companyLocation, setCompanyLocation] = useState<any>("Wyoming");
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+
+  const session = useSession();
+
+  const handleContinue = () => {
+    console.log("datadata", session);
+    if (!session?.data?.user) {
+      setIsAuth(true);
+      setActiveTabNumber(4);
+    }
+  };
 
   return (
     <div className={styles.startBusinessMainWrapper}>
@@ -75,23 +88,25 @@ const StartBusinessTabs: React.FC = () => {
                 <h5>Review and pay</h5>
               </div>
             </div>
-            <div
-              className={styles.tabListItem}
-              onClick={() => setActiveTabNumber(4)}
-            >
+            {isAuth && (
               <div
-                className={`${styles.numberWrapper} ${
-                  activeTabNumber > 3 ? styles.selectedTab : ""
-                }`}
+                className={styles.tabListItem}
+                onClick={() => setActiveTabNumber(4)}
               >
-                <div className={styles.Number}>
-                  <span>4</span>
+                <div
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 3 ? styles.selectedTab : ""
+                  }`}
+                >
+                  <div className={styles.Number}>
+                    <span>4</span>
+                  </div>
+                </div>
+                <div className={styles.itemContentWrapper}>
+                  <h5>Sign documents</h5>
                 </div>
               </div>
-              <div className={styles.itemContentWrapper}>
-                <h5>Sign documents</h5>
-              </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -122,14 +137,18 @@ const StartBusinessTabs: React.FC = () => {
                 </p>
               </div>
             )}
-            {activeTabNumber == 4 && (
-              <div className={styles.rightHeaderWrapper}>
-                <h1>Create an account </h1>
-                <p>
-                  {" "}
-                  Already have an account? <a>sign in</a>
-                </p>
-              </div>
+            {isAuth && (
+              <>
+                {activeTabNumber == 4 && (
+                  <div className={styles.rightHeaderWrapper}>
+                    <h1>Create an account </h1>
+                    <p>
+                      {" "}
+                      Already have an account? <a>sign in</a>
+                    </p>
+                  </div>
+                )}
+              </>
             )}
 
             {activeTabNumber == 1 && (
@@ -142,26 +161,31 @@ const StartBusinessTabs: React.FC = () => {
             )}
             {activeTabNumber == 2 && (
               <div className={styles.accordionStyles}>
-                <RegistrationState />
+                <RegistrationState
+                  setCompanyLocation={setCompanyLocation}
+                  companyLocation={companyLocation}
+                />
               </div>
             )}
             {activeTabNumber == 3 && (
               <div className={styles.accordionStyles}>
-                <ReviewandPay />
+                <ReviewandPay
+                  companyType={companyType}
+                  companyLocation={companyLocation}
+                  setActiveTabNumber={setActiveTabNumber}
+                  onContinue={handleContinue}
+                />
               </div>
             )}
-            {activeTabNumber == 4 && (
-              <div className={styles.accordionStyles}>
-                <CreateAccount />
-              </div>
+            {isAuth && (
+              <>
+                {activeTabNumber == 4 && (
+                  <div className={styles.accordionStyles}>
+                    <CreateAccount />
+                  </div>
+                )}
+              </>
             )}
-
-            <div className={styles.btnWrapper}>
-              <button>
-                <span>Continue </span>
-                <span></span>
-              </button>
-            </div>
           </div>
         </div>
       </div>

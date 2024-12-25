@@ -12,6 +12,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/pg": "^8.11.10",
     "antd": "^5.22.4",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "buisness-register": "file:",
     "dotenv": "^16.4.7",

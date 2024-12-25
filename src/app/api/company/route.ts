@@ -15,25 +15,20 @@ export async function GET() {
     );
   }
   console.log(data.user);
-  
+
   try {
     const adminUser: any = await UserService.findOne({ type: "admin" });
+    const where: any = {};
+    if (adminUser?.id !== data.user.id) {
+      where.userId = data.user.id;
+    }
     const companies = await Company.findAll({
-      where: {
-        [Op.or]: [
-          {
-            id: data.user.id,
-          },
-          adminUser&&{
-            id: adminUser?.id,
-          },
-        ],
-      },
+      where: where,
     });
     return NextResponse.json(companies);
   } catch (error) {
     console.log(error);
-    
+
     return NextResponse.json(
       { error: "Failed to fetch users" },
       { status: 500 }
@@ -54,6 +49,15 @@ export async function POST(req: Request) {
     registrationState,
     companyType,
     document,
+    ownerFname,
+    ownerLname,
+    companyName,
+    companyEmail,
+    streetAddress,
+    city,
+    state,
+    zipCode,
+    country,
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -78,6 +82,15 @@ export async function POST(req: Request) {
       type: companyType,
       userId: userExist.id,
       document,
+      ownerFname,
+      ownerLname,
+      companyName,
+      companyEmail,
+      streetAddress,
+      city,
+      state,
+      zipCode,
+      country,
     });
     return NextResponse.json(newCompany, { status: 201 });
   } catch (error) {
@@ -120,7 +133,7 @@ export async function PATCH(req: Request) {
       { status: 400 }
     );
   }
-  if (companyData?.userId !== data.user.id || data.user.id !== adminUser.id) {
+  if (companyData?.userId !== data.user.id || data.user.id !== adminUser?.id) {
     return NextResponse.json(
       {
         error: "User have no permission to do this operation!",
@@ -169,7 +182,7 @@ export async function DELETE(req: Request) {
       { status: 400 }
     );
   }
-  if (companyData?.userId !== data.user.id || data.user.id !== adminUser.id) {
+  if (companyData?.userId !== data.user.id || data.user.id !== adminUser?.id) {
     return NextResponse.json(
       {
         error: "User have no permission to do this operation!",

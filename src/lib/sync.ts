@@ -2,6 +2,7 @@
 import sequelize from "./sequelize";
 import User from "../models/user";
 import Company from "../models/company";
+import ContactUs from "@/models/contactus";
 
 const syncDatabase = async () => {
   try {
@@ -11,9 +12,9 @@ const syncDatabase = async () => {
     );
     Company.belongsTo(User, { foreignKey: "userId", as: "userData" });
     User.hasOne(Company, { foreignKey: "userId", as: "companyData" });
-
+    await ContactUs.sync();
     // Sync all models
-    await sequelize.sync({ alter: true }); // use { force: true } to drop and recreate tables
+    await sequelize.sync({ alter: true, }); // use { force: true } to drop and recreate tables
     console.log("All models were synchronized successfully.");
   } catch (error) {
     // console.error("Unable to connect to the database:", error);

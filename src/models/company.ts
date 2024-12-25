@@ -7,6 +7,16 @@ export interface CompanyAttributes {
   type?: string;
   registrationState: string;
   userId?: number;
+  ownerFname?: string;
+  ownerLname?: string;
+  companyName?: string;
+  companyEmail?: string;
+  streetAddress?: string;
+  city?: string;
+  state?: string;
+  zipCode?: string;
+  country?: string;
+
   document?: string;
 }
 export interface CompanyWithUserAttributes
@@ -26,6 +36,16 @@ class Company
   public registrationState!: string;
   public userId?: number;
   public document?: string;
+
+  public ownerFname?: string;
+  public ownerLname?: string;
+  public companyName?: string;
+  public companyEmail?: string;
+  public streetAddress?: string;
+  public city?: string;
+  public state?: string;
+  public zipCode?: string;
+  public country?: string;
 
   public user?: User;
 }
@@ -53,12 +73,48 @@ Company.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    ownerFname: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    ownerLname: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    companyName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    companyEmail: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    streetAddress: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    zipCode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    country: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,
     modelName: "Company",
     tableName: "companies",
-    paranoid:true
+    paranoid: true,
   }
 );
 

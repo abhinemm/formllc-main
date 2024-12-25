@@ -10,11 +10,15 @@ type ChildProps = {
 const MainLayout = ({ children }: ChildProps) => {
   const pathName = usePathname();
   return (
-    <div>
-      {!pathName?.includes("/admin") && <Header />}
-      {children}
-      {!pathName?.includes("/admin") && <Foooter />}
-    </div>
+    <section className="siteLayout">
+      <div className="headerDiv">
+        {!pathName?.includes("/admin") && <Header />}
+      </div>
+      <div className="childrenWrapper">{children}</div>
+      <div className="footerWrapper">
+        {!pathName?.includes("/admin") && <Foooter />}
+      </div>
+    </section>
   );
 };
 

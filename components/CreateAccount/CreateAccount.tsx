@@ -96,6 +96,16 @@ const CreateAccount = () => {
       </form>
 
       <div className={styles.signUpOptions}>
+
+        <ul>
+          <li>
+            <button className={styles.signInBtn}>Sign up</button>
+          </li>
+          <li><div><span>or</span></div></li>
+          <li>
+            <button className={styles.signInGoogleBtn}>Signup with Google</button>
+          </li>
+        </ul>
         
       </div>
     </div>

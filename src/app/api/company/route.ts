@@ -70,12 +70,12 @@ export async function POST(req: Request) {
     userExist.currency = currency;
     await userExist.save();
 
-    const companyExisted = await CompanyService.findOne({
-      userId: userExist.id,
-    });
-    if (companyExisted) {
-      return NextResponse.json({ message: "Company exists!" }, { status: 400 });
-    }
+    // const companyExisted = await CompanyService.findOne({
+    //   userId: userExist.id,
+    // });
+    // if (companyExisted) {
+    //   return NextResponse.json({ message: "Company exists!" }, { status: 400 });
+    // }
 
     const newCompany = await Company.create({
       registrationState,

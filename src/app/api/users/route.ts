@@ -25,6 +25,8 @@ export async function POST(req: Request) {
     type,
   }: UserAttributes = await req.json();
   try {
+    console.log("firstNamefirstName", firstName);
+
     const userExist = await User.findOne({ where: { email } });
     if (userExist) {
       return NextResponse.json(

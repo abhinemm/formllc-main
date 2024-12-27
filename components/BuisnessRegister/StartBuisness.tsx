@@ -7,12 +7,14 @@ import RegistrationState from "./components/RegistrationState";
 import ReviewandPay from "./components/ReviewandPay";
 import CreateAccount from "../CreateAccount/CreateAccount";
 import { useSession } from "next-auth/react";
+import CurrencyModals from "../Modals/CurrencyModals";
 
 const StartBusinessTabs: React.FC = () => {
   const [activeTabNumber, setActiveTabNumber] = useState<number>(1);
   const [companyType, setCompanyType] = useState<any>("LLC");
   const [companyLocation, setCompanyLocation] = useState<any>("Wyoming");
   const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [currencyPopup, setCurrencyPopup] = useState<any>(false);
 
   const session = useSession();
 
@@ -21,175 +23,194 @@ const StartBusinessTabs: React.FC = () => {
     if (!session?.data?.user) {
       setIsAuth(true);
       setActiveTabNumber(4);
+    } else {
+      setCurrencyPopup(true);
     }
+  };
+  const haddleNewAccount = () => {
+    setIsAuth(false);
+    setActiveTabNumber(3);
+    setCurrencyPopup(true);
   };
 
   return (
-    <div className={styles.startBusinessMainWrapper}>
-      <div className={styles.contentWrapperMain}>
-        <div className={styles.leftContetTabs}>
-          <div className={styles.leftHeaderWrapper}>
-            <h2> Start your US company in minutes. </h2>
-            <p> Answer a few questions to help us form your new company. </p>
-          </div>
+    <>
+      <div className={styles.startBusinessMainWrapper}>
+        <div className={styles.contentWrapperMain}>
+          <div className={styles.leftContetTabs}>
+            <div className={styles.leftHeaderWrapper}>
+              <h2> Start your US company in minutes. </h2>
+              <p> Answer a few questions to help us form your new company. </p>
+            </div>
 
-          <div className={styles.tabListWrapper}>
-            <div
-              className={styles.tabListItem}
-              onClick={() => setActiveTabNumber(1)}
-            >
-              <div
-                className={`${styles.numberWrapper} ${
-                  activeTabNumber > 0 ? styles.selectedTab : ""
-                }`}
-              >
-                <div className={styles.Number}>
-                  <span>1</span>
-                </div>
-              </div>
-              <div className={styles.itemContentWrapper}>
-                <h5>Company Type</h5>
-                <p>
-                  Choose your business entity. Unsure? We’ll help you choose.
-                </p>
-              </div>
-            </div>
-            <div
-              className={styles.tabListItem}
-              onClick={() => setActiveTabNumber(2)}
-            >
-              <div
-                className={`${styles.numberWrapper} ${
-                  activeTabNumber > 1 ? styles.selectedTab : ""
-                }`}
-              >
-                <div className={styles.Number}>
-                  <span>2</span>
-                </div>
-              </div>
-              <div className={styles.itemContentWrapper}>
-                <h5>Registration State</h5>
-              </div>
-            </div>
-            <div
-              className={styles.tabListItem}
-              onClick={() => setActiveTabNumber(3)}
-            >
-              <div
-                className={`${styles.numberWrapper} ${
-                  activeTabNumber > 2 ? styles.selectedTab : ""
-                }`}
-              >
-                <div className={styles.Number}>
-                  <span>3</span>
-                </div>
-              </div>
-              <div className={styles.itemContentWrapper}>
-                <h5>Review and pay</h5>
-              </div>
-            </div>
-            {isAuth && (
+            <div className={styles.tabListWrapper}>
               <div
                 className={styles.tabListItem}
-                onClick={() => setActiveTabNumber(4)}
+                onClick={() => setActiveTabNumber(1)}
               >
                 <div
                   className={`${styles.numberWrapper} ${
-                    activeTabNumber > 3 ? styles.selectedTab : ""
+                    activeTabNumber > 0 ? styles.selectedTab : ""
                   }`}
                 >
                   <div className={styles.Number}>
-                    <span>4</span>
+                    <span>1</span>
                   </div>
                 </div>
                 <div className={styles.itemContentWrapper}>
-                  <h5>Sign documents</h5>
+                  <h5>Company Type</h5>
+                  <p>
+                    Choose your business entity. Unsure? We’ll help you choose.
+                  </p>
                 </div>
               </div>
-            )}
-          </div>
-        </div>
-
-        <div className={styles.rightContet}>
-          <div className={styles.tableDropdownWrapper}>
-            {activeTabNumber == 1 && (
-              <div className={styles.rightHeaderWrapper}>
-                <h1> Company Structure </h1>
-                <p>
-                  {" "}
-                  Choose the entity type that&apos;s right for your business.{" "}
-                </p>
-              </div>
-            )}
-            {activeTabNumber == 2 && (
-              <div className={styles.rightHeaderWrapper}>
-                <h1> Choose your registration state </h1>
-              </div>
-            )}
-
-            {activeTabNumber == 3 && (
-              <div className={styles.rightHeaderWrapper}>
-                <h1>Review and Pay </h1>
-                <p>
-                  {" "}
-                  You’re almost done. 🎉 <br />
-                  Please review your information and proceed to payment.
-                </p>
-              </div>
-            )}
-            {isAuth && (
-              <>
-                {activeTabNumber == 4 && (
-                  <div className={styles.rightHeaderWrapper}>
-                    <h1>Create an account </h1>
-                    <p>
-                      {" "}
-                      Already have an account? <a>sign in</a>
-                    </p>
+              <div
+                className={styles.tabListItem}
+                onClick={() => setActiveTabNumber(2)}
+              >
+                <div
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 1 ? styles.selectedTab : ""
+                  }`}
+                >
+                  <div className={styles.Number}>
+                    <span>2</span>
                   </div>
-                )}
-              </>
-            )}
-
-            {activeTabNumber == 1 && (
-              <div className={styles.accordionStyles}>
-                <CompanyType
-                  companyType={companyType}
-                  setCompanyType={setCompanyType}
-                />
+                </div>
+                <div className={styles.itemContentWrapper}>
+                  <h5>Registration State</h5>
+                </div>
               </div>
-            )}
-            {activeTabNumber == 2 && (
-              <div className={styles.accordionStyles}>
-                <RegistrationState
-                  setCompanyLocation={setCompanyLocation}
-                  companyLocation={companyLocation}
-                />
-              </div>
-            )}
-            {activeTabNumber == 3 && (
-              <div className={styles.accordionStyles}>
-                <ReviewandPay
-                  companyType={companyType}
-                  companyLocation={companyLocation}
-                  setActiveTabNumber={setActiveTabNumber}
-                  onContinue={handleContinue}
-                />
-              </div>
-            )}
-            {isAuth && (
-              <>
-                {activeTabNumber == 4 && (
-                  <div className={styles.accordionStyles}>
-                    <CreateAccount />
+              <div
+                className={styles.tabListItem}
+                onClick={() => setActiveTabNumber(3)}
+              >
+                <div
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 2 ? styles.selectedTab : ""
+                  }`}
+                >
+                  <div className={styles.Number}>
+                    <span>3</span>
                   </div>
-                )}
-              </>
-            )}
+                </div>
+                <div className={styles.itemContentWrapper}>
+                  <h5>Review and pay</h5>
+                </div>
+              </div>
+              {isAuth && (
+                <div
+                  className={styles.tabListItem}
+                  onClick={() => setActiveTabNumber(4)}
+                >
+                  <div
+                    className={`${styles.numberWrapper} ${
+                      activeTabNumber > 3 ? styles.selectedTab : ""
+                    }`}
+                  >
+                    <div className={styles.Number}>
+                      <span>4</span>
+                    </div>
+                  </div>
+                  <div className={styles.itemContentWrapper}>
+                    <h5>Sign documents</h5>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
+          <div className={styles.rightContet}>
+            <div className={styles.tableDropdownWrapper}>
+              {activeTabNumber == 1 && (
+                <div className={styles.rightHeaderWrapper}>
+                  <h1> Company Structure </h1>
+                  <p>
+                    {" "}
+                    Choose the entity type that&apos;s right for your business.{" "}
+                  </p>
+                </div>
+              )}
+              {activeTabNumber == 2 && (
+                <div className={styles.rightHeaderWrapper}>
+                  <h1> Choose your registration state </h1>
+                </div>
+              )}
+
+              {activeTabNumber == 3 && (
+                <div className={styles.rightHeaderWrapper}>
+                  <h1>Review and Pay </h1>
+                  <p>
+                    {" "}
+                    You’re almost done. 🎉 <br />
+                    Please review your information and proceed to payment.
+                  </p>
+                </div>
+              )}
+              {isAuth && (
+                <>
+                  {activeTabNumber == 4 && (
+                    <div className={styles.rightHeaderWrapper}>
+                      <h1>Create an account </h1>
+                      <p>
+                        {" "}
+                        Already have an account? <a>sign in</a>
+                      </p>
+                    </div>
+                  )}
+                </>
+              )}
+
+              {activeTabNumber == 1 && (
+                <div className={styles.accordionStyles}>
+                  <CompanyType
+                    companyType={companyType}
+                    setCompanyType={setCompanyType}
+                  />
+                </div>
+              )}
+              {activeTabNumber == 2 && (
+                <div className={styles.accordionStyles}>
+                  <RegistrationState
+                    setCompanyLocation={setCompanyLocation}
+                    companyLocation={companyLocation}
+                  />
+                </div>
+              )}
+              {activeTabNumber == 3 && (
+                <div className={styles.accordionStyles}>
+                  <ReviewandPay
+                    companyType={companyType}
+                    companyLocation={companyLocation}
+                    setActiveTabNumber={setActiveTabNumber}
+                    onContinue={handleContinue}
+                  />
+                </div>
+              )}
+              {isAuth && (
+                <>
+                  {activeTabNumber == 4 && (
+                    <div className={styles.accordionStyles}>
+                      <CreateAccount onCreateAccount={haddleNewAccount} />
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+
+          {currencyPopup && (
+            <CurrencyModals
+              onClose={() => setCurrencyPopup(false)}
+              open={currencyPopup}
+              title="test"
+              companyType={companyType}
+              companyLocation={companyLocation}
+            />
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

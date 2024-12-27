@@ -1,32 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./CreateAccount.module.scss";
 import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
+import { Spin } from "antd";
 
-const CreateAccount = () => {
-  // const schema = yup.object().shape({
-  //   emailOrPhone: yup
-  //     .mixed()
-  //     .test(
-  //       "emailOrPhoneNumber",
-  //       "Invalid email or phone number",
-  //       function (value) {
-  //         if (!value) {
-  //           return false;
-  //         }
+const CreateAccount = ({ onCreateAccount }) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const schema = yup.object().shape({
+    firstName: yup.string().required("First Name is required"),
+    lastName: yup.string().required("Last Name is required"),
+    email: yup.string().email("Invalid email").required("Email is required"),
+    confirmEmail: yup
+      .string()
+      .oneOf([yup.ref("email"), undefined], "Confirm Email must match Email")
+      .required("Confirm Email is required"),
+    password: yup
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+      .matches(/[0-9]/, "Password must contain at least one number")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least one special character"
+      )
+      .required("Password is required"),
+    confirmPassword: yup
+      .mixed() // Use mixed for confirmPassword as explained before
+      .oneOf([yup.ref("password")], "Confirm Password must match Password")
+      .required("Confirm Password is required"),
+    agreeTerms: yup.boolean().oneOf([true], "You must agree to the terms"),
+  });
 
-  //         const isEmail = yup.string().email().isValidSync(value);
-  //         const isPhoneNumber = yup
-  //           .string()
-  //           .matches(/^[0-9]{10}$/)
-  //           .isValidSync(value);
-
-  //         return isEmail || isPhoneNumber;
-  //       }
-  //     )
-  //     .required("Email or phone number is required"),
-  // });
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -38,29 +43,38 @@ const CreateAccount = () => {
   };
   const onSubmit = async (values: any) => {
     console.log("the valuses are", values);
-
+    setLoading(true);
     const requestValue = {
       firstName: values?.firstName,
       lastName: values?.lastName,
       email: values?.email,
-      password: values?.email,
-      type: values?.password,
+      password: values?.password,
+      type: "customer",
     };
-    await axios
-      .post(`/api/user`, requestValue)
-      .then((res: any) => {
-        console.log("the response", res);
-      })
-      .catch((err: any) => {
-        console.log("the error is ", err);
-      });
+    try {
+      await axios
+        .post(`/api/users`, requestValue)
+        .then((res: any) => {
+          setLoading(false);
+          console.log("the response", res);
+          onCreateAccount();
+        })
+        .catch((err: any) => {
+          setLoading(false);
+          console.log("the error is ", err);
+        });
+    } catch (error) {
+      console.log("the error", error);
+      setLoading(false);
+    }
   };
+
   return (
     <div className={styles.fbonboardingcardwidgetcontent}>
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
-        // validationSchema={schema}
+        validationSchema={schema}
       >
         {({
           handleSubmit,
@@ -80,11 +94,12 @@ const CreateAccount = () => {
                   type="text"
                   placeholder="Type your first name here"
                   name="firstName"
+                  value={values.firstName}
                   onChange={handleChange}
                 />
-                {errors.emailOrPhone && touched.emailOrPhone ? (
-                  <p className={styles.errorWarning}>{errors.emailOrPhone}</p>
-                ) : null}
+                {errors.firstName && touched.firstName && (
+                  <p className={styles.errorWarning}>{errors.firstName}</p>
+                )}
               </div>
 
               <div className={styles.fbformitem}>
@@ -95,8 +110,12 @@ const CreateAccount = () => {
                   type="text"
                   placeholder="Type your last name here"
                   name="lastName"
+                  value={values.lastName}
                   onChange={handleChange}
                 />
+                {errors.lastName && touched.lastName && (
+                  <p className={styles.errorWarning}>{errors.lastName}</p>
+                )}
               </div>
             </div>
 
@@ -110,8 +129,12 @@ const CreateAccount = () => {
                   type="text"
                   placeholder="john.doe@mail.com"
                   name="email"
+                  value={values.email}
                   onChange={handleChange}
                 />
+                {errors.email && touched.email && (
+                  <p className={styles.errorWarning}>{errors.email}</p>
+                )}
               </div>
               <div className={styles.fbformitem}>
                 <label className={styles.fblabel}>Confirm Email</label>
@@ -121,8 +144,12 @@ const CreateAccount = () => {
                   type="text"
                   placeholder="john.doe@mail.com"
                   name="confirmEmail"
+                  value={values.confirmEmail}
                   onChange={handleChange}
                 />
+                {errors.confirmEmail && touched.confirmEmail && (
+                  <p className={styles.errorWarning}>{errors.confirmEmail}</p>
+                )}
               </div>
             </div>
 
@@ -135,8 +162,12 @@ const CreateAccount = () => {
                   type="password"
                   placeholder="●●●●●●●●●"
                   name="password"
+                  value={values.password}
                   onChange={handleChange}
                 />
+                {errors.password && touched.password && (
+                  <p className={styles.errorWarning}>{errors.password}</p>
+                )}
               </div>
 
               <div className={styles.fbformitem}>
@@ -147,8 +178,14 @@ const CreateAccount = () => {
                   type="password"
                   placeholder="●●●●●●●●●"
                   name="confirmPassword"
+                  value={values.confirmPassword}
                   onChange={handleChange}
                 />
+                {errors.confirmPassword && touched.confirmPassword && (
+                  <p className={styles.errorWarning}>
+                    {errors.confirmPassword}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -170,10 +207,13 @@ const CreateAccount = () => {
                 </a>
                 .
               </label>
+              {errors.agreeTerms && touched.agreeTerms && (
+                <p className={styles.errorWarning}>{errors.agreeTerms}</p>
+              )}
             </div>
             <div className={styles.btnWrapper}>
-              <button>
-                <span>Continue </span>
+              <button disabled={loading}>
+                <span>{loading ? <Spin /> : "Continue"} </span>
                 <span></span>
               </button>
             </div>

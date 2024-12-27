@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import styles from "./company-registration.module.scss";
 import { Formik } from "formik";
@@ -12,10 +13,6 @@ const CompanyRegistration = () => {
       .string()
       .email("Invalid email address")
       .required("Email is required"),
-    confirmEmail: yup
-      .string()
-      .oneOf([yup.ref("email"), undefined], "Emails must match")
-      .required("Confirm email is required"),
     streetAddress: yup.string().required("Street address is required"),
     city: yup.string().required("City is required"),
     state: yup.string().required("State is required"),
@@ -31,7 +28,6 @@ const CompanyRegistration = () => {
     lastName: "",
     companyName: "",
     email: "",
-    confirmEmail: "",
     streetAddress: "",
     city: "",
     state: "",
@@ -67,92 +63,161 @@ const CompanyRegistration = () => {
                 <label className={styles.fblabel}>Owner First Name</label>
                 <input
                   className={styles.fbinput}
-                  name="firstName"
+                  id="first-name"
                   type="text"
                   placeholder="Type your first name here"
+                  name="firstName"
                   onChange={handleChange}
+                  value={values.firstName}
                 />
-                {errors.firstName && touched.firstName && (
-                  <p className={styles.errorWarning}>{errors.firstName}</p>
-                )}
               </div>
 
               <div className={styles.fbformitem}>
                 <label className={styles.fblabel}>Owner Last Name</label>
                 <input
                   className={styles.fbinput}
-                  name="lastName"
+                  id="last-name"
                   type="text"
                   placeholder="Type your last name here"
+                  name="lastName"
                   onChange={handleChange}
+                  value={values.lastName}
                 />
-                {errors.lastName && touched.lastName && (
-                  <p className={styles.errorWarning}>{errors.lastName}</p>
-                )}
               </div>
             </div>
 
             <div className={styles.doubleFlex}>
+              {" "}
               <div className={styles.fbformitem}>
                 <label className={styles.fblabel}>Company Name</label>
                 <input
                   className={styles.fbinput}
-                  name="companyName"
+                  id="email"
                   type="text"
-                  placeholder="Type your company name here"
+                  placeholder="Tesla"
+                  name="companyName"
                   onChange={handleChange}
+                  value={values.companyName}
                 />
-                {errors.companyName && touched.companyName && (
-                  <p className={styles.errorWarning}>{errors.companyName}</p>
-                )}
               </div>
-
               <div className={styles.fbformitem}>
                 <label className={styles.fblabel}>Email</label>
                 <input
                   className={styles.fbinput}
-                  name="email"
+                  id="confirm-email"
                   type="text"
                   placeholder="john.doe@mail.com"
+                  name="email"
                   onChange={handleChange}
+                  value={values.email}
                 />
-                {errors.email && touched.email && (
-                  <p className={styles.errorWarning}>{errors.email}</p>
-                )}
+              </div>
+            </div>
+            <div className={styles.doubleFlex}>
+              {" "}
+              <div className={styles.fbformitem}>
+                <label className={styles.fblabel}>Street Address</label>
+                <input
+                  className={styles.fbinput}
+                  id="email"
+                  type="text"
+                  placeholder="Address line 1"
+                  name="streetAddress"
+                  onChange={handleChange}
+                  value={values.streetAddress}
+                />
+              </div>
+              <div className={styles.fbformitem}>
+                <label className={styles.fblabel}>City / Town</label>
+                <input
+                  className={styles.fbinput}
+                  id="confirm-email"
+                  type="text"
+                  placeholder="john.doe@mail.com"
+                  name="city"
+                  onChange={handleChange}
+                  value={values.city}
+                />
+              </div>
+            </div>
+            <div className={styles.doubleFlex}>
+              {" "}
+              <div className={styles.fbformitem}>
+                <label className={styles.fblabel}>
+                  State / Province / Region
+                </label>
+                <input
+                  className={styles.fbinput}
+                  id="email"
+                  type="text"
+                  placeholder="john.doe@mail.com"
+                  name="state"
+                  onChange={handleChange}
+                  value={values.state}
+                />
+              </div>
+              <div className={styles.fbformitem}>
+                <label className={styles.fblabel}>Postal / ZIP Code</label>
+                <input
+                  className={styles.fbinput}
+                  id="confirm-email"
+                  type="text"
+                  placeholder="john.doe@mail.com"
+                  name="zipCode"
+                  onChange={handleChange}
+                  value={values.zipCode}
+                />
+              </div>
+            </div>
+            <div className={styles.doubleFlex}>
+              {" "}
+              <div className={styles.fbformitem}>
+                <label className={styles.fblabel}>Country</label>
+                <select
+                  className={styles.fbinput}
+                  id="email"
+                  name="country"
+                  onChange={handleChange}
+                  value={values.country}
+                >
+                  <option value="1">country</option>
+                  <option value="1">country</option>
+                  <option value="1">country</option>
+                  <option value="1">country</option>
+                </select>
+              </div>
+              <div className={styles.fbformitem}>
+                <label className={styles.fblabel}>Proof of Address</label>
+                <div className={styles.fileUpload}>
+                  <input
+                    className={styles.fbinput}
+                    id="confirm-email"
+                    type="file"
+                  />
+                  <div className=""></div>
+                </div>
               </div>
             </div>
 
-            {/* Additional Fields with Validation */}
-
             <div className={styles.fbformitem}>
               <label className={styles.fbcheckboxlabel}>
-                <input
-                  className={styles.fbcheckbox}
-                  type="checkbox"
-                  name="agreeTerms"
-                  onChange={handleChange}
-                />
+                <input className={styles.fbcheckbox} type="checkbox" />
                 <span> I read and agree with the </span>
                 <a className={styles.fblink} href="" target="_blank">
                   Terms of Use
-                </a>
+                </a>{" "}
                 <span> and </span>
                 <a className={styles.fblink} href="" target="_blank">
                   Privacy Policy
                 </a>
                 .
               </label>
-              {errors.agreeTerms && touched.agreeTerms && (
-                <p className={styles.errorWarning}>{errors.agreeTerms}</p>
-              )}
             </div>
 
             <div className={styles.signUpOptions}>
               <ul>
                 <li>
-                  <button className={styles.signInBtn} type="submit">
-                    Register
-                  </button>
+                  <button className={styles.signInBtn}>Register</button>
                 </li>
               </ul>
             </div>

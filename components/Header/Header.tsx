@@ -22,7 +22,7 @@ const Header = () => {
         <div className={styles.container}>
           {/* Logo Section */}
           <div className={styles.logo}>
-            <Link href="/">firstbase</Link>
+            <Link href="/">Formllc</Link>
           </div>
 
           {/* Desktop Navigation */}

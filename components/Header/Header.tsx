@@ -3,11 +3,17 @@ import React, { useState } from "react";
 import styles from "./header.module.scss";
 import { Drawer } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
+  };
+
+  const handleRedirect = (url) => {
+    router.push(url);
   };
 
   return (
@@ -16,7 +22,7 @@ const Header = () => {
         <div className={styles.container}>
           {/* Logo Section */}
           <div className={styles.logo}>
-            <Link href="/">firstbase</Link>
+            <Link href="/">Formllc</Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -42,10 +48,10 @@ const Header = () => {
               </li>
             </ul>
             <div className={styles.authButtons}>
-              <Link href="#signin" className={styles.signIn}>
+              <Link href="/api/auth/signin" className={styles.signIn}>
                 Sign in
               </Link>
-              <Link href="#start" className={styles.startBusiness}>
+              <Link href="/start-buisness" className={styles.startBusiness}>
                 Start my business
               </Link>
             </div>
@@ -89,12 +95,12 @@ const Header = () => {
             </li>
           </ul>
           <div className={styles.authButtons}>
-            <a href="#signin" className={styles.signIn}>
+            <Link href="/api/auth/signin" className={styles.signIn}>
               Sign in
-            </a>
-            <a href="#start" className={styles.startBusiness}>
+            </Link>
+            <Link href="/start-buisness" className={styles.startBusiness}>
               Start my business
-            </a>
+            </Link>
           </div>
         </nav>
       </Drawer>

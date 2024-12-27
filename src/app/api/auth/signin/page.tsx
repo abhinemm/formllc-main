@@ -28,7 +28,7 @@ const SignIn = () => {
         <div className={styles.signinWithGoogleWrapper}>
           {" "}
           <div className={styles.authHeaderItem}>
-            <h2>Welcome to firstbase</h2>
+            <h2>Welcome to Firstbase</h2>
             <p title="Don’t have an account?">
               Don’t have an account?
               <a

@@ -75,7 +75,7 @@ a {
 
 .siteLayout {
   display: grid;
-  grid-template-rows: 1fr  auto;
+  grid-template-rows: 1fr auto;
   min-height: 100vh;
   position: relative;
 
@@ -85,8 +85,26 @@ a {
     width: 100%;
     z-index: 10000;
   }
-  .childrenWrapper{
+  .childrenWrapper {
     flex-grow: 1;
     padding-top: 70px;
+  }
+}
+
+.currencyModal {
+  .ant-modal-content {
+    background: #090a15 !important;
+  }
+  .ant-modal-close {
+    color: var(--white-color) !important;
+  }
+  .ant-select-selector {
+    border: none !important;
+    background: #181429 !important;
+    color: white !important;
+    padding: 10px !important;
+  }
+  .ant-select-single {
+    height: auto !important;
   }
 }

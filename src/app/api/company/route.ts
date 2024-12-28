@@ -17,7 +17,6 @@ export async function GET(req: Request) {
       { status: 401 }
     );
   }
-  console.log(data.user);
 
   try {
     const adminUser: any = await UserService.findOne({ type: "admin" });
@@ -31,6 +30,13 @@ export async function GET(req: Request) {
     const companies = await Company.findAll({
       where: where,
     });
+    if (id && companies?.length) {
+      try {
+        companies[0].user = (await UserService.findOne({
+          id: companies[0].userId,
+        })) as any;
+      } catch {}
+    }
     return NextResponse.json(companies);
   } catch (error) {
     console.log(error);

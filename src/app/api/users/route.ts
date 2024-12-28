@@ -2,9 +2,15 @@ import { NextResponse } from "next/server";
 import User, { UserAttributes } from "../../../models/user";
 import { createPassword } from "@/utils/helper";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
+  const where: any = {};
   try {
-    const users = await User.findAll();
+    if (id) {
+      where.id = id;
+    }
+    const users = await User.findAll({ where });
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json(

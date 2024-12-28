@@ -6,7 +6,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { Op } from "sequelize";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
+
   const data = (await getServerSession(authOptions)) as any;
   if (!data || !data.user) {
     return NextResponse.json(
@@ -21,6 +24,9 @@ export async function GET() {
     const where: any = {};
     if (adminUser?.id !== data.user.id) {
       where.userId = data.user.id;
+    }
+    if (id) {
+      where.id = id;
     }
     const companies = await Company.findAll({
       where: where,

@@ -8,6 +8,7 @@ import ReviewandPay from "./components/ReviewandPay";
 import CreateAccount from "../CreateAccount/CreateAccount";
 import { useSession } from "next-auth/react";
 import CurrencyModals from "../Modals/CurrencyModals";
+import SignIn from "../CreateAccount/SignIn";
 
 const StartBusinessTabs: React.FC = () => {
   const [activeTabNumber, setActiveTabNumber] = useState<number>(1);
@@ -15,6 +16,8 @@ const StartBusinessTabs: React.FC = () => {
   const [companyLocation, setCompanyLocation] = useState<any>("Wyoming");
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [currencyPopup, setCurrencyPopup] = useState<any>(false);
+  // signIn => for sihn in the page and signUp for sign up
+  const [viewPage, setViewPage] = useState<string>("signUp");
 
   const session = useSession();
 
@@ -31,6 +34,10 @@ const StartBusinessTabs: React.FC = () => {
     setIsAuth(false);
     setActiveTabNumber(3);
     setCurrencyPopup(true);
+  };
+
+  const handleSignIn = (event: string) => {
+    setViewPage(event);
   };
 
   return (
@@ -151,11 +158,24 @@ const StartBusinessTabs: React.FC = () => {
                 <>
                   {activeTabNumber == 4 && (
                     <div className={styles.rightHeaderWrapper}>
-                      <h1>Create an account </h1>
-                      <p>
-                        {" "}
-                        Already have an account? <a>sign in</a>
-                      </p>
+                      <h1>
+                        {viewPage === "signUp"
+                          ? "Create an account"
+                          : "Sign in with account"}{" "}
+                      </h1>
+                      {viewPage === "signUp" ? (
+                        <p>
+                          {" "}
+                          Already have an account?{" "}
+                          <a onClick={() => setViewPage("signIn")}>sign in</a>
+                        </p>
+                      ) : (
+                        <p>
+                          {" "}
+                          Don't have an account?{" "}
+                          <a onClick={() => setViewPage("signUp")}>sign up</a>
+                        </p>
+                      )}
                     </div>
                   )}
                 </>
@@ -191,7 +211,17 @@ const StartBusinessTabs: React.FC = () => {
                 <>
                   {activeTabNumber == 4 && (
                     <div className={styles.accordionStyles}>
-                      <CreateAccount onCreateAccount={haddleNewAccount} />
+                      {viewPage === "signUp" ? (
+                        <CreateAccount
+                          onCreateAccount={haddleNewAccount}
+                          handleSignIn={handleSignIn}
+                        />
+                      ) : (
+                        <SignIn
+                          onCreateAccount={haddleNewAccount}
+                          handleSignIn={handleSignIn}
+                        />
+                      )}
                     </div>
                   )}
                 </>

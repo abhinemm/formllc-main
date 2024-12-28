@@ -65,84 +65,57 @@ const SignIn = () => {
         </div>
         <div className={styles.formWrapper}>
           {" "}
-          <form
-            autoComplete="off"
-           
-          
-          >
+          <form autoComplete="off">
             <div className={styles.formContent}>
               {/* Email Input */}
               <div className={`${styles.authFormItem}`}>
-                
-                  <label
-                    htmlFor="input60"
-                   
-                  >
-                    <span>Email</span>
-                  </label>
-                  
-                      <input
-                        id="input60"
-                        type="email"
-                        name="email"
-                        placeholder="john.doe@mail.com"
-                        autoComplete="off"
-                      />
-                   
-                  
-                
+                <label htmlFor="input60">
+                  <span>Email</span>
+                </label>
+
+                <input
+                  id="input60"
+                  type="email"
+                  name="email"
+                  placeholder="john.doe@mail.com"
+                  autoComplete="off"
+                />
               </div>
 
               {/* Password Input */}
               <div className={`${styles.authFormItem} `}>
-              
-                  <label
-                    htmlFor="input65"
-                    className={styles.baseTextFieldLabel}
-                  >
-                    <span>Password</span>
-                  </label>
-                 
-                      <input
-                        id="input65"
-                        type="password"
-                        name="password"
-                        placeholder="●●●●●●●●●"
-                        autoComplete="off"
-                      />
-                  
+                <label htmlFor="input65" className={styles.baseTextFieldLabel}>
+                  <span>Password</span>
+                </label>
+
+                <input
+                  id="input65"
+                  type="password"
+                  name="password"
+                  placeholder="●●●●●●●●●"
+                  autoComplete="off"
+                />
               </div>
 
               {/* Remember Me & Forgot Password */}
               <div
                 className={`${styles.authFormItem} ${styles.rememberWrapper} `}
               >
-                
-                  <label className={styles.baseCheckboxLabel}>
-                    <input type="checkbox" id="checkbox69" name="remember" />
-                    
-                    <span className={styles.baseCheckboxContent}>
-                      Remember me
-                    </span>
-                  </label>
-                
-                <a
-                >
-                  <p
-                    
-                    title="Forgot password"
-                  >
-                    Forgot password
-                  </p>
+                <label className={styles.baseCheckboxLabel}>
+                  <input type="checkbox" id="checkbox69" name="remember" />
+
+                  <span className={styles.baseCheckboxContent}>
+                    Remember me
+                  </span>
+                </label>
+
+                <a>
+                  <p title="Forgot password">Forgot password</p>
                 </a>
               </div>
 
               <div className={styles.formActions}>
-                <button
-                  type="button"
-                >
-                 Sign In
-                </button>
+                <button type="button">Sign In</button>
               </div>
             </div>
           </form>

@@ -108,3 +108,8 @@ a {
     height: auto !important;
   }
 }
+
+.ant-notification{
+  z-index: 10001 !important;
+  background-color: var(--primary-color) !important;
+}

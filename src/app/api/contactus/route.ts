@@ -2,9 +2,15 @@ import { NextResponse } from "next/server";
 import { ContactUsAttributes } from "@/models/contactus";
 import ContactUsService from "@/services/contactus.model.service";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
   try {
-    const contactusList = await ContactUsService.findAll({});
+    const where: any = {};
+    if (id) {
+      where.id = id;
+    }
+    const contactusList = await ContactUsService.findAll(where);
     return NextResponse.json(contactusList);
   } catch (error) {
     console.log(error);

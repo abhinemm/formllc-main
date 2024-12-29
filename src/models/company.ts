@@ -88,6 +88,7 @@ Company.init(
     companyEmail: {
       type: DataTypes.STRING,
       allowNull: true,
+      unique:true,
     },
     streetAddress: {
       type: DataTypes.TEXT,

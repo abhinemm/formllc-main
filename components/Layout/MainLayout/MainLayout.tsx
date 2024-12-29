@@ -14,9 +14,11 @@ const MainLayout = ({ children }: ChildProps) => {
       <div className="headerDiv">
         {!pathName?.includes("/admin") && <Header />}
       </div>
-      <div className="childrenWrapper">{children}</div>
-      <div className="footerWrapper">
-        {!pathName?.includes("/admin") && <Foooter />}
+      <div className="childrenWrapper">
+        {children}
+        <div className="footerWrapper">
+          {!pathName?.includes("/admin") && <Foooter />}
+        </div>
       </div>
     </section>
   );

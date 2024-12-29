@@ -75,21 +75,26 @@ a {
 
 .siteLayout {
   display: grid;
-  grid-template-rows: 1fr auto;
-  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
   position: relative;
-
-  .headerDiv {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10000;
-  }
-  .childrenWrapper {
-    flex-grow: 1;
-    padding-top: 70px;
-  }
+  overflow: hidden;
 }
+
+
+.childrenWrapper {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.childrenWrapper::-webkit-scrollbar {
+  display: none; 
+  margin: 0;
+  padding: 0;/* Chrome, Safari, Edge: Hide scrollbar */
+  
+}
+
+
 
 .currencyModal {
   .ant-modal-content {

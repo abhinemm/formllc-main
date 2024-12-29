@@ -6,7 +6,10 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { Op } from "sequelize";
 
-export async function GET() {
+export async function GET(req: Request) {
+  const url = new URL(req.url);
+  const id = url.searchParams.get("id");
+
   const data = (await getServerSession(authOptions)) as any;
   if (!data || !data.user) {
     return NextResponse.json(
@@ -14,26 +17,30 @@ export async function GET() {
       { status: 401 }
     );
   }
-  console.log(data.user);
-  
+
   try {
     const adminUser: any = await UserService.findOne({ type: "admin" });
+    const where: any = {};
+    if (adminUser?.id !== data.user.id) {
+      where.userId = data.user.id;
+    }
+    if (id) {
+      where.id = id;
+    }
     const companies = await Company.findAll({
-      where: {
-        [Op.or]: [
-          {
-            id: data.user.id,
-          },
-          adminUser&&{
-            id: adminUser?.id,
-          },
-        ],
-      },
+      where: where,
     });
+    if (id && companies?.length) {
+      try {
+        companies[0].user = (await UserService.findOne({
+          id: companies[0].userId,
+        })) as any;
+      } catch {}
+    }
     return NextResponse.json(companies);
   } catch (error) {
     console.log(error);
-    
+
     return NextResponse.json(
       { error: "Failed to fetch users" },
       { status: 500 }
@@ -54,6 +61,15 @@ export async function POST(req: Request) {
     registrationState,
     companyType,
     document,
+    ownerFname,
+    ownerLname,
+    companyName,
+    companyEmail,
+    streetAddress,
+    city,
+    state,
+    zipCode,
+    country,
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -66,18 +82,27 @@ export async function POST(req: Request) {
     userExist.currency = currency;
     await userExist.save();
 
-    const companyExisted = await CompanyService.findOne({
-      userId: userExist.id,
-    });
-    if (companyExisted) {
-      return NextResponse.json({ message: "Company exists!" }, { status: 400 });
-    }
+    // const companyExisted = await CompanyService.findOne({
+    //   userId: userExist.id,
+    // });
+    // if (companyExisted) {
+    //   return NextResponse.json({ message: "Company exists!" }, { status: 400 });
+    // }
 
     const newCompany = await Company.create({
       registrationState,
       type: companyType,
       userId: userExist.id,
       document,
+      ownerFname,
+      ownerLname,
+      companyName,
+      companyEmail,
+      streetAddress,
+      city,
+      state,
+      zipCode,
+      country,
     });
     return NextResponse.json(newCompany, { status: 201 });
   } catch (error) {
@@ -120,7 +145,7 @@ export async function PATCH(req: Request) {
       { status: 400 }
     );
   }
-  if (companyData?.userId !== data.user.id || data.user.id !== adminUser.id) {
+  if (companyData?.userId !== data.user.id || data.user.id !== adminUser?.id) {
     return NextResponse.json(
       {
         error: "User have no permission to do this operation!",
@@ -169,7 +194,7 @@ export async function DELETE(req: Request) {
       { status: 400 }
     );
   }
-  if (companyData?.userId !== data.user.id || data.user.id !== adminUser.id) {
+  if (companyData?.userId !== data.user.id || data.user.id !== adminUser?.id) {
     return NextResponse.json(
       {
         error: "User have no permission to do this operation!",

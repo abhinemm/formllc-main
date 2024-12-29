@@ -239,8 +239,8 @@ const HomePage = () => {
               <p className={styles.description}>
                 From anywhere in the world, our complete platform simplifies the
                 USA company registration, allowing you to establish your
-                business as an LLC or C-Corp in globally recognized states like
-                Delaware or Wyoming.
+                business as an LLC in globally recognized states like
+                Montana or Wyoming.
               </p>
               <div className={styles.ctaButtons}>
                 <a

@@ -8,7 +8,7 @@ import { Op } from "sequelize";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const id = url.searchParams.get("id");
+  const searchParams = url.searchParams;
 
   const data = (await getServerSession(authOptions)) as any;
   if (!data || !data.user) {
@@ -21,22 +21,29 @@ export async function GET(req: Request) {
   try {
     const adminUser: any = await UserService.findOne({ type: "admin" });
     const where: any = {};
+
+    // Add default where condition for userId if not admin
     if (adminUser?.id !== data.user.id) {
       where.userId = data.user.id;
     }
-    if (id) {
-      where.id = id;
-    }
+
+    // Dynamically add all query params to the where condition
+    searchParams.forEach((value, key) => {
+      where[key] = value;
+    });
+
     const companies = await Company.findAll({
       where: where,
     });
-    if (id && companies?.length) {
+
+    if (where.id && companies?.length) {
       try {
         companies[0].user = (await UserService.findOne({
           id: companies[0].userId,
         })) as any;
       } catch {}
     }
+
     return NextResponse.json(companies);
   } catch (error) {
     console.log(error);
@@ -47,6 +54,7 @@ export async function GET(req: Request) {
     );
   }
 }
+
 
 export async function POST(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
@@ -81,14 +89,7 @@ export async function POST(req: Request) {
     }
     userExist.currency = currency;
     await userExist.save();
-
-    // const companyExisted = await CompanyService.findOne({
-    //   userId: userExist.id,
-    // });
-    // if (companyExisted) {
-    //   return NextResponse.json({ message: "Company exists!" }, { status: 400 });
-    // }
-
+    
     const newCompany = await Company.create({
       registrationState,
       type: companyType,

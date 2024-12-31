@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
 import "./globals.scss";
 import InnerLayout from "../../components/Layout/InnerLayout";
 import syncDatabase from "../lib/sync";
@@ -13,6 +13,11 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+const notoSans = Noto_Sans({
+  subsets: ['latin'], // You can specify subsets like 'latin', 'cyrillic', etc.
+  weight: ['400','500','600', '700'], // Specify font weights if needed
+  variable: '--font-noto-sans', // Add a CSS variable for easy use
 });
 
 export const metadata: Metadata = {
@@ -28,7 +33,7 @@ export default async function RootLayout({
   await syncDatabase();
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className={`${geistSans.variable} ${geistMono.variable}  ${notoSans.variable}`}>
         <AuthProvider>
           <InnerLayout>{children}</InnerLayout>
         </AuthProvider>

@@ -178,7 +178,7 @@ $secondary-color: #622774;
       gap: 2rem;
 
       .step {
-        background-color: #eef3fc;
+        background-color: #eef3fc14;
         border-radius: 10px;
         padding: 1.5rem;
         text-align: center;
@@ -209,10 +209,10 @@ $secondary-color: #622774;
         .stepNumber {
           font-weight: bold;
           margin-bottom: 0.5rem;
-          background: linear-gradient(45deg, #ff0008, #d54bff);
-          -webkit-background-clip: text; /* Apply gradient to text */
-          -webkit-text-fill-color: transparent; /* Make text color transparent */
-          font-size: 0.9rem; /* Adjust font size */
+          background:linear-gradient(84deg,#22a3ff,#ff90c9 25%,#4d54ff);
+          -webkit-background-clip: text; 
+          -webkit-text-fill-color: transparent;
+          font-size: 0.9rem; 
           text-transform: uppercase;
           text-align: center;
         }
@@ -220,7 +220,7 @@ $secondary-color: #622774;
         .stepTitle {
           font-size: 1.2rem;
           font-weight: bold;
-          color: #1c1e21;
+          color: #d1d2e8;
           margin-bottom: 0.5rem;
         }
 
@@ -273,13 +273,25 @@ $secondary-color: #622774;
     gap: 1rem;
 
     .feature {
-      background-color: #eef3fc;
+      background-color: #eef3fc14;
       border-radius: 5px;
       padding: 1rem 1.5rem;
       font-size: 0.9rem;
       font-weight: 500;
-      color: #1c1e21;
+      background:linear-gradient(84deg,#22a3ff,#ff90c9 25%,#4d54ff);
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+
+      overflow: hidden;
+      &::before{
+        content: '';
+        position: absolute;
+        inset: 0;
+      background-color: #eef3fc14;
+z-index: 0;
+      }
     }
   }
 }

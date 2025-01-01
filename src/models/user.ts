@@ -13,7 +13,7 @@ export interface UserAttributes {
   type?: string;
   currency?: string;
   gid?: string;
-
+  profilePic?: string;
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
@@ -31,6 +31,7 @@ class User
   public type?: string;
   public currency?: string;
   public gid?: string;
+  public profilePic?: string;
 
   public company?: Company;
 }
@@ -77,6 +78,11 @@ User.init(
       unique: true,
     },
     gid: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      unique: true,
+    },
+    profilePic: {
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,

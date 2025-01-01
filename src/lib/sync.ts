@@ -3,6 +3,8 @@ import sequelize from "./sequelize";
 import User from "../models/user";
 import Company from "../models/company";
 import ContactUs from "@/models/contactus";
+import Steps from "@/models/steps";
+import StepsTaken from "@/models/stepsTaken";
 
 const syncDatabase = async () => {
   try {
@@ -13,6 +15,8 @@ const syncDatabase = async () => {
     Company.belongsTo(User, { foreignKey: "userId", as: "userData" });
     User.hasOne(Company, { foreignKey: "userId", as: "companyData" });
     await ContactUs.sync();
+    await Steps.sync();
+    await StepsTaken.sync();
     // Sync all models
     await sequelize.sync({ alter: true, }); // use { force: true } to drop and recreate tables
     console.log("All models were synchronized successfully.");

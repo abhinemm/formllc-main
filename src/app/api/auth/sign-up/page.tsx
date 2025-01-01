@@ -6,10 +6,16 @@ const page = () => {
   const haddleNewAccount = () => {};
   const handleSignIn = () => {};
   return (
-    <CreateAccount
-      onCreateAccount={haddleNewAccount}
-      handleSignIn={handleSignIn}
-    />
+    <div className="sign-up-wrapper">
+      {" "}
+      <div className={'authHeaderItem'}>
+        <h2>Welcome to Firstbase</h2>
+      </div>
+      <CreateAccount
+        onCreateAccount={haddleNewAccount}
+        handleSignIn={handleSignIn}
+      />
+    </div>
   );
 };
 

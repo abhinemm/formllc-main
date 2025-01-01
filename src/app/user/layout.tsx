@@ -41,18 +41,18 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         collapsed={collapsed}
         onCollapse={toggle}
         breakpoint="lg"
-        collapsedWidth="80"
+        collapsedWidth="100"
         style={{
-          background: "#0e1041",
+          background: "#161618",
         }}
       >
         <div
           style={{
-            height: 64,
+           
             margin: 16,
             color: "#fff",
-            fontSize: "20px",
-            textAlign: "center",
+            fontSize: "18px",
+            textAlign: "left",
             lineHeight: "32px",
           }}
         >
@@ -72,12 +72,12 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
               label: "Dashboard",
             },
             {
-              key: "/admin/buisness-request",
+              key: "/user/1",
               icon: <VideoCameraOutlined />,
               label: "Orders",
             },
             {
-              key: "/admin/products",
+              key: "/user/2",
               icon: <UploadOutlined />,
               label: "Products",
             },
@@ -90,9 +90,8 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         <UserHeader />
         <Content
           style={{
-            margin: "16px",
-            padding: 24,
-            background: "#fff",
+            padding: ' 30px 20px 20px 20px',
+            background: "#161618",
           }}
         >
           {children}

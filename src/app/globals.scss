@@ -21,7 +21,7 @@ body {
   background-color: var(--body-color) !important;
 
   * {
-    font-family:var(--font-noto-sans) ;
+    font-family: var(--font-noto-sans);
   }
 }
 
@@ -79,20 +79,16 @@ a {
   overflow: hidden;
 }
 
-
 .childrenWrapper {
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 .childrenWrapper::-webkit-scrollbar {
-  display: none; 
+  display: none;
   margin: 0;
-  padding: 0;/* Chrome, Safari, Edge: Hide scrollbar */
-  
+  padding: 0; /* Chrome, Safari, Edge: Hide scrollbar */
 }
-
-
 
 .currencyModal {
   .ant-modal-content {
@@ -132,4 +128,47 @@ a {
 }
 .ant-layout-content {
   background: var(--body-color) !important;
+
+  overflow: auto;
+  max-height: 93vh;
+
+  scrollbar-width: "none";
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.ant-menu-dark {
+  background-color: #161618 !important;
+}
+
+.ant-layout-sider-children {
+  border-right: 1px solid #272729;
+}
+
+.ant-menu-item {
+  border-radius: 5px !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #ffffff08 !important;
+}
+.ant-menu-title-content {
+  font-weight: 500;
+}
+.ant-layout-sider-trigger {
+  background-color: #272729 !important;
+}
+.ant-menu-root {
+  &:not(:has(.ant-menu-item-selected)) {
+    li {
+      &:first-child {
+        background-color: #ffffff08 !important;
+      }
+    }
+  }
+}
+.ant-layout-content {
+  background-color: #161618 !important;
 }

@@ -1,11 +1,12 @@
 .headerStyle {
   padding: 0;
-  background: #0e1041;
+  background: #161618;
   display: flex;
   align-items: center;
   justify-content: end;
   padding-inline: 15px;
   gap: 40px;
+  border-bottom: 1px solid #272729 ;
 }
 .profileName {
   color: var(--white-color) !important;

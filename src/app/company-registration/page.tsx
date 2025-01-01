@@ -1,27 +1,40 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import styles from "./company-registration.module.scss";
 import { Formik } from "formik";
-import * as yup from "yup";
+
+import { notification, Select, Spin } from "antd";
+import { ALLCOUNTRIES } from "@/constants/constants";
+import axios from "axios";
+import { NotificationPlacement } from "antd/es/notification/interface";
+import { useRouter, useSearchParams } from "next/navigation";
+import Loader from "../../../components/Loader";
+import { registerSchema } from "@/helpers/validationSchema";
+const { Option } = Select;
+
+type NotificationType = "success" | "info" | "warning" | "error";
+
+type NotificationMessage = {
+  type: NotificationType;
+  message: string;
+  placement: NotificationPlacement;
+};
 
 const CompanyRegistration = () => {
-  const validationSchema = yup.object().shape({
-    firstName: yup.string().required("First name is required"),
-    lastName: yup.string().required("Last name is required"),
-    companyName: yup.string().required("Company name is required"),
-    email: yup
-      .string()
-      .email("Invalid email address")
-      .required("Email is required"),
-    streetAddress: yup.string().required("Street address is required"),
-    city: yup.string().required("City is required"),
-    state: yup.string().required("State is required"),
-    zipCode: yup.string().required("ZIP code is required"),
-    country: yup.string().required("Country is required"),
-    agreeTerms: yup
-      .boolean()
-      .oneOf([true], "You must accept the terms and conditions"),
-  });
+  const [file, setFile] = useState<File | null>(null);
+  const router = useRouter();
+  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
+  const [companyDetails, setCompanyDetails] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (data: NotificationMessage) => {
+    api[data.type]({
+      message: data.message,
+      placement: data?.placement,
+    });
+  };
 
   const initialValues = {
     firstName: "",
@@ -33,198 +46,391 @@ const CompanyRegistration = () => {
     state: "",
     zipCode: "",
     country: "",
-    proofOfAddress: null,
+    proofOfAddress: "",
     agreeTerms: false,
   };
 
-  const onSubmit = (values) => {
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      if (id) {
+        await axios
+          .get(`/api/company?id=${id}`)
+          .then((res: any) => {
+            setLoading(false);
+            if (res?.data?.length) {
+              setCompanyDetails(res?.data[0]);
+            } else {
+              router.push("/");
+            }
+            console.log("the response", res);
+          })
+          .catch((err: any) => {
+            setLoading(false);
+            router.push("/");
+            console.log("the error is ", err);
+          });
+      } else {
+        router.push("/");
+      }
+    })();
+  }, [id]);
+
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: any
+  ) => {
+    const selectedFile = event.target.files?.[0];
+    console.log("selectedFileselectedFile", selectedFile);
+    if (selectedFile) {
+      setFieldValue("proofOfAddress", selectedFile?.name);
+      const maxSizeInBytes = 1 * 1024 * 1024; // 10 MB
+      if (selectedFile.size > maxSizeInBytes) {
+        openNotification({
+          type: "warning",
+          message: "File size exceeds 10 MB. Please select a smaller file.",
+          placement: "topRight",
+        });
+
+        setFile(null);
+      } else {
+        setFile(selectedFile);
+      }
+    } else {
+      setFieldValue("proofOfAddress", "");
+    }
+  };
+
+  const handleFileUpload = async () => {
+    if (!file) {
+      openNotification({
+        type: "error",
+        message: "No file selected.",
+        placement: "topRight",
+      });
+
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await axios.post(
+        "https://utility.formllc.io/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("File uploaded successfully:", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      openNotification({
+        type: "error",
+        message: "Error uploading file. Please try again.",
+        placement: "topRight",
+      });
+    }
+  };
+
+  const onSubmit = async (values: any) => {
     console.log("Form submitted with values:", values);
+    setUpdateLoading(true);
+    const file = await handleFileUpload();
+    const data = {
+      document: file?.url,
+      ownerFname: values?.firstName,
+      ownerLname: values?.lastName,
+      companyName: values?.companyName,
+      companyEmail: values?.email,
+      streetAddress: values?.streetAddress,
+      city: values?.city,
+      state: values?.state,
+      zipCode: values?.zipCode,
+      country: values?.country,
+    };
+    try {
+      await axios
+        .patch(`/api/company?id=${id}`, data)
+        .then((res: any) => {
+          setUpdateLoading(false);
+          console.log("the response", res);
+          openNotification({
+            type: "success",
+            message: "Buisness registered sucessfully",
+            placement: "topRight",
+          });
+        })
+        .catch((err: any) => {
+          setUpdateLoading(false);
+          const message = err?.response?.data?.error || "Something went wrong!";
+          openNotification({
+            type: "error",
+            message: message,
+            placement: "topRight",
+          });
+          console.log("the error is ", err);
+        });
+    } catch (error) {
+      console.log("the error is ", error);
+      setUpdateLoading(false);
+    }
     // Handle form submission logic here
   };
 
   return (
-    <div className={styles.fbonboardingcardwidgetcontent}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        {({
-          handleSubmit,
-          handleChange,
-          setFieldValue,
-          values,
-          errors,
-          touched,
-        }) => (
-          <form className={styles.fbform} onSubmit={handleSubmit}>
-            <div className={styles.doubleFlex}>
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Owner First Name</label>
-                <input
-                  className={styles.fbinput}
-                  id="first-name"
-                  type="text"
-                  placeholder="Type your first name here"
-                  name="firstName"
-                  onChange={handleChange}
-                  value={values.firstName}
-                />
-              </div>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className={styles.fbonboardingcardwidgetcontent}>
+          {contextHolder}
+          <Formik
+            initialValues={initialValues}
+            validationSchema={registerSchema}
+            onSubmit={onSubmit}
+          >
+            {({
+              handleSubmit,
+              handleChange,
+              setFieldValue,
+              values,
+              errors,
+              touched,
+            }) => (
+              <form className={styles.fbform} onSubmit={handleSubmit}>
+                <div className={styles.doubleFlex}>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Owner First Name</label>
+                    <input
+                      className={styles.fbinput}
+                      id="first-name"
+                      type="text"
+                      placeholder="Type your first name here"
+                      name="firstName"
+                      onChange={handleChange}
+                      value={values.firstName}
+                    />
+                    {errors.firstName && touched.firstName && (
+                      <p className={styles.errorWarning}>{errors.firstName}</p>
+                    )}
+                  </div>
 
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Owner Last Name</label>
-                <input
-                  className={styles.fbinput}
-                  id="last-name"
-                  type="text"
-                  placeholder="Type your last name here"
-                  name="lastName"
-                  onChange={handleChange}
-                  value={values.lastName}
-                />
-              </div>
-            </div>
-
-            <div className={styles.doubleFlex}>
-              {" "}
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Company Name</label>
-                <input
-                  className={styles.fbinput}
-                  id="email"
-                  type="text"
-                  placeholder="Tesla"
-                  name="companyName"
-                  onChange={handleChange}
-                  value={values.companyName}
-                />
-              </div>
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Email</label>
-                <input
-                  className={styles.fbinput}
-                  id="confirm-email"
-                  type="text"
-                  placeholder="john.doe@mail.com"
-                  name="email"
-                  onChange={handleChange}
-                  value={values.email}
-                />
-              </div>
-            </div>
-            <div className={styles.doubleFlex}>
-              {" "}
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Street Address</label>
-                <input
-                  className={styles.fbinput}
-                  id="email"
-                  type="text"
-                  placeholder="Address line 1"
-                  name="streetAddress"
-                  onChange={handleChange}
-                  value={values.streetAddress}
-                />
-              </div>
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>City / Town</label>
-                <input
-                  className={styles.fbinput}
-                  id="confirm-email"
-                  type="text"
-                  placeholder="john.doe@mail.com"
-                  name="city"
-                  onChange={handleChange}
-                  value={values.city}
-                />
-              </div>
-            </div>
-            <div className={styles.doubleFlex}>
-              {" "}
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>
-                  State / Province / Region
-                </label>
-                <input
-                  className={styles.fbinput}
-                  id="email"
-                  type="text"
-                  placeholder="john.doe@mail.com"
-                  name="state"
-                  onChange={handleChange}
-                  value={values.state}
-                />
-              </div>
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Postal / ZIP Code</label>
-                <input
-                  className={styles.fbinput}
-                  id="confirm-email"
-                  type="text"
-                  placeholder="john.doe@mail.com"
-                  name="zipCode"
-                  onChange={handleChange}
-                  value={values.zipCode}
-                />
-              </div>
-            </div>
-            <div className={styles.doubleFlex}>
-              {" "}
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Country</label>
-                <select
-                  className={styles.fbinput}
-                  id="email"
-                  name="country"
-                  onChange={handleChange}
-                  value={values.country}
-                >
-                  <option value="1">country</option>
-                  <option value="1">country</option>
-                  <option value="1">country</option>
-                  <option value="1">country</option>
-                </select>
-              </div>
-              <div className={styles.fbformitem}>
-                <label className={styles.fblabel}>Proof of Address</label>
-                <div className={styles.fileUpload}>
-                  <input
-                    className={styles.fbinput}
-                    id="confirm-email"
-                    type="file"
-                  />
-                  <div className=""></div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Owner Last Name</label>
+                    <input
+                      className={styles.fbinput}
+                      id="last-name"
+                      type="text"
+                      placeholder="Type your last name here"
+                      name="lastName"
+                      onChange={handleChange}
+                      value={values.lastName}
+                    />
+                    {errors.lastName && touched.lastName && (
+                      <p className={styles.errorWarning}>{errors.lastName}</p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            <div className={styles.fbformitem}>
-              <label className={styles.fbcheckboxlabel}>
-                <input className={styles.fbcheckbox} type="checkbox" />
-                <span> I read and agree with the </span>
-                <a className={styles.fblink} href="" target="_blank">
-                  Terms of Use
-                </a>{" "}
-                <span> and </span>
-                <a className={styles.fblink} href="" target="_blank">
-                  Privacy Policy
-                </a>
-                .
-              </label>
-            </div>
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Company Name</label>
+                    <input
+                      className={styles.fbinput}
+                      id="email"
+                      type="text"
+                      placeholder="Tesla"
+                      name="companyName"
+                      onChange={handleChange}
+                      value={values.companyName}
+                    />
+                    {errors.companyName && touched.companyName && (
+                      <p className={styles.errorWarning}>
+                        {errors.companyName}
+                      </p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Email</label>
+                    <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="john.doe@mail.com"
+                      name="email"
+                      onChange={handleChange}
+                      value={values.email}
+                    />
+                    {errors.email && touched.email && (
+                      <p className={styles.errorWarning}>{errors.email}</p>
+                    )}
+                  </div>
+                </div>
 
-            <div className={styles.signUpOptions}>
-              <ul>
-                <li>
-                  <button className={styles.signInBtn}>Register</button>
-                </li>
-              </ul>
-            </div>
-          </form>
-        )}
-      </Formik>
-    </div>
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Street Address</label>
+                    <input
+                      className={styles.fbinput}
+                      id="email"
+                      type="text"
+                      placeholder="Address line 1"
+                      name="streetAddress"
+                      onChange={handleChange}
+                      value={values.streetAddress}
+                    />
+                    {errors.streetAddress && touched.streetAddress && (
+                      <p className={styles.errorWarning}>
+                        {errors.streetAddress}
+                      </p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>City / Town</label>
+                    <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="john.doe@mail.com"
+                      name="city"
+                      onChange={handleChange}
+                      value={values.city}
+                    />
+                    {errors.city && touched.city && (
+                      <p className={styles.errorWarning}>{errors.city}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>
+                      State / Province / Region
+                    </label>
+                    <input
+                      className={styles.fbinput}
+                      id="email"
+                      type="text"
+                      placeholder="john.doe@mail.com"
+                      name="state"
+                      onChange={handleChange}
+                      value={values.state}
+                    />
+                    {errors.state && touched.state && (
+                      <p className={styles.errorWarning}>{errors.state}</p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Postal / ZIP Code</label>
+                    <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="john.doe@mail.com"
+                      name="zipCode"
+                      onChange={handleChange}
+                      value={values.zipCode}
+                    />
+                    {errors.state && touched.state && (
+                      <p className={styles.errorWarning}>{errors.state}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Country</label>
+                    <Select
+                      showSearch
+                      placeholder="Select a country"
+                      optionFilterProp="children"
+                      onChange={handleChange}
+                      filterOption={(input: any, option: any) =>
+                        (option?.children as string)
+                          .toLowerCase()
+                          .includes(input.toLowerCase())
+                      }
+                      style={{ width: 300 }}
+                    >
+                      {ALLCOUNTRIES?.map((country) => (
+                        <Option key={country.code} value={country.name}>
+                          {country.name}
+                        </Option>
+                      ))}
+                    </Select>
+                    {errors.state && touched.state && (
+                      <p className={styles.errorWarning}>{errors.state}</p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Proof of Address</label>
+                    <div className={styles.fileUpload}>
+                      <input
+                        className={styles.fbinput}
+                        id="confirm-email"
+                        type="file"
+                        name="proofOfAddress"
+                        onChange={(e) => handleFileChange(e, setFieldValue)}
+                      />
+                      {errors.proofOfAddress && touched.proofOfAddress && (
+                        <p className={styles.errorWarning}>
+                          {errors.proofOfAddress}
+                        </p>
+                      )}
+                      <div className=""></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.fbformitem}>
+                  <label className={styles.fbcheckboxlabel}>
+                    <input
+                      className={styles.fbcheckbox}
+                      type="checkbox"
+                      name="agreeTerms"
+                      onChange={handleChange}
+                    />
+                    <span> I read and agree with the </span>
+                    <a className={styles.fblink} href="" target="_blank">
+                      Terms of Use
+                    </a>{" "}
+                    <span> and </span>
+                    <a className={styles.fblink} href="" target="_blank">
+                      Privacy Policy
+                    </a>
+                    .
+                  </label>
+                  {errors.agreeTerms && touched.agreeTerms && (
+                    <p className={styles.errorWarning}>{errors.agreeTerms}</p>
+                  )}
+                </div>
+
+                <div className={styles.signUpOptions}>
+                  <ul>
+                    <li>
+                      <button
+                        type="submit"
+                        className={styles.signInBtn}
+                        disabled={updateLoading}
+                      >
+                        {updateLoading ? <Spin /> : "Register"}
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </form>
+            )}
+          </Formik>
+        </div>
+      )}
+    </>
   );
 };
 

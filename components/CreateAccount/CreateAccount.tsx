@@ -5,7 +5,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { Spin } from "antd";
 
-const CreateAccount = ({ onCreateAccount }) => {
+const CreateAccount = ({ onCreateAccount, handleSignIn }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const schema = yup.object().shape({
     firstName: yup.string().required("First Name is required"),
@@ -41,6 +41,8 @@ const CreateAccount = ({ onCreateAccount }) => {
     confirmPassword: "",
     agreeTerms: false,
   };
+
+  
   const onSubmit = async (values: any) => {
     console.log("the valuses are", values);
     setLoading(true);
@@ -221,7 +223,9 @@ const CreateAccount = ({ onCreateAccount }) => {
         )}
       </Formik>
 
-      <div className={styles.signUpOptions}></div>
+      <div className={styles.signUpOptions}>
+       
+      </div>
     </div>
   );
 };

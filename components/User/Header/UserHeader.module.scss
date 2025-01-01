@@ -1,0 +1,18 @@
+.headerStyle {
+  padding: 0;
+  background: #0e1041;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-inline: 15px;
+  gap: 40px;
+}
+.profileName {
+  color: var(--white-color) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  img {
+    border-radius: 50%;
+  }
+}

@@ -2,6 +2,8 @@ $page-bg: #020314;
 $primary-gradient: linear-gradient(45deg, #ff5a5f, #622774);
 $text-color: #ffffff;
 $card-bg: #1b1d29;
+$highlight-color: #ff5a5f;
+$secondary-color: #622774;
 
 .pageContainer {
   background-color: $page-bg;
@@ -110,5 +112,41 @@ $card-bg: #1b1d29;
         }
       }
     }
+  }
+}
+
+// success modal
+
+.modalTitle {
+  font-size: 24px;
+  text-align: center;
+  color: $text-color;
+  font-weight: bold;
+}
+
+.modalContent {
+  text-align: center;
+  color: #ccc;
+  font-size: 16px;
+
+  p {
+    margin: 10px 0;
+  }
+}
+
+.modalButton {
+  text-decoration: none;
+  background: linear-gradient(45deg, $highlight-color, $secondary-color);
+  color: $text-color;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      $highlight-color,
+      $secondary-color
+    ) !important;
   }
 }

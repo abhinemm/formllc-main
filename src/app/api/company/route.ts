@@ -4,7 +4,6 @@ import UserService from "@/services/user.model.service";
 import CompanyService from "@/services/company.model.service";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { Op } from "sequelize";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -78,6 +77,7 @@ export async function POST(req: Request) {
     state,
     zipCode,
     country,
+    status
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -104,6 +104,7 @@ export async function POST(req: Request) {
       state,
       zipCode,
       country,
+      status
     });
     return NextResponse.json(newCompany, { status: 201 });
   } catch (error) {

@@ -32,7 +32,7 @@ const SignIn = () => {
             <p title="Don’t have an account?">
               Don’t have an account?
               <a
-                href="/auth/sign-up"
+                href="/api/auth/sign-up"
                 className={`${styles.authHeaderLink} ${styles.link}`}
               >
                 Sign up

@@ -102,11 +102,11 @@ const HomePage = () => {
   ];
 
   const features = [
-    "Fast, easy, and online LLC & C-Corp formation",
+    "Fast, easy, and online",
     "US Bank account with a physical debit card",
     "Registered Agent",
     "Formation and EIN",
-    "US phone number",
+    
     "Company's initial legal documentation",
     "US business address with mail forwarding",
   ];
@@ -195,38 +195,38 @@ const HomePage = () => {
         </svg>
       ),
     },
-    {
-      title: "Delaware",
-      icon: "/images/icon-delaware.png",
-      points: [
-        "Investor Confidence (startup hub all around the world)",
-        "Flexible Corporate Structure",
-        "Established, entrepreneur-friendly legal landscape",
-        "Privacy Protection",
-        "No sales tax",
-      ],
-      svgIcon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="25"
-          height="25"
-          viewBox="0 0 25 25"
-          fill="none"
-        >
-          <path
-            d="M12.2148 17.4001V10.4001M12.2148 10.4001L18.2148 6.90015L12.2148 3.40015V10.4001ZM9.21484 14.5993C5.71927 15.0798 3.21484 16.3762 3.21484 17.9001C3.21484 19.8331 7.24428 21.4001 12.2148 21.4001C17.1854 21.4001 21.2148 19.8331 21.2148 17.9001C21.2148 16.3762 18.7104 15.0798 15.2148 14.5993"
-            stroke="#622774"
-            strokeWidth="2"
-          ></path>
-        </svg>
-      ),
-    },
+      {
+        title: "Montana",
+        icon: "/images/icon-delaware.png",
+        points: [
+          "Strong asset protection laws",
+          "No state sales tax",
+          "Cost-effective registration process",
+          "Privacy for business owners",
+          "Flexible management options",
+        ],
+        svgIcon: (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            viewBox="0 0 25 25"
+            fill="none"
+          >
+            <path
+              d="M12.2148 17.4001V10.4001M12.2148 10.4001L18.2148 6.90015L12.2148 3.40015V10.4001ZM9.21484 14.5993C5.71927 15.0798 3.21484 16.3762 3.21484 17.9001C3.21484 19.8331 7.24428 21.4001 12.2148 21.4001C17.1854 21.4001 21.2148 19.8331 21.2148 17.9001C21.2148 16.3762 18.7104 15.0798 15.2148 14.5993"
+              stroke="#622774"
+              strokeWidth="2"
+            ></path>
+          </svg>
+        ),
+      },
   ];
 
   const featuresSecSix = [
     "Fast, easy, and online LLC & C-Corp formation",
     "US Bank account application and a debit card",
-    "EIN & ITIN application",
+    "EIN application",
   ];
   return (
     <>
@@ -340,7 +340,7 @@ const HomePage = () => {
 
       <section>
         <div className="container">
-          <div className={styles?.companyStructure}>
+          {/* <div className={styles?.companyStructure}>
             <div className={styles.header}>
               <h2>Deciding on Company Structure</h2>
               <p>
@@ -372,7 +372,7 @@ const HomePage = () => {
             <p className={styles.contact}>
               Can’t decide? Let us help you! <a href="#contact">Contact us</a>
             </p>
-          </div>
+          </div> */}
         </div>
       </section>
 

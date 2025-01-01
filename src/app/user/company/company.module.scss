@@ -150,14 +150,75 @@
   td {
     border: 1px solid #272729 !important;
     color: #fff !important;
-
-    
   }
   :global(.anticon) {
     color: #fff !important;
   }
   :global(.ant-table-cell-row-hover) {
     background: none !important;
+  }
+
+  :global(.ant-space-item){
+    @media screen and (max-width:678px){
+        width: 100%;
+
+        button{
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            text-align: center;
+        }
+    }
+  }
+
+  :global(.ant-space-gap-row-middle){
+    @media screen and (max-width:678px) {
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+    }
+  }
+
+
+
+
+
+  .addwrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+
+    button {
+      all: unset;
+      box-sizing: border-box;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 7px;
+      border: 1px solid #94949e;
+
+      color: #94949e;
+        transition: .3s ease-in-out;
+
+        svg{
+       path {transition: .3s ease-in-out;}
+
+        }
+      &:hover {
+        border: 1px solid #fff;
+
+        color: #fff;
+
+        svg{
+            path{
+                stroke: #fff;
+            }
+        }
+      }
+    }
   }
 
   button {
@@ -173,9 +234,9 @@
     background-color: #db4c2a;
   }
   .previewBtn {
-    background-color: #63fb27;
+    background-color: #3c9817;
   }
   .deleteBtn {
-    background-color: #ff1616;
+    background-color: #a31818;
   }
 }

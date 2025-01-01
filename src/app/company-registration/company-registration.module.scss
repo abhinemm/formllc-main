@@ -25,6 +25,32 @@
   }
 
   .fbformitem {
+    :global(.ant-select){
+      width: 100% !important;
+      cursor: pointer !important;
+    }
+    :global(.ant-select-single ){
+      cursor: pointer !important;
+      height: 54px;
+    }
+    :global(.ant-select-arrow){
+   color: #fff !important;
+   transform: translateY(-50%);
+   cursor: pointer !important;
+
+    }
+    :global(.ant-select-selector) {
+      border: none !important;
+      background: #181429;
+      height: 54px;
+      cursor: pointer !important;
+      box-shadow: none !important;
+
+
+      span{
+        color: #fff !important;
+      }
+    }
     .fbcheckboxlabel {
       display: flex;
       align-items: center;

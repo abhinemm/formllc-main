@@ -60,6 +60,7 @@ export const authOptions: AuthOptions = {
           email: user.email,
           gid: user.id,
           firstName: user.name,
+          // profilePic: d,
         });
         return true; // Continue with sign-in
       }

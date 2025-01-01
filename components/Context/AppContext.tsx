@@ -4,6 +4,7 @@ import React, { ReactNode, createContext, useContext, useState } from "react";
 interface ContextOptions {
   userData: any;
   selectedCompany: any;
+  allCompanies: any;
 }
 
 interface AppContextProps {
@@ -19,6 +20,7 @@ export const AppProvider: React.FC<{
   const [contextOptions, setContextOptions] = useState<ContextOptions>({
     userData: null,
     selectedCompany: null,
+    allCompanies: [],
   });
 
   return (

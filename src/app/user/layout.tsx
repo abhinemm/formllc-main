@@ -72,9 +72,19 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
               label: "Dashboard",
             },
             {
-              key: "/user/1",
+              key: "",
               icon: <VideoCameraOutlined />,
-              label: "Orders",
+              label: "Company",
+              children: [
+                {
+                  key: "/user/company/details",
+                  label: "Details",
+                },
+                {
+                  key: "/user/company/documents",
+                  label: "Documents",
+                },
+              ],
             },
             {
               key: "/user/2",

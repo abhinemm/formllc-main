@@ -139,7 +139,7 @@ a {
   }
 }
 
-.ant-menu-dark {
+.ant-menu-dark,.ant-menu-inline {
   background-color: #161618 !important;
 }
 
@@ -160,15 +160,7 @@ a {
 .ant-layout-sider-trigger {
   background-color: #272729 !important;
 }
-.ant-menu-root {
-  &:not(:has(.ant-menu-item-selected)) {
-    li {
-      &:first-child {
-        background-color: #ffffff08 !important;
-      }
-    }
-  }
-}
+
 .ant-layout-content {
   background-color: #161618 !important;
 }

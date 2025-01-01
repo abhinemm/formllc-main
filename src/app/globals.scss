@@ -139,7 +139,8 @@ a {
   }
 }
 
-.ant-menu-dark,.ant-menu-inline {
+.ant-menu-dark,
+.ant-menu-inline {
   background-color: #161618 !important;
 }
 
@@ -165,8 +166,7 @@ a {
   background-color: #161618 !important;
 }
 
-
-.sign-up-wrapper{
+.sign-up-wrapper {
   max-width: 700px;
   margin-top: 30px;
   padding-inline: 20px;
@@ -182,4 +182,19 @@ a {
     margin-bottom: 20px;
     text-align: center;
   }
+}
+
+.ant-modal-content {
+  background-color: #161618 !important;
+}
+
+.ant-modal-footer{
+  display: none;
+}
+.anticon{
+  color: #fff !important;
+}
+.ant-select-arrow{
+  margin: 0 !important;
+  transform: translateY(-50%) !important;
 }

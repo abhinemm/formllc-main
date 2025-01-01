@@ -1,6 +1,7 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../lib/sequelize";
 import User, { UserAttributes } from "./user";
+import { CompanyPaymentStatus, CompanyStatus } from "@/utils/constants";
 
 export interface CompanyAttributes {
   id?: number;
@@ -16,6 +17,8 @@ export interface CompanyAttributes {
   state?: string;
   zipCode?: string;
   country?: string;
+  status?: number;
+  paymentStatus?: number;
 
   document?: string;
 }
@@ -46,6 +49,9 @@ class Company
   public state?: string;
   public zipCode?: string;
   public country?: string;
+
+  public status?: number;
+  public paymentStatus?: number;
 
   public user?: User;
 }
@@ -88,7 +94,7 @@ Company.init(
     companyEmail: {
       type: DataTypes.STRING,
       allowNull: true,
-      unique:true,
+      unique: true,
     },
     streetAddress: {
       type: DataTypes.TEXT,
@@ -109,6 +115,16 @@ Company.init(
     country: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: CompanyStatus.inActive,
+    },
+    paymentStatus: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: CompanyPaymentStatus.notPaid,
     },
   },
   {

@@ -1,114 +1,55 @@
 "use client";
-import React, { useState } from "react";
-import { Dropdown, Layout, Menu, MenuProps, Space } from "antd";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-  DownOutlined,
-} from "@ant-design/icons";
+import React, { useLayoutEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import styles from "./mainStyle.module.scss";
-import UserHeader from "../../../components/User/Header/UserHeader";
-
-const { Header, Sider, Content } = Layout;
+import InnerLayout from "../../../components/User/Layouts/innerLayoutData";
+import Loader from "../../../components/Loader";
+import axios from "axios";
+import { useAppContext } from "../../../components/Context/AppContext";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
-  const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
+  const session: any = useSession();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [userData, setUserData] = useState<any>();
+  const { setContextOptions } = useAppContext();
 
-  const toggle = () => {
-    setCollapsed(!collapsed);
+  useLayoutEffect(() => {
+    if (session?.status == "loading") {
+      setLoading(true);
+    } else {
+      if (session?.data?.user) {
+        setUserData(session?.data?.user);
+        setContextOptions((prev) => ({
+          ...prev,
+          userData: session?.data?.user,
+        }));
+        handleGetAllbuisness(session?.data?.user?.id);
+      } else {
+        setLoading(false);
+        router.push("/");
+      }
+    }
+  }, [session]);
+
+  const handleGetAllbuisness = async (id: number) => {
+    await axios
+      .get(`/api/company?userId=${id}`)
+      .then((res: any) => {
+        setLoading(false);
+        console.log("the response", res);
+        setContextOptions((prev) => ({
+          ...prev,
+          allCompanies: res?.data,
+        }));
+      })
+      .catch((err: any) => {
+        setLoading(false);
+        router.push("/");
+        console.log("the error is ", err);
+      });
   };
-
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: "My Account",
-    },
-    {
-      key: "2",
-      label: "Profile",
-      extra: "⌘P",
-    },
-  ];
-
-  return (
-    <Layout style={{ minHeight: "100vh" }}>
-      {/* Sidebar */}
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={toggle}
-        breakpoint="lg"
-        collapsedWidth="100"
-        style={{
-          background: "#161618",
-        }}
-      >
-        <div
-          style={{
-           
-            margin: 16,
-            color: "#fff",
-            fontSize: "18px",
-            textAlign: "left",
-            lineHeight: "32px",
-          }}
-        >
-          Formllc
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          onClick={({ key }) => {
-            router.push(key); // Navigate to corresponding route
-          }}
-          items={[
-            {
-              key: "/user",
-              icon: <UserOutlined />,
-              label: "Dashboard",
-            },
-            {
-              key: "",
-              icon: <VideoCameraOutlined />,
-              label: "Company",
-              children: [
-                {
-                  key: "/user/company/details",
-                  label: "Details",
-                },
-                {
-                  key: "/user/company/documents",
-                  label: "Documents",
-                },
-              ],
-            },
-            {
-              key: "/user/2",
-              icon: <UploadOutlined />,
-              label: "Products",
-            },
-          ]}
-        />
-      </Sider>
-
-      {/* Main Content */}
-      <Layout>
-        <UserHeader />
-        <Content
-          style={{
-            padding: ' 30px 20px 20px 20px',
-            background: "#161618",
-          }}
-        >
-          {children}
-        </Content>
-      </Layout>
-    </Layout>
-  );
+  return <>{loading ? <Loader /> : <InnerLayout>{children}</InnerLayout>}</>;
 };
 
 export default UserLayout;

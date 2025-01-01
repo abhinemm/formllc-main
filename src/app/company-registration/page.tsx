@@ -81,7 +81,6 @@ const CompanyRegistration = () => {
     setFieldValue: any
   ) => {
     const selectedFile = event.target.files?.[0];
-    console.log("selectedFileselectedFile", selectedFile);
     if (selectedFile) {
       setFieldValue("proofOfAddress", selectedFile?.name);
       const maxSizeInBytes = 1 * 1024 * 1024; // 10 MB
@@ -136,7 +135,6 @@ const CompanyRegistration = () => {
   };
 
   const onSubmit = async (values: any) => {
-    console.log("Form submitted with values:", values);
     setUpdateLoading(true);
     const file = await handleFileUpload();
     const data = {

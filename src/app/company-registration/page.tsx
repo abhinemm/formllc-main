@@ -90,7 +90,6 @@ const CompanyRegistration = () => {
           message: "File size exceeds 10 MB. Please select a smaller file.",
           placement: "topRight",
         });
-
         setFile(null);
       } else {
         setFile(selectedFile);
@@ -135,46 +134,49 @@ const CompanyRegistration = () => {
   };
 
   const onSubmit = async (values: any) => {
-    setUpdateLoading(true);
-    const file = await handleFileUpload();
-    const data = {
-      document: file?.url,
-      ownerFname: values?.firstName,
-      ownerLname: values?.lastName,
-      companyName: values?.companyName,
-      companyEmail: values?.email,
-      streetAddress: values?.streetAddress,
-      city: values?.city,
-      state: values?.state,
-      zipCode: values?.zipCode,
-      country: values?.country,
-    };
-    try {
-      await axios
-        .patch(`/api/company?id=${id}`, data)
-        .then((res: any) => {
-          setUpdateLoading(false);
-          console.log("the response", res);
-          openNotification({
-            type: "success",
-            message: "Buisness registered sucessfully",
-            placement: "topRight",
-          });
-        })
-        .catch((err: any) => {
-          setUpdateLoading(false);
-          const message = err?.response?.data?.error || "Something went wrong!";
-          openNotification({
-            type: "error",
-            message: message,
-            placement: "topRight",
-          });
-          console.log("the error is ", err);
-        });
-    } catch (error) {
-      console.log("the error is ", error);
-      setUpdateLoading(false);
-    }
+    console.log("the values is", values);
+
+    // setUpdateLoading(true);
+    // const file = await handleFileUpload();
+    // const data = {
+    //   document: file?.url,
+    //   ownerFname: values?.firstName,
+    //   ownerLname: values?.lastName,
+    //   companyName: values?.companyName,
+    //   companyEmail: values?.email,
+    //   streetAddress: values?.streetAddress,
+    //   city: values?.city,
+    //   state: values?.state,
+    //   zipCode: values?.zipCode,
+    //   country: values?.country,
+    //   status: 1,
+    // };
+    // try {
+    //   await axios
+    //     .patch(`/api/company?id=${id}`, data)
+    //     .then((res: any) => {
+    //       setUpdateLoading(false);
+    //       console.log("the response", res);
+    //       openNotification({
+    //         type: "success",
+    //         message: "Buisness registered sucessfully",
+    //         placement: "topRight",
+    //       });
+    //     })
+    //     .catch((err: any) => {
+    //       setUpdateLoading(false);
+    //       const message = err?.response?.data?.error || "Something went wrong!";
+    //       openNotification({
+    //         type: "error",
+    //         message: message,
+    //         placement: "topRight",
+    //       });
+    //       console.log("the error is ", err);
+    //     });
+    // } catch (error) {
+    //   console.log("the error is ", error);
+    //   setUpdateLoading(false);
+    // }
     // Handle form submission logic here
   };
 
@@ -335,8 +337,8 @@ const CompanyRegistration = () => {
                       onChange={handleChange}
                       value={values.zipCode}
                     />
-                    {errors.state && touched.state && (
-                      <p className={styles.errorWarning}>{errors.state}</p>
+                    {errors.zipCode && touched.zipCode && (
+                      <p className={styles.errorWarning}>{errors.zipCode}</p>
                     )}
                   </div>
                 </div>
@@ -349,7 +351,9 @@ const CompanyRegistration = () => {
                       showSearch
                       placeholder="Select a country"
                       optionFilterProp="children"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setFieldValue("country", e);
+                      }}
                       filterOption={(input: any, option: any) =>
                         (option?.children as string)
                           .toLowerCase()
@@ -363,8 +367,8 @@ const CompanyRegistration = () => {
                         </Option>
                       ))}
                     </Select>
-                    {errors.state && touched.state && (
-                      <p className={styles.errorWarning}>{errors.state}</p>
+                    {errors.country && touched.country && (
+                      <p className={styles.errorWarning}>{errors.country}</p>
                     )}
                   </div>
                   <div className={styles.fbformitem}>

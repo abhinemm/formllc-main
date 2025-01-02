@@ -12,14 +12,13 @@
     color: #5e5d62;
     display: block;
 
-
     span {
       display: block;
       font-size: 12px;
       font-weight: 400;
       color: #fff;
 
-      article{
+      article {
         display: inline;
         color: rgb(251, 30, 30);
         font-size: 11px;
@@ -35,15 +34,13 @@
       padding-block: 12px;
       border-bottom: 1px solid #2f2f31;
 
-      @media screen and (max-width:678px) {
-      gap: 15px;
-      flex-direction: column;
-        
+      @media screen and (max-width: 678px) {
+        gap: 15px;
+        flex-direction: column;
       }
 
-      &:first-child{
-      border-top: 1px solid #2f2f31;
-
+      &:first-child {
+        border-top: 1px solid #2f2f31;
       }
 
       h6 {
@@ -52,57 +49,54 @@
         color: #fff;
         width: 100%;
       }
-      .inputActionWrapper{
+      .inputActionWrapper {
         display: flex;
 
         align-items: center;
         justify-content: flex-start;
         gap: 10px;
 
+        input {
+          background-color: #232325;
+          border-radius: 5px;
 
-        input{
-            background-color: #232325;
-            border-radius: 5px;
-
-            font-size: 12px;
-            color: #89888D;
-            width: 100%;
-            flex-grow: 1;
-            padding-left: 10px;
-            border: none;
-            padding-block: 6px;
+          font-size: 12px;
+          color: #89888d;
+          width: 100%;
+          flex-grow: 1;
+          padding-left: 10px;
+          border: none;
+          padding-block: 6px;
         }
       }
 
       > div {
         width: 100%;
 
-        label{
-            &:not(:first-child){
-                margin-top: 5px;
-            }
-        }
-        button{
-            all:unset;
-            box-sizing: border-box;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 4px 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            background-color: #DB4C2A;
-            flex-shrink: 0;
-            span {
-                display: block;
-                font-size: 12px;
-                font-weight: 400;
-                color: #fff;
-              }
-
-            
+        label {
+          &:not(:first-child) {
+            margin-top: 5px;
           }
+        }
+        button {
+          all: unset;
+          box-sizing: border-box;
+          cursor: pointer;
+          border-radius: 5px;
+          padding: 4px 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 10px;
+          background-color: #db4c2a;
+          flex-shrink: 0;
+          span {
+            display: block;
+            font-size: 12px;
+            font-weight: 400;
+            color: #fff;
+          }
+        }
 
         .logoUploadWrapper {
           display: flex;
@@ -110,16 +104,15 @@
           align-items: center;
           gap: 10px;
 
-          .imgWrapper{
+          .imgWrapper {
             width: 20px;
             aspect-ratio: 1;
             border-radius: 5px;
             overflow: hidden;
-
           }
 
-          button{
-            all:unset;
+          button {
+            all: unset;
             box-sizing: border-box;
             cursor: pointer;
             border-radius: 5px;
@@ -128,21 +121,122 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            background-color: #DB4C2A;
+            background-color: #db4c2a;
 
             span {
-                display: block;
-                font-size: 12px;
-                font-weight: 400;
-                color: #fff;
-              }
+              display: block;
+              font-size: 12px;
+              font-weight: 400;
+              color: #fff;
+            }
 
-              svg{
-
-              }
+            svg {
+            }
           }
         }
       }
     }
+  }
+}
+//documents page
+
+.tableWrapper {
+  th,
+  tbody {
+    background-color: #161618 !important;
+  }
+  th,
+  tr,
+  td {
+    border: 1px solid #272729 !important;
+    color: #fff !important;
+  }
+  :global(.anticon) {
+    color: #fff !important;
+  }
+  :global(.ant-table-cell-row-hover) {
+    background: none !important;
+  }
+
+  :global(.ant-space-item){
+    @media screen and (max-width:678px){
+        width: 100%;
+
+        button{
+            display: block;
+            box-sizing: border-box;
+            width: 100%;
+            text-align: center;
+        }
+    }
+  }
+
+  :global(.ant-space-gap-row-middle){
+    @media screen and (max-width:678px) {
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+    }
+  }
+
+
+
+
+
+  .addwrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+
+    button {
+      all: unset;
+      box-sizing: border-box;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 7px;
+      border: 1px solid #94949e;
+
+      color: #94949e;
+        transition: .3s ease-in-out;
+
+        svg{
+       path {transition: .3s ease-in-out;}
+
+        }
+      &:hover {
+        border: 1px solid #fff;
+
+        color: #fff;
+
+        svg{
+            path{
+                stroke: #fff;
+            }
+        }
+      }
+    }
+  }
+
+  button {
+    all: unset;
+    cursor: pointer;
+    padding: 4px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 12px;
+  }
+
+  .editBtn {
+    background-color: #db4c2a;
+  }
+  .previewBtn {
+    background-color: #3c9817;
+  }
+  .deleteBtn {
+    background-color: #a31818;
   }
 }

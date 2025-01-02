@@ -4,6 +4,9 @@ import UserService from "@/services/user.model.service";
 import CompanyService from "@/services/company.model.service";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { CompanyStatus, StepsTakenStatusEnum } from "@/utils/constants";
+import StepsTaken from "@/models/stepsTaken";
+import Steps from "@/models/steps";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -54,7 +57,6 @@ export async function GET(req: Request) {
   }
 }
 
-
 export async function POST(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
   if (!data || !data.user) {
@@ -77,7 +79,7 @@ export async function POST(req: Request) {
     state,
     zipCode,
     country,
-    status
+    status,
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -89,7 +91,7 @@ export async function POST(req: Request) {
     }
     userExist.currency = currency;
     await userExist.save();
-    
+
     const newCompany = await Company.create({
       registrationState,
       type: companyType,
@@ -104,8 +106,29 @@ export async function POST(req: Request) {
       state,
       zipCode,
       country,
-      status
+      status,
     });
+    try {
+      const steps = await Steps.findAll({});
+      for (const step of steps) {
+        if (step.position === 1 && status === CompanyStatus.active) {
+          await StepsTaken.create({
+            companyId: newCompany.id,
+            status: StepsTakenStatusEnum.completed,
+            stepId: step.id,
+            userId: userExist.id,
+          });
+        } else {
+          await StepsTaken.create({
+            companyId: newCompany.id,
+            status: StepsTakenStatusEnum.inReview,
+            stepId: step.id,
+            userId: userExist.id,
+          });
+        }
+      }
+    } catch {}
+
     return NextResponse.json(newCompany, { status: 201 });
   } catch (error) {
     return NextResponse.json(
@@ -156,6 +179,24 @@ export async function PATCH(req: Request) {
     );
   }
   const updatedCompany = await CompanyService.update(companyData.id!, body);
+  try {
+    const steps = await Steps.findAll({});
+    const firstStep = steps.find((el) => el.position === 1);
+    if (firstStep) {
+      if (body.status === 1) {
+        await StepsTaken.update(
+          { status: StepsTakenStatusEnum.completed },
+          {
+            where: {
+              stepId: firstStep.id,
+              userId: companyData.userId,
+              companyId: companyData.id,
+            },
+          }
+        );
+      }
+    }
+  } catch {}
   return NextResponse.json(
     {
       message: "Company updated successfully!",

@@ -14,9 +14,9 @@ const syncDatabase = async () => {
     );
     Company.belongsTo(User, { foreignKey: "userId", as: "userData" });
     User.hasOne(Company, { foreignKey: "userId", as: "companyData" });
-    await ContactUs.sync();
-    await Steps.sync();
-    await StepsTaken.sync();
+    await ContactUs.sync({alter:true});
+    await Steps.sync({alter:true});
+    await StepsTaken.sync({alter:true});
     // Sync all models
     await sequelize.sync({ alter: true, }); // use { force: true } to drop and recreate tables
     console.log("All models were synchronized successfully.");

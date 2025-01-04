@@ -13,7 +13,10 @@ const nextConfig: NextConfig = {
   },
   eslint: {
     ignoreDuringBuilds: true, // Suppresses ESLint warnings during the build process
-  }
+  },
+  images: {
+    domains: ['lh3.googleusercontent.com'],
+  },
 };
 
 export default nextConfig;

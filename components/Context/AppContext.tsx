@@ -6,6 +6,7 @@ interface ContextOptions {
   selectedCompany: any;
   allCompanies: any;
   campanyName: any;
+  selectedCompanyDetails: any;
 }
 
 interface AppContextProps {
@@ -25,6 +26,7 @@ export const AppProvider: React.FC<{
     },
     allCompanies: [],
     campanyName: null,
+    selectedCompanyDetails: null,
   });
 
   return (

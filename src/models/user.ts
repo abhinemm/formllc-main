@@ -32,7 +32,6 @@ class User
   public currency?: string;
   public gid?: string;
   public profilePic?: string;
-
   public company?: Company;
 }
 

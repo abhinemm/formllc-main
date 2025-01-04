@@ -162,6 +162,7 @@ export async function PATCH(req: Request) {
   const companyData = await CompanyService.findOne({
     id,
   });
+
   if (!companyData) {
     return NextResponse.json(
       {
@@ -170,7 +171,8 @@ export async function PATCH(req: Request) {
       { status: 400 }
     );
   }
-  if (companyData?.userId !== data.user.id || data.user.id !== adminUser?.id) {
+  // || data.user.id !== adminUser?.id
+  if (companyData?.userId !== data.user.id) {
     return NextResponse.json(
       {
         error: "User have no permission to do this operation!",

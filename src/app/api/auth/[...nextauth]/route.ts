@@ -19,7 +19,9 @@ export const authOptions: AuthOptions = {
         email: { label: "Email", type: "text", placeholder: "you@example.com" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials):Promise<any> {
+      async authorize(credentials): Promise<any> {
+        console.log("inside the confition");
+
         const { email, password } = credentials!;
         // Find the user in your database
         const user = await UserService.findOne({ email });
@@ -47,11 +49,17 @@ export const authOptions: AuthOptions = {
     signIn: "/auth/signin", // Optional custom sign-in page
   },
   callbacks: {
-    async signIn(data: any):Promise<any> {
+    async signIn(data: any): Promise<any> {
+      console.log("accountaccount", data);
+
       const { user, account, profile } = data;
       // For Google Sign-In
       if (account?.provider === "google") {
+        console.log("accountaccountaccountaccount");
+
         const userExist = await UserService.findOne({ email: user.email });
+        console.log("userExist", userExist);
+
         if (userExist) {
           return true; // Allow sign-in for existing users
         }
@@ -66,7 +74,7 @@ export const authOptions: AuthOptions = {
       }
       return true; // For credentials login, simply allow sign-in
     },
-    async jwt(data: any):Promise<any> {
+    async jwt(data: any): Promise<any> {
       const { token, account, user } = data;
       if (account) {
         token.accessToken = account.access_token;
@@ -76,18 +84,18 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
-    async session(data: any):Promise<any> {
-      console.log("session data",data);
-      
+    async session(data: any): Promise<any> {
+      console.log("session data", data);
+
       const { session, token } = data;
       session.accessToken = token.accessToken;
-      session.user.id = token.id; 
+      session.user.id = token.id;
       const userExist = await UserService.findOne({
         email: session.user.email,
       });
       if (userExist) {
         session.user.id = userExist.id;
-        session.user = userExist.dataValues
+        session.user = userExist.dataValues;
         delete session.user.password;
       }
       return session;
@@ -95,6 +103,6 @@ export const authOptions: AuthOptions = {
   },
 };
 
-const handler:NextApiHandler = NextAuth(authOptions);
+const handler: NextApiHandler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

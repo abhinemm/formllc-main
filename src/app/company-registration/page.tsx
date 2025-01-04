@@ -136,47 +136,47 @@ const CompanyRegistration = () => {
   const onSubmit = async (values: any) => {
     console.log("the values is", values);
 
-    // setUpdateLoading(true);
-    // const file = await handleFileUpload();
-    // const data = {
-    //   document: file?.url,
-    //   ownerFname: values?.firstName,
-    //   ownerLname: values?.lastName,
-    //   companyName: values?.companyName,
-    //   companyEmail: values?.email,
-    //   streetAddress: values?.streetAddress,
-    //   city: values?.city,
-    //   state: values?.state,
-    //   zipCode: values?.zipCode,
-    //   country: values?.country,
-    //   status: 1,
-    // };
-    // try {
-    //   await axios
-    //     .patch(`/api/company?id=${id}`, data)
-    //     .then((res: any) => {
-    //       setUpdateLoading(false);
-    //       console.log("the response", res);
-    //       openNotification({
-    //         type: "success",
-    //         message: "Buisness registered sucessfully",
-    //         placement: "topRight",
-    //       });
-    //     })
-    //     .catch((err: any) => {
-    //       setUpdateLoading(false);
-    //       const message = err?.response?.data?.error || "Something went wrong!";
-    //       openNotification({
-    //         type: "error",
-    //         message: message,
-    //         placement: "topRight",
-    //       });
-    //       console.log("the error is ", err);
-    //     });
-    // } catch (error) {
-    //   console.log("the error is ", error);
-    //   setUpdateLoading(false);
-    // }
+    setUpdateLoading(true);
+    const file = await handleFileUpload();
+    const data = {
+      document: file?.url,
+      ownerFname: values?.firstName,
+      ownerLname: values?.lastName,
+      companyName: values?.companyName,
+      companyEmail: values?.email,
+      streetAddress: values?.streetAddress,
+      city: values?.city,
+      state: values?.state,
+      zipCode: values?.zipCode,
+      country: values?.country,
+      status: 1,
+    };
+    try {
+      await axios
+        .patch(`/api/company?id=${id}`, data)
+        .then((res: any) => {
+          setUpdateLoading(false);
+          openNotification({
+            type: "success",
+            message: "Buisness registered sucessfully",
+            placement: "topRight",
+          });
+          router.push("/user");
+        })
+        .catch((err: any) => {
+          setUpdateLoading(false);
+          const message = err?.response?.data?.error || "Something went wrong!";
+          openNotification({
+            type: "error",
+            message: message,
+            placement: "topRight",
+          });
+          console.log("the error is ", err);
+        });
+    } catch (error) {
+      console.log("the error is ", error);
+      setUpdateLoading(false);
+    }
     // Handle form submission logic here
   };
 

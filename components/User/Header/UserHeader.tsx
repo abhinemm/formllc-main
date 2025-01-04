@@ -4,20 +4,26 @@ import { Dropdown, Layout, Menu, MenuProps, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { useAppContext } from "../../Context/AppContext";
+import { useRouter } from "next/navigation";
 const { Header } = Layout;
 
 const UserHeader = () => {
+  const router = useRouter();
   const { contextOptions, setContextOptions } = useAppContext();
+
   const [itemList, setItemList] = useState<MenuProps["items"]>([]);
   useLayoutEffect(() => {
     if (contextOptions?.allCompanies?.length) {
       const itemlist = contextOptions?.allCompanies?.map((el: any) => ({
         key: el.id,
-        label: el?.campanyName ?? el?.registrationState,
+        label: el?.companyName ?? el?.registrationState,
       }));
-      setItemList(itemlist);
+      setItemList([...itemlist, { key: "0", label: "+ Add new Company" }]);
     }
   }, [contextOptions?.allCompanies]);
+
+  console.log("contextOptions", contextOptions);
+
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -30,18 +36,23 @@ const UserHeader = () => {
   ];
 
   const handleMenuClick = (e: any) => {
-    const selectedCompany = contextOptions?.allCompanies?.find(
-      (el: any) => el.id == e.key
-    );
-    const obj = {
-      id: selectedCompany?.id,
-      name: selectedCompany?.campanyName,
-    };
-    setContextOptions((prev) => ({
-      ...prev,
-      selectedCompany: obj,
-    }));
-    console.log("e.keye.keye.key", e.key);
+    if (e.key == "0") {
+      router.push("/start-buisness");
+    } else {
+      const selectedCompany = contextOptions?.allCompanies?.find(
+        (el: any) => el.id == e.key
+      );
+      const obj = {
+        id: selectedCompany?.id,
+        name: selectedCompany?.companyName,
+      };
+      localStorage.setItem("company", selectedCompany?.id);
+      setContextOptions((prev) => ({
+        ...prev,
+        selectedCompany: obj,
+        selectedCompanyDetails: selectedCompany,
+      }));
+    }
   };
 
   // const itemList: MenuProps["items"] = [
@@ -65,6 +76,7 @@ const UserHeader = () => {
         menu={{
           items: itemList,
           onClick: handleMenuClick,
+          selectedKeys: [contextOptions?.selectedCompany?.id?.toString()],
         }}
         trigger={["click"]}
       >
@@ -76,12 +88,20 @@ const UserHeader = () => {
       <Dropdown menu={{ items }}>
         <a onClick={(e) => e.preventDefault()} className={styles.profileName}>
           <Image
-            src="/images/avathar.jpg"
+            src={
+              contextOptions?.userData?.profilePic
+                ? contextOptions?.userData?.profilePic
+                : "/images/avathar.jpg"
+            }
             width={30}
             height={30}
             alt="Description of the image"
           />
-          <span>Hover me</span>
+          <span>
+            {contextOptions?.userData
+              ? `${contextOptions?.userData?.firstName}`
+              : "My account"}
+          </span>
           <DownOutlined />
         </a>
       </Dropdown>

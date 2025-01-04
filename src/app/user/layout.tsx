@@ -44,17 +44,28 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     await axios
       .get(`/api/company?userId=${id}`)
       .then((res: any) => {
-        console.log("res?.datares?.datares?.data", res?.data);
         if (res?.data?.length) {
-          const firstCompany = res?.data[0];
-          const values = {
-            id: firstCompany?.id,
-            name: firstCompany?.campanyName,
-          };
+          const selected = localStorage.getItem("company");
+          let values: any;
+          let filterOne: any;
+          if (selected) {
+            filterOne = res?.data?.find((el: any) => el.id == Number(selected));
+            values = {
+              id: filterOne?.id,
+              name: filterOne?.companyName,
+            };
+          } else {
+            filterOne = res?.data[0];
+            values = {
+              id: filterOne?.id,
+              name: filterOne?.companyName,
+            };
+          }
           setContextOptions((prev) => ({
             ...prev,
             allCompanies: res?.data,
             selectedCompany: values,
+            selectedCompanyDetails: filterOne,
           }));
         }
         setLoading(false);

@@ -6,7 +6,13 @@
   justify-content: end;
   padding-inline: 15px;
   gap: 40px;
-  border-bottom: 1px solid #272729 ;
+  border-bottom: 1px solid #272729;
+  :global {
+    .ant-dropdown-menu-item-selected {
+      background: #c6c6c6 !important;
+      color: #000000 !important;
+    }
+  }
 }
 .profileName {
   color: var(--white-color) !important;

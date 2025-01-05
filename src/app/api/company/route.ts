@@ -80,6 +80,9 @@ export async function POST(req: Request) {
     zipCode,
     country,
     status,
+    mailingAdress,
+    phone,
+    countryCode
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -107,6 +110,9 @@ export async function POST(req: Request) {
       zipCode,
       country,
       status,
+      mailingAdress,
+      phone,
+      countryCode
     });
     try {
       const steps = await Steps.findAll({});

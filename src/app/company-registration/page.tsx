@@ -47,6 +47,8 @@ const CompanyRegistration = () => {
     zipCode: "",
     country: "",
     proofOfAddress: "",
+    countryCode: "",
+    phone: "",
     agreeTerms: false,
   };
 
@@ -275,7 +277,13 @@ const CompanyRegistration = () => {
                     <label className={styles.fblabel}>Phone</label>
                     <InputNumber
                       addonBefore={
-                        <Select style={{ width: 80, color: "#fff" }}>
+                        <Select
+                          style={{ width: 80, color: "#fff" }}
+                          onChange={(e: any) => {
+                            setFieldValue("countryCode", e);
+                          }}
+                          value={values.countryCode}
+                        >
                           {COUNTRYCODE?.map((el: any, index: number) => (
                             <Option value={el?.countryCode} key={index}>
                               {el?.countryCode}
@@ -283,7 +291,9 @@ const CompanyRegistration = () => {
                           ))}
                         </Select>
                       }
-                      defaultValue={100}
+                      onChange={(e) => {
+                        console.log("the eeeee", e);
+                      }}
                     />
                     {/* <input
                       className={styles.fbinput}

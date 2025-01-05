@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useAppContext } from "../../../components/Context/AppContext";
 import DashBoard from "../../../components/User/Dashboard/DashBoard";
-import Loader from "../../../components/Loader";
 import CommonAction from "../../../components/CommonActionPage/CommonAction";
 
 const page = () => {

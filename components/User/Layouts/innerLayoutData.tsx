@@ -1,28 +1,21 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { Layout, Menu, MenuProps } from "antd";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import React, { useState } from "react";
+import { Layout, Menu } from "antd";
+import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import { usePathname, useRouter } from "next/navigation";
 import UserHeader from "../Header/UserHeader";
 const { Sider, Content } = Layout;
 
 const InnerLayout = ({ children }: { children: React.ReactNode }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const [keys, setKeys] = useState<string>("/user");
   const pathName = usePathname();
   const router = useRouter();
-  const [openKeys, setOpenKeys] = useState<string[]>([]);
 
   const toggle = () => {
     setCollapsed(!collapsed);
   };
 
   const handleClickMenu = (key: any) => {
-    setKeys(key);
     if (key !== "company") {
       router.push(key);
     }
@@ -76,17 +69,17 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
                   key: "/user/company/details",
                   label: "Details",
                 },
-                {
-                  key: "/user/company/documents",
-                  label: "Documents",
-                },
+                // {
+                //   key: "/user/company/documents",
+                //   label: "Documents",
+                // },
               ],
             },
-            {
-              key: "/user/2",
-              icon: <UploadOutlined />,
-              label: "Products",
-            },
+            // {
+            //   key: "/user/2",
+            //   icon: <UploadOutlined />,
+            //   label: "Products",
+            // },
           ]}
         />
       </Sider>

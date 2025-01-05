@@ -49,6 +49,7 @@
         color: #fff;
         width: 100%;
       }
+
       .inputActionWrapper {
         display: flex;
 
@@ -158,29 +159,25 @@
     background: none !important;
   }
 
-  :global(.ant-space-item){
-    @media screen and (max-width:678px){
+  :global(.ant-space-item) {
+    @media screen and (max-width: 678px) {
+      width: 100%;
+
+      button {
+        display: block;
+        box-sizing: border-box;
         width: 100%;
-
-        button{
-            display: block;
-            box-sizing: border-box;
-            width: 100%;
-            text-align: center;
-        }
+        text-align: center;
+      }
     }
   }
 
-  :global(.ant-space-gap-row-middle){
-    @media screen and (max-width:678px) {
-        flex-direction: column !important;
-        justify-content: flex-start !important;
+  :global(.ant-space-gap-row-middle) {
+    @media screen and (max-width: 678px) {
+      flex-direction: column !important;
+      justify-content: flex-start !important;
     }
   }
-
-
-
-
 
   .addwrapper {
     display: flex;
@@ -201,21 +198,22 @@
       border: 1px solid #94949e;
 
       color: #94949e;
-        transition: .3s ease-in-out;
+      transition: 0.3s ease-in-out;
 
-        svg{
-       path {transition: .3s ease-in-out;}
-
+      svg {
+        path {
+          transition: 0.3s ease-in-out;
         }
+      }
       &:hover {
         border: 1px solid #fff;
 
         color: #fff;
 
-        svg{
-            path{
-                stroke: #fff;
-            }
+        svg {
+          path {
+            stroke: #fff;
+          }
         }
       }
     }
@@ -239,4 +237,7 @@
   .deleteBtn {
     background-color: #a31818;
   }
+}
+.document {
+  cursor: pointer !important;
 }

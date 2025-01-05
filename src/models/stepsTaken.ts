@@ -38,7 +38,7 @@ StepsTaken.init(
       primaryKey: true,
     },
     stepId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: Steps, // References the Step model
@@ -46,7 +46,7 @@ StepsTaken.init(
       },
     },
     companyId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: Company,
@@ -54,7 +54,7 @@ StepsTaken.init(
       },
     },
     userId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: true,
       references: {
         model: User,

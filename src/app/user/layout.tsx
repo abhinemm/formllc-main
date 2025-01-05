@@ -52,13 +52,13 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             filterOne = res?.data?.find((el: any) => el.id == Number(selected));
             values = {
               id: filterOne?.id,
-              name: filterOne?.companyName,
+              name: `${filterOne?.companyName} ${filterOne?.type}`,
             };
           } else {
             filterOne = res?.data[0];
             values = {
               id: filterOne?.id,
-              name: filterOne?.companyName,
+              name: `${filterOne?.companyName} ${filterOne?.type}`,
             };
           }
           setContextOptions((prev) => ({

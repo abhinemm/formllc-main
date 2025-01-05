@@ -121,7 +121,7 @@ export async function POST(req: Request) {
         } else {
           await StepsTaken.create({
             companyId: newCompany.id,
-            status: StepsTakenStatusEnum.inReview,
+            status: StepsTakenStatusEnum.pending,
             stepId: step.id,
             userId: userExist.id,
           });
@@ -182,12 +182,18 @@ export async function PATCH(req: Request) {
   }
   const updatedCompany = await CompanyService.update(companyData.id!, body);
   try {
+    console.log("inside the condition list", body);
+
     const steps = await Steps.findAll({});
+    console.log("stepsstepssteps", steps);
+
     const firstStep = steps.find((el) => el.position === 1);
+    console.log("firstStepfirstStep", firstStep);
+
     if (firstStep) {
       if (body.status === 1) {
         await StepsTaken.update(
-          { status: StepsTakenStatusEnum.completed },
+          { status: StepsTakenStatusEnum.inReview },
           {
             where: {
               stepId: firstStep.id,

@@ -17,8 +17,16 @@ export enum CompanyPaymentStatus {
   failed = 2,
 }
 
-export enum StepsTakenStatusEnum{
-  completed = 'completed',
-  inReview = 'inReview',
-  actionRequired = 'actionRequired',
+export enum StepsTakenStatusEnum {
+  completed = "completed",
+  inReview = "inReview",
+  actionRequired = "actionRequired",
+  pending = "pending",
+}
+
+export enum StepsView {
+  completed = "Completed",
+  inReview = "In Review",
+  actionRequired = "Action Required",
+  pending = "Pending",
 }

@@ -5,11 +5,14 @@ import { DownOutlined } from "@ant-design/icons";
 import Image from "next/image";
 import { useAppContext } from "../../Context/AppContext";
 import { useRouter } from "next/navigation";
+import MyAccountModal from "../../Modals/ProfileModal/MyAccountModal";
 const { Header } = Layout;
 
 const UserHeader = () => {
   const router = useRouter();
   const { contextOptions, setContextOptions } = useAppContext();
+  const [accountShow, setAccountShow] = useState<boolean>(false);
+  const [accountKey, setAccountKey] = useState<any>();
 
   const [itemList, setItemList] = useState<MenuProps["items"]>([]);
   useLayoutEffect(() => {
@@ -22,18 +25,14 @@ const UserHeader = () => {
     }
   }, [contextOptions?.allCompanies]);
 
-  console.log("contextOptions", contextOptions);
-
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: "My Account",
-    },
-    {
-      key: "2",
       label: "Profile",
     },
   ];
+
+  console.log("contest options", contextOptions);
 
   const handleMenuClick = (e: any) => {
     if (e.key == "0") {
@@ -44,7 +43,7 @@ const UserHeader = () => {
       );
       const obj = {
         id: selectedCompany?.id,
-        name: selectedCompany?.companyName,
+        name: `${selectedCompany?.companyName} ${selectedCompany?.type}`,
       };
       localStorage.setItem("company", selectedCompany?.id);
       setContextOptions((prev) => ({
@@ -70,42 +69,56 @@ const UserHeader = () => {
   //   },
   // ];
 
+  const handleAccountClick = (e: any) => {
+    setAccountKey(e.key);
+    if (e.key === "1") {
+      setAccountShow(true);
+    }
+  };
+
   return (
-    <Header className={styles?.headerStyle}>
-      <Dropdown
-        menu={{
-          items: itemList,
-          onClick: handleMenuClick,
-          selectedKeys: [contextOptions?.selectedCompany?.id?.toString()],
-        }}
-        trigger={["click"]}
-      >
-        <a onClick={(e) => e.preventDefault()} className={styles.profileName}>
-          <span>{contextOptions?.selectedCompany?.name ?? "No Company"}</span>
-          <DownOutlined />
-        </a>
-      </Dropdown>
-      <Dropdown menu={{ items }}>
-        <a onClick={(e) => e.preventDefault()} className={styles.profileName}>
-          <Image
-            src={
-              contextOptions?.userData?.profilePic
-                ? contextOptions?.userData?.profilePic
-                : "/images/avathar.jpg"
-            }
-            width={30}
-            height={30}
-            alt="Description of the image"
-          />
-          <span>
-            {contextOptions?.userData
-              ? `${contextOptions?.userData?.firstName}`
-              : "My account"}
-          </span>
-          <DownOutlined />
-        </a>
-      </Dropdown>
-    </Header>
+    <>
+      <Header className={styles?.headerStyle}>
+        <Dropdown
+          menu={{
+            items: itemList,
+            onClick: handleMenuClick,
+            selectedKeys: [contextOptions?.selectedCompany?.id?.toString()],
+          }}
+          trigger={["click"]}
+        >
+          <a onClick={(e) => e.preventDefault()} className={styles.profileName}>
+            <span>{contextOptions?.selectedCompany?.name ?? "No Company"}</span>
+            <DownOutlined />
+          </a>
+        </Dropdown>
+        <Dropdown menu={{ items, onClick: handleAccountClick }}>
+          <a onClick={(e) => e.preventDefault()} className={styles.profileName}>
+            <Image
+              src={
+                contextOptions?.userData?.profilePic
+                  ? contextOptions?.userData?.profilePic
+                  : "/images/avathar.jpg"
+              }
+              width={30}
+              height={30}
+              alt="Description of the image"
+            />
+            <span>
+              {contextOptions?.userData
+                ? `${contextOptions?.userData?.firstName}`
+                : "My account"}
+            </span>
+            <DownOutlined />
+          </a>
+        </Dropdown>
+      </Header>
+      <MyAccountModal
+        onClose={() => setAccountShow(false)}
+        open={accountShow}
+        userData={contextOptions.userData}
+      />
+    </>
   );
 };
 

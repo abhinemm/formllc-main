@@ -19,6 +19,10 @@ export interface CompanyAttributes {
   country?: string;
   status?: number;
   paymentStatus?: number;
+  mailingAdress?: string;
+  countryCode?: string;
+  phone?: string;
+
 
   document?: string;
 }
@@ -52,6 +56,11 @@ class Company
 
   public status?: number;
   public paymentStatus?: number;
+
+  public mailingAdress?: string;
+  public countryCode?: string;
+  public phone?: string;
+
 
   public user?: User;
 }
@@ -125,6 +134,18 @@ Company.init(
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: CompanyPaymentStatus.notPaid,
+    },
+    mailingAdress: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    countryCode: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

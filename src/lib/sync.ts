@@ -13,6 +13,7 @@ const syncDatabase = async () => {
     console.log(
       "Connection to the database has been established successfully."
     );
+    await Company.sync({alter:true})
     Company.belongsTo(User, { foreignKey: "userId", as: "userData" });
     User.hasOne(Company, { foreignKey: "userId", as: "companyData" });
     await ContactUs.sync({ alter: false });

@@ -1,34 +1,26 @@
 "use client";
 import React, { useState } from "react";
-import { Layout, Menu, MenuProps } from "antd";
-import {
-  UserOutlined,
-  VideoCameraOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
-import { useRouter } from "next/navigation";
+import { Layout, Menu } from "antd";
+import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import { usePathname, useRouter } from "next/navigation";
 import UserHeader from "../Header/UserHeader";
 const { Sider, Content } = Layout;
 
 const InnerLayout = ({ children }: { children: React.ReactNode }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const pathName = usePathname();
   const router = useRouter();
 
   const toggle = () => {
     setCollapsed(!collapsed);
   };
 
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: "My Account",
-    },
-    {
-      key: "2",
-      label: "Profile",
-      extra: "⌘P",
-    },
-  ];
+  const handleClickMenu = (key: any) => {
+    if (key !== "company") {
+      router.push(key);
+    }
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
@@ -56,9 +48,11 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["1"]}
+          // defaultSelectedKeys={["0"]}
+          selectedKeys={[pathName]}
           onClick={({ key }) => {
-            router.push(key); // Navigate to corresponding route
+            handleClickMenu(key);
+            // Navigate to corresponding route
           }}
           items={[
             {
@@ -67,7 +61,7 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
               label: "Dashboard",
             },
             {
-              key: "",
+              key: "company",
               icon: <VideoCameraOutlined />,
               label: "Company",
               children: [
@@ -75,17 +69,17 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
                   key: "/user/company/details",
                   label: "Details",
                 },
-                {
-                  key: "/user/company/documents",
-                  label: "Documents",
-                },
+                // {
+                //   key: "/user/company/documents",
+                //   label: "Documents",
+                // },
               ],
             },
-            {
-              key: "/user/2",
-              icon: <UploadOutlined />,
-              label: "Products",
-            },
+            // {
+            //   key: "/user/2",
+            //   icon: <UploadOutlined />,
+            //   label: "Products",
+            // },
           ]}
         />
       </Sider>

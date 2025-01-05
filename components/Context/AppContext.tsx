@@ -5,6 +5,8 @@ interface ContextOptions {
   userData: any;
   selectedCompany: any;
   allCompanies: any;
+  campanyName: any;
+  selectedCompanyDetails: any;
 }
 
 interface AppContextProps {
@@ -19,8 +21,12 @@ export const AppProvider: React.FC<{
 }> = ({ children }) => {
   const [contextOptions, setContextOptions] = useState<ContextOptions>({
     userData: null,
-    selectedCompany: null,
+    selectedCompany: {
+      name: "No Company",
+    },
     allCompanies: [],
+    campanyName: null,
+    selectedCompanyDetails: null,
   });
 
   return (

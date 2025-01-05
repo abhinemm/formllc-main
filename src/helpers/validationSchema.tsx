@@ -60,3 +60,12 @@ export const createAccountSchema = yup.object().shape({
     .required("Confirm Password is required"),
   agreeTerms: yup.boolean().oneOf([true], "You must agree to the terms"),
 });
+
+export const profileSchema = yup.object().shape({
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+});

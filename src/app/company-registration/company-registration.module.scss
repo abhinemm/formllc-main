@@ -23,21 +23,53 @@
     gap: 16px;
     max-width: 800px;
   }
+  .fbformitemSelect {
+    :global(.ant-input-number-group-wrapper) {
+      margin-top: 11px !important;
+      background: #181429 !important;
+      width: 100% !important;
+      border-radius: 5px;
+    }
+    :global(.ant-select-selection-item) {
+      color: #fff !important;
+    }
+    :global(.ant-input-number-input) {
+      padding: 13px 8px 13px 20px !important;
+      color: #fff;
+      border-left: 1px solid #fff !important;
+      border-radius: 0px !important;
+    }
+    :global(.ant-input-number) {
+      background: transparent !important;
+      border-color: transparent !important;
+      :focus {
+        border-color: #fff !important;
+      }
+    }
+    :global(.ant-input-number-handler-wrap) {
+      display: none !important;
+    }
+    :global(.ant-input-number-group-addon) {
+      border: 1px solid transparent !important;
+    }
+    :global(.ant-number-input-outlined:focus) {
+      box-shadow: none !important;
+    }
+  }
 
   .fbformitem {
-    :global(.ant-select){
+    :global(.ant-select) {
       width: 100% !important;
       cursor: pointer !important;
     }
-    :global(.ant-select-single ){
+    :global(.ant-select-single) {
       cursor: pointer !important;
       height: 54px;
     }
-    :global(.ant-select-arrow){
-   color: #fff !important;
-   transform: translateY(-50%);
-   cursor: pointer !important;
-
+    :global(.ant-select-arrow) {
+      color: #fff !important;
+      transform: translateY(-50%);
+      cursor: pointer !important;
     }
     :global(.ant-select-selector) {
       border: none !important;
@@ -46,8 +78,7 @@
       cursor: pointer !important;
       box-shadow: none !important;
 
-
-      span{
+      span {
         color: #fff !important;
       }
     }
@@ -132,7 +163,6 @@
 .signUpOptions {
   width: 100%;
   margin-top: 30px;
-
   ul {
     all: unset;
     display: flex;
@@ -195,7 +225,7 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 20px;
-        color: var(--color-light);
+        color: var(--white-color);
         box-shadow: 0 4px 60px rgba(0, 0, 0, 0.0196078431);
         transition: background-color var(--transition-delay) ease,
           color var(--transition-delay) ease,
@@ -234,7 +264,7 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 20px;
-        color: var(--color-light);
+        color: var(--white-color);
         box-shadow: 0 4px 60px #00000005;
         transition: background-color var(--transition-delay) ease,
           color var(--transition-delay) ease,

@@ -106,7 +106,7 @@ const HomePage = () => {
     "US Bank account with a physical debit card",
     "Registered Agent",
     "Formation and EIN",
-    
+
     "Company's initial legal documentation",
     "US business address with mail forwarding",
   ];
@@ -195,32 +195,32 @@ const HomePage = () => {
         </svg>
       ),
     },
-      {
-        title: "Montana",
-        icon: "/images/icon-delaware.png",
-        points: [
-          "Strong asset protection laws",
-          "No state sales tax",
-          "Cost-effective registration process",
-          "Privacy for business owners",
-          "Flexible management options",
-        ],
-        svgIcon: (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="25"
-            viewBox="0 0 25 25"
-            fill="none"
-          >
-            <path
-              d="M12.2148 17.4001V10.4001M12.2148 10.4001L18.2148 6.90015L12.2148 3.40015V10.4001ZM9.21484 14.5993C5.71927 15.0798 3.21484 16.3762 3.21484 17.9001C3.21484 19.8331 7.24428 21.4001 12.2148 21.4001C17.1854 21.4001 21.2148 19.8331 21.2148 17.9001C21.2148 16.3762 18.7104 15.0798 15.2148 14.5993"
-              stroke="#622774"
-              strokeWidth="2"
-            ></path>
-          </svg>
-        ),
-      },
+    {
+      title: "Montana",
+      icon: "/images/icon-delaware.png",
+      points: [
+        "Strong asset protection laws",
+        "No state sales tax",
+        "Cost-effective registration process",
+        "Privacy for business owners",
+        "Flexible management options",
+      ],
+      svgIcon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="25"
+          height="25"
+          viewBox="0 0 25 25"
+          fill="none"
+        >
+          <path
+            d="M12.2148 17.4001V10.4001M12.2148 10.4001L18.2148 6.90015L12.2148 3.40015V10.4001ZM9.21484 14.5993C5.71927 15.0798 3.21484 16.3762 3.21484 17.9001C3.21484 19.8331 7.24428 21.4001 12.2148 21.4001C17.1854 21.4001 21.2148 19.8331 21.2148 17.9001C21.2148 16.3762 18.7104 15.0798 15.2148 14.5993"
+            stroke="#622774"
+            strokeWidth="2"
+          ></path>
+        </svg>
+      ),
+    },
   ];
 
   const featuresSecSix = [
@@ -239,8 +239,8 @@ const HomePage = () => {
               <p className={styles.description}>
                 From anywhere in the world, our complete platform simplifies the
                 USA company registration, allowing you to establish your
-                business as an LLC in globally recognized states like
-                Montana or Wyoming.
+                business as an LLC in globally recognized states like Montana or
+                Wyoming.
               </p>
               <div className={styles.ctaButtons}>
                 <a
@@ -461,7 +461,7 @@ const HomePage = () => {
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.1, delay: index * 0.1 }}
+                    transition={{ duration: 0.5, delay: index * 0.3 }}
                   >
                     • {feature}
                   </motion.div>

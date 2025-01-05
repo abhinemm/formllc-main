@@ -1,88 +1,60 @@
 "use client";
-import React, { useRef } from "react";
-import styles from "./mainStyle.module.scss";
+import React from "react";
+import { useAppContext } from "../../../components/Context/AppContext";
+import DashBoard from "../../../components/User/Dashboard/DashBoard";
+import CommonAction from "../../../components/CommonActionPage/CommonAction";
 
 const page = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const { contextOptions } = useAppContext();
 
-  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (scrollRef.current) {
-      e.preventDefault();
-      scrollRef.current.scrollLeft += e.deltaY > 0 ? 50 : -50;
+  const renderPage = () => {
+    console.log(
+      "contextOptions?.selectedCompanyDetails",
+      contextOptions?.selectedCompanyDetails
+    );
+
+    if (!contextOptions?.selectedCompanyDetails) {
+      return (
+        <CommonAction
+          title="No Company Registered"
+          description="Please register a company to continue using the dashboard."
+          btnText="Register company"
+          redirectUrl="/start-buisness"
+        />
+      );
+    } else if (contextOptions?.selectedCompanyDetails?.paymentStatus === 0) {
+      return (
+        <CommonAction
+          title="Payment Incomplete"
+          description="Please complete the payment to proceed."
+          btnText="Go to Payment"
+          redirectUrl="payment"
+        />
+      );
+    } else if (contextOptions?.selectedCompanyDetails.paymentStatus === 2) {
+      return (
+        <CommonAction
+          title="Payment Failed"
+          description="Please try again or continue using the dashboard."
+          btnText="Go to Payment"
+          redirectUrl="payment"
+        />
+      );
+    } else if (contextOptions?.selectedCompanyDetails.status === 0) {
+      return (
+        <CommonAction
+          title="Incomplete Company Details"
+          description="Please complete the registration process to continue."
+          btnText="Continue Register"
+          redirectUrl={`/company-registration?id=${contextOptions?.selectedCompanyDetails.id}`}
+        />
+      );
+    } else {
+      return <DashBoard />;
     }
   };
 
-  return (
-    <section className={styles.userDashSection}>
-      <div
-        ref={scrollRef}
-        onWheel={handleWheel}
-        className={styles.userStepsMainWrapper}
-      >
-        <ul>
-          {/* <li className={styles.StepCompleted}> 
-          if a step is completed add this class to the li for the style 
-            */}
-
-          {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
-            <li
-              className={`${item % 2 == 0 ? styles.StepCompleted : ""}`}
-              key={index}
-            >
-              <div className={styles.stepCountWrapper}>
-                <h5>step {item}</h5>
-
-                {/* conditionaly render this span for the completed and incompleted step */}
-                {item % 2 == 0 && <span>completed</span>}
-              </div>
-              <div className={styles.stepContent}>
-                <h6>Company steps content</h6>
-
-                <p className={styles.underlined}>
-                  By default, the mouse wheel scrolls vertically. Even if your
-                  section has overflow-x: scroll, the mouse wheel won't scroll
-                  horizontally unless:
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className={styles.taskMainWrapper}>
-        <ul>
-          {
-            [1,2,3,4].map((_,index)=>(
-
-              <li key={index}>
-              <div className={styles.taskHeader}>
-                <h6>Task name</h6>
-  
-                <span className={styles.alertSpan}>Past Due</span>
-  
-                <span className={styles.requiredStyle}>required</span>
-              </div>
-              <p>
-                This error happens because TypeScript doesn't know the type of the
-                element attached to useRef. By default, useRef is inferred as if
-                no type is provided. We need to explicitly type the reference to
-              </p>
-  
-              <div className={styles.actionWrapper}>
-                <button>
-                  <span>Start Task</span>
-                </button>
-              </div>
-            </li>
-
-            ))
-          }
-
-         
-        </ul>
-      </div>
-    </section>
-  );
+  return <>{renderPage()}</>;
 };
 
 export default page;

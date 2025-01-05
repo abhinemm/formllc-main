@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./company-registration.module.scss";
 import { Formik } from "formik";
 
-import { notification, Select, Spin } from "antd";
-import { ALLCOUNTRIES } from "@/constants/constants";
+import { InputNumber, notification, Select, Spin } from "antd";
+import { ALLCOUNTRIES, COUNTRYCODE } from "@/constants/constants";
 import axios from "axios";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -90,7 +90,6 @@ const CompanyRegistration = () => {
           message: "File size exceeds 10 MB. Please select a smaller file.",
           placement: "topRight",
         });
-
         setFile(null);
       } else {
         setFile(selectedFile);
@@ -148,18 +147,19 @@ const CompanyRegistration = () => {
       state: values?.state,
       zipCode: values?.zipCode,
       country: values?.country,
+      status: 1,
     };
     try {
       await axios
         .patch(`/api/company?id=${id}`, data)
         .then((res: any) => {
           setUpdateLoading(false);
-          console.log("the response", res);
           openNotification({
             type: "success",
             message: "Buisness registered sucessfully",
             placement: "topRight",
           });
+          router.push("/user");
         })
         .catch((err: any) => {
           setUpdateLoading(false);
@@ -271,6 +271,33 @@ const CompanyRegistration = () => {
 
                 <div className={styles.doubleFlex}>
                   {" "}
+                  <div className={styles.fbformitemSelect}>
+                    <label className={styles.fblabel}>Phone</label>
+                    <InputNumber
+                      addonBefore={
+                        <Select style={{ width: 80, color: "#fff" }}>
+                          {COUNTRYCODE?.map((el: any, index: number) => (
+                            <Option value={el?.countryCode} key={index}>
+                              {el?.countryCode}
+                            </Option>
+                          ))}
+                        </Select>
+                      }
+                      defaultValue={100}
+                    />
+                    {/* <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="john.doe@mail.com"
+                      name="city"
+                      onChange={handleChange}
+                      value={values.city}
+                    /> */}
+                    {/* {errors.city && touched.city && (
+                      <p className={styles.errorWarning}>{errors.city}</p>
+                    )} */}
+                  </div>
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>Street Address</label>
                     <input
@@ -288,6 +315,10 @@ const CompanyRegistration = () => {
                       </p>
                     )}
                   </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>City / Town</label>
                     <input
@@ -303,10 +334,6 @@ const CompanyRegistration = () => {
                       <p className={styles.errorWarning}>{errors.city}</p>
                     )}
                   </div>
-                </div>
-
-                <div className={styles.doubleFlex}>
-                  {" "}
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>
                       State / Province / Region
@@ -324,6 +351,10 @@ const CompanyRegistration = () => {
                       <p className={styles.errorWarning}>{errors.state}</p>
                     )}
                   </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>Postal / ZIP Code</label>
                     <input
@@ -335,21 +366,19 @@ const CompanyRegistration = () => {
                       onChange={handleChange}
                       value={values.zipCode}
                     />
-                    {errors.state && touched.state && (
-                      <p className={styles.errorWarning}>{errors.state}</p>
+                    {errors.zipCode && touched.zipCode && (
+                      <p className={styles.errorWarning}>{errors.zipCode}</p>
                     )}
                   </div>
-                </div>
-
-                <div className={styles.doubleFlex}>
-                  {" "}
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>Country</label>
                     <Select
                       showSearch
                       placeholder="Select a country"
                       optionFilterProp="children"
-                      onChange={handleChange}
+                      onChange={(e) => {
+                        setFieldValue("country", e);
+                      }}
                       filterOption={(input: any, option: any) =>
                         (option?.children as string)
                           .toLowerCase()
@@ -363,10 +392,13 @@ const CompanyRegistration = () => {
                         </Option>
                       ))}
                     </Select>
-                    {errors.state && touched.state && (
-                      <p className={styles.errorWarning}>{errors.state}</p>
+                    {errors.country && touched.country && (
+                      <p className={styles.errorWarning}>{errors.country}</p>
                     )}
                   </div>
+                </div>
+                <div className={styles.doubleFlex}>
+                  {" "}
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>Proof of Address</label>
                     <div className={styles.fileUpload}>
@@ -375,6 +407,7 @@ const CompanyRegistration = () => {
                         id="confirm-email"
                         type="file"
                         name="proofOfAddress"
+                        accept="image/*"
                         onChange={(e) => handleFileChange(e, setFieldValue)}
                       />
                       {errors.proofOfAddress && touched.proofOfAddress && (

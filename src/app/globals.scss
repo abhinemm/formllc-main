@@ -108,6 +108,24 @@ a {
   }
 }
 
+.userModal {
+  .ant-modal-content {
+    background: #121327 !important;
+  }
+  .ant-modal-close {
+    color: var(--white-color) !important;
+  }
+  .ant-select-selector {
+    border: none !important;
+    background: #121327 !important;
+    color: white !important;
+    padding: 10px !important;
+  }
+  .ant-select-single {
+    height: auto !important;
+  }
+}
+
 .ant-notification {
   z-index: 10001 !important;
   background-color: var(--primary-color) !important;
@@ -188,13 +206,27 @@ a {
   background-color: #161618 !important;
 }
 
-.ant-modal-footer{
+.ant-modal-footer {
   display: none;
 }
-.anticon{
+.anticon {
   color: #fff !important;
 }
-.ant-select-arrow{
+.ant-select-arrow {
   margin: 0 !important;
   transform: translateY(-50%) !important;
+}
+
+.IframeWrapper {
+  width: 100%;
+  iframe {
+    width: 90%;
+    min-height: 75vh;
+    body {
+      display: flex;
+      align-items: center;
+      justify-items: center;
+      background-color: #020314;
+    }
+  }
 }

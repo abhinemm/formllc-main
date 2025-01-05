@@ -1,5 +1,5 @@
 "use client";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import InnerLayout from "../../../components/User/Layouts/innerLayoutData";
@@ -12,19 +12,21 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const session: any = useSession();
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<any>();
-  const { setContextOptions } = useAppContext();
+  const { contextOptions, setContextOptions } = useAppContext();
 
   useLayoutEffect(() => {
     if (session?.status == "loading") {
       setLoading(true);
     } else {
       if (session?.data?.user) {
-        setUserData(session?.data?.user);
-        setContextOptions((prev) => ({
-          ...prev,
-          userData: session?.data?.user,
-        }));
-        handleGetAllbuisness(session?.data?.user?.id);
+        if (!userData) {
+          setUserData(session?.data?.user);
+          setContextOptions((prev) => ({
+            ...prev,
+            userData: session?.data?.user,
+          }));
+          handleGetAllbuisness(session?.data?.user?.id);
+        }
       } else {
         setLoading(false);
         router.push("/");
@@ -32,16 +34,41 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [session]);
 
+  useEffect(() => {
+    if (contextOptions.campanyName) {
+      setLoading(true);
+    }
+  }, [contextOptions.campanyName]);
+
   const handleGetAllbuisness = async (id: number) => {
     await axios
       .get(`/api/company?userId=${id}`)
       .then((res: any) => {
+        if (res?.data?.length) {
+          const selected = localStorage.getItem("company");
+          let values: any;
+          let filterOne: any;
+          if (selected) {
+            filterOne = res?.data?.find((el: any) => el.id == Number(selected));
+            values = {
+              id: filterOne?.id,
+              name: `${filterOne?.companyName} ${filterOne?.type}`,
+            };
+          } else {
+            filterOne = res?.data[0];
+            values = {
+              id: filterOne?.id,
+              name: `${filterOne?.companyName} ${filterOne?.type}`,
+            };
+          }
+          setContextOptions((prev) => ({
+            ...prev,
+            allCompanies: res?.data,
+            selectedCompany: values,
+            selectedCompanyDetails: filterOne,
+          }));
+        }
         setLoading(false);
-        console.log("the response", res);
-        setContextOptions((prev) => ({
-          ...prev,
-          allCompanies: res?.data,
-        }));
       })
       .catch((err: any) => {
         setLoading(false);
@@ -49,6 +76,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         console.log("the error is ", err);
       });
   };
+
   return <>{loading ? <Loader /> : <InnerLayout>{children}</InnerLayout>}</>;
 };
 

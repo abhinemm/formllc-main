@@ -1,10 +1,45 @@
 .footer {
-    background-color: #333;
-    color: #fff;
+
+   
     text-align: center;
-    padding: 1rem 0;
+  
+    color: #fff;
+    margin-top: 100px;
+    position: relative;
+
+    >div {
+        position: relative;
+        z-index: 10;
+        padding-block: 60px 10px;
+        background-color: #020314;
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        padding-inline: 50px;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        inset: -1px -1px 0px -1px;
+        background: linear-gradient(84deg, #22a3ff, #ff90c9 25%, #4d54ff);
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        z-index: -0;
+
+    }
+
+
+    h2 {
+        margin-bottom: 20px;
+    }
 
     p {
-        font-size: 0.9rem;
+
+        color: #a4a7ff;
+
+
+        &:has(a) {
+            margin-bottom: 15px;
+        }
     }
 }

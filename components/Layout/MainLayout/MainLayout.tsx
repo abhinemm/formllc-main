@@ -30,11 +30,13 @@ const MainLayout = ({ children }: ChildProps) => {
     <section className="siteLayout">
       <div className="headerDiv">{renderHeader()}</div>
       <div className={checkUserLayout() ? "" : "childrenWrapper"}>
-        {children}
+        <div> {children}</div>
+
+        <div className="footerWrapper">
+          {!pathName?.includes("/admin") && <Foooter />}
+        </div>
       </div>
-      <div className="footerWrapper">
-        {!pathName?.includes("/admin") && <Foooter />}
-      </div>
+
     </section>
   );
 };

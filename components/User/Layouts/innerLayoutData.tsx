@@ -58,12 +58,12 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
             {
               key: "/user",
               icon: <UserOutlined />,
-              label: "Dashboard",
+              label: "Companies",
             },
             {
-              key: "company",
+              key: "Contacts",
               icon: <VideoCameraOutlined />,
-              label: "Company",
+              label: "Contacts",
               children: [
                 {
                   key: "/user/company/details",
@@ -74,6 +74,11 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
                 //   label: "Documents",
                 // },
               ],
+            },
+            {
+              key: "/user",
+              icon: <UserOutlined />,
+              label: "Steps",
             },
             // {
             //   key: "/user/2",

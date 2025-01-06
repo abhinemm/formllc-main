@@ -22,7 +22,6 @@ const StartBusinessTabs: React.FC = () => {
   const session = useSession();
 
   const handleContinue = () => {
-    console.log("datadata", session);
     if (!session?.data?.user) {
       setIsAuth(true);
       setActiveTabNumber(4);

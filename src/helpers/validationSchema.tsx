@@ -8,6 +8,14 @@ export const registerSchema = yup.object().shape({
     .string()
     .email("Invalid email address")
     .required("Email is required"),
+  phone: yup
+    .string()
+    .matches(
+      /^\+?[1-9]\d{1,14}$/,
+      "Please enter a valid international phone number"
+    )
+    .required("Phone number is required"),
+  countryCode: yup.string().required("Country Code is required"),
   streetAddress: yup.string().required("Street address is required"),
   city: yup.string().required("City is required"),
   state: yup.string().required("State is required"),

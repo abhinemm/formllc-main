@@ -4,6 +4,7 @@ import styles from "./HomePage.module.scss";
 import { motion } from "framer-motion";
 import FAQSection from "./FAQSection/FAQSection";
 import Image from "next/image";
+import Link from "next/link";
 
 const HomePage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -244,13 +245,13 @@ const HomePage = () => {
               </p>
               <div className={styles.ctaButtons}>
                 <a
-                  href="#get-started"
+                  href="/start-buisness"
                   className={`${styles.btn} ${styles.btnPrimary}`}
                 >
                   Get Started →
                 </a>
                 <a
-                  href="#contact-us"
+                  href="/contact-us"
                   className={`${styles.btn} ${styles.btnSecondary}`}
                 >
                   Contact us
@@ -426,7 +427,7 @@ const HomePage = () => {
             </div>
             <p className={styles.contact}>
               Can&apos;t decide? Let us help you!{" "}
-              <a href="#contact">Contact us</a>
+              <Link href="/contact-us">Contact us</Link>
             </p>
           </div>
         </div>
@@ -445,7 +446,7 @@ const HomePage = () => {
                   platform. Dive into a hassle-free US business experience
                   online wherever you are in the world.
                 </p>
-                <a href="#get-started" className={styles.button}>
+                <a href="/start-buisness" className={styles.button}>
                   Get Started →
                 </a>
               </div>

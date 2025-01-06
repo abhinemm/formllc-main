@@ -47,6 +47,8 @@ const CompanyRegistration = () => {
     zipCode: "",
     country: "",
     proofOfAddress: "",
+    countryCode: "",
+    phone: "",
     agreeTerms: false,
   };
 
@@ -147,6 +149,8 @@ const CompanyRegistration = () => {
       state: values?.state,
       zipCode: values?.zipCode,
       country: values?.country,
+      countryCode: values?.countryCode,
+      phone: values?.phone,
       status: 1,
     };
     try {
@@ -275,15 +279,28 @@ const CompanyRegistration = () => {
                     <label className={styles.fblabel}>Phone</label>
                     <InputNumber
                       addonBefore={
-                        <Select style={{ width: 80, color: "#fff" }}>
-                          {COUNTRYCODE?.map((el: any, index: number) => (
-                            <Option value={el?.countryCode} key={index}>
-                              {el?.countryCode}
-                            </Option>
-                          ))}
-                        </Select>
+                        <>
+                          <Select
+                            style={{ width: 100, color: "#fff" }}
+                            onChange={(e: any) => {
+                              setFieldValue("countryCode", e);
+                            }}
+                            value={values.countryCode}
+                            placeholder="Code"
+                          >
+                            {COUNTRYCODE?.map((el: any, index: number) => (
+                              <Option value={el?.dial_code} key={index}>
+                                {`${el?.code}(${el?.dial_code})`}
+                              </Option>
+                            ))}
+                          </Select>
+                        </>
                       }
-                      defaultValue={100}
+                      onChange={(e) => {
+                        setFieldValue("phone", e);
+                      }}
+                      value={values.phone}
+                      placeholder="Phone number"
                     />
                     {/* <input
                       className={styles.fbinput}
@@ -294,9 +311,14 @@ const CompanyRegistration = () => {
                       onChange={handleChange}
                       value={values.city}
                     /> */}
-                    {/* {errors.city && touched.city && (
-                      <p className={styles.errorWarning}>{errors.city}</p>
-                    )} */}
+                    {errors.countryCode && touched.countryCode && (
+                      <p className={styles.errorWarning}>
+                        {errors.countryCode}
+                      </p>
+                    )}
+                    {errors.phone && touched.phone && (
+                      <p className={styles.errorWarning}>{errors.phone}</p>
+                    )}
                   </div>
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>Street Address</label>

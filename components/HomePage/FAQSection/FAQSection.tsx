@@ -65,12 +65,12 @@ const FAQSection = () => {
       </div>
       <div className={styles.faqList}>
         {faqs.map((faq, index) => (
-          <motion.div
+          <div
             key={index}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: index * 0.3 }}
+            // initial={{ opacity: 0, y: 50 }}
+            // whileInView={{ opacity: 1, y: 0 }}
+            // viewport={{ once: true }}
+            // transition={{ duration: 0.5, delay: index * 0.3 }}
             className={`${styles.faqItem} ${
               activeIndex === index ? styles.active : ""
             }`}
@@ -89,7 +89,7 @@ const FAQSection = () => {
             >
               {faq.answer}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </section>

@@ -1,7 +1,12 @@
+import { Spin } from "antd";
 import React from "react";
 
 const Loader = () => {
-  return <div>Loading....</div>;
+  return (
+    <div className="loaderWrapper">
+      <Spin />
+    </div>
+  );
 };
 
 export default Loader;

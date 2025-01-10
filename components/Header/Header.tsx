@@ -4,6 +4,7 @@ import styles from "./header.module.scss";
 import { Drawer } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Header = () => {
   const router = useRouter();
@@ -11,6 +12,7 @@ const Header = () => {
   const showDrawer = () => {
     setOpen(true);
   };
+  const session = useSession();
 
   const handleRedirect = (url) => {
     router.push(url);
@@ -28,7 +30,7 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className={`${styles.nav} ${styles.desktopNav}`}>
             <ul>
-              <li>
+              {/* <li>
                 <Link href="#products">Products</Link>
               </li>
               <li>
@@ -39,18 +41,23 @@ const Header = () => {
               </li>
               <li>
                 <Link href="#partners">Partners</Link>
+              </li> */}
+              <li>
+                <Link href="/contact-us">Contact Us</Link>
               </li>
               <li>
-                <Link href="#resources">Resources</Link>
-              </li>
-              <li>
-                <Link href="#company">Company</Link>
+                {session?.data?.user ? (
+                  <Link href="/user" className={styles.signIn}>
+                    My Account
+                  </Link>
+                ) : (
+                  <Link href="/api/auth/signin" className={styles.signIn}>
+                    Sign in
+                  </Link>
+                )}
               </li>
             </ul>
             <div className={styles.authButtons}>
-              <Link href="/api/auth/signin" className={styles.signIn}>
-                Sign in
-              </Link>
               <Link href="/start-buisness" className={styles.startBusiness}>
                 Start my business
               </Link>

@@ -4,33 +4,11 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { Spin } from "antd";
+import { createAccountSchema } from "@/helpers/validationSchema";
 
-const CreateAccount = ({ onCreateAccount }) => {
+const CreateAccount = ({ onCreateAccount, handleSignIn }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const schema = yup.object().shape({
-    firstName: yup.string().required("First Name is required"),
-    lastName: yup.string().required("Last Name is required"),
-    email: yup.string().email("Invalid email").required("Email is required"),
-    confirmEmail: yup
-      .string()
-      .oneOf([yup.ref("email"), undefined], "Confirm Email must match Email")
-      .required("Confirm Email is required"),
-    password: yup
-      .string()
-      .min(8, "Password must be at least 8 characters")
-      .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-      .matches(/[0-9]/, "Password must contain at least one number")
-      .matches(
-        /[!@#$%^&*(),.?":{}|<>]/,
-        "Password must contain at least one special character"
-      )
-      .required("Password is required"),
-    confirmPassword: yup
-      .mixed() // Use mixed for confirmPassword as explained before
-      .oneOf([yup.ref("password")], "Confirm Password must match Password")
-      .required("Confirm Password is required"),
-    agreeTerms: yup.boolean().oneOf([true], "You must agree to the terms"),
-  });
+
 
   const initialValues = {
     firstName: "",
@@ -41,6 +19,8 @@ const CreateAccount = ({ onCreateAccount }) => {
     confirmPassword: "",
     agreeTerms: false,
   };
+
+  
   const onSubmit = async (values: any) => {
     console.log("the valuses are", values);
     setLoading(true);
@@ -74,7 +54,7 @@ const CreateAccount = ({ onCreateAccount }) => {
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
-        validationSchema={schema}
+        validationSchema={createAccountSchema}
       >
         {({
           handleSubmit,
@@ -221,7 +201,9 @@ const CreateAccount = ({ onCreateAccount }) => {
         )}
       </Formik>
 
-      <div className={styles.signUpOptions}></div>
+      <div className={styles.signUpOptions}>
+       
+      </div>
     </div>
   );
 };

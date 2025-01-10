@@ -1,0 +1,25 @@
+.headerStyle {
+  padding: 0;
+  background: #161618;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-inline: 15px;
+  gap: 40px;
+  border-bottom: 1px solid #272729;
+  :global {
+    .ant-dropdown-menu-item-selected {
+      background: #c6c6c6 !important;
+      color: #000000 !important;
+    }
+  }
+}
+.profileName {
+  color: var(--white-color) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  img {
+    border-radius: 50%;
+  }
+}

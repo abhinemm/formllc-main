@@ -4,7 +4,9 @@ import UserService from "@/services/user.model.service";
 import CompanyService from "@/services/company.model.service";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { Op } from "sequelize";
+import { CompanyStatus, StepsTakenStatusEnum } from "@/utils/constants";
+import StepsTaken from "@/models/stepsTaken";
+import Steps from "@/models/steps";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -55,7 +57,6 @@ export async function GET(req: Request) {
   }
 }
 
-
 export async function POST(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
   if (!data || !data.user) {
@@ -78,6 +79,10 @@ export async function POST(req: Request) {
     state,
     zipCode,
     country,
+    status,
+    mailingAdress,
+    phone,
+    countryCode
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -89,7 +94,7 @@ export async function POST(req: Request) {
     }
     userExist.currency = currency;
     await userExist.save();
-    
+
     const newCompany = await Company.create({
       registrationState,
       type: companyType,
@@ -104,7 +109,32 @@ export async function POST(req: Request) {
       state,
       zipCode,
       country,
+      status,
+      mailingAdress,
+      phone,
+      countryCode
     });
+    try {
+      const steps = await Steps.findAll({});
+      for (const step of steps) {
+        if (step.position === 1 && status === CompanyStatus.active) {
+          await StepsTaken.create({
+            companyId: newCompany.id,
+            status: StepsTakenStatusEnum.completed,
+            stepId: step.id,
+            userId: userExist.id,
+          });
+        } else {
+          await StepsTaken.create({
+            companyId: newCompany.id,
+            status: StepsTakenStatusEnum.pending,
+            stepId: step.id,
+            userId: userExist.id,
+          });
+        }
+      }
+    } catch {}
+
     return NextResponse.json(newCompany, { status: 201 });
   } catch (error) {
     return NextResponse.json(
@@ -138,6 +168,7 @@ export async function PATCH(req: Request) {
   const companyData = await CompanyService.findOne({
     id,
   });
+
   if (!companyData) {
     return NextResponse.json(
       {
@@ -146,7 +177,8 @@ export async function PATCH(req: Request) {
       { status: 400 }
     );
   }
-  if (companyData?.userId !== data.user.id || data.user.id !== adminUser?.id) {
+  // || data.user.id !== adminUser?.id
+  if (companyData?.userId !== data.user.id) {
     return NextResponse.json(
       {
         error: "User have no permission to do this operation!",
@@ -155,6 +187,30 @@ export async function PATCH(req: Request) {
     );
   }
   const updatedCompany = await CompanyService.update(companyData.id!, body);
+  try {
+    console.log("inside the condition list", body);
+
+    const steps = await Steps.findAll({});
+    console.log("stepsstepssteps", steps);
+
+    const firstStep = steps.find((el) => el.position === 1);
+    console.log("firstStepfirstStep", firstStep);
+
+    if (firstStep) {
+      if (body.status === 1) {
+        await StepsTaken.update(
+          { status: StepsTakenStatusEnum.inReview },
+          {
+            where: {
+              stepId: firstStep.id,
+              userId: companyData.userId,
+              companyId: companyData.id,
+            },
+          }
+        );
+      }
+    }
+  } catch {}
   return NextResponse.json(
     {
       message: "Company updated successfully!",

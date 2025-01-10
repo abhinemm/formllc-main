@@ -48,6 +48,7 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
         currency: selectedCurrency,
         registrationState: companyLocation,
         companyType: companyType,
+        status: 0,
       };
       try {
         await axios

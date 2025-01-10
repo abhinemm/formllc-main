@@ -4,6 +4,7 @@ import styles from "./HomePage.module.scss";
 import { motion } from "framer-motion";
 import FAQSection from "./FAQSection/FAQSection";
 import Image from "next/image";
+import Link from "next/link";
 
 const HomePage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -102,11 +103,11 @@ const HomePage = () => {
   ];
 
   const features = [
-    "Fast, easy, and online LLC & C-Corp formation",
+    "Fast, easy, and online",
     "US Bank account with a physical debit card",
     "Registered Agent",
     "Formation and EIN",
-    "US phone number",
+
     "Company's initial legal documentation",
     "US business address with mail forwarding",
   ];
@@ -196,14 +197,14 @@ const HomePage = () => {
       ),
     },
     {
-      title: "Delaware",
+      title: "Montana",
       icon: "/images/icon-delaware.png",
       points: [
-        "Investor Confidence (startup hub all around the world)",
-        "Flexible Corporate Structure",
-        "Established, entrepreneur-friendly legal landscape",
-        "Privacy Protection",
-        "No sales tax",
+        "Strong asset protection laws",
+        "No state sales tax",
+        "Cost-effective registration process",
+        "Privacy for business owners",
+        "Flexible management options",
       ],
       svgIcon: (
         <svg
@@ -226,7 +227,7 @@ const HomePage = () => {
   const featuresSecSix = [
     "Fast, easy, and online LLC & C-Corp formation",
     "US Bank account application and a debit card",
-    "EIN & ITIN application",
+    "EIN application",
   ];
   return (
     <>
@@ -239,18 +240,18 @@ const HomePage = () => {
               <p className={styles.description}>
                 From anywhere in the world, our complete platform simplifies the
                 USA company registration, allowing you to establish your
-                business as an LLC in globally recognized states like
-                Montana or Wyoming.
+                business as an LLC in globally recognized states like Montana or
+                Wyoming.
               </p>
               <div className={styles.ctaButtons}>
                 <a
-                  href="#get-started"
+                  href="/start-buisness"
                   className={`${styles.btn} ${styles.btnPrimary}`}
                 >
                   Get Started →
                 </a>
                 <a
-                  href="#contact-us"
+                  href="/contact-us"
                   className={`${styles.btn} ${styles.btnSecondary}`}
                 >
                   Contact us
@@ -340,7 +341,7 @@ const HomePage = () => {
 
       <section>
         <div className="container">
-          <div className={styles?.companyStructure}>
+          {/* <div className={styles?.companyStructure}>
             <div className={styles.header}>
               <h2>Deciding on Company Structure</h2>
               <p>
@@ -372,7 +373,7 @@ const HomePage = () => {
             <p className={styles.contact}>
               Can’t decide? Let us help you! <a href="#contact">Contact us</a>
             </p>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -426,7 +427,7 @@ const HomePage = () => {
             </div>
             <p className={styles.contact}>
               Can&apos;t decide? Let us help you!{" "}
-              <a href="#contact">Contact us</a>
+              <Link href="/contact-us">Contact us</Link>
             </p>
           </div>
         </div>
@@ -445,7 +446,7 @@ const HomePage = () => {
                   platform. Dive into a hassle-free US business experience
                   online wherever you are in the world.
                 </p>
-                <a href="#get-started" className={styles.button}>
+                <a href="/start-buisness" className={styles.button}>
                   Get Started →
                 </a>
               </div>

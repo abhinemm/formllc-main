@@ -1,10 +1,15 @@
 "use client";
-
 import React from "react";
 import styles from "./ContactUs.module.scss";
 import ContactForm from "./Form/ContactForm";
+import { useRouter } from "next/navigation";
 
 const ContactUsComponent: React.FC = () => {
+  const router = useRouter();
+
+  const onRedirect = (url) => {
+    router.push(url);
+  };
   return (
     <div className={styles.pageContainer}>
       {/* Hero Section */}
@@ -17,7 +22,13 @@ const ContactUsComponent: React.FC = () => {
           businesses in the USA. Reliable, fast, and hassle-free registration
           process.
         </p>
-        <button className={styles.ctaButton}>Get Started</button>
+        <button
+          type="button"
+          onClick={() => onRedirect("/start-buisness")}
+          className={styles.ctaButton}
+        >
+          Get Started
+        </button>
       </section>
 
       {/* Contact Form Section */}

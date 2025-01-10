@@ -1,6 +1,8 @@
+"use client";
 import React, { Suspense } from "react";
 import Loader from "../Loader";
 import MainLayout from "./MainLayout/MainLayout";
+import { AppProvider } from "../Context/AppContext";
 
 type ChildProps = {
   children: React.ReactNode;
@@ -9,7 +11,9 @@ type ChildProps = {
 const InnerLayout = ({ children }: ChildProps) => {
   return (
     <Suspense fallback={<Loader />}>
-      <MainLayout>{children}</MainLayout>
+      <AppProvider>
+        <MainLayout>{children}</MainLayout>
+      </AppProvider>
     </Suspense>
   );
 };

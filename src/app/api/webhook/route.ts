@@ -1,4 +1,5 @@
 export async function POST(req: Request) {
-    console.log("req------------->",req.body);
+    const body = await req.body;
+    console.log("req------------->",body);
 }
   

@@ -30,6 +30,7 @@
     "react-dom": "^19.0.0",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2",
+    "stripe": "^17.5.0",
     "uuid": "^11.0.3",
     "yup": "^1.6.0"
   },

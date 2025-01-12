@@ -14,6 +14,10 @@ export interface UserAttributes {
   currency?: string;
   gid?: string;
   profilePic?: string;
+  // paymentStatus?: boolean;
+  // paymentLink?: string;
+  // plan?: string;
+  // subsriptionPaymentStatus?: boolean;
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
@@ -33,6 +37,10 @@ class User
   public gid?: string;
   public profilePic?: string;
   public company?: Company;
+  // public paymentStatus?: boolean;
+  // public paymentLink?: string;
+  // public plan?: string;
+  // public subsriptionPaymentStatus?: boolean;
 }
 
 User.init(
@@ -86,6 +94,25 @@ User.init(
       allowNull: true,
       unique: true,
     },
+
+    // paymentStatus: {
+    //   type: DataTypes.BOOLEAN,
+    //   allowNull: true,
+    //   defaultValue: false,
+    // },
+    // subsriptionPaymentStatus: {
+    //   type: DataTypes.BOOLEAN,
+    //   allowNull: true,
+    //   defaultValue: false,
+    // },
+    // paymentLink: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
+    // plan: {
+    //   type: DataTypes.STRING,
+    //   allowNull: true,
+    // },
   },
   {
     sequelize,

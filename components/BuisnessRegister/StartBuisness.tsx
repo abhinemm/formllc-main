@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import styles from "./StartBusiness.module.scss";
 import CompanyType from "./components/CompanyType";
 import RegistrationState from "./components/RegistrationState";
@@ -9,8 +9,14 @@ import CreateAccount from "../CreateAccount/CreateAccount";
 import { useSession } from "next-auth/react";
 import CurrencyModals from "../Modals/CurrencyModals";
 import SignIn from "../CreateAccount/SignIn";
+import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import PlansSelection from "./components/PlansSelection";
+import { useSearchParams } from "next/navigation";
 
 const StartBusinessTabs: React.FC = () => {
+  const planList = ["basic", "pro"];
+  const searchParams = useSearchParams();
+  const planUrl = searchParams.get("plan");
   const [activeTabNumber, setActiveTabNumber] = useState<number>(1);
   const [companyType, setCompanyType] = useState<any>("LLC");
   const [companyLocation, setCompanyLocation] = useState<any>("Wyoming");
@@ -18,6 +24,20 @@ const StartBusinessTabs: React.FC = () => {
   const [currencyPopup, setCurrencyPopup] = useState<any>(false);
   // signIn => for sihn in the page and signUp for sign up
   const [viewPage, setViewPage] = useState<string>("signUp");
+  const [plan, setPlan] = useState<any>();
+
+  useLayoutEffect(() => {
+    if (planUrl && planUrl === "pro") {
+      setPlan(planUrl);
+      setCompanyLocation("Wyoming");
+    } else if (planUrl && planUrl === "basic") {
+      setPlan(planUrl);
+      setCompanyLocation("Montana");
+    } else {
+      setCompanyLocation("Wyoming");
+      setPlan("pro");
+    }
+  }, [planUrl]);
 
   const session = useSession();
 
@@ -39,6 +59,17 @@ const StartBusinessTabs: React.FC = () => {
     setViewPage(event);
   };
 
+  const handleBack = () => {
+    if (activeTabNumber > 1) {
+      setActiveTabNumber((prev) => prev - 1);
+    }
+  };
+  const handleNext = () => {
+    if (activeTabNumber < 3) {
+      setActiveTabNumber((prev) => prev + 1);
+    }
+  };
+
   return (
     <>
       <div className={styles.startBusinessMainWrapper}>
@@ -48,7 +79,6 @@ const StartBusinessTabs: React.FC = () => {
               <h2> Start your US company in minutes. </h2>
               <p> Answer a few questions to help us form your new company. </p>
             </div>
-
             <div className={styles.tabListWrapper}>
               <div
                 className={styles.tabListItem}
@@ -101,6 +131,23 @@ const StartBusinessTabs: React.FC = () => {
                   </div>
                 </div>
                 <div className={styles.itemContentWrapper}>
+                  <h5>Choose Plan</h5>
+                </div>
+              </div>
+              <div
+                className={styles.tabListItem}
+                onClick={() => setActiveTabNumber(4)}
+              >
+                <div
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 3 ? styles.selectedTab : ""
+                  }`}
+                >
+                  <div className={styles.Number}>
+                    <span>4</span>
+                  </div>
+                </div>
+                <div className={styles.itemContentWrapper}>
                   <h5>Review and pay</h5>
                 </div>
               </div>
@@ -142,8 +189,12 @@ const StartBusinessTabs: React.FC = () => {
                   <h1> Choose your registration state </h1>
                 </div>
               )}
-
               {activeTabNumber == 3 && (
+                <div className={styles.rightHeaderWrapper}>
+                  <h1>Plan Selected</h1>
+                </div>
+              )}
+              {activeTabNumber == 4 && (
                 <div className={styles.rightHeaderWrapper}>
                   <h1>Review and Pay </h1>
                   <p>
@@ -193,16 +244,28 @@ const StartBusinessTabs: React.FC = () => {
                   <RegistrationState
                     setCompanyLocation={setCompanyLocation}
                     companyLocation={companyLocation}
+                    setPlan={setPlan}
                   />
                 </div>
               )}
               {activeTabNumber == 3 && (
+                <div className={styles.accordionStyles}>
+                  <PlansSelection
+                    plan={plan}
+                    setPlan={setPlan}
+                    setCompanyLocation={setCompanyLocation}
+                    
+                  />
+                </div>
+              )}
+              {activeTabNumber == 4 && (
                 <div className={styles.accordionStyles}>
                   <ReviewandPay
                     companyType={companyType}
                     companyLocation={companyLocation}
                     setActiveTabNumber={setActiveTabNumber}
                     onContinue={handleContinue}
+                    plan={plan}
                   />
                 </div>
               )}
@@ -226,6 +289,22 @@ const StartBusinessTabs: React.FC = () => {
                 </>
               )}
             </div>
+            {activeTabNumber < 3 && (
+              <div className={styles.buttonFlexWrapper}>
+                <div className={styles.backButton}>
+                  <button type="button" onClick={handleBack}>
+                    <ArrowLeftOutlined />
+                    Back
+                  </button>
+                </div>
+                <div className={styles.nextButton} onClick={handleNext}>
+                  <button type="button">
+                    Next
+                    <ArrowRightOutlined />
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           {currencyPopup && (

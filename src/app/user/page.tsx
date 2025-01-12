@@ -8,11 +8,6 @@ const page = () => {
   const { contextOptions } = useAppContext();
 
   const renderPage = () => {
-    console.log(
-      "contextOptions?.selectedCompanyDetails",
-      contextOptions?.selectedCompanyDetails
-    );
-
     if (!contextOptions?.selectedCompanyDetails) {
       return (
         <CommonAction

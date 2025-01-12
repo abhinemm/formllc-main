@@ -22,7 +22,10 @@ export interface CompanyAttributes {
   mailingAdress?: string;
   countryCode?: string;
   phone?: string;
-
+  paymentLink?: string;
+  plan?: string;
+  subsriptionPaymentStatus?: boolean;
+  regPaymentStatus?: boolean;
 
   document?: string;
 }
@@ -60,6 +63,11 @@ class Company
   public mailingAdress?: string;
   public countryCode?: string;
   public phone?: string;
+
+  public paymentLink?: string;
+  public plan?: string;
+  public subsriptionPaymentStatus?: boolean;
+  public regPaymentStatus?: boolean;
 
 
   public user?: User;
@@ -144,6 +152,24 @@ Company.init(
       allowNull: true,
     },
     phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    subsriptionPaymentStatus: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    regPaymentStatus: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    paymentLink: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    plan: {
       type: DataTypes.STRING,
       allowNull: true,
     },

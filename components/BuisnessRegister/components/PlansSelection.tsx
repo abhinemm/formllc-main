@@ -3,10 +3,12 @@ import React from "react";
 import styles from "../StartBusiness.module.scss";
 
 import { Collapse, Space } from "antd";
+import Link from "next/link";
 
-interface ICompanyType {
-  companyType: any;
-  setCompanyType: any;
+interface IPlansSelection {
+  plan: any;
+  setPlan: any;
+  setCompanyLocation: any;
 }
 
 const text = `
@@ -15,13 +17,20 @@ const text = `
   it can be found as a welcome guest in many households across the world.
 `;
 
-const CompanyType: React.FC<ICompanyType> = ({
-  companyType,
-  setCompanyType,
+const PlansSelection: React.FC<IPlansSelection> = ({
+  plan,
+  setPlan,
+  setCompanyLocation,
 }) => {
-  const handleChecked = (event: any, type) => {
+  const handleChecked = (event: any, type: string) => {
     if (event.target.checked) {
-      setCompanyType(type);
+      if (type === "pro") {
+        setCompanyLocation("Wyoming");
+      }
+      if (type === "basic") {
+        setCompanyLocation("Montana");
+      }
+      setPlan(type);
     }
   };
   return (
@@ -33,15 +42,16 @@ const CompanyType: React.FC<ICompanyType> = ({
             key: "1",
             label: (
               <div className={styles.accordionHeader}>
-                <h5>LLC</h5>
+                <h5>Basic</h5>
                 <div>
-                  <p>Minimal fees + unmatched privacy and flexibility.</p>
+                  <p>The plan is used to for register buisness in Montana</p>
                   <input
                     type="checkbox"
-                    checked={companyType === "LLC"}
-                    onChange={(event) => handleChecked(event, "LLC")}
+                    checked={plan === "basic"}
+                    onChange={(event) => handleChecked(event, "basic")}
                   ></input>
                 </div>
+                <Link href="#">View Details</Link>
               </div>
             ),
             children: <p>{text}</p>,
@@ -55,16 +65,17 @@ const CompanyType: React.FC<ICompanyType> = ({
             key: "1",
             label: (
               <div className={styles.accordionHeader}>
-                <h5>C-corporation </h5>
+                <h5>Pro</h5>
                 <div>
                   {" "}
-                  <p>Ideal for startups that plan to seek outside funding.</p>
+                  <p>The plan is used to for register buisness in Wyoming.</p>
                   <input
                     type="checkbox"
-                    checked={companyType === "C-corporation"}
-                    onChange={(event) => handleChecked(event, "C-corporation")}
+                    checked={plan === "pro"}
+                    onChange={(event) => handleChecked(event, "pro")}
                   ></input>
                 </div>
+                <Link href="#">View Details</Link>
               </div>
             ),
             children: <p>{text}</p>,
@@ -75,4 +86,4 @@ const CompanyType: React.FC<ICompanyType> = ({
   );
 };
 
-export default CompanyType;
+export default PlansSelection;

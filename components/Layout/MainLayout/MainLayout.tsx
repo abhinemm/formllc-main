@@ -16,6 +16,9 @@ const MainLayout = ({ children }: ChildProps) => {
     if (pathName?.includes("/user")) {
       return null;
     }
+    if (pathName?.includes("/api")) {
+      return null;
+    }
     return <Header />;
   };
 

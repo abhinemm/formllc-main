@@ -67,6 +67,7 @@ export const authOptions: AuthOptions = {
         await UserService.createUser({
           email: user.email,
           gid: user.id,
+          profilePic:user.image,
           firstName: user.name,
           // profilePic: d,
         });

@@ -76,7 +76,7 @@ const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
         <AdminHeader />
         <Content
           style={{
-            margin: "16px",
+         
             padding: 24,
             background: "#fff",
           }}

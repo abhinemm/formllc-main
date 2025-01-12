@@ -3,7 +3,7 @@ import React, { useLayoutEffect, useState } from "react";
 import styles from "./header.module.scss";
 import { Drawer } from "antd";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 const Header = () => {
@@ -43,9 +43,14 @@ const Header = () => {
               </li>
               <li>
                 {session?.data?.user ? (
-                  <Link href="/user" className={styles.signIn}>
-                    My Account
-                  </Link>
+                  <>
+                    <Link href="/user" className={styles.signIn}>
+                      My Account
+                    </Link>
+                    <button onClick={() => signOut({ callbackUrl: "/" })}>
+                      Logout
+                    </button>
+                  </>
                 ) : (
                   <Link href="/api/auth/signin" className={styles.signIn}>
                     Sign in

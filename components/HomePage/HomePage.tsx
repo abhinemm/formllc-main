@@ -265,7 +265,7 @@ const HomePage = () => {
             <div className={styles.mapSection}>
               <div className={styles.map}>
                 <Image
-                  src="/images/main dash.jpg" // Replace with your image path
+                  src="/images/main-thumpnail.jpg" // Replace with your image path
                   alt="Description of the image"
                   layout="responsive" // Responsive layout
                   width={16} // Proportional width

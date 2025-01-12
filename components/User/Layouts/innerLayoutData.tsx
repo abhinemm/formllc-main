@@ -1,12 +1,17 @@
 "use client";
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
-import { UserOutlined, VideoCameraOutlined } from "@ant-design/icons";
+
 import { usePathname, useRouter } from "next/navigation";
 import UserHeader from "../Header/UserHeader";
+import Link from "next/link";
 const { Sider, Content } = Layout;
+interface IInnerLayout {
+  children: React.ReactNode;
+  menues: any;
+}
 
-const InnerLayout = ({ children }: { children: React.ReactNode }) => {
+const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
   const [collapsed, setCollapsed] = useState(false);
   const pathName = usePathname();
   const router = useRouter();
@@ -43,7 +48,7 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
             lineHeight: "32px",
           }}
         >
-          Formllc
+          <Link href="/">Formllc</Link>
         </div>
         <Menu
           theme="dark"
@@ -54,38 +59,7 @@ const InnerLayout = ({ children }: { children: React.ReactNode }) => {
             handleClickMenu(key);
             // Navigate to corresponding route
           }}
-          items={[
-            {
-              key: "/user",
-              icon: <UserOutlined />,
-              label: "Companies",
-            },
-            {
-              key: "Contacts",
-              icon: <VideoCameraOutlined />,
-              label: "Contacts",
-              children: [
-                {
-                  key: "/user/company/details",
-                  label: "Details",
-                },
-                // {
-                //   key: "/user/company/documents",
-                //   label: "Documents",
-                // },
-              ],
-            },
-            {
-              key: "/user",
-              icon: <UserOutlined />,
-              label: "Steps",
-            },
-            // {
-            //   key: "/user/2",
-            //   icon: <UploadOutlined />,
-            //   label: "Products",
-            // },
-          ]}
+          items={menues}
         />
       </Sider>
 

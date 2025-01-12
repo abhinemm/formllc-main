@@ -1,22 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import styles from "./header.module.scss";
 import { Drawer } from "antd";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
-  const router = useRouter();
-  const [open, setOpen] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
+  const [sideDrawer, setSideDrawer] = useState(false);
   const session = useSession();
-
-  const handleRedirect = (url) => {
-    router.push(url);
-  };
+  const pathName = usePathname();
+  useLayoutEffect(() => {
+    setSideDrawer(false);
+  }, [pathName]);
 
   return (
     <header className={styles.header}>
@@ -70,7 +66,10 @@ const Header = () => {
           </nav>
 
           {/* Mobile Menu Button */}
-          <div className={styles.mobileMenu} onClick={showDrawer}>
+          <div
+            className={styles.mobileMenu}
+            onClick={() => setSideDrawer(true)}
+          >
             <div className={styles.burger}></div>
             <div className={styles.burger}></div>
             <div className={styles.burger}></div>
@@ -81,35 +80,28 @@ const Header = () => {
       <Drawer
         placement={"right"}
         width={"60%"}
-        onClose={() => setOpen(false)}
-        open={open}
+        onClose={() => setSideDrawer(false)}
+        open={sideDrawer}
         className={"headerDrawerStyle"}
       >
         <nav className={styles.navMobile}>
           <ul>
             <li>
-              <a href="#products">Products</a>
+              <Link href="/contact-us">Contact Us</Link>
             </li>
             <li>
-              <a href="#pricing">Pricing</a>
-            </li>
-            <li>
-              <a href="#rewards">Rewards</a>
-            </li>
-            <li>
-              <a href="#partners">Partners</a>
-            </li>
-            <li>
-              <a href="#resources">Resources</a>
-            </li>
-            <li>
-              <a href="#company">Company</a>
+              {session?.data?.user ? (
+                <Link href="/user" className={styles.signIn}>
+                  My Account
+                </Link>
+              ) : (
+                <Link href="/api/auth/signin" className={styles.signIn}>
+                  Sign in
+                </Link>
+              )}
             </li>
           </ul>
           <div className={styles.authButtons}>
-            <Link href="/api/auth/signin" className={styles.signIn}>
-              Sign in
-            </Link>
             <Link href="/start-buisness" className={styles.startBusiness}>
               Start my business
             </Link>

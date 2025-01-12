@@ -4,11 +4,13 @@ import styles from "../StartBusiness.module.scss";
 interface IRegistrationState {
   setCompanyLocation: any;
   companyLocation: any;
+  setPlan: any;
 }
 
 const RegistrationState: React.FC<IRegistrationState> = ({
   setCompanyLocation,
   companyLocation,
+  setPlan,
 }) => {
   return (
     <div className={styles.registrationMainWrapper}>
@@ -16,10 +18,13 @@ const RegistrationState: React.FC<IRegistrationState> = ({
 
       <div className={styles.stateContainer}>
         <div
-          className={companyLocation === "Delaware" ? styles.selectedState : ""}
-          onClick={() => setCompanyLocation("Delaware")}
+          className={companyLocation === "Montana" ? styles.selectedState : ""}
+          onClick={() => {
+            setCompanyLocation("Montana");
+            setPlan("basic");
+          }}
         >
-          <h5>Delaware</h5>
+          <h5>Montana</h5>
           <p>
             Recommended for C-Corps due to strong legal protections for
             shareholders and strong business laws. No state income tax if you
@@ -28,7 +33,10 @@ const RegistrationState: React.FC<IRegistrationState> = ({
         </div>
         <div
           className={companyLocation === "Wyoming" ? styles.selectedState : ""}
-          onClick={() => setCompanyLocation("Wyoming")}
+          onClick={() => {
+            setCompanyLocation("Wyoming");
+            setPlan("pro");
+          }}
         >
           <h5>Wyoming </h5>
           <p>

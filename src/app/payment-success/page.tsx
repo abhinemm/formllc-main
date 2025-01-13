@@ -1,10 +1,9 @@
 import React from 'react'
+import PaymentSuccess from '../../../components/PaymentSuccess/PaymentSuccess';
 
 const page = () => {
     return (
-        <section className='container'>
-            sccess <button>Continue</button>
-        </section>
+        <PaymentSuccess />
     );
 }
 

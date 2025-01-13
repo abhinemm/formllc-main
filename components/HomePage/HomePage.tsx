@@ -35,7 +35,7 @@ const HomePage = () => {
     {
       icon: "/images/icon-state.png",
       title: "Select your company state",
-      description: "Delaware or Wyoming? Find your company's best fit.",
+      description: "Montana or Wyoming? Find your company's best fit.",
       step: "Step 2",
       svgIcon: (
         <svg
@@ -58,7 +58,8 @@ const HomePage = () => {
     {
       icon: "/images/icon-form.png",
       title: "Easy Form, Easier Process",
-      description: "Just provide the details; Clemta manages the rest.",
+      description:
+        "Just give us the details, and Formllc does the rest for you.",
       step: "Step 3",
       svgIcon: (
         <svg
@@ -80,7 +81,7 @@ const HomePage = () => {
     {
       icon: "/images/icon-documents.png",
       title: "Documents Delivered Fast",
-      description: "Claim your formation docs; the journey begins.",
+      description: "Claim your formation documents and take the first step.",
       step: "Step 4",
       svgIcon: (
         <svg
@@ -198,7 +199,7 @@ const HomePage = () => {
     },
     {
       title: "Montana",
-      icon: "/images/icon-delaware.png",
+      icon: "/images/icon-Montana.png",
       points: [
         "Strong asset protection laws",
         "No state sales tax",
@@ -225,7 +226,7 @@ const HomePage = () => {
   ];
 
   const featuresSecSix = [
-    "Fast, easy, and online LLC & C-Corp formation",
+    "Fast, easy, and online LLC formation",
     "US Bank account application and a debit card",
     "EIN application",
   ];
@@ -316,9 +317,9 @@ const HomePage = () => {
             <div className={styles.header}>
               <h2>Easily Register Your USA Company</h2>
               <p>
-                Non-US resident? It doesn’t matter whether you are a resident in
-                the US or not. Easily start your non-resident LLC or C-Corp
-                today, Clemta is your gateway to the US market!
+                Non-US resident? It doesn&apos;t matter whether you are a
+                resident in the US or not. Easily start your non-resident LLC
+                today, Formllc is your gateway to the US market!
               </p>
             </div>
             <div className={styles.features}>
@@ -381,10 +382,10 @@ const HomePage = () => {
         <div className="container">
           <div className={styles.wyomingDelawareSection}>
             <div className={styles.header}>
-              <h2>Wyoming vs. Delaware: Which to Choose?</h2>
+              <h2>Wyoming vs. Montana: Which to Choose?</h2>
               <p>
                 State selection can shape your business. With Wyoming&apos;s
-                cost-effectiveness and Delaware&apos;s investor appeal, choose
+                cost-effectiveness and Montana&apos;s investor appeal, choose
                 wisely to set your business on its path. Assess each
                 state&apos;s benefits to find where your company fits best.
               </p>
@@ -439,7 +440,7 @@ const HomePage = () => {
             <div className={styles.content}>
               {/* Text Section */}
               <div className={styles.text}>
-                <h2>Easily Manage Your Business with Clemta</h2>
+                <h2>Easily Manage Your Business with Formllc</h2>
                 <p>
                   Start your company, register trademarks, navigate US taxes,
                   streamline accounting, and access banking—all from one

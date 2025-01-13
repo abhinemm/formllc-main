@@ -12,6 +12,16 @@ import SignIn from "../CreateAccount/SignIn";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import PlansSelection from "./components/PlansSelection";
 import { useSearchParams } from "next/navigation";
+import { NotificationPlacement } from "antd/es/notification/interface";
+import { notification } from "antd";
+
+type NotificationType = "success" | "info" | "warning" | "error";
+
+type NotificationMessage = {
+  type: NotificationType;
+  message: string;
+  placement: NotificationPlacement;
+};
 
 const StartBusinessTabs: React.FC = () => {
   const planList = ["basic", "pro"];
@@ -25,6 +35,14 @@ const StartBusinessTabs: React.FC = () => {
   // signIn => for sihn in the page and signUp for sign up
   const [viewPage, setViewPage] = useState<string>("signUp");
   const [plan, setPlan] = useState<any>();
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (data: NotificationMessage) => {
+    api[data.type]({
+      message: data.message,
+      placement: data?.placement,
+    });
+  };
 
   useLayoutEffect(() => {
     if (planUrl && planUrl === "pro") {
@@ -44,7 +62,7 @@ const StartBusinessTabs: React.FC = () => {
   const handleContinue = () => {
     if (!session?.data?.user) {
       setIsAuth(true);
-      setActiveTabNumber(4);
+      setActiveTabNumber(5);
     } else {
       setCurrencyPopup(true);
     }
@@ -73,6 +91,7 @@ const StartBusinessTabs: React.FC = () => {
   return (
     <>
       <div className={styles.startBusinessMainWrapper}>
+        {contextHolder}
         <div className={styles.contentWrapperMain}>
           <div className={styles.leftContetTabs}>
             <div className={styles.leftHeaderWrapper}>
@@ -85,9 +104,8 @@ const StartBusinessTabs: React.FC = () => {
                 onClick={() => setActiveTabNumber(1)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${
-                    activeTabNumber > 0 ? styles.selectedTab : ""
-                  }`}
+                  className={`${styles.numberWrapper} ${activeTabNumber > 0 ? styles.selectedTab : ""
+                    }`}
                 >
                   <div className={styles.Number}>
                     <span>1</span>
@@ -105,9 +123,8 @@ const StartBusinessTabs: React.FC = () => {
                 onClick={() => setActiveTabNumber(2)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${
-                    activeTabNumber > 1 ? styles.selectedTab : ""
-                  }`}
+                  className={`${styles.numberWrapper} ${activeTabNumber > 1 ? styles.selectedTab : ""
+                    }`}
                 >
                   <div className={styles.Number}>
                     <span>2</span>
@@ -122,9 +139,8 @@ const StartBusinessTabs: React.FC = () => {
                 onClick={() => setActiveTabNumber(3)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${
-                    activeTabNumber > 2 ? styles.selectedTab : ""
-                  }`}
+                  className={`${styles.numberWrapper} ${activeTabNumber > 2 ? styles.selectedTab : ""
+                    }`}
                 >
                   <div className={styles.Number}>
                     <span>3</span>
@@ -139,9 +155,8 @@ const StartBusinessTabs: React.FC = () => {
                 onClick={() => setActiveTabNumber(4)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${
-                    activeTabNumber > 3 ? styles.selectedTab : ""
-                  }`}
+                  className={`${styles.numberWrapper} ${activeTabNumber > 3 ? styles.selectedTab : ""
+                    }`}
                 >
                   <div className={styles.Number}>
                     <span>4</span>
@@ -154,12 +169,11 @@ const StartBusinessTabs: React.FC = () => {
               {isAuth && (
                 <div
                   className={styles.tabListItem}
-                  onClick={() => setActiveTabNumber(4)}
+                  onClick={() => setActiveTabNumber(5)}
                 >
                   <div
-                    className={`${styles.numberWrapper} ${
-                      activeTabNumber > 3 ? styles.selectedTab : ""
-                    }`}
+                    className={`${styles.numberWrapper} ${activeTabNumber > 3 ? styles.selectedTab : ""
+                      }`}
                   >
                     <div className={styles.Number}>
                       <span>4</span>
@@ -206,7 +220,7 @@ const StartBusinessTabs: React.FC = () => {
               )}
               {isAuth && (
                 <>
-                  {activeTabNumber == 4 && (
+                  {activeTabNumber == 5 && (
                     <div className={styles.rightHeaderWrapper}>
                       <h1>
                         {viewPage === "signUp"
@@ -254,7 +268,7 @@ const StartBusinessTabs: React.FC = () => {
                     plan={plan}
                     setPlan={setPlan}
                     setCompanyLocation={setCompanyLocation}
-                    
+
                   />
                 </div>
               )}
@@ -271,12 +285,13 @@ const StartBusinessTabs: React.FC = () => {
               )}
               {isAuth && (
                 <>
-                  {activeTabNumber == 4 && (
+                  {activeTabNumber == 5 && (
                     <div className={styles.accordionStyles}>
                       {viewPage === "signUp" ? (
                         <CreateAccount
                           onCreateAccount={haddleNewAccount}
                           handleSignIn={handleSignIn}
+                          openNotification={openNotification}
                         />
                       ) : (
                         <SignIn
@@ -314,6 +329,8 @@ const StartBusinessTabs: React.FC = () => {
               title="test"
               companyType={companyType}
               companyLocation={companyLocation}
+              plan={plan}
+              openNotification={openNotification}
             />
           )}
         </div>

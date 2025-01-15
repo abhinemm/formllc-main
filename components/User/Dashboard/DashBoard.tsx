@@ -26,7 +26,6 @@ const DashBoard = () => {
     await axios
       .get(`/api/steps`)
       .then((res: any) => {
-        console.log("resss", res);
         if (res?.data?.length) {
           const sortedData: StepsAttributes[] = res?.data.sort(
             (a: any, b: any) => a.position - b.position
@@ -51,7 +50,6 @@ const DashBoard = () => {
     await axios
       .get(`/api/stepsTaken?companyId=${companyId}`)
       .then((res: any) => {
-        console.log("resss", res);
         if (res?.data?.length) {
           const assignedData = res?.data;
           const finalSteps = sortedData?.map((el: any) => ({
@@ -60,7 +58,6 @@ const DashBoard = () => {
               (data: any) => data?.stepId === el.id
             ),
           }));
-          console.log("finalStepsfinalStepsfinalSteps", finalSteps);
 
           // const sortedData: StepsAttributes[] = res?.data.sort(
           //   (a: any, b: any) => a.position - b.position
@@ -147,33 +144,6 @@ const DashBoard = () => {
             </ul>
           </div>
 
-          {/* <div className={styles.taskMainWrapper}>
-            <ul>
-              {[1, 2, 3, 4]?.map((_, index) => (
-                <li key={index}>
-                  <div className={styles.taskHeader}>
-                    <h6>Task name</h6>
-
-                    <span className={styles.alertSpan}>Past Due</span>
-
-                    <span className={styles.requiredStyle}>required</span>
-                  </div>
-                  <p>
-                    This error happens because TypeScript doesn't know the type
-                    of the element attached to useRef. By default, useRef is
-                    inferred as if no type is provided. We need to explicitly
-                    type the reference to
-                  </p>
-
-                  <div className={styles.actionWrapper}>
-                    <button>
-                      <span>Start Task</span>
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div> */}
         </>
       )}
     </section>

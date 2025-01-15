@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3003",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "formik": "^2.4.6",
     "framer-motion": "^11.14.4",
     "joi": "^17.13.3",
+    "micro": "^10.0.1",
     "next": "15.1.0",
     "next-auth": "^4.24.11",
     "pg": "^8.13.1",
@@ -30,6 +31,8 @@
     "react-dom": "^19.0.0",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2",
+    "strip": "^3.0.0",
+    "stripe": "^17.5.0",
     "uuid": "^11.0.3",
     "yup": "^1.6.0"
   },
@@ -39,6 +42,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sequelize": "^4.28.20",
+    "@types/stripe": "^8.0.416",
     "eslint": "^9",
     "eslint-config-next": "15.1.0",
     "sass": "^1.82.0",

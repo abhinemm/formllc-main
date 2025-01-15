@@ -1,4 +1,7 @@
 // styles/IncompletePaymentPage.module.scss
+$highlight-color: #ff5a5f;
+$secondary-color: #622774;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -7,27 +10,27 @@
   min-height: 100vh;
   padding: 20px;
   text-align: center;
-  background-color: #959595;
+  background-color: var(--body-color);
 }
 
 .title {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333;
+  color: #c6bfbf;
 }
 
 .message {
   font-size: 1rem;
   margin-bottom: 20px;
-  color: #555;
+  color: #969696;
 }
 
 .button {
   padding: 10px 20px;
   font-size: 1rem;
   color: #fff;
-  background-color: #0070f3;
+  background: linear-gradient(45deg, $highlight-color, $secondary-color);
   border: none;
   border-radius: 5px;
   cursor: pointer;

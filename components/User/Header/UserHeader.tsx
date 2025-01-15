@@ -19,7 +19,7 @@ const UserHeader = () => {
     if (contextOptions?.allCompanies?.length) {
       const itemlist = contextOptions?.allCompanies?.map((el: any) => ({
         key: el.id,
-        label: el?.companyName ?? el?.registrationState,
+        label: `${el?.companyName ?? "Campany Name"} ${el?.type}`,
       }));
       setItemList([...itemlist, { key: "0", label: "+ Add new Company" }]);
     }
@@ -32,8 +32,6 @@ const UserHeader = () => {
     },
   ];
 
-  console.log("contest options", contextOptions);
-
   const handleMenuClick = (e: any) => {
     if (e.key == "0") {
       router.push("/start-buisness");
@@ -43,7 +41,7 @@ const UserHeader = () => {
       );
       const obj = {
         id: selectedCompany?.id,
-        name: `${selectedCompany?.companyName} ${selectedCompany?.type}`,
+        name: `${selectedCompany?.companyName ?? ""} ${selectedCompany?.type}`,
       };
       localStorage.setItem("company", selectedCompany?.id);
       setContextOptions((prev) => ({

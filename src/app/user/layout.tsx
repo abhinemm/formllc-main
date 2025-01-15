@@ -6,6 +6,11 @@ import InnerLayout from "../../../components/User/Layouts/innerLayoutData";
 import Loader from "../../../components/Loader";
 import axios from "axios";
 import { useAppContext } from "../../../components/Context/AppContext";
+import {
+  DashboardOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -13,6 +18,43 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<any>();
   const { contextOptions, setContextOptions } = useAppContext();
+
+  const [menues, setMenues] = useState<any>([
+    {
+      key: "/user",
+      icon: <DashboardOutlined />,
+      label: "Dashboard",
+    },
+  ]);
+
+  useLayoutEffect(() => {
+    if (contextOptions?.selectedCompanyDetails) {
+      const menu = [
+        {
+          key: "/user",
+          icon: <DashboardOutlined />,
+          label: "Dashboard",
+        },
+        {
+          key: "company",
+          icon: <HomeOutlined />,
+          label: "Company",
+          children: [
+            {
+              key: "/user/company/details",
+              label: "Details",
+              icon: <UnorderedListOutlined />,
+            },
+            // {
+            //   key: "/user/company/documents",
+            //   label: "Documents",
+            // },
+          ],
+        },
+      ];
+      setMenues(menu);
+    }
+  }, [contextOptions?.selectedCompanyDetails]);
 
   useLayoutEffect(() => {
     if (session?.status == "loading") {
@@ -52,13 +94,15 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             filterOne = res?.data?.find((el: any) => el.id == Number(selected));
             values = {
               id: filterOne?.id,
-              name: `${filterOne?.companyName} ${filterOne?.type}`,
+              name: `${filterOne?.companyName ?? ""} ${filterOne?.type ?? "No type"
+                }`,
             };
           } else {
             filterOne = res?.data[0];
             values = {
               id: filterOne?.id,
-              name: `${filterOne?.companyName} ${filterOne?.type}`,
+              name: `${filterOne?.companyName ?? ""} ${filterOne?.type ?? "No type"
+                } `,
             };
           }
           setContextOptions((prev) => ({
@@ -77,7 +121,15 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       });
   };
 
-  return <>{loading ? <Loader /> : <InnerLayout>{children}</InnerLayout>}</>;
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <InnerLayout menues={menues}>{children}</InnerLayout>
+      )}
+    </>
+  );
 };
 
 export default UserLayout;

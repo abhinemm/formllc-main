@@ -30,3 +30,9 @@ export enum StepsView {
   actionRequired = "Action Required",
   pending = "Pending",
 }
+
+
+export enum PlansEnum {
+  BASIC = "BASIC",
+  PRO = "PRO",
+}

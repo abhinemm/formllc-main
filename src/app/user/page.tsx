@@ -17,7 +17,7 @@ const page = () => {
           redirectUrl="/start-buisness"
         />
       );
-    } else if (contextOptions?.selectedCompanyDetails?.paymentStatus === 0) {
+    } else if (!contextOptions?.selectedCompanyDetails?.regPaymentStatus) {
       return (
         <CommonAction
           title="Payment Incomplete"
@@ -26,12 +26,13 @@ const page = () => {
           redirectUrl="payment"
         />
       );
-    } else if (contextOptions?.selectedCompanyDetails.paymentStatus === 2) {
+
+    } else if (!contextOptions?.selectedCompanyDetails?.regPaymentStatus) {
       return (
         <CommonAction
-          title="Payment Failed"
-          description="Please try again or continue using the dashboard."
-          btnText="Go to Payment"
+          title="Subscription Expired"
+          description="Your subscription has expired, and access to our premium services has been paused. To continue enjoying uninterrupted benefits, please renew your subscription at the earliest."
+          btnText="Renew Subscription"
           redirectUrl="payment"
         />
       );

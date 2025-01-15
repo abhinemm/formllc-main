@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import styles from "./CreateAccount.module.scss";
 import { Formik } from "formik";
-import * as yup from "yup";
 import axios from "axios";
 import { Spin } from "antd";
 import { createAccountSchema } from "@/helpers/validationSchema";
 
-const CreateAccount = ({ onCreateAccount, handleSignIn }) => {
-  const [loading, setLoading] = useState<boolean>(false);
 
+const CreateAccount = ({ onCreateAccount, handleSignIn, openNotification }) => {
+  const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
     firstName: "",
@@ -20,9 +19,8 @@ const CreateAccount = ({ onCreateAccount, handleSignIn }) => {
     agreeTerms: false,
   };
 
-  
+
   const onSubmit = async (values: any) => {
-    console.log("the valuses are", values);
     setLoading(true);
     const requestValue = {
       firstName: values?.firstName,
@@ -41,6 +39,11 @@ const CreateAccount = ({ onCreateAccount, handleSignIn }) => {
         })
         .catch((err: any) => {
           setLoading(false);
+          openNotification({
+            type: 'error',
+            message: err?.response?.data?.message ?? "Something went wrong",
+            placement: "topRight",
+          });
           console.log("the error is ", err);
         });
     } catch (error) {
@@ -202,7 +205,7 @@ const CreateAccount = ({ onCreateAccount, handleSignIn }) => {
       </Formik>
 
       <div className={styles.signUpOptions}>
-       
+
       </div>
     </div>
   );

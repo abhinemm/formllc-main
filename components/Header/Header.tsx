@@ -41,22 +41,26 @@ const Header = () => {
               <li>
                 <Link href="/contact-us">Contact Us</Link>
               </li>
-              <li>
-                {session?.data?.user ? (
-                  <>
+              {session?.data?.user ? (
+                <>
+                  <li>
                     <Link href="/user" className={styles.signIn}>
                       My Account
                     </Link>
-                    <button onClick={() => signOut({ callbackUrl: "/" })}>
+                  </li>
+                  <li>
+                    <a onClick={() => signOut({ callbackUrl: "/" })} className={styles.signIn}>
                       Logout
-                    </button>
-                  </>
-                ) : (
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <li>
                   <Link href="/api/auth/signin" className={styles.signIn}>
                     Sign in
                   </Link>
-                )}
-              </li>
+                </li>
+              )}
             </ul>
             <div className={styles.authButtons}>
               <Link href="/start-buisness" className={styles.startBusiness}>

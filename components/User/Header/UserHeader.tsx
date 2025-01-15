@@ -19,7 +19,7 @@ const UserHeader = () => {
     if (contextOptions?.allCompanies?.length) {
       const itemlist = contextOptions?.allCompanies?.map((el: any) => ({
         key: el.id,
-        label: el?.companyName ?? el?.registrationState,
+        label: `${el?.companyName ?? "Campany Name"} ${el?.type}`,
       }));
       setItemList([...itemlist, { key: "0", label: "+ Add new Company" }]);
     }

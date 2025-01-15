@@ -12,6 +12,8 @@ interface CurrencyModalsProps {
   title?: string; //make title optional
   companyLocation: string;
   companyType: string;
+  plan: string
+  openNotification: any
 }
 
 const CurrencyModals: React.FC<CurrencyModalsProps> = ({
@@ -19,8 +21,14 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
   onClose,
   companyType,
   companyLocation,
+  plan,
+  openNotification
 }) => {
   const router = useRouter();
+  const plans = {
+    'basic': 'BASIC',
+    'pro': 'PRO'
+  }
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(
     "USD"
   );
@@ -54,22 +62,66 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
         await axios
           .post(`/api/company`, requestValue)
           .then((res: any) => {
-            setLoading(false);
-            onClose();
-            if (res?.data?.id) {
-              router.push(`/company-registration?id=${res?.data?.id}`);
-            }
+            // onClose();
+            // if (res?.data?.id) {
+            //   router.push(`/company-registration?id=${res?.data?.id}`);
+            // }
+            handlePayment(res?.data?.id, plan)
           })
           .catch((err: any) => {
             setLoading(false);
+            openNotification({
+              type: 'error',
+              message: err?.response?.data?.message ?? "Something went wrong",
+              placement: "topRight",
+            });
             console.log("the error is ", err);
           });
-      } catch (error) {
+      } catch (error: any) {
         console.log("the error", error);
+        openNotification({
+          type: 'error',
+          message: error?.response?.data?.message ?? "Something went wrong",
+          placement: "topRight",
+        });
         setLoading(false);
       }
     }
   };
+
+  const handlePayment = async (companyId: number, plan: string) => {
+    const body = {
+      plan: plans[plan],
+      companyId: companyId
+    }
+    try {
+      await axios
+        .post(`/api/generatePaymentLink`, body).then((res: any) => {
+          console.log("the response is", res);
+          if (res?.data?.url) {
+            router.push(res?.data?.url)
+            setLoading(false);
+          }
+        }).catch((err) => {
+          setLoading(false);
+          openNotification({
+            type: 'error',
+            message: err?.response?.data?.message ?? "Something went wrong",
+            placement: "topRight",
+          });
+          console.log("the error in payment", err);
+
+        })
+    } catch (error: any) {
+      openNotification({
+        type: 'error',
+        message: error?.response?.data?.message ?? "Something went wrong",
+        placement: "topRight",
+      });
+      setLoading(false);
+    }
+
+  }
 
   return (
     <Modal

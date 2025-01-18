@@ -36,6 +36,7 @@ export async function GET(req: Request) {
 
     const companies = await Company.findAll({
       where: where,
+      order: [["id", "desc"]],
     });
 
     if (where.id && companies?.length) {
@@ -82,7 +83,8 @@ export async function POST(req: Request) {
     status,
     mailingAdress,
     phone,
-    countryCode
+    countryCode,
+    stripeEmailId,
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -112,7 +114,8 @@ export async function POST(req: Request) {
       status,
       mailingAdress,
       phone,
-      countryCode
+      countryCode,
+      stripeEmailId: stripeEmailId ? stripeEmailId : companyEmail,
     });
     try {
       const steps = await Steps.findAll({});

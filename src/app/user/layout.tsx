@@ -53,13 +53,6 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         },
       ];
       setMenues(menu);
-      // if (
-      //   contextOptions?.selectedCompanyDetails?.paymentStatus === 0 ||
-      //   contextOptions?.selectedCompanyDetails.paymentStatus === 2 ||
-      //   contextOptions?.selectedCompanyDetails.status === 0
-      // ) {
-      //   setMenues
-      // }
     }
   }, [contextOptions?.selectedCompanyDetails]);
 
@@ -101,17 +94,15 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             filterOne = res?.data?.find((el: any) => el.id == Number(selected));
             values = {
               id: filterOne?.id,
-              name: `${filterOne?.companyName ?? ""} ${
-                filterOne?.type ?? "No type"
-              }`,
+              name: `${filterOne?.companyName ?? ""} ${filterOne?.type ?? "No type"
+                }`,
             };
           } else {
             filterOne = res?.data[0];
             values = {
               id: filterOne?.id,
-              name: `${filterOne?.companyName ?? ""} ${
-                filterOne?.type ?? "No type"
-              } `,
+              name: `${filterOne?.companyName ?? ""} ${filterOne?.type ?? "No type"
+                } `,
             };
           }
           setContextOptions((prev) => ({

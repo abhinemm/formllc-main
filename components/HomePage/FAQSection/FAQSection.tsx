@@ -44,9 +44,9 @@ const FAQSection = () => {
     },
     {
       question:
-        "Can Clemta help me with additional services after company formation?",
+        "Can Formllc help me with additional services after company formation?",
       answer:
-        "Yes, Clemta offers various services such as bookkeeping, tax filing, and compliance management to support your business.",
+        "Yes, Formllc offers various services such as bookkeeping, tax filing, and compliance management to support your business.",
     },
   ];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

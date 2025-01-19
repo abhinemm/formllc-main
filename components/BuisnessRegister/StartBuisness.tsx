@@ -296,6 +296,7 @@ const StartBusinessTabs: React.FC = () => {
                         <SignIn
                           onCreateAccount={haddleNewAccount}
                           handleSignIn={handleSignIn}
+                          openNotification={openNotification}
                         />
                       )}
                     </div>

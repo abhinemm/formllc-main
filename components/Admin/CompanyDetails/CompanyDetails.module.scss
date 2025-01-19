@@ -15,15 +15,14 @@
     display: flex;
     justify-content: flex-start;
     gap: 0;
-    align-items: flex-start;
+    // align-items: flex-start;
     list-style: none;
 
     li {
       list-style: none;
       flex-shrink: 0;
-
       padding: 20px;
-
+      min-width: 350px;
       max-width: 350px;
       cursor: pointer;
 
@@ -65,11 +64,55 @@
           color: #bbb7b7;
         }
 
-        span {
+        .completed {
           padding: 8px 12px;
           background-color: #193b1f;
           border-radius: 4px;
           color: #76ae7f;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 10px;
+          text-transform: capitalize;
+          font-weight: 400;
+        }
+        .inReview {
+          padding: 8px 12px;
+          background-color: #d88321;
+          border-radius: 4px;
+          color: #fff;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 10px;
+          text-transform: capitalize;
+          font-weight: 400;
+        }
+        .inReview {
+          padding: 8px 12px;
+          background-color: #d88321;
+          border-radius: 4px;
+          color: #fff;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 10px;
+          text-transform: capitalize;
+          font-weight: 400;
+        }
+        .actionRequired {
+          padding: 8px 12px;
+          background-color: #e05822;
+          border-radius: 4px;
+          color: #fff;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 10px;
+          text-transform: capitalize;
+          font-weight: 400;
+        }
+        .pending {
+          padding: 8px 12px;
+          background-color: #225ee0;
+          border-radius: 4px;
+          color: #ffffff;
           font-size: 12px;
           font-weight: 400;
           line-height: 10px;
@@ -247,6 +290,44 @@
           }
         }
       }
+      .documentWrapper {
+        display: flex !important;
+        gap: 20px;
+        .actionBtnWrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          align-items: center;
+          justify-content: center;
+          button {
+            font-size: 14px;
+            color: antiquewhite;
+
+            padding: 10px 12px !important;
+          }
+        }
+      }
     }
+  }
+}
+
+//modal
+
+.modalContentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 1rem 2rem;
+  h3 {
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    line-height: normal;
+  }
+  .modalDescription {
+    color: #919199;
+    text-align: center;
+    font-size: 14px;
+    margin-bottom: 0px;
   }
 }

@@ -1601,3 +1601,81 @@ export const VERIFIED = [
     label: "Payments",
   },
 ];
+
+export const SLIDEACTTION = {
+  1: [
+    {
+      key: "verified-1",
+      label: "Verified",
+    },
+    {
+      key: "actionRequired-1",
+      label: "Action Required",
+    },
+  ],
+  2: [
+    {
+      key: "uploadDoc-2",
+      label: "Upload Document",
+    },
+  ],
+  3: [
+    {
+      key: "getAccountEmail-3",
+      label: "Verify Account Email",
+    },
+  ],
+  4: [
+    {
+      key: "getAccountEmail-3",
+      label: "Verify Account Email",
+    },
+  ],
+};
+
+export const COMPANYDETAILS = [
+  {
+    value: "document",
+    label: "Document",
+  },
+  {
+    value: "ownerFname",
+    label: "Owner First Name",
+  },
+  {
+    value: "ownerLname",
+    label: "Owner Last Name",
+  },
+  {
+    value: "companyName",
+    label: "Company Name",
+  },
+  {
+    value: "companyEmail",
+    label: "Company Email",
+  },
+  {
+    value: "city",
+    label: "City",
+  },
+  {
+    value: "state",
+    label: "State",
+  },
+  {
+    value: "zipCode",
+    label: "Zip code",
+  },
+  {
+    value: "country",
+    label: "Country",
+  },
+  {
+    value: "countryCode",
+    label: "Country Code",
+  },
+  {
+    value: "phone",
+    label: "Phone",
+  },
+];

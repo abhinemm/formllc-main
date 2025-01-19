@@ -1,10 +1,8 @@
-import React from 'react'
-import Payments from '../../../../components/User/Payaments/Payments'
+import React from "react";
+import Payments from "../../../../components/User/Payaments/Payments";
 
 const page = () => {
-    return (
-        <Payments />
-    )
-}
+  return <Payments />;
+};
 
-export default page
+export default page;

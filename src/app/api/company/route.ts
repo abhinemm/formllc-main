@@ -33,6 +33,7 @@ export async function GET(req: Request) {
     searchParams.forEach((value, key) => {
       where[key] = value;
     });
+    console.log("searchParamssearchParams", searchParams);
 
     const companies = await Company.findAll({
       where: where,
@@ -60,6 +61,8 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
+  console.log("datadatadatadatadata", data);
+
   if (!data || !data.user) {
     return NextResponse.json(
       { message: "User not authenticated" },

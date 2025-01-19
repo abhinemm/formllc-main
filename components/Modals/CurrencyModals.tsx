@@ -12,8 +12,8 @@ interface CurrencyModalsProps {
   title?: string; //make title optional
   companyLocation: string;
   companyType: string;
-  plan: string
-  openNotification: any
+  plan: string;
+  openNotification: any;
 }
 
 const CurrencyModals: React.FC<CurrencyModalsProps> = ({
@@ -22,13 +22,13 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
   companyType,
   companyLocation,
   plan,
-  openNotification
+  openNotification,
 }) => {
   const router = useRouter();
   const plans = {
-    'basic': 'BASIC',
-    'pro': 'PRO'
-  }
+    basic: "BASIC",
+    pro: "PRO",
+  };
   const [selectedCurrency, setSelectedCurrency] = useState<string | null>(
     "USD"
   );
@@ -66,12 +66,12 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
             // if (res?.data?.id) {
             //   router.push(`/company-registration?id=${res?.data?.id}`);
             // }
-            handlePayment(res?.data?.id, plan)
+            handlePayment(res?.data?.id, plan);
           })
           .catch((err: any) => {
             setLoading(false);
             openNotification({
-              type: 'error',
+              type: "error",
               message: err?.response?.data?.message ?? "Something went wrong",
               placement: "topRight",
             });
@@ -80,7 +80,7 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
       } catch (error: any) {
         console.log("the error", error);
         openNotification({
-          type: 'error',
+          type: "error",
           message: error?.response?.data?.message ?? "Something went wrong",
           placement: "topRight",
         });
@@ -92,36 +92,37 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
   const handlePayment = async (companyId: number, plan: string) => {
     const body = {
       plan: plans[plan],
-      companyId: companyId
-    }
+      companyId: companyId,
+      register: true,
+    };
     try {
       await axios
-        .post(`/api/generatePaymentLink`, body).then((res: any) => {
+        .post(`/api/generatePaymentLink`, body)
+        .then((res: any) => {
           console.log("the response is", res);
           if (res?.data?.url) {
-            router.push(res?.data?.url)
+            router.push(res?.data?.url);
             setLoading(false);
           }
-        }).catch((err) => {
+        })
+        .catch((err) => {
           setLoading(false);
           openNotification({
-            type: 'error',
+            type: "error",
             message: err?.response?.data?.message ?? "Something went wrong",
             placement: "topRight",
           });
           console.log("the error in payment", err);
-
-        })
+        });
     } catch (error: any) {
       openNotification({
-        type: 'error',
+        type: "error",
         message: error?.response?.data?.message ?? "Something went wrong",
         placement: "topRight",
       });
       setLoading(false);
     }
-
-  }
+  };
 
   return (
     <Modal

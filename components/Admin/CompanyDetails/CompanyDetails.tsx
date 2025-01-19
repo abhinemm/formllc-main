@@ -1,8 +1,135 @@
-import React, { useRef } from "react";
-import styles from "./CompanyDetails.module.scss"
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import styles from "./CompanyDetails.module.scss";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import axios from "axios";
+import { useAppContext } from "../../Context/AppContext";
+import { StepsTakenStatusEnum, StepsView } from "@/utils/constants";
+import Image from "next/image";
+import {
+  VerticalAlignBottomOutlined,
+  EditOutlined,
+  MoreOutlined,
+} from "@ant-design/icons";
+import { Dropdown, notification, Spin } from "antd";
+import { SLIDEACTTION } from "@/constants/constants";
+import { NotificationPlacement } from "antd/es/notification/interface";
+import TransparentLoader from "../../TransparentLoader";
+import ActionPopup from "./ActionPopup";
+
+type NotificationType = "success" | "info" | "warning" | "error";
+
+type NotificationMessage = {
+  type: NotificationType;
+  message: string;
+  placement: NotificationPlacement;
+};
 
 const CompanyDetails = () => {
+  const params = useParams();
+  const id = params?.id;
+  const router = useRouter();
+  const { contextOptions, setContextOptions } = useAppContext();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [appiCalledStatus, setAppiCalledStatus] = useState<boolean>(false);
+  const [allSteps, setAllSteps] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [companyDetails, setCompanyDetails] = useState<any>(null);
+  const [downloadLoading, setDownloadLoading] = useState<boolean>(false);
+  const [api, contextHolder] = notification.useNotification();
+  const [actionLoader, setActionLoader] = useState<boolean>(false);
+  const [modalStatus, setModalStatus] = useState<any>(false);
+  const [stepId, setStepId] = useState<any>();
+  const openNotification = (data: NotificationMessage) => {
+    api[data.type]({
+      message: data.message,
+      placement: data?.placement,
+    });
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (id) {
+        if (contextOptions?.selectedCompanyDetails) {
+          setCompanyDetails(contextOptions?.selectedCompanyDetails);
+        } else {
+          await getCompanyDetails(Number(id));
+        }
+        getAllSteps(Number(id));
+      } else {
+        router.push("/admin");
+      }
+    })();
+  }, [id]);
+
+  const getCompanyDetails = async (companyId: number) => {
+    await axios
+      .get(`/api/company?id=${companyId}`)
+      .then((res: any) => {
+        if (res?.data?.length) {
+          const details = res?.data;
+          if (details?.length) {
+            setContextOptions((prev) => ({
+              ...prev,
+              selectedCompanyDetails: details[0],
+            }));
+            setCompanyDetails(details[0]);
+          }
+          console.log("the company is ", details);
+        }
+      })
+      .catch((err: any) => {
+        setLoading(false);
+      });
+  };
+
+  const getAllSteps = async (id: any) => {
+    await axios
+      .get(`/api/steps`)
+      .then((res: any) => {
+        if (res?.data?.length) {
+          const sortedData = res?.data.sort(
+            (a: any, b: any) => a.position - b.position
+          );
+          setAppiCalledStatus(true);
+          if (id && id != 0) {
+            getAllTakenSteps(sortedData, id);
+          } else {
+            setAllSteps(sortedData);
+          }
+        }
+      })
+      .catch((err: any) => {
+        setLoading(false);
+      });
+  };
+
+  const getAllTakenSteps = async (sortedData: any, companyId: number) => {
+    await axios
+      .get(`/api/stepsTaken?companyId=${companyId}`)
+      .then((res: any) => {
+        if (res?.data?.length) {
+          const assignedData = res?.data;
+          const finalSteps = sortedData?.map((el: any) => ({
+            ...el,
+            stepTaken: assignedData?.find(
+              (data: any) => data?.stepId === el.id
+            ),
+          }));
+
+          // const sortedData: StepsAttributes[] = res?.data.sort(
+          //   (a: any, b: any) => a.position - b.position
+          // );
+          setAllSteps(finalSteps);
+        } else {
+          setAllSteps(sortedData);
+        }
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        setLoading(false);
+      });
+  };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (scrollRef.current) {
@@ -11,153 +138,311 @@ const CompanyDetails = () => {
     }
   };
 
+  const handleDownload = async (imageUrl) => {
+    try {
+      setDownloadLoading(true);
+      const response = await fetch(imageUrl);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "image.png"; // Set the desired file name
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      // Revoke the object URL after download
+      URL.revokeObjectURL(url);
+      setDownloadLoading(false);
+    } catch (error) {
+      setDownloadLoading(false);
+      console.error("Error downloading the image:", error);
+    }
+  };
+
+  const handleMenuClick = (e: any) => {
+    console.log("the event is", e);
+    if (e.key) {
+      const type = e.key?.split("/")[0];
+      const stepId = Number(e.key?.split("/")[1]);
+      let body: any;
+      switch (type) {
+        case "verified-1":
+          body = {
+            status: StepsTakenStatusEnum?.completed,
+          };
+          updateStepStatus(stepId, body, Number(id));
+          break;
+
+        case "actionRequired-1":
+          setStepId(stepId);
+          break;
+
+        default:
+          break;
+      }
+    }
+  };
+
+  const handleGetmenu = (stepId: number, menus: any = []) => {
+    return menus?.map((el: any) => ({
+      key: `${el.key}/${stepId}`,
+      label: el.label,
+    }));
+  };
+
+  const updateStepStatus = async (
+    stepId: number,
+    body: any,
+    companyId: number
+  ) => {
+    try {
+      setActionLoader(true);
+      await axios
+        .patch(`/api/stepsTaken?stepId=${stepId}&companyId=${companyId}`, body)
+        .then((res: any) => {
+          console.log("the responsde isdsdsd", res);
+          openNotification({
+            type: "success",
+            message: "Status Updated successfully",
+            placement: "topRight",
+          });
+          setActionLoader(false);
+        })
+        .catch((err: any) => {
+          console.log("the erris", err);
+          openNotification({
+            type: "error",
+            message: "Something went wrong!",
+            placement: "topRight",
+          });
+          setActionLoader(false);
+        });
+    } catch (error) {
+      openNotification({
+        type: "error",
+        message: "Something went wrong!",
+        placement: "topRight",
+      });
+      setActionLoader(false);
+      console.log("the error is ", error);
+    }
+  };
+
   return (
     <section className={styles.userDashSection}>
-      <>
-        <div
-          ref={scrollRef}
-          onWheel={handleWheel}
-          className={styles.userStepsMainWrapper}
-        >
-          <ul>
-            {/* <li className={styles.StepCompleted}> 
+      {actionLoader ? (
+        <TransparentLoader />
+      ) : (
+        <>
+          <div
+            ref={scrollRef}
+            onWheel={handleWheel}
+            className={styles.userStepsMainWrapper}
+          >
+            <ul>
+              {/* <li className={styles.StepCompleted}> 
             if a step is completed add this class to the li for the style 
               */}
 
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
-              <li
-                className={`${item % 2 == 0 ? styles.StepCompleted : ""}`}
-                key={index}
-              >
-                <div className={styles.stepCountWrapper}>
-                  <h5>step {item}</h5>
+              {allSteps?.map((item: any, index: number) => (
+                <li
+                  className={`${
+                    item?.stepTaken?.status == StepsTakenStatusEnum.completed
+                      ? styles.StepCompleted
+                      : ""
+                  }`}
+                  key={index}
+                >
+                  <div className={styles.stepCountWrapper}>
+                    <h5>step {item.position}</h5>
+                    {SLIDEACTTION[item.position] ? (
+                      <Dropdown
+                        menu={{
+                          items: handleGetmenu(
+                            item?.id,
+                            SLIDEACTTION[item.position]
+                          ),
+                          onClick: handleMenuClick,
+                          selectedKeys: [
+                            contextOptions?.selectedCompany?.id?.toString(),
+                          ],
+                        }}
+                        trigger={["click"]}
+                      >
+                        <MoreOutlined style={{ fontSize: "20px" }} />
+                      </Dropdown>
+                    ) : (
+                      ""
+                    )}
 
-                  {item % 2 == 0 && <span>completed</span>}
-                </div>
-                <div className={styles.stepContent}>
-                  <h6>Company steps content</h6>
+                    {/* {item?.stepTaken && (
+                    <span className={styles[item?.stepTaken?.status]}>
+                      {StepsView[item?.stepTaken?.status]}
+                    </span>
+                  )} */}
+                  </div>
+                  <div className={styles.stepContent}>
+                    <h6>{item.title}</h6>
 
-                  <p className={styles.underlined}>
-                    By default, the mouse wheel scrolls vertically. Even if your
-                    section has overflow-x: scroll, the mouse wheel won't scroll
-                    horizontally unless:
-                  </p>
-                </div>
+                    <p className={styles.underlined}>{item.description}</p>
+                  </div>
 
-                <button> button </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className={styles.deatialsMainWrapper}>
-          <h3>Details</h3>
-          <label htmlFor="">Personal and company details</label>
-          <div className={styles.detailsListWrapper}>
-            <div className={styles.deatilsItem}>
-              <h6>Company Name</h6>
-              <div>
-                <label htmlFor="">
-                  <span>company name</span>
-                </label>
-              </div>
-            </div>
-
-            <div className={styles.deatilsItem}>
-              <h6>Company Email</h6>
-              <div>
-                <label htmlFor="">
-                  <span>company email</span>
-                </label>
-              </div>
-            </div>
-            <div className={styles.deatilsItem}>
-              <h6>State</h6>
-              <div>
-                <label htmlFor="">
-                  <span>state</span>
-                </label>
-              </div>
-            </div>
-            <div className={styles.deatilsItem}>
-              <h6>Company Type</h6>
-              <div>
-                <label htmlFor="">company type</label>
-              </div>
-            </div>
-            <div className={styles.deatilsItem}>
-              <h6>Company Type</h6>
-              <div>
-                <label htmlFor="">company type</label>
-              </div>
-            </div>
-
-            <div className={styles.deatilsItem}>
-              <h6>Responsible Party</h6>
-              <div>
-                <label htmlFor="">
-                  Name
-                  <span>name</span>
-                </label>
-                <label htmlFor="">
-                  Address
-                  <span>
-                    adderss line 1 , addressline 2 <article>(100%)</article>{" "}
-                  </span>
-                </label>
-                <label htmlFor="">
-                  Phone
-                  <span>93030203003</span>
-                </label>
-                <label htmlFor="">
-                  Email
-                  <span>email.email</span>
-                </label>
-              </div>
-            </div>
-            <div className={styles.deatilsItem}>
-              <h6>Owner</h6>
-              <div>
-                <label htmlFor="">
-                  Name
-                  <span>name</span>
-                </label>
-                <label htmlFor="">
-                  Address
-                  <span>
-                    adderss line 1 , addressline 2 <article>(100%)</article>{" "}
-                  </span>
-                </label>
-                <label htmlFor="">
-                  Phone
-                  <span>98342902</span>
-                </label>
-                <label htmlFor="">
-                  Email
-                  <span>email</span>
-                </label>
-              </div>
-            </div>
-
-            <div className={styles.deatilsItem}>
-              <h6>Mailing Address</h6>
-              <div>
-                <label htmlFor="">
-                  Address
-                  <span>
-                    adderss line 1 , addressline 2 <article>(100%)</article>{" "}
-                  </span>
-                </label>
-              </div>
-            </div>
+                  <button> button </button>
+                </li>
+              ))}
+            </ul>
           </div>
-          {/* <DocumentPreview
-          onClose={() => setShowDocumentViewer(false)}
-          open={showDocumentViewer}
-          url={docUrl}
-        /> */}
-        </div>
-      </>
+          {companyDetails ? (
+            <div className={styles.deatialsMainWrapper}>
+              <h3>Details</h3>
+              <label htmlFor="">Personal and company details</label>
+              <div className={styles.detailsListWrapper}>
+                <div className={styles.deatilsItem}>
+                  <h6>Company Name</h6>
+                  <div>
+                    <label htmlFor="">
+                      <span>{`${contextOptions?.selectedCompanyDetails?.companyName} ${contextOptions?.selectedCompanyDetails?.type}`}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.deatilsItem}>
+                  <h6>Company Email</h6>
+                  <div>
+                    <label htmlFor="">
+                      <span>{companyDetails?.companyEmail}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.deatilsItem}>
+                  <h6>State</h6>
+                  <div>
+                    <label htmlFor="">
+                      <span>{companyDetails?.registrationState}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.deatilsItem}>
+                  <h6>Company Type</h6>
+                  <div>
+                    <label htmlFor="">
+                      <span>{companyDetails?.type}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.deatilsItem}>
+                  <h6>Responsible Party</h6>
+                  <div>
+                    <label htmlFor="">
+                      Name
+                      <span>
+                        {`${companyDetails?.ownerFname} ${companyDetails?.ownerLname}`}
+                      </span>
+                    </label>
+                    <label htmlFor="">
+                      Address
+                      <span>
+                        {`${companyDetails?.streetAddress}, ${companyDetails?.city}, ${companyDetails?.state}, ${companyDetails?.country}`}
+                        {/* adderss line 1 , addressline 2 <article>(100%)</article>{" "} */}
+                      </span>
+                    </label>
+                    <label htmlFor="">
+                      Phone
+                      <span>{`${companyDetails?.countryCode ?? " "} ${
+                        companyDetails?.phone ?? ""
+                      }`}</span>
+                    </label>
+                    <label htmlFor="">
+                      Email
+                      <span>{companyDetails?.companyEmail}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.deatilsItem}>
+                  <h6>Owner</h6>
+                  <div>
+                    <label htmlFor="">
+                      Name
+                      <span>
+                        {`${companyDetails?.ownerFname} ${companyDetails?.ownerLname}`}
+                      </span>
+                    </label>
+                    <label htmlFor="">
+                      Address
+                      <span>
+                        {`${companyDetails?.streetAddress}, ${companyDetails?.city}, ${companyDetails?.state}, ${companyDetails?.country}`}
+                        {/* adderss line 1 , addressline 2 <article>(100%)</article>{" "} */}
+                      </span>
+                    </label>
+                    <label htmlFor="">
+                      Phone
+                      <span>{`${companyDetails?.countryCode ?? " "} ${
+                        companyDetails?.phone ?? ""
+                      }`}</span>
+                    </label>
+                    <label htmlFor="">
+                      Email
+                      <span>{companyDetails?.companyEmail}</span>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.deatilsItem}>
+                  <h6>Proof of address</h6>
+                  <div>
+                    <label htmlFor="" className={styles.documentWrapper}>
+                      {companyDetails?.document && (
+                        <Image
+                          src={companyDetails?.document}
+                          alt="proof of address"
+                          width={100}
+                          height={100}
+                          className={styles.document}
+                          onClick={() => {}}
+                        />
+                      )}
+                      <div className={styles.actionBtnWrapper}>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleDownload(companyDetails?.document)
+                          }
+                        >
+                          {downloadLoading ? (
+                            <Spin />
+                          ) : (
+                            <VerticalAlignBottomOutlined
+                              style={{ fontSize: "20px" }}
+                            />
+                          )}
+                        </button>
+                        <button type="button">
+                          <EditOutlined style={{ fontSize: "20px" }} />
+                        </button>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div className={styles.deatilsItem}>
+                  <h6>Mailing Address</h6>
+                  <div>
+                    <label htmlFor="">
+                      Address
+                      <span>
+                        adderss line 1 , addressline 2 <article>(100%)</article>{" "}
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <h2>No Data found</h2>
+            </div>
+          )}
+        </>
+      )}
+      <ActionPopup open={modalStatus} onClose={() => setModalStatus(false)} />
     </section>
   );
 };

@@ -12,6 +12,7 @@ import AdminHeader from "./Header/AdminHeader";
 const { Header, Sider, Content } = Layout;
 
 const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
+  
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
 

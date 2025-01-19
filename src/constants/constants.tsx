@@ -1,3 +1,9 @@
+import {
+  DashboardOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
+
 export const CURRENCIES = [
   {
     currencyCode: "USD",
@@ -1556,5 +1562,42 @@ export const COUNTRYCODE = [
     name: "Zimbabwe",
     dial_code: "+263",
     code: "ZW",
+  },
+];
+
+export const UNVERIFIED = [
+  {
+    key: "/user",
+    icon: <DashboardOutlined />,
+    label: "Dashboard",
+  },
+];
+
+export const VERIFIED = [
+  {
+    key: "/user",
+    icon: <DashboardOutlined />,
+    label: "Dashboard",
+  },
+  {
+    key: "company",
+    icon: <HomeOutlined />,
+    label: "Company",
+    children: [
+      {
+        key: "/user/company/details",
+        label: "Details",
+        icon: <UnorderedListOutlined />,
+      },
+      // {
+      //   key: "/user/company/documents",
+      //   label: "Documents",
+      // },
+    ],
+  },
+  {
+    key: "/user/payments",
+    icon: <DashboardOutlined />,
+    label: "Payments",
   },
 ];

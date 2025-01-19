@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import styles from "./Faqsection.module.scss";
-import { motion } from "framer-motion";
 
 const FAQSection = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -20,7 +19,7 @@ const FAQSection = () => {
     {
       question: "How long does the company formation process take?",
       answer:
-        "It typically takes between 7-14 business days, depending on the state and filing method.",
+        "The company formation process typically takes 3-5 business days in Wyoming and 7-10 business days in Montana, depending on the filing method.",
     },
     {
       question: "Am I required to visit US for company formation?",

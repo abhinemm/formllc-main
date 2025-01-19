@@ -11,6 +11,7 @@ export interface PaymentsAttributes {
   status?: string;
   description?: string;
   invoicePDF?: string;
+  amountPaid?: number;
 }
 
 interface PaymentsCreationAttributes
@@ -29,6 +30,7 @@ class Payments
   public status?: string;
   public description?: string;
   public invoicePDF?: string;
+  public amountPaid?: number;
 }
 
 Payments.init(
@@ -76,6 +78,10 @@ Payments.init(
     invoicePDF: {
       type: DataTypes.STRING,
 
+      allowNull: true,
+    },
+    amountPaid: {
+      type: DataTypes.DOUBLE,
       allowNull: true,
     },
   },

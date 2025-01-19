@@ -63,6 +63,7 @@ export async function POST(req: NextRequest) {
                 status: invoice.status as any,
                 companyId: company.id,
                 invoicePDF:invoice.invoice_pdf as any,
+                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
                 description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
               });
             }
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest) {
                 status: invoice.status as any,
                 companyId: company.id,
                 invoicePDF:invoice.invoice_pdf as any,
-
+                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
                 description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
               });
               company.subsriptionPaymentStatus = true;
@@ -95,6 +96,7 @@ export async function POST(req: NextRequest) {
                 status: invoice.status as any,
                 companyId: company.id,
                 invoicePDF:invoice.invoice_pdf as any,
+                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
 
                 description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
               });
@@ -108,6 +110,7 @@ export async function POST(req: NextRequest) {
                 status: invoice.status as any,
                 companyId: company.id,
                 invoicePDF:invoice.invoice_pdf as any,
+                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
 
                 description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
               });

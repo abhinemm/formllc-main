@@ -25,15 +25,31 @@ export default class StripeService {
     if (priceIds.regPriceId && priceIds.subPriceId) {
       type = "SUB_REG";
     }
-    const paymentLink = await stripe.paymentLinks.create({
-      line_items: listItems,
-      subscription_data: {
-        metadata: {
+
+    const subdata:any = {}
+    if(type === 'REG_ONLY'){
+      subdata.metadata = {
+     
           type,
           id,
           subPlan: priceIds.subPlan || null,
-        },
-      },
+
+      }
+
+    }else{
+      subdata.metadata = {
+        type,
+        id,
+        subPlan: priceIds.subPlan || null,
+      }
+    }
+    console.log(listItems)
+
+    console.log(subdata)
+    const paymentLink = await stripe.paymentLinks.create({
+      line_items: listItems,
+
+      ...subdata,
       after_completion: {
         type: "redirect",
         redirect: {

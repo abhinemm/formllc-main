@@ -7,26 +7,22 @@ import Steps from "@/models/steps";
 import StepsTaken from "@/models/stepsTaken";
 import { DataTypes } from "sequelize";
 import Payments from "@/models/payments.model";
-import CompanyDocuments from "@/models/companyDocuments";
 // import { DataTypes } from "sequelize";
-
-const alter = process.env.dbAlter === 'true' ? true : false
 
 const syncDatabase = async () => {
   try {
     await sequelize.authenticate();
-    await CompanyDocuments.sync({alter:alter})
-    await Payments.sync({ alter: alter });
+    await Payments.sync({ alter: true });
 
-    await Company.sync({ alter: alter });
-    await User.sync({ alter: alter });
+    await Company.sync({ alter: true });
+    await User.sync({ alter: true });
     await Company.belongsTo(User, { foreignKey: "userId", as: "userData" });
     await User.hasOne(Company, { foreignKey: "userId", as: "companyData" });
-    await ContactUs.sync({ alter: alter });
-    await Steps.sync({ alter: alter });
-    await StepsTaken.sync({ alter: alter });
+    await ContactUs.sync({ alter: false });
+    await Steps.sync({ alter: false });
+    await StepsTaken.sync({ alter: false });
     // Sync all models
-    await sequelize.sync({ alter: alter }); // use { : true } to drop and recreate tables
+    await sequelize.sync({ alter: false }); // use { : true } to drop and recreate tables
     console.log("All models were synchronized successfully.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);

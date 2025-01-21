@@ -3,7 +3,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 export default class StripeService {
   static async createLink(
     id: number,
-    priceIds: { regPriceId?: string; subPriceId?: string; subPlan?: string }
+    priceIds: { regPriceId?: string; subPriceId?: string; subPlan?: string },
+    redirecturl?: string
   ) {
     const listItems: any[] = [];
     if (!priceIds.regPriceId && !priceIds.subPriceId) {
@@ -50,7 +51,9 @@ export default class StripeService {
       after_completion: {
         type: "redirect",
         redirect: {
-          url: `${process.env.FRONTENDURL}?id=${id}`,
+          url: redirecturl
+            ? redirecturl
+            : `${process.env.FRONTENDURL}?id=${id}`,
         },
       },
       invoice_creation: {
@@ -60,5 +63,23 @@ export default class StripeService {
     console.log("paymentLinkpaymentLinkpaymentLinkpaymentLink", paymentLink);
 
     return paymentLink.url;
+  }
+  static async getInvoicePDF(invoiceId) {
+    try {
+      // Retrieve the invoice using the invoice ID
+      const invoice = await stripe.invoices.retrieve(invoiceId);
+
+      if (invoice.invoice_pdf) {
+        console.log("Invoice PDF URL:", invoice.invoice_pdf);
+        return invoice.invoice_pdf;
+        // You can use this URL to download or share the PDF
+      } else {
+        console.log("Invoice PDF is not available for this invoice.");
+        return null;
+      }
+    } catch (error:any) {
+      console.error("Error retrieving invoice PDF:", error.message);
+      return null;
+    }
   }
 }

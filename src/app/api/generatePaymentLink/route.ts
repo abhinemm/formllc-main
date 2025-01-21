@@ -49,7 +49,8 @@ export async function POST(req: Request) {
 
   const paymentLink = await StripeService.createLink(
     company.id!,
-    paymentPrices
+    paymentPrices,
+    body.redirecturl ? body.redirecturl : null
   );
   console.log("paymentLinkpaymentLinkpaymentLink", paymentLink);
 

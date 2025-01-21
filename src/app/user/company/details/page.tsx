@@ -5,13 +5,41 @@ import styles from "../company.module.scss";
 import { useAppContext } from "../../../../../components/Context/AppContext";
 import Image from "next/image";
 import DocumentPreview from "../../../../../components/Modals/DocumentPreview";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import SubscriptionRenew from "../../../../../components/Modals/SubscriptionRenew";
+import { notification } from "antd";
+import { NotificationPlacement } from "antd/es/notification/interface";
+
+type NotificationType = "success" | "info" | "warning" | "error";
+
+type NotificationMessage = {
+  type: NotificationType;
+  message: string;
+  placement: NotificationPlacement;
+};
 
 const page = () => {
+  const router = useRouter();
   const { contextOptions } = useAppContext();
   const [showDocumentViewer, setShowDocumentViewer] = useState<boolean>(false);
   const [docUrl, setDocUrl] = useState<string>("");
+  const [subStatus, setSubStatus] = useState<boolean>(false);
+
+  const handleSubscription = async () => {
+    setSubStatus(true);
+  };
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (data: NotificationMessage) => {
+    api[data.type]({
+      message: data.message,
+      placement: data?.placement,
+    });
+  };
   return (
     <section className={styles.deatialsMainWrapper}>
+      {contextHolder}
       <h3>Details</h3>
       <label htmlFor="">Personal and company details</label>
       <div className={styles.detailsListWrapper}>
@@ -194,12 +222,21 @@ const page = () => {
         <div className={styles.deatilsItem}>
           <h6>Mailing Address</h6>
           <div>
-            <label htmlFor="">
-              Address
-              <span>
-                adderss line 1 , addressline 2 <article>(100%)</article>{" "}
-              </span>
-            </label>
+            {contextOptions?.selectedCompanyDetails
+              ?.subsriptionPaymentStatus ? (
+              <>
+                <label htmlFor="">
+                  Address
+                  <span>
+                    adderss line 1 , addressline 2 <article>(100%)</article>{" "}
+                  </span>
+                </label>
+              </>
+            ) : (
+              <button type="button" onClick={handleSubscription}>
+                View
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -207,6 +244,12 @@ const page = () => {
         onClose={() => setShowDocumentViewer(false)}
         open={showDocumentViewer}
         url={docUrl}
+      />
+      <SubscriptionRenew
+        onClose={() => setSubStatus(false)}
+        open={subStatus}
+        companyId={contextOptions?.selectedCompanyDetails?.id}
+        openNotification={openNotification}
       />
     </section>
   );

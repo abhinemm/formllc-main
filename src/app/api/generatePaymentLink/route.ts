@@ -13,10 +13,13 @@ export async function POST(req: Request) {
 
   const company = await Company.findByPk(body.companyId);
   if (!company) {
-    return NextResponse.json({ message: "company not found!" }, { status: 404 });
+    return NextResponse.json(
+      { message: "company not found!" },
+      { status: 404 }
+    );
   }
-  if(!body.plan){
-    return NextResponse.json({message:"Plan is required!"},{status:400})
+  if (!body.plan) {
+    return NextResponse.json({ message: "Plan is required!" }, { status: 400 });
   }
   const paymentPrices: any = {};
   switch (body.plan) {
@@ -24,8 +27,8 @@ export async function POST(req: Request) {
       if (body.register) {
         paymentPrices.regPriceId = BASIC_PLAN_FEE_PRICEID;
       }
-      if(body.sub){
-        paymentPrices.subPriceId = BASIC_PLAN_SUB_PRICEID
+      if (body.sub) {
+        paymentPrices.subPriceId = BASIC_PLAN_SUB_PRICEID;
       }
 
       paymentPrices.subPlan = PlansEnum.BASIC;
@@ -35,8 +38,8 @@ export async function POST(req: Request) {
       if (body.register) {
         paymentPrices.regPriceId = PRO_PLAN_FEE_PRICEID;
       }
-      if(body.sub){
-        paymentPrices.subPriceId =PRO_PLAN_SUB_PRICEID
+      if (body.sub) {
+        paymentPrices.subPriceId = PRO_PLAN_SUB_PRICEID;
       }
 
       paymentPrices.subPlan = PlansEnum.PRO;
@@ -44,7 +47,11 @@ export async function POST(req: Request) {
     }
   }
 
-  const paymentLink = await StripeService.createLink(company.id!, paymentPrices);
+  const paymentLink = await StripeService.createLink(
+    company.id!,
+    paymentPrices
+  );
+  console.log("paymentLinkpaymentLinkpaymentLink", paymentLink);
 
   company.paymentLink = paymentLink;
   company.plan = body.plan;

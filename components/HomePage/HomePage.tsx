@@ -440,12 +440,11 @@ const HomePage = () => {
             <div className={styles.content}>
               {/* Text Section */}
               <div className={styles.text}>
-                <h2>Easily Manage Your Business with Formllc</h2>
+                <h2>Easily Register Your Business with Formllc</h2>
                 <p>
-                  Start your company, register trademarks, navigate US taxes,
-                  streamline accounting, and access banking—all from one
-                  platform. Dive into a hassle-free US business experience
-                  online wherever you are in the world.
+                  Start your company and US Bank — all from one platform. Dive
+                  into a hassle-free US business experience online wherever you
+                  are in the world.
                 </p>
                 <a href="/start-buisness" className={styles.button}>
                   Get Started →

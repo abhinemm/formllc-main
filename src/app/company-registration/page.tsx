@@ -47,7 +47,7 @@ const CompanyRegistration = () => {
     zipCode: "",
     country: "",
     proofOfAddress: "",
-    countryCode: "",
+    countryCode: "+91",
     phone: "",
     agreeTerms: false,
   };

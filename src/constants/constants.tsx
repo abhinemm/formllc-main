@@ -1,3 +1,9 @@
+import {
+  DashboardOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
+
 export const CURRENCIES = [
   {
     currencyCode: "USD",
@@ -1556,5 +1562,120 @@ export const COUNTRYCODE = [
     name: "Zimbabwe",
     dial_code: "+263",
     code: "ZW",
+  },
+];
+
+export const UNVERIFIED = [
+  {
+    key: "/user",
+    icon: <DashboardOutlined />,
+    label: "Dashboard",
+  },
+];
+
+export const VERIFIED = [
+  {
+    key: "/user",
+    icon: <DashboardOutlined />,
+    label: "Dashboard",
+  },
+  {
+    key: "company",
+    icon: <HomeOutlined />,
+    label: "Company",
+    children: [
+      {
+        key: "/user/company/details",
+        label: "Details",
+        icon: <UnorderedListOutlined />,
+      },
+      // {
+      //   key: "/user/company/documents",
+      //   label: "Documents",
+      // },
+    ],
+  },
+  {
+    key: "/user/payments",
+    icon: <DashboardOutlined />,
+    label: "Payments",
+  },
+];
+
+export const SLIDEACTTION = {
+  1: [
+    {
+      key: "verified-1",
+      label: "Verified",
+    },
+    {
+      key: "actionRequired-1",
+      label: "Action Required",
+    },
+  ],
+  2: [
+    {
+      key: "uploadDoc-2",
+      label: "Upload Document",
+    },
+  ],
+  3: [
+    {
+      key: "getAccountEmail-3",
+      label: "Verify Account Email",
+    },
+  ],
+  4: [
+    {
+      key: "getAccountEmail-3",
+      label: "Verify Account Email",
+    },
+  ],
+};
+
+export const COMPANYDETAILS = [
+  {
+    value: "document",
+    label: "Document",
+  },
+  {
+    value: "ownerFname",
+    label: "Owner First Name",
+  },
+  {
+    value: "ownerLname",
+    label: "Owner Last Name",
+  },
+  {
+    value: "companyName",
+    label: "Company Name",
+  },
+  {
+    value: "companyEmail",
+    label: "Company Email",
+  },
+  {
+    value: "city",
+    label: "City",
+  },
+  {
+    value: "state",
+    label: "State",
+  },
+  {
+    value: "zipCode",
+    label: "Zip code",
+  },
+  {
+    value: "country",
+    label: "Country",
+  },
+  {
+    value: "countryCode",
+    label: "Country Code",
+  },
+  {
+    value: "phone",
+    label: "Phone",
   },
 ];

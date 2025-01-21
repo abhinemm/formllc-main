@@ -11,6 +11,7 @@ import {
   HomeOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
+import { SideMenuHelper } from "@/helpers/helper";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -18,7 +19,6 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [userData, setUserData] = useState<any>();
   const { contextOptions, setContextOptions } = useAppContext();
-
   const [menues, setMenues] = useState<any>([
     {
       key: "/user",
@@ -29,30 +29,11 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
   useLayoutEffect(() => {
     if (contextOptions?.selectedCompanyDetails) {
-      const menu = [
-        {
-          key: "/user",
-          icon: <DashboardOutlined />,
-          label: "Dashboard",
-        },
-        {
-          key: "company",
-          icon: <HomeOutlined />,
-          label: "Company",
-          children: [
-            {
-              key: "/user/company/details",
-              label: "Details",
-              icon: <UnorderedListOutlined />,
-            },
-            // {
-            //   key: "/user/company/documents",
-            //   label: "Documents",
-            // },
-          ],
-        },
-      ];
-      setMenues(menu);
+      const menu = SideMenuHelper(contextOptions?.selectedCompanyDetails);
+      setContextOptions((prev) => ({
+        ...prev,
+        sideMenus: menu,
+      }));
     }
   }, [contextOptions?.selectedCompanyDetails]);
 
@@ -94,15 +75,17 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             filterOne = res?.data?.find((el: any) => el.id == Number(selected));
             values = {
               id: filterOne?.id,
-              name: `${filterOne?.companyName ?? ""} ${filterOne?.type ?? "No type"
-                }`,
+              name: `${filterOne?.companyName ?? ""} ${
+                filterOne?.type ?? "No type"
+              }`,
             };
           } else {
             filterOne = res?.data[0];
             values = {
               id: filterOne?.id,
-              name: `${filterOne?.companyName ?? ""} ${filterOne?.type ?? "No type"
-                } `,
+              name: `${filterOne?.companyName ?? ""} ${
+                filterOne?.type ?? "No type"
+              } `,
             };
           }
           setContextOptions((prev) => ({

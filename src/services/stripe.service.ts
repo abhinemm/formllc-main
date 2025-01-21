@@ -26,37 +26,39 @@ export default class StripeService {
       type = "SUB_REG";
     }
 
-    const subdata:any = {}
-    if(type === 'REG_ONLY'){
-      subdata.metadata = {
-     
-          type,
-          id,
-          subPlan: priceIds.subPlan || null,
-
-      }
-
-    }else{
-      subdata.metadata = {
+    let subdata: any = {};
+    if (type === "REG_ONLY") {
+      subdata = {
         type,
         id,
         subPlan: priceIds.subPlan || null,
-      }
+      };
+    } else {
+      subdata = {
+        type,
+        id,
+        subPlan: priceIds.subPlan || null,
+      };
     }
-    console.log(listItems)
+    console.log(listItems);
 
-    console.log(subdata)
+    console.log(subdata);
     const paymentLink = await stripe.paymentLinks.create({
       line_items: listItems,
-
-      ...subdata,
+      metadata: subdata,
+      // ...subdata,
       after_completion: {
         type: "redirect",
         redirect: {
           url: `${process.env.FRONTENDURL}?id=${id}`,
         },
       },
+      invoice_creation: {
+        enabled: true,
+      },
     });
+    console.log("paymentLinkpaymentLinkpaymentLinkpaymentLink", paymentLink);
+
     return paymentLink.url;
   }
 }

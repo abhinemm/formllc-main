@@ -77,3 +77,10 @@ export const profileSchema = yup.object().shape({
     .email("Invalid email address")
     .required("Email is required"),
 });
+
+export const filedActionSchema = yup.object().shape({
+  description: yup.string().required("Description is required"),
+  fields: yup
+    .string()
+    .required("Fields is required"),
+});

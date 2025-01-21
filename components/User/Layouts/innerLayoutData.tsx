@@ -5,6 +5,7 @@ import { Layout, Menu } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import UserHeader from "../Header/UserHeader";
 import Link from "next/link";
+import { useAppContext } from "../../Context/AppContext";
 const { Sider, Content } = Layout;
 interface IInnerLayout {
   children: React.ReactNode;
@@ -13,6 +14,7 @@ interface IInnerLayout {
 
 const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const { contextOptions } = useAppContext();
   const pathName = usePathname();
   const router = useRouter();
 
@@ -59,7 +61,7 @@ const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
             handleClickMenu(key);
             // Navigate to corresponding route
           }}
-          items={menues}
+          items={contextOptions?.sideMenus}
         />
       </Sider>
 

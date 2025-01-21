@@ -5,8 +5,9 @@ import axios from "axios";
 import * as yup from "yup";
 import { Spin } from "antd";
 import { signIn } from "next-auth/react";
+import { ApiStatus } from "@/utils/constants";
 
-const SignIn = ({ onCreateAccount, handleSignIn }) => {
+const SignIn = ({ onCreateAccount, handleSignIn, openNotification }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const schema = yup.object().shape({
     email: yup.string().email("Invalid email").required("Email is required"),
@@ -28,31 +29,31 @@ const SignIn = ({ onCreateAccount, handleSignIn }) => {
   };
 
   const onSubmit = async (values: any) => {
-    console.log("the valuses are", values);
     setLoading(true);
-    const requestValue = {
-      firstName: values?.firstName,
-      lastName: values?.lastName,
-      email: values?.email,
-      password: values?.password,
-      type: "customer",
-    };
-    try {
-      await axios
-        .post(`/api/users`, requestValue)
-        .then((res: any) => {
+    await signIn("credentials", {
+      redirect: false,
+      email: values.email,
+      password: values.password,
+    })
+      .then((res: any) => {
+        if (res?.error) {
+          openNotification({
+            type: "error",
+            message: res?.error,
+            placement: "topRight",
+          });
           setLoading(false);
-          console.log("the response", res);
-          onCreateAccount();
-        })
-        .catch((err: any) => {
+        } else {
+          if (res.status === ApiStatus.success) {
+            onCreateAccount();
+          }
           setLoading(false);
-          console.log("the error is ", err);
-        });
-    } catch (error) {
-      console.log("the error", error);
-      setLoading(false);
-    }
+        }
+        console.log("the result", res);
+      })
+      .catch((err) => {
+        console.log("the error", err);
+      });
   };
 
   const onSignInWithGoogle = async () => {

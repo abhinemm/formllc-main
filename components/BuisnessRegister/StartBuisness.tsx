@@ -72,6 +72,10 @@ const StartBusinessTabs: React.FC = () => {
     setCurrencyPopup(true);
   };
 
+  const handleNewAccountTest = (res: any) => {
+    setViewPage("signIn");
+  };
+
   const handleSignIn = (event: string) => {
     setViewPage(event);
   };
@@ -289,7 +293,7 @@ const StartBusinessTabs: React.FC = () => {
                     <div className={styles.accordionStyles}>
                       {viewPage === "signUp" ? (
                         <CreateAccount
-                          onCreateAccount={haddleNewAccount}
+                          onCreateAccount={handleNewAccountTest}
                           openNotification={openNotification}
                         />
                       ) : (

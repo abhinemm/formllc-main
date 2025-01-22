@@ -32,7 +32,6 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
         .post(`/api/users`, requestValue)
         .then((res: any) => {
           setLoading(false);
-          console.log("the response", res);
           onCreateAccount(res);
         })
         .catch((err: any) => {

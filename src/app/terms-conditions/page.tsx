@@ -296,7 +296,7 @@ const TabContent = () => {
       </div>
 
       <div>
-        <div> Changes to the Terms of Use</div>
+        <h2> Changes to the Terms of Use</h2>
         <p>
           We may revise and update these Terms of Use from time to time in our
           sole discretion. All changes are effective immediately when we post
@@ -316,7 +316,7 @@ const TabContent = () => {
       </div>
 
       <div>
-        <div> Accessing the Website and Account Security</div>
+        <h2> Accessing the Website and Account Security</h2>
         <p>
           We reserve the right to withdraw or amend this Website, and any
           service or material we provide on the Website, in our sole discretion
@@ -327,7 +327,7 @@ const TabContent = () => {
         </p>
 
         <p>You are responsible for both:</p>
-        <u>
+        <ul>
           {" "}
           <li>
             Making all arrangements necessary for you to have access to the
@@ -338,7 +338,7 @@ const TabContent = () => {
             internet connection are aware of these Terms of Use and comply with
             them.
           </li>
-        </u>
+        </ul>
 
         <p>
           To access the Website or some of the resources it offers, you may be
@@ -1100,6 +1100,565 @@ const TabContent = () => {
   );
 };
 
+const TabContent2 = () => {
+  return (
+    <div className={styles.policyWrapper}>
+      <div className={styles.date}>
+        <p>
+          <strong>Last Modified:</strong> November 5, 2021
+        </p>
+      </div>
+
+      <div>
+        <p>
+          BY CLICKING A BOX INDICATING YOUR ACCEPTANCE OF THESE MASTER TERMS AND
+          CONDITIONS (THIS “AGREEMENT”) OR BY EXECUTING AN ORDER FORM THAT
+          REFERENCES THIS AGREEMENT OR BY OTHERWISE USING OR ACCESSING THE
+          SERVICES (AS DEFINED BELOW) (THE “ACCEPTANCE”), YOU AGREE YOU HAVE
+          READ AND ARE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU ARE ENTERING
+          INTO THIS AGREEMENT ON BEHALF OF A COMPANY OR OTHER LEGAL ENTITY, YOU
+          REPRESENT THAT YOU HAVE THE AUTHORITY TO BIND SUCH ENTITY TO THIS
+          AGREEMENT, IN WHICH CASE THE TERM “CUSTOMER” WILL REFER TO SUCH
+          ENTITY. IF YOU DO NOT HAVE SUCH AUTHORITY, OR IF YOU DO NOT AGREE WITH
+          THIS AGREEMENT, YOU MUST NOT ACCEPT THIS AGREEMENT AND MAY NOT USE THE
+          SERVICES.
+        </p>
+        <p>
+          This Agreement, by and between Customer and Firstbase.io (“Company”),
+          is effective as of the date of Acceptance (the “Effective Date”) and
+          governs Customer’s use of Company’s Firstbase Mailroom Services (the
+          “Services”), as described in Section 1 below. Company reserves the
+          right to change or modify portions of this Agreement at any time. If
+          Company does so, it will post the changes on this page and will
+          indicate at the top of this page the date this Agreement was last
+          revised. Company will also notify Customer, either through the
+          Services user interface, in an email notification or through other
+          reasonable means. Any such changes will become effective no earlier
+          than fourteen (14) days after being posted, except that changes
+          addressing new functions of the Services or changes made for legal
+          reasons may become effective immediately. Customer’s continued use of
+          the Services after any such changes or modifications become effective
+          constitutes acceptance of such changes or modifications. Each of
+          Company and Customer may be referred to herein individually as a
+          “Party” or collectively as “Parties. The Services may be delivered
+          and/or used in connection with other Company products or services,
+          including Firstbase Start, the terms of use for which are available at
+          https://firstbase.io/terms (the “Platform Terms”) and are incorporated
+          by reference in this Agreement. In the event of any conflict between
+          the terms of the Platform Terms and this Agreement, the terms of this
+          Agreement shall govern.
+        </p>
+      </div>
+
+      <div>
+        <h2> 1. Services</h2>
+        <h3>1.1 Description of Services</h3>
+        <p>
+          The Services consist of virtual mail services administered through
+          Company’s proprietary platform (the “Platform”). The Services include
+          certain services which are provided by third parties not affiliated
+          with the Company, including but not limited to a third providing PDF
+          to mail functionality and a third party agent located in Customer’s
+          state of incorporation or domicile (the “Local Agent”), as designated
+          and authorized by Customer pursuant to United States Postal Service
+          Form 1583, titled “Application for Delivery of Mail Through Agent”
+          (“Form 1583”). As part of the Services, and subject to execution of
+          Form 1583 by Customer, the Local Agent will:
+        </p>
+        <p>
+          - Scan all hardcopy mail and upload into the Platform for receipt by
+          the corresponding Customer
+        </p>
+        <p>
+          - Forward mail to the Customer as requested (postage paid by Customer)
+        </p>
+        <p>
+          - Recycle mail that is not actioned within 30 days. Requesting a mail
+          action resets the 30 day window.
+        </p>
+        <p>- Shred uploaded mail upon Customer request; and</p>
+        <p>
+          - Notify Customers of received mail, forwarded mail status, and
+          respond to Customer queries regarding mail received.
+        </p>
+
+        <p>
+          All communications between the Local Agent and Customer will be
+          through the Platform, and subject to the terms of this Agreement.
+          Customer acknowledges and agrees that its access to and use of the
+          Services may be affected by factors outside of Company’s control,
+          including but not limited to actions and omissions of third parties
+          and the requirements set forth by the Local Agent or other third
+          parties, and Company will not be liable or bear any responsibility for
+          such factors. Customer further acknowledges that the services by the
+          Local Agent are limited and that (a) the Local Agent supports the
+          receipt, forwarding, and other processing of only mail and not
+          packages, (b) the Local Agent does not receive or otherwise process
+          mail for individuals or entities other than the Customer, and any mail
+          that is not labeled with the Customer’s company name will be rejected
+          by the Local Agent, and (c) the Local Agent’s forwarding service may
+          not be available to every Customer and will be subject to additional
+          fees. As part of the Services, the Local Agent will assign a mailing
+          address for Customer; however, such address may be changed and/or
+          disabled, at the Local Agent or Company’s discretion, upon written
+          notice to Customer. If disabled, Company or the Local Agent will use
+          reasonable efforts to assign a new address to Customer.
+        </p>
+
+        <h3>1.2 Subscriptions</h3>
+        <p>
+          Customer will need to purchase a subscription to the Platform to
+          access the Services. Customer may elect a subscription for a bundle of
+          features (a “Mailroom Bundle”), which include Customer’s right to
+          access the Services and may include other products or services that
+          may be offered by the Company through the Platform. All subscription
+          descriptions and pricing are set forth on the Ordering Page (as
+          defined below). Customer’s subscription will renew automatically at
+          the then-current rates for additional periods as set forth on the
+          Ordering Page or if not specified thereon, then annual periods.
+          Company reserves the right to change subscription prices at the end of
+          each subscription term and will provide notice of the change on the
+          Platform or in an email to Customer. Notwithstanding the foregoing,
+          any fees payable to a state authority or other governmental authority
+          is subject to change at any time, upon written notice. Customer’s
+          continued use of the Services after the price change becomes effective
+          constitutes Customer’s agreement to pay the changed amount upon
+          renewal of your subscription and Customer will automatically be
+          charged at the start of each new subscription period in accordance
+          with Section 3. To avoid future subscription charges, Customer must
+          submit to Company (a) proof of change of the Company’s mailing address
+          and (b) written notice indicating Customer’s desire to cancel its
+          subscription at least ten business days before the subscription period
+          renewal date by contacting us by creating a ticket here.
+        </p>
+
+        <p>
+          Subject to the foregoing period noted to avoid renewal charges,
+          Customer may cancel at any time and will be permitted to access and
+          use the Services for the remaining period in the then-effective
+          subscription term. All subscription fees are non-refundable and no
+          credits shall be given for any partially used periods.
+        </p>
+
+        <h3>1.3 Subscription Changes</h3>
+        <p>
+          If Customer elects to change its subscription from a higher tier
+          Mailroom Bundle to a lower tier Mailroom Bundle (“Downgrade”), such
+          Downgrade, including the new fees and any loss of access to features
+          and functionalities provided in the higher tier, will take effect at
+          the start of the next subscription period. In order to Downgrade,
+          Customers with mailing addresses in the states of New York,
+          California, or Florida must submit to Company (a) proof of change of
+          the Company’s mailing address and (b) written notice indicating
+          Customer’s desire to cancel its subscription at least ten business
+          days before the subscription period renewal date by creating a ticket
+          here. No refunds or credits shall be given for any Downgrade. If
+          Customer elects to change its subscription to a higher tier Mailroom
+          Bundle or to any Mailroom Bundle that includes functionalities not
+          included in Customer’s current subscription (“Upgrade”), Customer will
+          be charged the difference in subscription fees required for the new
+          Mailroom Bundle and such Upgrade will take effect following Customer’s
+          payment. An Upgrade will trigger the commencement of a new
+          subscription period and Customer’s subscription will automatically
+          renew thereafter on the anniversary of the date such Upgrade was
+          effective (or based on such other periods as set forth on the Ordering
+          Page).
+        </p>
+
+        <h3>1.4 Access to Services</h3>
+        <p>
+          Subject to the terms and conditions of this Agreement, Company hereby
+          grants Customer the limited, non-exclusive, non-transferable,
+          non-sublicenseable right to access and use the Platform to access
+          Services and communicate with the Local Agent solely for the purposes
+          hereof. Company will provide Customer with username(s) and password(s)
+          pursuant to which Customer may access the Services. Customer will be
+          responsible for any actions taken by parties with access to such
+          usernames and passwords, and Customer agrees not to disclose such
+          usernames and passwords to any third parties (other than employees of
+          Customer).
+        </p>
+
+        <h3>1.5 License Restrictions and Responsibilities</h3>
+        <p>
+          Customer will not use the Platform for any purpose other than the
+          purposes expressly set forth herein. Customer may not, directly or
+          indirectly: (a) reverse engineer, decompile, disassemble or otherwise
+          attempt to discover the source code, object code or underlying
+          structure, ideas, know-how or algorithms relevant to the Platform; (b)
+          modify, translate, or create derivative works based on the Platform
+          (except to the extent expressly permitted by Company); (c) remove any
+          proprietary notices or labels. Customer shall be responsible for
+          obtaining and maintaining any equipment and ancillary services needed
+          to connect to, access or otherwise use the Platform and Services,
+          including, without limitation, modems, hardware, server, software,
+          operating system, networking, web servers and the like.
+        </p>
+
+        <h3>1.6 License to Customer Data</h3>
+        <p>
+          Customer hereby grants to Company: a non-exclusive, worldwide,
+          royalty-free, fully paid up, sublicenseable (through multiple tiers),
+          transferable right and license to copy, distribute, display and create
+          derivative works of and otherwise use the electronic data or
+          information (including, without limitation scanned or other electronic
+          copies of mail received by Agent on behalf of Customer and uploaded to
+          and/or transmitted through the Platform), submitted or uploaded by
+          Customer and/or its designated Agent to the Platform (collectively,
+          “Customer Data”) solely to exercise its rights and perform its
+          obligations under this Agreement.
+        </p>
+
+        <h3>1.7 Feedback</h3>
+        <p>
+          Customer may from time to time provide suggestions, comments for
+          enhancements or functionality or other feedback (“Feedback”) to
+          Company with respect to the Services or Platform. Company will have
+          full discretion to determine whether or not to proceed with the
+          development of the requested enhancements, new features or
+          functionality. Customer hereby grants to Company a royalty-free, fully
+          paid up, worldwide, transferable, sublicenseable, irrevocable,
+          perpetual license to (a) copy, distribute, transmit, display, perform,
+          and create derivative works of the Feedback, and (b) use the Feedback
+          and/or any subject matter thereof, including without limitation, the
+          right to develop, manufacture, have manufactured, market, promote,
+          sell, have sold, offer for sale, have offered for sale, import, have
+          imported, rent, provide and/or lease products or services which
+          practice or embody, or are configured for use in practicing, the
+          Feedback and/or any subject matter of the Feedback.
+        </p>
+      </div>
+
+      <div>
+        <h2> 2. Ownership; Reservation of Rights</h2>
+        <p>
+          Customer acknowledges and agrees that, as between the Parties, Company
+          retains all right, title and interest in and to the Platform and
+          Services and all intellectual property rights therein and thereto.
+          Company grants no, and reserves any and all, rights other than the
+          rights expressly granted to Customer under this Agreement with respect
+          to the Services. Customer will acquire no right, title, or interest in
+          and to the Services other than the limited licensed rights expressly
+          granted under this Agreement. Notwithstanding the foregoing, Customer
+          retains all right, title and interest in and to the Customer Data.
+        </p>
+      </div>
+
+      <div>
+        <h2> 3. Fees; Payment Terms</h2>
+        <h3>3.1 Fees</h3>
+        <p>
+          Customer will pay to Company any fees for the Services (“Fees”) set
+          forth on the applicable ordering page on the Platform (“Ordering
+          Page”) in accordance with the terms and conditions set forth herein.
+          Customer may choose to purchase certain related services which will be
+          subject to additional fees separate from the Platform Fees, including
+          but not limited to postage fees for mail forwarding or postage fees
+          for mailing PDF files uploaded by Customer. Payment obligations are
+          non-cancelable and Fees paid are non-refundable.
+        </p>
+
+        <h3>3.2 Payment Terms</h3>
+        <p>
+          Unless otherwise stated on the Ordering Page, Customer will pay all
+          Fees monthly in advance, and Customer hereby authorizes Company to
+          charge Customer’s credit card each month for the applicable Fees for
+          the term of this Agreement. If payment of any Fees is not made when
+          due and payable, a late fee will accrue at the rate of the lesser of
+          one and one-half percent (1.5%) per month or the highest legal rate
+          permitted by law. If any past due payment has not been received by
+          Company within fifteen (15) days from the time such payment is due,
+          Company may suspend access to the Services until such payment is made.
+        </p>
+
+        <h3>3.3 Net of Taxes</h3>
+        <p>
+          All amounts payable by Customer to Company hereunder are exclusive of
+          any sales, use and other taxes or duties, however designated,
+          including without limitation, withholding taxes, royalties, knowhow
+          payments, customs, privilege, excise, sales, use, value-added and
+          Platform taxes (collectively “Taxes”). Customer will be solely
+          responsible for payment of any Taxes, except for those taxes based on
+          the income of Company. Customer will not withhold any Taxes from any
+          amounts due Company.
+        </p>
+      </div>
+
+      <div>
+        <h2>4. Term; Termination</h2>
+        <h3>4.1 Term; Termination</h3>
+        <p>
+          Subject to earlier termination as set forth in this Agreement, the
+          term of this Agreement will commence on the Effective Date and
+          continue for the initial term set forth in the Ordering Page, and
+          shall automatically renew for additional monthly periods, unless
+          either Party provides written notice of non-renewal at least thirty
+          (30) days prior to the end of the then-current term. In addition, a
+          Party may terminate this Agreement (a) for convenience upon thirty
+          (30) days prior written notice to the other party or (b) immediately
+          if the other Party breaches any material provision of this Agreement
+          and does not cure such breach within fifteen (15) days after receiving
+          written notice thereof, provided that if Customer wishes to terminate
+          this Agreement, Customer must first submit to Company proof of change
+          of the Company’s mailing address.{" "}
+        </p>
+
+        <h3>4.2 Effect of Termination</h3>
+        <p>
+          In the event that this Agreement expires or is terminated for any
+          reason, all rights with respect to the Services will immediately
+          terminate, and Customer will (a) cease use of the Services; (b) return
+          to Company or destroy, in Company’ sole discretion, all copies or
+          other embodiments of Company’s Confidential Information; and (c) pay
+          to Company all amounts due and owing under this Agreement. Upon
+          termination for any reason other than Customer’s material breach,
+          Customer will have access to the Platform for a period of at least
+          thirty (30) days to retrieve its Customer Data.
+        </p>
+
+        <h3>4.3 Survival</h3>
+        <p>
+          Upon termination of this Agreement, all obligations in this Agreement
+          will terminate, provided that Sections 1.5 (License Restrictions and
+          Responsibilities), 1.6 (License to Customer Data), 1.7 (Feedback), 2
+          (Ownership; Reservation of Rights), 3 (Fees; Payment Terms), 4 (Term;
+          Termination), 5 (Confidentiality), 6.2 (Disclaimer), 7 (Limitations of
+          Liability), 8 (Indemnification) and 9 (General) will survive.
+        </p>
+      </div>
+
+      <div>
+        <h2> 5. Confidentiality</h2>
+        <h3>5.1 Definition of Confidential Information</h3>
+        <p>
+          “Confidential Information” means, subject to the exceptions set forth
+          in Section 5.2 hereof, any information or data or materials,
+          regardless of whether it is in tangible form, that is disclosed or
+          otherwise made available by a party (the “Discloser”) to the other
+          party (the “Recipient”) and that (a) the Discloser has marked as
+          confidential or proprietary, or (b) the Discloser identifies as
+          confidential at the time of disclosure with written confirmation
+          within fifteen (15) days of disclosure to the Recipient; provided,
+          however, that reports and/or information related to or regarding the
+          Discloser’s business plans, business methodologies, strategies,
+          technology, specifications, development plans, customers, prospective
+          customers, partners, suppliers billing records, and products or
+          services will be deemed Confidential Information of the Discloser even
+          if not so marked or identified, unless such information is the subject
+          of any of the exceptions set forth in Section 5.2 hereof. For the
+          avoidance of doubt, the Services is Confidential Information of
+          Company.
+        </p>
+
+        <h3>5.2 Exceptions to Confidential Information</h3>
+        <p>
+          Confidential Information will not include any information which: (a)
+          the Recipient can show by written record was in its possession prior
+          to disclosure by the Discloser hereunder, provided that the Recipient
+          must promptly notify the Discloser of any prior knowledge; (b) appears
+          in issued patents or printed publications in integrated form or which
+          otherwise is or becomes generally known by the public other than
+          through the Recipient’s failure to observe any or all terms and
+          conditions hereof; or (c) subsequent to disclosure to the Recipient by
+          the Discloser, is obtained by the Recipient from a third person who is
+          not subject to any confidentiality obligation in favor of Discloser.
+        </p>
+
+        <h3>5.3 Use and Disclosure of Confidential Information</h3>
+        <p>
+          The Recipient may only use the Confidential Information for the
+          purpose of performing its obligations and exercising its rights
+          hereunder. The Recipient must keep secret and will never disclose,
+          publish, divulge, furnish or make accessible to anyone any of the
+          Confidential Information of the Discloser, directly or indirectly,
+          other than furnishing such Confidential Information to (a) the
+          Recipient’s employees who are required to have access to such
+          Confidential Information in connection with the performance of the
+          Recipient’s obligations, or the exercise of the Recipient’s rights,
+          hereunder, and (b) professional advisers (e.g., lawyers and
+          accountants), in each case, during the time that the Recipient is
+          permitted to retain such Confidential Information hereunder; provided
+          that any and all such employees are bound by written agreements or, in
+          the case of professional advisers, ethical duties, respecting the
+          Confidential Information in the manner set forth in this Agreement.
+          The Recipient will use at least reasonable care and adequate measures
+          to protect the security of the Confidential Information of the
+          Discloser and to ensure that any Confidential Information of the
+          Discloser is not disclosed or otherwise made available to other
+          persons or used in violation of this Agreement.
+        </p>
+
+        <h3>5.4 Disclosures Required by Law</h3>
+        <p>
+          In the event that the Recipient is required by law to make any
+          disclosure of any of the Confidential Information of the Discloser, by
+          subpoena, judicial or administrative order or otherwise, the Recipient
+          will first give written notice of such requirement to the Discloser,
+          and will permit the Discloser to intervene in any relevant proceedings
+          to protect its interests in the Confidential Information, and provide
+          full cooperation and assistance to the Discloser in seeking to obtain
+          such protection.
+        </p>
+      </div>
+
+      <div>
+        <h2>6. Representations and Warranties; Disclaimer</h2>
+        <h3>6.1 Representations and Warranties</h3>
+        <p>
+          Each Party represents and warrants to the other Party that (a) such
+          Party has the required power and authority to enter into this
+          Agreement and to perform its obligations hereunder, (b) the execution
+          of this Agreement and performance of its obligations thereunder do not
+          and will not violate any other agreement to which it is a party, and
+          (c) this Agreement constitutes a legal, valid and binding obligation
+          when signed by both Parties.
+        </p>
+
+        <h3>6.2 Disclaimers</h3>
+        <p>
+          EXCEPT AS EXPRESSLY SET FORTH HEREIN, THE PLATFORM AND SERVICES ARE
+          PROVIDED ON AN “AS-IS” BASIS AND COMPANY DISCLAIMS ANY ADDITIONAL
+          REPRESENTATION OR WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED
+          (EITHER IN FACT OR BY OPERATION OF LAW), OR STATUTORY, AS TO ANY
+          MATTER WHATSOEVER. COMPANY EXPRESSLY DISCLAIMS ALL IMPLIED WARRANTIES
+          OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUALITY,
+          ACCURACY, TITLE, AND NON-INFRINGEMENT. COMPANY DOES NOT WARRANT THAT
+          THE PLATFORM OR SERVICES ARE ERROR-FREE OR THAT OPERATION OF THE
+          SERVICES WILL BE SECURE OR UNINTERRUPTED.
+        </p>
+      </div>
+
+      <div>
+        <h2> 7. Limitations of Liability</h2>
+        <h3>7.1 Disclaimer of Consequential Damages</h3>
+        <p>
+          IN NO EVENT WILL COMPANY BE LIABLE TO CUSTOMER FOR ANY SPECIAL,
+          INDIRECT, RELIANCE, INCIDENTAL OR CONSEQUENTIAL DAMAGES OF ANY KIND,
+          LOST OR DAMAGED DATA, LOST PROFITS OR LOST REVENUE, WHETHER ARISING IN
+          CONTRACT, TORT (INCLUDING NEGLIGENCE), OR OTHERWISE, EVEN IF A PARTY
+          HAS BEEN NOTIFIED OF THE POSSIBILITY THEREOF.
+        </p>
+
+        <h3>7.2 General Cap on Liability</h3>
+        <p>
+          UNDER NO CIRCUMSTANCES WILL COMPANY’S LIABILITY FOR ALL CLAIMS ARISING
+          UNDER OR RELATING TO THIS AGREEMENT (INCLUDING BUT NOT LIMITED TO
+          WARRANTY CLAIMS), REGARDLESS OF THE FORUM AND REGARDLESS OF WHETHER
+          ANY ACTION OR CLAIM IS BASED ON CONTRACT, TORT, OR OTHERWISE, EXCEED
+          THE AGGREGATE FEES PAID AND PAYABLE BY CUSTOMER TO COMPANY UNDER THIS
+          AGREEMENT DURING THE TWELVE (12) MONTHS PRECEDING THE CLAIM. THIS
+          LIMITATION OF LIABILITY IS CUMULATIVE AND NOT PER INCIDENT.
+        </p>
+
+        <h3>7.3 Independent Allocations of Risk</h3>
+        <p>
+          EACH PROVISION OF THIS AGREEMENT THAT PROVIDES FOR A LIMITATION OF
+          LIABILITY, DISCLAIMER OF WARRANTIES, OR EXCLUSION OF DAMAGES IS TO
+          ALLOCATE THE RISKS OF THIS AGREEMENT BETWEEN THE PARTIES. EACH OF
+          THESE PROVISIONS IS SEVERABLE AND INDEPENDENT OF ALL OTHER PROVISIONS
+          OF THIS AGREEMENT, AND EACH OF THESE PROVISIONS WILL APPLY EVEN IF
+          THEY HAVE FAILED OF THEIR ESSENTIAL PURPOSE.
+        </p>
+      </div>
+
+      <div>
+        <h2>8. Indemnification; Release</h2>
+        <h3>8.1 Indemnification</h3>
+        <p>
+          Customer will indemnify, defend and hold Company and its affiliates
+          and their respective officers, directors, agents, and employees of
+          Company (“Company Releasees”) harmless from Liabilities that are
+          payable to any third party by the Company Indemnified Parties
+          (including reasonable attorneys' fees) arising from, directly or
+          indirectly, any claim, demand or allegation by a third party that
+          arises out of or is in connection with any use by Customer of the
+          Services (including any third party services accessed or purchased
+          through the Platform) in violation of this Agreement.
+        </p>
+        <h3>8.2 Release</h3>
+        <p>
+          Customer acknowledges and agrees that all services separate from the
+          Platform (including but not limited to the receipt, processing,
+          notification, delivery, and/or destruction of Customer’s mail and the
+          printing, processing, and/or delivery of PDF files provided by
+          Customer) will be performed by Customer’s designated Local Agent or
+          another third party, and Customer hereby waives and releases the
+          Company Releasees from any and all causes of action, claims and
+          damages relating to such services.
+        </p>
+      </div>
+
+      <div>
+        <h2>9. General</h2>
+        <p>
+          The terms and conditions of this Agreement are severable. If any
+          provision of this Agreement is found to be unenforceable or invalid,
+          that provision will be limited or eliminated to the minimum extent
+          necessary so that this Agreement will otherwise remain in full force
+          and effect and enforceable. Neither Party may assign this Agreement
+          without the other Party’s prior written consent; provided, that,
+          either Party may assign this Agreement without such consent to an
+          affiliate or to a successor to all or substantially all of the
+          business or assets to which this Agreement relates, whether by sale of
+          stock, sale of assets, merger, reorganization or otherwise. Any
+          assignment or attempted assignment by either Party in violation of the
+          foregoing will be null and void. Subject to the foregoing, this
+          Agreement will be binding on the Parties and their successors and
+          assigns. Both Parties agree that this Agreement is the complete and
+          exclusive statement of the mutual understanding of the Parties and
+          supersede and cancel all previous written and oral agreements,
+          communications and other understandings relating to the subject matter
+          of this Agreement, and that all waivers and modifications must be in a
+          writing signed by both Parties, except as otherwise provided herein.
+          No agency, partnership, joint venture, or employment is created as a
+          result of this Agreement and a Party does not have any authority of
+          any kind to bind the other Party in any respect whatsoever. All
+          notices under this Agreement will be in writing and sent to the
+          recipient’s address set forth above and will be deemed to have been
+          duly given when received, if personally delivered; when receipt is
+          electronically confirmed, if transmitted by facsimile or email; the
+          day after it is sent, if sent for next day delivery by recognized
+          overnight delivery service; and upon receipt, if sent by certified or
+          registered mail, return receipt requested. Each Party will be excused
+          from performance for any period during which, and to the extent that,
+          it is prevented from performing any obligation or service, in whole or
+          in part, as a result of a cause beyond its reasonable control and
+          without its fault or negligence, including, but not limited to, acts
+          of God, acts of war, epidemics, fire, communication line failures,
+          power failures, earthquakes, floods, blizzard, or other natural
+          disasters (but excluding failure caused by a Party's financial
+          condition or any internal labor problems (including strikes, lockouts,
+          work stoppages or slowdowns, or the threat thereof)) (a “Force Majeure
+          Event”). Delays in performing obligations due to a Force Majeure Event
+          will automatically extend the deadline for performing such obligations
+          for a period equal to the duration of such Force Majeure Event. Except
+          as otherwise agreed upon by the Parties in writing, in the event such
+          non-performance continues for a period of thirty (30) days or more,
+          either Party may terminate this Agreement by giving written notice
+          thereof to the other Party. This Agreement will be governed by the
+          laws of the State of New York without regard to its conflict of laws
+          provisions. For all disputes relating to this Agreement, each Party
+          submits to the exclusive jurisdiction of the state and federal courts
+          located in New York, New York and waives any jurisdictional, venue, or
+          inconvenient forum objections to such courts. Customer acknowledges
+          that any unauthorized use of the Platform or Services will cause
+          irreparable harm and injury to Company for which there is no adequate
+          remedy at law. In addition to all other remedies available under this
+          Agreement, at law or in equity, Customer further agrees that Company
+          will be entitled to injunctive relief in the event Customer uses the
+          Platform or Services in violation of the limited license granted
+          herein or uses the Platform or Services in any way not expressly
+          permitted by this Agreement. In any action or proceeding to enforce
+          rights under this Agreement, the prevailing Party will be entitled to
+          recover costs and attorneys’ fees. Failure by either Party to enforce
+          any provision of this Agreement will not be deemed a waiver of future
+          enforcement of that or any other provision.
+        </p>
+      </div>
+    </div>
+  );
+};
+
 const items: TabsProps["items"] = [
   {
     key: "1",
@@ -1109,7 +1668,7 @@ const items: TabsProps["items"] = [
   {
     key: "2",
     label: "Mailroom Services Terms of Use",
-    children: "Content of Tab Pane 2",
+    children: <TabContent2 />,
   },
   {
     key: "3",

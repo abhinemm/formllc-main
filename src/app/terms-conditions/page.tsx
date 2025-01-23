@@ -1659,6 +1659,815 @@ const TabContent2 = () => {
   );
 };
 
+const TabContent3 = () => {
+  return (
+    <div className={styles.policyWrapper}>
+      <div className={styles.date}>
+        <p>
+          <strong>Last Modified:</strong> November 5, 2021
+        </p>
+      </div>
+
+      <div>
+        <p>
+          {" "}
+          BY CLICKING A BOX INDICATING YOUR ACCEPTANCE OF THESE AGENT SERVICES
+          TERMS AND CONDITIONS (THIS “AGREEMENT”) OR BY EXECUTING AN ORDER FORM
+          THAT REFERENCES THIS AGREEMENT OR BY OTHERWISE USING OR ACCESSING THE
+          SERVICES (AS DEFINED BELOW) (THE “ACCEPTANCE”), YOU AGREE YOU HAVE
+          READ AND AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU ARE
+          ENTERING INTO THIS AGREEMENT ON BEHALF OF A COMPANY OR OTHER LEGAL
+          ENTITY, YOU REPRESENT THAT YOU HAVE THE AUTHORITY TO BIND SUCH ENTITY
+          TO THIS AGREEMENT, IN WHICH CASE THE TERM “YOU” OR “CUSTOMER” WILL
+          REFER TO SUCH ENTITY. IF YOU DO NOT HAVE SUCH AUTHORITY, OR IF YOU DO
+          NOT AGREE WITH THIS AGREEMENT, YOU MUST NOT ACCEPT THIS AGREEMENT AND
+          MAY NOT USE THE SERVICES.
+        </p>
+
+        <p>
+          This Agreement, by and between Customer and Firstbase Agent LLC
+          (“Company”), is effective as of the date of Acceptance (the “Effective
+          Date”) and governs Customer’s use of certain services as described in
+          Section 1 below (collectively, the “Services”). Company reserves the
+          right to change or modify portions of this Agreement at any time. If
+          Company does so, it will post the changes on this page and will
+          indicate at the top of this page the date this Agreement was last
+          revised. With respect to changes that materially adversely impact
+          Customer’s use of the Services, Company will also use commercially
+          reasonable efforts to notify Customer, either through the Platform
+          user interface, in an email notification or through other reasonable
+          means. Any such changes will become effective no earlier than thirty
+          (30) days after being posted, except that changes addressing new
+          functions of the Services or changes made for legal reasons may become
+          effective immediately. Customer’s continued use of the Services after
+          any such changes or modifications become effective constitutes
+          acceptance of such changes or modifications. Each of Company and
+          Customer may be referred to herein individually as a “Party” or
+          collectively as “Parties”. Customer’s use of the Services shall be
+          subject to the terms of this Agreement and all other terms, agreements
+          and policies referenced herein and Customer agrees that its Acceptance
+          hereunder shall also constitute its acceptance of such other terms,
+          agreements and policies.
+        </p>
+      </div>
+      <div>
+        <h2> 1. Services</h2>
+        <h3>1.1 Description of Services</h3>
+        <p>
+          The Services provide Customer with (a) registered agent appointment
+          services which will assist Customer to (i) appoint either Company or a
+          third party service provider engaged by Company as Customer’s
+          officially designated agent in Customer’s state of incorporation,
+          organization or domicile (the “Registered Agent”) to receive service
+          of process notices, government correspondence and compliance-related
+          documents on behalf of Customer and (ii) change its Registered Agent
+          designation, (b) foreign state qualification services which will
+          assist Customer to obtain foreign qualification (and corresponding
+          Registered Agent services) for a Customer entity in a state other than
+          the state in which the entity was incorporated or formed (“Foreign
+          Qualification”), as well as preparation and filing of annual reports
+          and franchise tax as required by applicable states (“Annual Reports”),
+          and (c) state payroll tax registration which will assist Customers to
+          obtain Customer’s unemployment insurance and withholding accounts
+          (“Payroll Tax Registration”). All Services are made available and
+          administered through Company’s proprietary platform operated by or on
+          behalf of the Company or one of its affiliates (the “Platform”). All
+          use of the Platform shall be subject to the Platform terms of use
+          available at https://firstbase.io/terms (the “Platform Terms”) and
+          Customer hereby agrees and acknowledges its Acceptance of the Platform
+          Terms. In the event of any conflict between the terms of the Platform
+          Terms and this Agreement, the terms of this Agreement shall govern.
+          Furthermore, all Services require Customer to be and remain in good
+          standing in in Customer’s state of incorporation, organization or
+          domicile and all other states in which Customer obtains a Foreign
+          Qualification. If Customer fails to maintain its good standing in the
+          applicable state(s), Company may immediately suspend Customer’s access
+          to any or all of the Services until Customer provides Company a
+          certificate of good standing or other evidence of its cure of any
+          compliance issues.
+        </p>
+
+        <h3>1.2 Registered Agent Services</h3>
+        <p>
+          If Customer is a new customer of Company and uses the Platform to
+          incorporate or form a new corporation or limited liability company, it
+          may use the Services to designate its Registered Agent as part of the
+          corresponding incorporation/formation services administered through
+          the Platform. If an existing Customer has already formed or
+          incorporated an entity using the Platform it may opt-in to the
+          Services hereunder, and in connection therewith may be required to
+          execute forms appointing its Registered Agent in the applicable
+          state(s). Similarly, if Customer is a new customer to Company and/or
+          otherwise has an existing entity that was not incorporated or formed
+          by the Company or otherwise using the Platform, it may subscribe to
+          the Services, and in such event must execute applicable forms
+          appointing its Registered Agent in the applicable state(s). Customer
+          will be responsible for all applicable state filing fees for
+          appointing and/or changing its Registered Agent designation.
+        </p>
+
+        <h3>1.3 Other Services</h3>
+        <p>
+          Subject to payment of applicable state filing fees, a Customer may
+          also utilize the Foreign Qualification, Annual Reports, and Payroll
+          Tax Registration functionalities of the Services.
+        </p>
+
+        <h3>1.4 Subscriptions</h3>
+        <p>
+          Customer will need to purchase a subscription to the Platform to
+          access the Services. Customer may elect a subscription solely for the
+          Services or a bundle of Platform features (“Agent Bundles”), which
+          include Customer’s right to access the Services along with other
+          products or services that may be offered by the Company through the
+          Platform. All subscription descriptions and pricing are set forth on
+          the Ordering Page (as defined below). Customer’s subscription will
+          renew automatically at the then-current rates for additional periods
+          as set forth on the Ordering Page or if not specified thereon, then
+          annual periods. Company reserves the right to change subscription
+          prices at the end of each subscription term and will provide notice of
+          the change on the Platform or in an email to Customer. Notwithstanding
+          the foregoing, any fees payable to a state authority or other
+          governmental authority is subject to change at any time, upon written
+          notice. Customer’s continued use of the Services after the price
+          change becomes effective constitutes Customer’s agreement to pay the
+          changed amount upon renewal of your subscription and Customer will
+          automatically be charged at the start of each new subscription period
+          in accordance with Section 3. To avoid future subscription charges,
+          Customer must submit to Company (a) proof of change of the Company’s
+          Registered Agent and (b) written notice indicating Customer’s desire
+          to cancel its subscription at least ten business days before the
+          subscription period renewal date by emailing support@firstbase.io.
+          Subject to the foregoing period noted to avoid renewal charges,
+          Customer may cancel at any time and will be permitted to access and
+          use the Services for the remaining period in the then-effective
+          subscription term. All subscription fees are non-refundable and no
+          credits shall be given for any partially used periods.
+        </p>
+
+        <h3>1.5 Subscription Changes</h3>
+        <p>
+          If Customer elects to change its subscription from a higher tier Agent
+          Bundle to a lower tier Agent Bundle (“Downgrade”), such Downgrade,
+          including the new fees and any loss of access to features and
+          functionalities provided in the higher tier, will take effect at the
+          start of the next subscription period. No refunds or credits shall be
+          given for any Downgrade. If Customer elects to change its subscription
+          to a higher tier Agent Bundle or to any Agent Bundle that includes
+          functionalities not included in Customer’s current subscription
+          (“Upgrade”), Customer will be charged the difference in subscription
+          fees required for the new Agent Bundle and such Upgrade will take
+          effect following Customer’s payment. An Upgrade will trigger the
+          commencement of a new subscription period and Customer’s subscription
+          will automatically renew thereafter on the anniversary of the date
+          such Upgrade was effective (or based on such other periods as set
+          forth on the Ordering Page).
+        </p>
+
+        <h3>1.6 Access to Services</h3>
+        <p>
+          Subject to the terms and conditions of this Agreement, Company hereby
+          grants Customer a limited, non-exclusive, non-transferable,
+          non-sublicensable right to access and use the Platform solely to
+          access the Services and communicate with the Registered Agent, in each
+          case solely for Customer’s internal business purposes.
+        </p>
+
+        <h3>1.7 Registration; Additional Information</h3>
+        <p>
+          To access the Services, Customer needs to register on the Platform. As
+          part of the registration process, Company will provide Customer with
+          username(s) and password(s) for to create an account (“Account”).
+          Customer agrees to provide and maintain true, accurate, current, and
+          complete information for its Account. Customer is responsible for
+          maintaining the confidentiality of the password and Account details
+          and agrees not to disclose such Account details to any third parties
+          (other than employees of Customer). Customer is fully responsible for
+          any and all activities that occur under Customer’s Account and any
+          actions taken by parties with access to Customer’s Account.
+          Furthermore, from time to time, Company may request additional
+          information, documents or other materials necessary for Company’s
+          performance of Services. Company will be excused from meeting
+          specified deadlines or performing specified responsibilities to the
+          extent the Company’s delays or failures are caused by Customer’s
+          delays or failures in providing the Company with reasonable
+          cooperation or access to information, documentation or other materials
+          necessary for the performance of Services.
+        </p>
+
+        <h3>1.8 Access Restrictions and Responsibilities</h3>
+        <p>
+          Customer will not use the Platform or Services for any purpose other
+          than the purposes expressly set forth herein. Customer may not,
+          directly or indirectly: (a) reverse engineer, decompile, disassemble
+          or otherwise attempt to discover the source code, object code or
+          underlying structure, ideas, know-how or algorithms relevant to the
+          Platform; (b) modify, translate, or create derivative works based on
+          the Platform (except to the extent expressly permitted by Company);
+          (c) remove any proprietary notices or labels; (d) use bots, hacks,
+          mods or any other unauthorized software designed to modify the
+          Platform; (e) circumvent, remove, alter or thwart any technological
+          measure or content protections of the Platform; (f) use any spider,
+          crawler, scraper or other automatic device, process or software that
+          intercepts, mines, scrapes, extracts or otherwise accesses the
+          Platform to monitor, extract, copy or collect information or data from
+          or through the Platform or engage in any manual process to do the
+          same; (g) introduce any viruses, trojan horses, worms, bombs or other
+          materials that are malicious or technologically harmful into Company’s
+          systems or (h) access or use the Platform or Services in any way not
+          expressly permitted by this Agreement. Customer shall be responsible
+          for obtaining and maintaining any equipment and ancillary services
+          needed to connect to, access or otherwise use the Platform and
+          Services, including, without limitation, modems, hardware, server,
+          software, operating system, networking, web servers and the like.
+        </p>
+
+        <h3>1.9 Customer Data</h3>
+        <p>
+          Customer hereby grants to Company: a non-exclusive, worldwide,
+          royalty-free, fully paid up, sublicenseable (through multiple tiers),
+          transferable right and license to copy, distribute, display and create
+          derivative works of and otherwise use the electronic data or
+          information (including, without limitation scanned or other electronic
+          copies of mail received by the Registered Agent on behalf of Customer
+          and uploaded to and/or transmitted through the Platform), submitted or
+          uploaded by Customer and/or its Registered Agent to the Platform
+          (collectively, “Customer Data”) (a) to exercise its rights and perform
+          its obligations under this Agreement, (b) solely on an aggregated
+          basis, to improve and enhance the Services and/or Platform and for
+          other development, diagnostic and corrective purposes in connection
+          with the Services and other Company offerings. The term of the license
+          in clause (a) of the preceding sentence will be for the term of this
+          Agreement, and the term of the license granted in clause (b) of the
+          preceding sentence will be perpetual. Customer represents and warrants
+          that it has obtained all licenses, permits, consents and
+          authorizations required to provide the Customer Data to Company and
+          for Company’s use as set forth herein. Furthermore, Company shall have
+          the right to collect and analyze data and other information relating
+          to Customer’s use of the Services and related systems and
+          technologies, and Company will be free (during and after the term of
+          this Agreement) to use such information and data in connection with
+          the Company’s conduct of its business.
+        </p>
+
+        <h3>1.10 Feedback</h3>
+        <p>
+          Customer may from time to time provide suggestions, comments for
+          enhancements or functionality or other feedback with respect to the
+          Services or Platform (“Feedback”) to Company. Company will have full
+          discretion to determine whether or not to proceed with any Feedback or
+          any other potential enhancements, new features or functionality.
+          Customer hereby assigns Company all right, title and interest in and
+          to the Feedback.
+        </p>
+      </div>
+
+      <div>
+        <h2> 2. Ownership; Reservation of Rights</h2>
+        <p>
+          {" "}
+          Customer acknowledges and agrees that, as between the Parties, Company
+          retains all right, title and interest in and to the Platform and
+          Services and all intellectual property rights therein and thereto.
+          Company grants no, and reserves any and all, rights other than the
+          rights expressly granted to Customer under this Agreement with respect
+          to the Services. Customer will acquire no right, title, or interest in
+          and to the Services other than the limited licensed rights expressly
+          granted under this Agreement. Notwithstanding the foregoing, subject
+          to the rights granted under Section 1.9, Customer retains all right,
+          title and interest in and to the Customer Data.
+        </p>
+      </div>
+
+      <div>
+        <h2> 3. Fees; Payment Terms</h2>
+        <h3>3.1 Fees</h3>
+        <p>
+          Customer will pay to Company any fees for the Services (“Fees”) set
+          forth on the applicable ordering page on the Platform (“Ordering
+          Page”) in accordance with the terms and conditions set forth herein.
+          In addition to the Fees for the Services, Customer is responsible for
+          all filing fees and other fees payable to a state authority or other
+          governmental authority. Payment obligations are non-cancelable and
+          Fees paid are non-refundable and no credits shall be given for any
+          partially used periods.
+        </p>
+
+        <h3>3.2 Payment Terms</h3>
+        <p>
+          Customer will be required to provide Company with information
+          regarding its credit card or other payment instrument when you sign up
+          for an Account. Customer represents and warrants to Company that such
+          information is true and that Customer is authorized to use the payment
+          instrument. Customer will promptly update its Account information with
+          any changes (for example, a change in your billing address or credit
+          card expiration date) that may occur. Customer hereby authorizes
+          Company to charge Customer’s credit card for the applicable Fees for
+          the term of this Agreement. All subscription fees will be paid
+          annually in advance and other fees will be charged when incurred.
+        </p>
+
+        <h3>3.3 Net of Taxes</h3>
+        <p>
+          All amounts payable by Customer to Company hereunder are exclusive of
+          any sales, use and other taxes or duties, however designated,
+          including without limitation, withholding taxes, royalties, know-how
+          payments, customs, privilege, excise, sales, use, value-added and
+          Platform taxes (collectively “Taxes”). Customer will be solely
+          responsible for payment of any Taxes, except for those taxes based on
+          the income of Company. Customer will not withhold any Taxes from any
+          amounts due Company.
+        </p>
+      </div>
+
+      <div>
+        <h2> 4. Term; Termination</h2>
+        <h3>4.1 Term; Termination</h3>
+        <p>
+          Subject to earlier termination as set forth in this Agreement, the
+          term of this Agreement will commence on the Effective Date and
+          continue for the initial term set forth in the Ordering Page, and
+          shall automatically renew for additional periods as set forth on the
+          Ordering Page or if not specified thereon, then annual periods, unless
+          either Party provides written notice of non-renewal at least thirty
+          (30) days prior to the end of the then-current term. In addition, a
+          Party may terminate this Agreement immediately if the other Party
+          breaches any material provision of this Agreement and does not cure
+          such breach within fifteen (15) days after receiving written notice
+          thereof. Furthermore, Company reserves the right to modify or
+          discontinue, temporarily or permanently, the Services (or any part
+          thereof) for any reason, including but limited to changes in
+          applicable law and government mandates.
+        </p>
+
+        <h3>4.2 Suspension</h3>
+        <p>
+          In addition to the rights in Section 4.1, Company may immediately
+          suspend Customer’s access to any or all of the Services (including
+          withdrawing from or refusing to act as Customer’s Registered Agent)
+          upon written notice for any or no reason, including if (a) Customer
+          fails to make a payment of Fees being due or if there is a billing
+          error or if Company is not otherwise able to process Customers payment
+          when due, (b) Customer is not in good standing or is otherwise not in
+          compliance with applicable laws, (c) Customer fails to provide Company
+          with timely and accurate information required for Company to provide
+          the Services or (d) Company reasonably suspects that Customer is
+          breaching any of the restrictions in Section 1.8. No refunds or
+          credits shall be provided during any periods of suspension of the
+          Services. If Customer is not in good standing in all applicable
+          state(s), it is Customer’s responsibility to re-establish good
+          standing and provide Company a certificate of good standing or other
+          evidence of its cure of any compliance issues in order to restart the
+          applicable suspended Services.
+        </p>
+
+        <h3>4.3 Effect of Termination</h3>
+        <p>
+          In the event that this Agreement expires or is terminated for any
+          reason, all rights with respect to the Services will immediately
+          terminate, and Customer will (a) cease use of the Services; (b) return
+          to Company or destroy, in Company’ sole discretion, all copies or
+          other embodiments of Company’s Confidential Information (as defined
+          below); and (c) pay to Company all amounts due and owing under this
+          Agreement. All of Customer Data and all other data associated with
+          Customer’s Account may be permanently deleted by Company upon any
+          termination of this Agreement in its sole discretion.
+        </p>
+
+        <h3>4.4 Survival</h3>
+        <p>
+          Upon termination of this Agreement, all obligations in this Agreement
+          will terminate except for those which by their nature shall survive,
+          including without limitation Sections 1.8 (Access Restrictions and
+          Responsibilities), 1.9 (License to Customer Data), 1.10 (Feedback), 2
+          (Ownership; Reservation of Rights), 3 (Fees), 4 (Term; Termination), 5
+          (Confidentiality), 9.2 (Disclaimers), 10 (Limitations of Liability),
+          11 (Indemnification; Release) and 12 (General) will survive.
+        </p>
+      </div>
+
+      <div>
+        <h2> 5. Confidentiality</h2>
+        <h3>5.1 Definition of Confidential Information</h3>
+        <p>
+          “Confidential Information” means, subject to the exceptions set forth
+          in Section 5.2 hereof, any information or data or materials,
+          regardless of whether it is in tangible form, that is disclosed or
+          otherwise made available by a party (the “Discloser”) to the other
+          party (the “Recipient”) and that the Discloser has marked as
+          confidential or proprietary, or that a reasonable person would
+          understand to be confidential in light of the circumstances of
+          disclosure, including all business plans, business methodologies,
+          strategies, technology, specifications, development plans, customers,
+          prospective customers, partners, suppliers billing records, and
+          information regarding the Discloser’s products or services. For the
+          avoidance of doubt, all information relating to the Platform, the
+          Services, fees and the terms of this Agreement is the Confidential
+          Information of Company.
+        </p>
+
+        <h3>5.2 Exceptions to Confidential Information</h3>
+        <p>
+          Confidential Information will not include any information which: (a)
+          the Recipient can show by written record was in its possession prior
+          to disclosure by the Discloser hereunder, provided that the Recipient
+          must promptly notify the Discloser of any prior knowledge; (b) appears
+          in issued patents or printed publications in integrated form or which
+          otherwise is or becomes generally known by the public other than
+          through the Recipient’s failure to observe any or all terms and
+          conditions hereof; or (c) subsequent to disclosure to the Recipient by
+          the Discloser, is obtained by the Recipient from a third person who is
+          not subject to any confidentiality obligation in favor of Discloser.
+        </p>
+
+        <h3>5.3 Use and Disclosure of Confidential Information</h3>
+        <p>
+          The Recipient may only use the Confidential Information for the
+          purpose of performing its obligations and exercising its rights
+          hereunder. The Recipient must keep secret and will never disclose,
+          publish, divulge, furnish or make accessible to anyone any of the
+          Confidential Information of the Discloser, directly or indirectly,
+          other than furnishing such Confidential Information to (a) the
+          Recipient’s employees who are required to have access to such
+          Confidential Information in connection with the performance of the
+          Recipient’s obligations, or the exercise of the Recipient’s rights,
+          hereunder, and (b) professional advisers (e.g., lawyers and
+          accountants), in each case, during the time that the Recipient is
+          permitted to retain such Confidential Information hereunder; provided
+          that any and all such employees are bound by written agreements or, in
+          the case of professional advisers, ethical duties, respecting the
+          Confidential Information in the manner set forth in this Agreement.
+          The Recipient will use at least reasonable care and adequate measures
+          to protect the security of the Confidential Information of the
+          Discloser and to ensure that any Confidential Information of the
+          Discloser is not disclosed or otherwise made available to other
+          persons or used in violation of this Agreement.
+        </p>
+
+        <h3>5.4 Disclosures Required by Law</h3>
+        <p>
+          In the event that the Recipient is required by law to make any
+          disclosure of any of the Confidential Information of the Discloser, by
+          subpoena, judicial or administrative order or otherwise, the Recipient
+          will first give written notice of such requirement to the Discloser,
+          and will permit the Discloser to intervene in any relevant proceedings
+          to protect its interests in the Confidential Information, and provide
+          full cooperation and assistance to the Discloser in seeking to obtain
+          such protection.
+        </p>
+      </div>
+
+      <div>
+        <h2> 6. Third Party Service</h2>
+        <p>
+          {" "}
+          The Services may provide links or other access to services, sites,
+          technology, and resources that are provided or otherwise made
+          available by third parties (the “Third-Party Services”) including
+          information made available through such Third-Party Services. For
+          example, Customer may be able to access certain information relating
+          to Customer’s good standing status, as made available through a
+          Third-Party Service. Company has no control over and is not
+          responsible for such Third-Party Services, including for the accuracy,
+          availability, reliability, or completeness of information shared by or
+          available through Third-Party Services. Company enables these
+          Third-Party Services merely as a convenience. Customer is solely
+          responsible for confirming all information made available from
+          Third-Party Services.
+        </p>
+      </div>
+
+      <div>
+        <h2> 7. Self Help Tools</h2>
+        <p>
+          The Services may provide to Customer certain documents, tools, and
+          ancillary services for Customer to use for its own benefit (“Self Help
+          Tools”). For example, Customer may be provided with tax form templates
+          that are pre-populated with information associated with Customer’s
+          Account. Company provides Self Help Tools merely as a convenience and
+          all use of the Self Help Tools is at Customer’s own risk. Company does
+          not investigate, monitor, or check for accuracy, appropriateness, or
+          completeness of any Self Help Tools or Customer’s use of Self Help
+          Tools. Company shall not be responsible, and Customer is solely
+          responsible for its use of all Self Help Tools, including but not
+          limited to confirming the applicability and appropriateness of the
+          Self Help Tools, the accuracy of information contained in Self Help
+          Tools, and compliance with laws, procedures, guidelines, and other
+          rules associated with Self Help Tools. Company may offer ancillary
+          services to the Self Help Tools, such as assisting Customer to submit
+          tax forms completed using the Self Help Tools to the IRS; however,
+          notwithstanding such Company assistance, Customer remains responsible
+          for the content of any forms, documents or other materials generated
+          using the Self Help Tools. To the extent Customer provides to the
+          Company any information (including but not limited to personal
+          information) as part of Customer’s use of the Self Help Tools, such
+          information shall be deemed Customer Data and subject to the terms of
+          Section 1.9.
+        </p>
+      </div>
+
+      <div>
+        <h2> 8. Consent To Electronic Communications</h2>
+        <p>
+          {" "}
+          By using the Services, Customer consents to receiving electronic
+          communications from Company regarding the Services at the email
+          account associated with Customer’s Account. Customer agrees to waive
+          all claims resulting from failure to receive communications because of
+          changes in Customer’s e-mail address which changes are not reflected
+          in your Account. Customer agrees that any notices, agreements,
+          disclosures, or other communications relating to the Services or this
+          Agreement that Company sends to you electronically (including via the
+          Services) will satisfy any legal communication requirements, including
+          that such communications be in writing. Without limitation of the
+          foregoing, Customer agrees to be bound by any affirmation, assent, or
+          agreement Customer transmits through the Services, including but not
+          limited to any consent you give to receive communications from Company
+          solely through electronic transmission.
+        </p>
+      </div>
+
+      <div>
+        <h2>9. Representations and Warranties; Disclaimer</h2>
+        <h3>9.1 Representations and Warranties</h3>
+        <p>
+          Each Party represents and warrants to the other Party that (a) such
+          Party has the required power and authority to enter into this
+          Agreement and to perform its obligations hereunder, (b) the execution
+          of this Agreement and performance of its obligations thereunder do not
+          and will not violate any other agreement to which it is a party, and
+          (c) this Agreement constitutes a legal, valid and binding obligation
+          when signed by both Parties.
+        </p>
+
+        <h3>9.2 Disclaimers</h3>
+        <p>
+          EXCEPT AS EXPRESSLY SET FORTH HEREIN, THE SERVICES AND PLATFORM ARE
+          PROVIDED ON AN “AS-IS” BASIS AND COMPANY DISCLAIMS ANY REPRESENTATION
+          OR WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED (EITHER IN FACT OR
+          BY OPERATION OF LAW), OR STATUTORY, AS TO ANY MATTER WHATSOEVER.
+          COMPANY EXPRESSLY DISCLAIMS ALL IMPLIED WARRANTIES OF MERCHANTABILITY,
+          FITNESS FOR A PARTICULAR PURPOSE, QUALITY, ACCURACY, TITLE, AND
+          NON-INFRINGEMENT. COMPANY DOES NOT WARRANT THAT THE PLATFORM IS
+          ERROR-FREE OR THAT OPERATION OF THE SERVICES WILL BE SECURE OR
+          UNINTERRUPTED.
+        </p>
+      </div>
+
+      <div>
+        <h2> 10. Limitations of Liability</h2>
+        <h3>10.1 Disclaimer of Consequential Damages</h3>
+        <p>
+          IN NO EVENT WILL COMPANY BE LIABLE TO CUSTOMER FOR ANY SPECIAL,
+          INDIRECT, RELIANCE, INCIDENTAL OR CONSEQUENTIAL DAMAGES OF ANY KIND,
+          LOST OR DAMAGED DATA, LOST PROFITS OR LOST REVENUE, WHETHER ARISING IN
+          CONTRACT, TORT (INCLUDING NEGLIGENCE), OR OTHERWISE, EVEN IF COMPANY
+          HAS BEEN NOTIFIED OF THE POSSIBILITY THEREOF
+        </p>
+
+        <h3>10.2 General Cap on Liability</h3>
+        <p>
+          UNDER NO CIRCUMSTANCES WILL COMPANY’S LIABILITY FOR ALL CLAIMS ARISING
+          UNDER OR RELATING TO THIS AGREEMENT (INCLUDING BUT NOT LIMITED TO
+          WARRANTY CLAIMS), REGARDLESS OF THE FORUM AND REGARDLESS OF WHETHER
+          ANY ACTION OR CLAIM IS BASED ON CONTRACT, TORT, OR OTHERWISE, EXCEED
+          THE AGGREGATE FEES PAID AND PAYABLE BY CUSTOMER TO COMPANY UNDER THIS
+          AGREEMENT DURING THE TWELVE (12) MONTHS PRECEDING THE CLAIM. THIS
+          LIMITATION OF LIABILITY IS CUMULATIVE AND NOT PER INCIDENT.
+        </p>
+
+        <h3>10.3 Independent Allocations of Risk</h3>
+        <p>
+          EACH PROVISION OF THIS AGREEMENT THAT PROVIDES FOR A LIMITATION OF
+          LIABILITY, DISCLAIMER OF WARRANTIES, OR EXCLUSION OF DAMAGES IS TO
+          ALLOCATE THE RISKS OF THIS AGREEMENT BETWEEN THE PARTIES. EACH OF
+          THESE PROVISIONS IS SEVERABLE AND INDEPENDENT OF ALL OTHER PROVISIONS
+          OF THIS AGREEMENT, AND EACH OF THESE PROVISIONS WILL APPLY EVEN IF
+          THEY HAVE FAILED OF THEIR ESSENTIAL PURPOSE.
+        </p>
+      </div>
+
+      <div>
+        <h2>11. Indemnification; Release</h2>
+        <h3>11.1 Indemnification</h3>
+        <p>
+          Customer will indemnify, defend and hold Company and its affiliates
+          and their respective officers, directors, agents, and employees of
+          Company (“Company Parties”) harmless from and against liabilities,
+          damages, judgments, awards, losses, costs, expenses, or fees
+          (including reasonable attorneys’ fees) incurred by the Company Parties
+          in connection with any claim, demand or allegation by a third party
+          that arises out of or is in connection with (a) any use by Customer of
+          the Services in violation of this Agreement, (b) Customer’s
+          non-compliance with any applicable laws and regulations, and (c)
+          Customer’s gross negligence and willful misconduct.
+        </p>
+
+        <h3>11.2 Release</h3>
+        <p>
+          Customer acknowledges and agrees that certain services (including
+          receipt, processing, notification, delivery, and/or destruction of
+          Customer’s mail) may be performed by persons or entities not
+          affiliated with Company, and Customer hereby waives and releases the
+          Company Releasees from any and all causes of action, claims and
+          damages relating to such services.
+        </p>
+      </div>
+
+      <div>
+        <h2> 12. General</h2>
+        <p>
+          The terms and conditions of this Agreement are severable. If any
+          provision of this Agreement is found to be unenforceable or invalid,
+          that provision will be limited or eliminated to the minimum extent
+          necessary so that this Agreement will otherwise remain in full force
+          and effect and enforceable. Neither Party may assign this Agreement
+          without the other Party’s prior written consent; provided, that,
+          either Party may assign this Agreement without such consent to an
+          affiliate or to a successor to all or substantially all of the
+          business or assets to which this Agreement relates, whether by sale of
+          stock, sale of assets, merger, reorganization or otherwise. Any
+          assignment or attempted assignment by either Party in violation of the
+          foregoing will be null and void. Subject to the foregoing, this
+          Agreement will be binding on the Parties and their successors and
+          assigns. Both Parties agree that this Agreement, together with the
+          Platform Terms, is the complete and exclusive statement of the mutual
+          understanding of the Parties and supersede and cancel all previous
+          written and oral agreements, communications and other understandings
+          relating to the subject matter of this Agreement. No agency,
+          partnership, joint venture, or employment is created as a result of
+          this Agreement and each Party does not have any authority of any kind
+          to bind the other Party in any respect whatsoever. All notices under
+          this Agreement will be in writing and sent, if to Company, to the
+          address set forth in Section 13 below and if to Customer, to the
+          address associated with Customer’s Account and will be deemed to have
+          been duly given when received, if personally delivered; when receipt
+          is electronically confirmed, if transmitted by facsimile or email; the
+          day after it is sent, if sent for next day delivery by recognized
+          overnight delivery service; and upon receipt, if sent by certified or
+          registered mail, return receipt requested. Each Party will be excused
+          from performance (other than performance of payment obligations) for
+          any period during which, and to the extent that, it is prevented from
+          performing any obligation or service, in whole or in part, as a result
+          of a cause beyond its reasonable control and without its fault or
+          negligence, including, but not limited to, acts of God, acts of war,
+          epidemics, fire, communication line failures, power failures,
+          earthquakes, floods, blizzard, or other natural disasters (a “Force
+          Majeure Event”). In the event such non-performance continues for a
+          period of thirty (30) days or more, the Party not affected by the
+          Force Majeure Event may terminate this Agreement by giving written
+          notice thereof to the other Party. This Agreement will be governed by
+          the laws of the State of New York without regard to its conflict of
+          laws provisions. For all disputes relating to this Agreement, each
+          Party submits to the exclusive jurisdiction of the state and federal
+          courts located in New York, New York and waives any jurisdictional,
+          venue, or inconvenient forum objections to such courts. Customer
+          acknowledges that any unauthorized use of the Platform or Services
+          will cause irreparable harm and injury to Company for which there is
+          no adequate remedy at law. In addition to all other remedies available
+          under this Agreement, at law or in equity, Customer further agrees
+          that Company will be entitled to injunctive relief in the event
+          Customer uses the Platform or Services in violation of the limited
+          license granted herein or uses the Platform or Services in any way not
+          expressly permitted by this Agreement. In any action or proceeding to
+          enforce rights under this Agreement, the prevailing Party will be
+          entitled to recover costs and attorneys’ fees. Failure by either Party
+          to enforce any provision of this Agreement will not be deemed a waiver
+          of future enforcement of that or any other provision.
+        </p>
+      </div>
+
+      <div>
+        <h2> 13. Contact Information</h2>
+        <p>
+          {" "}
+          Company is available at support@firstbase.io for any questions
+          regarding this Agreement, the Platform or the Services.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const TabContent4 = () => {
+  return (
+    <div className={styles.policyWrapper}>
+      <div className={styles.date}>
+        <p>
+          <strong>Last Modified:</strong> November 5, 2021
+        </p>
+      </div>
+
+      <div>
+    <p>  This Agreement, by and between Customer and Firstbase.io(“Company”), is effective as of the date of Acceptance (the “Effective Date”) and governs Customer’s use of certain services as described in Section 1 below (collectively, the “Services”).  Company reserves the right to change or modify portions of this Agreement at any time.  If Company does so, it will post the changes on this page and will indicate at the top of this page the date this Agreement was last revised. With respect to changes that materially adversely impact Customer’s use of the Services, Company will also use commercially reasonable efforts to notify Customer, either through the Platform user interface, in an email notification or through other reasonable means. Any such changes will become effective no earlier than thirty (30) days after being posted, except that changes addressing new functions of the Services or changes made for legal reasons may become effective immediately. Customer’s continued use of the Services after any such changes or modifications become effective constitutes acceptance of such changes or modifications.  Each of Company and Customer may be referred to herein individually as a “Party” or collectively as “Parties”.  Customer’s use of the Services shall be subject to the terms of this Agreement and all other terms, agreements and policies referenced herein and Customer agrees that its Acceptance hereunder shall also constitute its acceptance of such other terms, agreements and policies.</p>
+
+<h3>1. Services</h3>
+<h3>1.1 Description of Services</h3>
+<p>The Services provide Customer with (a) accounting services through “Firstbase Accounting” including(i) ongoing bookkeeping services; as defined as registering and categorizing financial transactions to prepare financial statements (ii) Firstbase reserves the right to change bookkeepers at discretion (b) financial statement preparation (c) ad hoc accounting requests , and (d) other ancillary functionality. All Services are made available and administered through Company’s proprietary platform operated by or on behalf of the Company or one of its affiliates (the “Platform”).  All use of the Platform shall be subject to the Platform terms of use available at https://firstbase.io/terms (the “Platform Terms”) and Customer hereby agrees and acknowledges its Acceptance of the Platform Terms.  In the event of any conflict between the terms of the Platform Terms and this Agreement, the terms of this Agreement shall govern.</p>
+‍
+<h3>1.2 Other Services</h3>
+<p>Customer may elect to have Firstbase Accounting file their annual tax returns for an additional fee, as set forth on the ordering page. Certain Customers may be required to electronically file Form 114, Report of Foreign Bank and Financial Accounts (FBAR) with the U.S. Department of the Treasury. Unless otherwise specifically agreed in writing, we will not prepare, file, or provide assistance with this form. In addition to the ongoing services, Firstbase Accounting may provide catchup bookkeeping services for an additional fee, as determined on a customer-by-customer basis.</p>
+
+<h3>1.3 Subscriptions</h3>
+<p>Customer will need to purchase a subscription to the Platform to access the Services.   All subscription descriptions and pricing are set forth on the Ordering Page (as defined below).  Customer’s subscription will renew automatically at the then-current rates for additional periods as set forth on the Ordering Page or if not specified thereon.  Company reserves the right to change subscription prices at the end of each subscription term and will provide notice of the change on the Platform or in an email to Customer.   Customer’s continued use of the Services after the price change becomes effective constitutes Customer’s agreement to pay the changed amount upon renewal of your subscription and Customer will automatically be charged at the start of each new subscription period in accordance with Section 3.(a) Customers may cancel their subscription by emailing support@firstbase.io at least two business days before the subscription period renewal date. Subject to the foregoing period noted to avoid renewal charges, Customer may cancel at any time and will be permitted to access and use the Services for the remaining period in the then-effective subscription term.  All subscription fees are non-refundable and no credits shall be given for any partially used periods.</p>
+
+<h3>1.4 Subscription Changes</h3>
+<p>Subscription pricing is determined based on a company’s monthly operational expenses, where operational expenses are defined as the sum of Cost of Goods Sold and expenses for a given month. Customer will be graduated to a higher pricing tier when the trailing three-month average of cash-based operational expenses exceeds their current pricing plan, with the exception of the base plan where Customer will be graduated upon reaching $2,500 in a single month’s expense. The new plan price will take effect at the start of the next subscription period.</p>
+
+<h3>1.5 Access to Services</h3>
+<p>Subject to the terms and conditions of this Agreement, Company hereby grants Customer a limited, non-exclusive, non-transferable, non-sublicensable right to access and use the Platform solely to access the Services and communicate with the Bookkeeper, in each case solely for Customer’s internal business purposes.</p>
+
+<h3>1.6 Registration; Additional Information</h3>
+<p>To access the Services, Customer needs to register on the Platform.  As part of the registration process, Company will provide Customer with username(s) and password(s) to create an account (“Account”).  Customer agrees to provide and maintain true, accurate, current, and complete information for its Account. Customer is responsible for maintaining the confidentiality of the password and Account details and agrees not to disclose such Account details to any third parties (other than employees of Customer).  Customer is fully responsible for any and all activities that occur under Customer’s Account and any actions taken by parties with access to Customer’s Account. Furthermore, from time to time, Company may request additional information, documents, or other materials necessary for Company’s performance of Services. Customer may be required to prove the accuracy and completeness of the information provided and of the returns to a taxing authority. Company's or affiliate's work in connection with the preparation of your income tax returns does not include any procedures designed to discover defalcations or other irregularities, should any exist. Customer has the final responsibility for the income tax returns. In addition, Company will be excused from meeting specified deadlines or performing specified responsibilities to the extent the Company’s delays or failures are caused by Customer’s delays or failures in providing the Company with reasonable cooperation or access to information, documentation, or other materials necessary for the performance of Services. With respect to annual tax returns ("Other Services"- Section 1.2), if Customer shares information with the Company or its affiliates later than 15 days before the respective filing deadline, Company reserves the right to file a free extension with the IRS on behalf of the Customer.</p>
+
+<h3>1.7 Access Restrictions and Responsibilities</h3>
+<p>Customer will not use the Platform or Services for any purpose other than the purposes expressly set forth herein.  Customer may not, directly or indirectly: (a) reverse engineer, decompile, disassemble or otherwise attempt to discover the source code, object code or underlying structure, ideas, know-how or algorithms relevant to the Platform; (b) modify, translate, or create derivative works based on the Platform (except to the extent expressly permitted by Company); (c) remove any proprietary notices or labels; (d) use bots, hacks, mods or any other unauthorized software designed to modify the Platform; (e) circumvent, remove, alter or thwart any technological measure or content protections of the Platform; (f) use any spider, crawler, scraper or other automatic device, process or software that intercepts, mines, scrapes, extracts or otherwise accesses the Platform to monitor, extract, copy or collect information or data from or through the Platform or engage in any manual process to do the same; (g) introduce any viruses, trojan horses, worms, bombs or other materials that are malicious or technologically harmful into Company’s systems or (h) access or use the Platform or Services in any way not expressly permitted by this Agreement.  Customer shall be responsible for obtaining and maintaining any equipment and ancillary services needed to connect to, access, or otherwise use the Platform and Services, including, without limitation, modems, hardware, server, software, operating system, networking, web servers, and the like.</p>
+
+<h3>1.8 Customer Data</h3>
+<p>Customer hereby grants to Company: a non-exclusive, worldwide, royalty-free, fully paid up, sublicensable (through multiple tiers), transferable right and license to copy, distribute, display and create derivative works of and otherwise use the electronic data or information (including, without limitation scanned or other electronic copies of documents uploaded to and/or transmitted through the Platform), submitted or uploaded by Customer to the Platform (collectively, “Customer Data”) (a) to exercise its rights and perform its obligations under this Agreement, (b) solely on an aggregated basis, to improve and enhance the Services and/or Platform and for other development, diagnostic and corrective purposes in connection with the Services and other Company offerings. The term of the license in clause (a) of the preceding sentence will be for the term of this Agreement, and the term of the license granted in clause (b) of the preceding sentence will be perpetual.  Customer represents and warrants that it has obtained all licenses, permits, consents, and authorizations required to provide the Customer Data to Company and for Company’s use as set forth herein. Furthermore, Company shall have the right to collect and analyze data and other information relating to Customer’s use of the Services and related systems and technologies, and  Company will be free (during and after the term of this Agreement) to use such information and data in connection with the Company’s conduct of its business. In addition, if Customer elects Company or its affiliates to file Customer's annual tax returns ("Other Services" - Section 1.2), Customer acknowledges the returns may be selected for examination or audit by tax authorities. In the event of such governmental tax examination, Company may represent Customer under the terms of a separate engagement. Company does not disclose any personal information obtained in the course of our practice except as required or permitted by law.</p>
+
+<h3>1.9 Feedback</h3>
+<p>Customer may from time to time provide suggestions, comments for enhancements or functionality, or other feedback with respect to the Services or Platform (“Feedback”) to Company.  Company will have full discretion to determine whether or not to proceed with any Feedback or any other potential enhancements, new features, or functionality.  Customer hereby assigns Company all right, title, and interest in and to the Feedback.</p>
+
+<h3>2. Ownership; Reservation of Rights</h3>
+<p>CUSTOMER ACKNOWLEDGES AND AGREES THAT, AS BETWEEN THE PARTIES, COMPANY RETAINS ALL RIGHT, TITLE, AND INTEREST IN AND TO THE PLATFORM AND SERVICES AND ALL INTELLECTUAL PROPERTY RIGHTS THEREIN AND THERETO.  COMPANY GRANTS NO, AND RESERVES ANY AND ALL, RIGHTS OTHER THAN THE RIGHTS EXPRESSLY GRANTED TO CUSTOMER UNDER THIS AGREEMENT WITH RESPECT TO THE SERVICES.  CUSTOMER WILL ACQUIRE NO RIGHT, TITLE, OR INTEREST IN AND TO THE SERVICES OTHER THAN THE LIMITED LICENSED RIGHTS EXPRESSLY GRANTED UNDER THIS AGREEMENT.  NOTWITHSTANDING THE FOREGOING, SUBJECT TO THE RIGHTS GRANTED UNDER SECTION 1.9, CUSTOMER RETAINS ALL RIGHT, TITLE, AND INTEREST IN AND TO THE CUSTOMER DATA.</p>
+
+<h3>3. Fees; Payment Terms</h3>
+<h3>3.1 Fees</h3>
+<p>Customer will pay to Company any fees for the Services (“Fees”) set forth on the applicable ordering page on the Platform (“Ordering Page”) in accordance with the terms and conditions set forth herein.  In addition to the Fees for the Services, Customer is responsible for all filing fees and other fees payable to a state authority or other governmental authority.  Payment obligations are non-cancelable, Fees paid are non-refundable, and no credits shall be given for any partially used periods.</p>
+
+<h3>3.2 Payment Terms</h3>
+<p>Customer will be required to provide Company with information regarding their credit card or other payment instrument when they sign up for an Account.  Customer represents and warrants to Company that such information is true and that Customer is authorized to use the payment instrument.  Customer will promptly update their Account information with any changes (for example, a change in your billing address or credit card expiration date) that may occur.  Customer hereby authorizes Company to charge Customer’s credit card for the applicable Fees for the term of this Agreement.  All subscription fees will be paid annually or monthly in advance and other fees will be charged when incurred.</p>
+
+<h3>3.3 Net of Taxes</h3>
+<p>All amounts payable by Customer to Company hereunder are exclusive of any sales, use, and other taxes or duties, however designated, including without limitation, withholding taxes, royalties, know-how payments, customs, privilege, excise, sales, use, value-added and Platform taxes (collectively “Taxes”).  Customer will be solely responsible for payment of any Taxes, except for those taxes based on the income of Company.  Customer will not withhold any Taxes from any amounts due Company.</p>
+
+<h3>4. Term; Termination</h3>
+<p>4.1 Termination</p>
+<p>Subject to earlier termination as set forth in this Agreement, the term of this Agreement will commence on the Effective Date and continue for the initial term set forth in the Ordering Page, and shall automatically renew for additional periods as set forth on the Ordering Page or if not specified thereon, then annual periods, unless either Party provides written notice of non-renewal at least two(2) business days prior to the end of the then-current term.  In addition, a Party may terminate this Agreement immediately if the other Party breaches any material provision of this Agreement and does not cure such breach within fifteen (15) days after receiving written notice thereof. Furthermore, Company reserves the right to modify or discontinue, temporarily or permanently, the Services (or any part thereof) for any reason, including but limited to changes in applicable law and government mandates.</p>
+ 
+<h3>4.2 Suspension</h3>
+<p>In addition to the rights in Section 4.1, Company may immediately suspend Customer’s access to any or all of the Services (including withdrawing from or refusing to act as Customer’s Registered Agent) upon written notice for any or no reason, including if (a) Customer fails to make a payment of Fees being due or if there is a billing error or if Company is not otherwise able to process Customers payment when due, (b) Customer is not in good standing or is otherwise not in compliance with applicable laws, (c) Customer fails to provide Company with timely and accurate information required for Company to provide the Services or (d) Company reasonably suspects that Customer is breaching any of the restrictions in Section 1.8.  No refunds or credits shall be provided during any periods of suspension of the Services.
+</p>
+<h3>4.3 Effect of Termination</h3>
+<p>In the event that this Agreement expires or is terminated for any reason, all rights with respect to the Services will immediately terminate, and Customer will (a) cease use of the Services; (b) return to Company or destroy, in Company’ sole discretion, all copies or other embodiments of Company’s Confidential Information (as defined below); and (c) pay to Company all amounts due and owing under this Agreement.  Upon request, Firstbase will provide all of Customer’s Firstbase Accounting information to Customer for a period of up to one (1) year following termination. Subsequently, all of Customer Data and all other data associated with Customer’s Account may be permanently deleted by Company upon any termination of this Agreement in its sole discretion.</p>
+
+<h3>4.4 Survival</h3>
+<p>Upon termination of this Agreement, all obligations in this Agreement will terminate except for those which by their nature shall survive, including without limitation Sections 1.8 (Access Restrictions and Responsibilities), 1.9 (License to Customer Data), 1.10 (Feedback), 2 (Ownership; Reservation of Rights), 3 (Fees), 4 (Term; Termination), 5 (Confidentiality), 9.2 (Disclaimers), 10 (Limitations of Liability), 11 (Indemnification; Release) and 12 (General) will survive.</p>
+
+<h3>5. Confidentiality</h3>
+<h3>5.1 Definition of Confidential Information</h3>
+<p>“Confidential Information” means, subject to the exceptions set forth in Section 5.2 hereof, any information or data or materials, regardless of whether it is in tangible form, that is disclosed or otherwise made available by a party (the “Discloser”) to the other party (the “Recipient”) and that the Discloser has marked as confidential or proprietary, or that a reasonable person would understand to be confidential in light of the circumstances of disclosure, including all business plans, business methodologies, strategies, technology, specifications, development plans, customers, prospective customers, partners, suppliers billing records, and information regarding the Discloser’s products or services.  For the avoidance of doubt, all information relating to the Platform, the Services, fees, and the terms of this Agreement is the Confidential Information of Company.</p>
+
+<h3>5.2 Exceptions to Confidential Information</h3>
+<p>Confidential Information will not include any information which: (a) the Recipient can show by written record was in its possession prior to disclosure by the Discloser hereunder, provided that the Recipient must promptly notify the Discloser of any prior knowledge; (b) appears in issued patents or printed publications in integrated form or which otherwise is or becomes generally known by the public other than through the Recipient’s failure to observe any or all terms and conditions hereof; or (c) subsequent to disclosure to the Recipient by the Discloser, is obtained by the Recipient from a third person who is not subject to any confidentiality obligation in favor of Discloser.</p>
+
+<h3>5.3 Use and Disclosure of Confidential Information</h3>
+<p>The Recipient may only use the Confidential Information for the purpose of performing its obligations and exercising its rights hereunder.  The Recipient must keep secret and will never disclose, publish, divulge, furnish or make accessible to anyone any of the Confidential Information of the Discloser, directly or indirectly, other than furnishing such Confidential Information to (a) the Recipient’s employees who are required to have access to such Confidential Information in connection with the performance of the Recipient’s obligations, or the exercise of the Recipient’s rights, hereunder, and (b) professional advisers (e.g., lawyers and accountants), in each case, during the time that the Recipient is permitted to retain such Confidential Information hereunder; provided that any and all such employees are bound by written agreements or, in the case of professional advisers, ethical duties, respecting the Confidential Information in the manner set forth in this Agreement.  The Recipient will use at least reasonable care and adequate measures to protect the security of the Confidential Information of the Discloser and to ensure that any Confidential Information of the Discloser is not disclosed or otherwise made available to other persons or used in violation of this Agreement.
+</p>
+<h3>5.4 Disclosures Required by Law</h3>
+<p>In the event that the Recipient is required by law to make any disclosure of any of the Confidential Information of the Discloser, by subpoena, judicial or administrative order, or otherwise, the Recipient will first give written notice of such requirement to the Discloser, and will permit the Discloser to intervene in any relevant proceedings to protect its interests in the Confidential Information, and provide full cooperation and assistance to the Discloser in seeking to obtain such protection.</p>
+
+<h3>6. Third Party Service</h3>
+<p>The Services may provide links or other access to services, sites, technology, and resources that are provided or otherwise made available by third parties (the “Third-Party Services”). Company has no control over and is not responsible for such Third-Party Services, including for the accuracy, availability, reliability, or completeness of information shared by or available through Third-Party Services.  Company enables these Third-Party Services merely as a convenience.  Customer is solely responsible for confirming all information made available from Third-Party Services.</p>
+
+<h3>7. Consent To Electronic Communications</h3>
+<p>By using the Services, Customer consents to receive electronic communications from Company regarding the Services at the email account associated with Customer’s Account.  Customer agrees to waive all claims resulting from failure to receive communications because of changes in Customer’s e-mail address which changes are not reflected in your Account. Customer agrees that any notices, agreements, disclosures, or other communications relating to the Services or this Agreement that Company sends to you electronically (including via the Services) will satisfy any legal communication requirements, including that such communications be in writing. Without limitation of the foregoing, Customer agrees to be bound by any affirmation, assent, or agreement Customer transmits through the Services, including but not limited to any consent you give to receive communications from Company solely through electronic transmission.</p>
+
+<h3>8. Representations and Warranties; Disclaimer</h3>
+<h3>8.1 Representations and Warranties</h3>
+<p>Each Party represents and warrants to the other Party that (a) such Party has the required power and authority to enter into this Agreement and to perform its obligations hereunder, (b) the execution of this Agreement and performance of its obligations thereunder do not and will not violate any other agreement to which it is a party, and (c) this Agreement constitutes a legal, valid and binding obligation when signed by both Parties.</p>
+
+<h3>8.2 Disclaimers</h3>
+<p>EXCEPT AS EXPRESSLY SET FORTH HEREIN, THE SERVICES AND PLATFORM ARE PROVIDED ON AN “AS-IS” BASIS AND COMPANY DISCLAIMS ANY REPRESENTATION OR WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED (EITHER IN FACT OR BY OPERATION OF LAW), OR STATUTORY, AS TO ANY MATTER WHATSOEVER.  COMPANY EXPRESSLY DISCLAIMS ALL IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, QUALITY, ACCURACY, TITLE, AND NON-INFRINGEMENT. COMPANY DOES NOT WARRANT THAT THE PLATFORM IS ERROR-FREE OR THAT OPERATION OF THE SERVICES WILL BE SECURE OR UNINTERRUPTED.</p>
+
+<h3>9. Limitations of Liability</h3>
+<h3>9.1 Disclaimer of Consequential Damages</h3>
+<p>IN NO EVENT WILL COMPANY BE LIABLE TO CUSTOMER FOR ANY SPECIAL, INDIRECT, RELIANCE, INCIDENTAL OR CONSEQUENTIAL DAMAGES OF ANY KIND, LOST OR DAMAGED DATA, LOST PROFITS, OR LOST REVENUE, WHETHER ARISING IN CONTRACT, TORT (INCLUDING NEGLIGENCE), OR OTHERWISE, EVEN IF COMPANY HAS BEEN NOTIFIED OF THE POSSIBILITY THEREOF</p>
+
+<h3>9.2 General Cap on Liability</h3>
+<p>UNDER NO CIRCUMSTANCES WILL COMPANY’S LIABILITY FOR ALL CLAIMS ARISING UNDER OR RELATING TO THIS AGREEMENT (INCLUDING BUT NOT LIMITED TO WARRANTY CLAIMS), REGARDLESS OF THE FORUM AND REGARDLESS OF WHETHER ANY ACTION OR CLAIM IS BASED ON CONTRACT, TORT, OR OTHERWISE, EXCEED THE AGGREGATE FEES PAID AND PAYABLE BY CUSTOMER TO COMPANY UNDER THIS AGREEMENT DURING THE TWELVE (12) MONTHS PRECEDING THE CLAIM. THIS LIMITATION OF LIABILITY IS CUMULATIVE AND NOT PER INCIDENT.</p>
+
+<h3>9.3 Independent Allocations of Risk</h3>
+<p>EACH PROVISION OF THIS AGREEMENT THAT PROVIDES FOR A LIMITATION OF LIABILITY, DISCLAIMER OF WARRANTIES, OR EXCLUSION OF DAMAGES IS TO ALLOCATE THE RISKS OF THIS AGREEMENT BETWEEN THE PARTIES.  EACH OF THESE PROVISIONS IS SEVERABLE AND INDEPENDENT OF ALL OTHER PROVISIONS OF THIS AGREEMENT, AND EACH OF THESE PROVISIONS WILL APPLY EVEN IF THEY HAVE FAILED OF THEIR ESSENTIAL PURPOSE.</p>
+
+<h3>10. Indemnification; Release</h3>
+<h3>10.1 Indemnification</h3>
+<p>Customer will indemnify, defend and hold Company and its affiliates and their respective officers, directors, agents, and employees of Company (“Company Parties”) harmless from and against liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys’ fees) incurred by the Company Parties in connection with any claim, demand or allegation by a third party that arises out of or is in connection with (a) any use by Customer of the Services in violation of this Agreement, (b) Customer’s non-compliance with any applicable laws and regulations, and (c) Customer’s gross negligence and willful misconduct. Customer also will indemnify and hold Company and its affiliates harmless with respect to any and all claims arising from the use of the annual tax returns ("Other Services" - Section 1.2) for any purpose other than filing with the IRS and state and local tax authorities regardless of the nature of the claim, including the negligence of any party.</p>
+
+<h3>10.2 Release</h3>
+<p>Customer acknowledges and agrees that certain services (including bookkeeping tax preparation, and tax filing) may be performed by persons or entities not affiliated with Company, and Customer hereby waives and releases the Company Releases from any and all causes of action, claims, and damages relating to such services.</p>
+
+<h3>11. General</h3>
+<p>The terms and conditions of this Agreement are severable.  If any provision of this Agreement is found to be unenforceable or invalid, that provision will be limited or eliminated to the minimum extent necessary so that this Agreement will otherwise remain in full force and effect and enforceable.  Neither Party may assign this Agreement without the other Party’s prior written consent; provided, that, either Party may assign this Agreement without such consent to an affiliate or to a successor to all or substantially all of the business or assets to which this Agreement relates, whether by sale of stock, sale of assets, merger, reorganization or otherwise.  Any assignment or attempted assignment by either Party in violation of the foregoing will be null and void.  Subject to the foregoing, this Agreement will be binding on the Parties and their successors and assigns. Both Parties agree that this Agreement, together with the Platform Terms, is the complete and exclusive statement of the mutual understanding of the Parties and supersede and cancel all previous written and oral agreements, communications, and other understandings relating to the subject matter of this Agreement.  No agency, partnership, joint venture, or employment is created as a result of this Agreement and each Party does not have any authority of any kind to bind the other Party in any respect whatsoever.  All notices under this Agreement will be in writing and sent, if to Company, to the address set forth in Section 13 below and if to Customer, to the address associated with Customer’s Account and will be deemed to have been duly given when received, if personally delivered; when receipt is electronically confirmed, if transmitted by facsimile or email; the day after it is sent, if sent for next day delivery by recognized overnight delivery service; and upon receipt, if sent by certified or registered mail, return receipt requested.  Each Party will be excused from performance (other than performance of payment obligations) for any period during which, and to the extent that, it is prevented from performing any obligation or service, in whole or in part, as a result of a cause beyond its reasonable control and without its fault or negligence, including, but not limited to, acts of God, acts of war, epidemics, fire, communication line failures, power failures, earthquakes, floods, blizzard, or other natural disasters (a “Force Majeure Event”).  In the event such non-performance continues for a period of thirty (30) days or more, the Party not affected by the Force Majeure Event may terminate this Agreement by giving written notice thereof to the other Party.  This Agreement will be governed by the laws of the State of New York without regard to its conflict of laws provisions. For all disputes relating to this Agreement, each Party submits to the exclusive jurisdiction of the state and federal courts located in New York, New York and waives any jurisdictional, venue, or inconvenient forum objections to such courts. Customer acknowledges that any unauthorized use of the Platform or Services will cause irreparable harm and injury to Company for which there is no adequate remedy at law.  In addition to all other remedies available under this Agreement, at law or in equity, Customer further agrees that Company will be entitled to injunctive relief in the event Customer uses the Platform or Services in violation of the limited license granted herein or uses the Platform or Services in any way not expressly permitted by this Agreement.  In any action or proceeding to enforce rights under this Agreement, the prevailing Party will be entitled to recover costs and attorneys’ fees.  Failure by either Party to enforce any provision of this Agreement will not be deemed a waiver of future enforcement of that or any other provision.</p>
+
+<h3>12. Contact Information</h3>
+<p>Company is available at support@firstbase.io for any questions regarding this Agreement, the Platform, or the Services</p>
+      </div>
+    </div>
+  );
+};
+
 const items: TabsProps["items"] = [
   {
     key: "1",
@@ -1673,12 +2482,12 @@ const items: TabsProps["items"] = [
   {
     key: "3",
     label: "Agent Services Terms of Use",
-    children: "Content of Tab Pane 3",
+    children: <TabContent3 />,
   },
   {
     key: "4",
     label: "Accounting Terms of Service",
-    children: "Content of Tab Pane 3",
+    children: <TabContent4 />,
   },
 ];
 

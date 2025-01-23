@@ -36,3 +36,8 @@ export enum PlansEnum {
   BASIC = "BASIC",
   PRO = "PRO",
 }
+
+export enum ApiStatus {
+  success = 200,
+  error = 501,
+}

@@ -3,6 +3,7 @@ import Payments from "@/models/payments.model";
 import { PlansEnum } from "@/utils/constants";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import StripeService from "@/services/stripe.service";
 
 const BASIC_PLAN_FEE_PRICEID = process.env.BASIC_PLAN_FEE_PRICEID!;
 const BASIC_PLAN_SUB_PRICEID = process.env.BASIC_PLAN_SUB_PRICEID!;
@@ -19,6 +20,8 @@ export const config = {
 };
 
 export async function POST(req: NextRequest) {
+  console.log("the resquest", req);
+
   if (!endpointSecret) {
     return NextResponse.json(
       { error: "Webhook secret not configured" },
@@ -35,6 +38,7 @@ export async function POST(req: NextRequest) {
 
     // Validate and parse the event
     event = stripe.webhooks.constructEvent(rawBody, signature, endpointSecret);
+    console.log("eventeventeventtheevent", event);
   } catch (err: any) {
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },
@@ -54,6 +58,18 @@ export async function POST(req: NextRequest) {
         const pricids = invoice.lines.data.map((el) => el.price?.id);
         switch (invoice.subscription_details?.metadata?.subPlan) {
           case PlansEnum.BASIC: {
+            await Payments.create({
+              invoice: invoice.subscription as string,
+              paymentDate: new Date() as any,
+              plan: invoice.subscription_details?.metadata?.subPlan,
+              status: invoice.status as any,
+              companyId: company.id,
+              invoicePDF: invoice.invoice_pdf as any,
+              amountPaid: invoice.amount_paid
+                ? invoice.amount_paid / 100
+                : undefined,
+              description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
+            });
             if (pricids.find((el) => el === BASIC_PLAN_FEE_PRICEID)) {
               company.regPaymentStatus = true;
               await Payments.create({
@@ -62,8 +78,10 @@ export async function POST(req: NextRequest) {
                 plan: invoice.subscription_details?.metadata?.subPlan,
                 status: invoice.status as any,
                 companyId: company.id,
-                invoicePDF:invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
+                invoicePDF: invoice.invoice_pdf as any,
+                amountPaid: invoice.amount_paid
+                  ? invoice.amount_paid / 100
+                  : undefined,
                 description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
               });
             }
@@ -75,8 +93,10 @@ export async function POST(req: NextRequest) {
                 plan: invoice.subscription_details?.metadata?.subPlan,
                 status: invoice.status as any,
                 companyId: company.id,
-                invoicePDF:invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
+                invoicePDF: invoice.invoice_pdf as any,
+                amountPaid: invoice.amount_paid
+                  ? invoice.amount_paid / 100
+                  : undefined,
                 description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
               });
               company.subsriptionPaymentStatus = true;
@@ -95,8 +115,10 @@ export async function POST(req: NextRequest) {
                 plan: invoice.subscription_details?.metadata?.subPlan,
                 status: invoice.status as any,
                 companyId: company.id,
-                invoicePDF:invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
+                invoicePDF: invoice.invoice_pdf as any,
+                amountPaid: invoice.amount_paid
+                  ? invoice.amount_paid / 100
+                  : undefined,
 
                 description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
               });
@@ -109,8 +131,10 @@ export async function POST(req: NextRequest) {
                 plan: invoice.subscription_details?.metadata?.subPlan,
                 status: invoice.status as any,
                 companyId: company.id,
-                invoicePDF:invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid ? invoice.amount_paid/100 : undefined,
+                invoicePDF: invoice.invoice_pdf as any,
+                amountPaid: invoice.amount_paid
+                  ? invoice.amount_paid / 100
+                  : undefined,
 
                 description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
               });
@@ -124,6 +148,63 @@ export async function POST(req: NextRequest) {
         }
       }
 
+      break;
+    }
+    case "checkout.session.completed": {
+      const invoice = event.data.object;
+      const metaData = invoice?.metadata;
+      const companyId = Number(invoice?.metadata?.id);
+      const company = await Company.findByPk(companyId);
+      const paymentId: any = invoice?.payment_intent;
+      if (company && paymentId) {
+        let invoiceDetails: any = null;
+        const invoiceId: any = invoice.invoice;
+        if (invoiceId) {
+          invoiceDetails = await stripe.invoices.retrieve(invoiceId);
+        }
+        switch (metaData?.subPlan) {
+          case PlansEnum.BASIC: {
+            await Payments.create({
+              invoice: invoice.invoice as string,
+              paymentDate: new Date() as any,
+              plan: metaData?.subPlan,
+              status: invoice.payment_status as any,
+              companyId: company.id,
+              invoicePDF: invoiceDetails?.invoice_pdf
+                ? invoiceDetails?.invoice_pdf
+                : null,
+              amountPaid: invoice?.amount_total
+                ? invoice?.amount_total / 100
+                : undefined,
+              description: `${metaData?.subPlan} fee payment completed`,
+            });
+            company.regPaymentStatus = true;
+            company.paymentLink = null as any;
+            await company.save();
+            break;
+          }
+          case PlansEnum.PRO: {
+            await Payments.create({
+              invoice: invoice.invoice as string,
+              paymentDate: new Date() as any,
+              plan: metaData?.subPlan,
+              status: invoice.payment_status as any,
+              companyId: company.id,
+              invoicePDF: invoiceDetails?.invoice_pdf
+                ? invoiceDetails?.invoice_pdf
+                : null,
+              amountPaid: invoice?.amount_total
+                ? invoice?.amount_total / 100
+                : undefined,
+              description: `${metaData?.subPlan} fee payment completed`,
+            });
+            company.regPaymentStatus = true;
+            company.paymentLink = null as any;
+            await company.save();
+            break;
+          }
+        }
+      }
       break;
     }
     case "invoice.payment_failed":

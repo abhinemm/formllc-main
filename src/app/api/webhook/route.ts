@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
 
     // Validate and parse the event
     event = stripe.webhooks.constructEvent(rawBody, signature, endpointSecret);
-    console.log("eventeventeventtheevent", event);
+    console.log("eventeventeventtheevent", event.data.object);
   } catch (err: any) {
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },
@@ -50,103 +50,149 @@ export async function POST(req: NextRequest) {
   switch (event.type) {
     case "invoice.payment_succeeded": {
       const invoice = event.data.object;
-
-      const company = await Company.findByPk(
-        invoice.subscription_details?.metadata?.id
-      );
-      if (company) {
-        const pricids = invoice.lines.data.map((el) => el.price?.id);
-        switch (invoice.subscription_details?.metadata?.subPlan) {
+      const metaData: any = invoice?.subscription_details?.metadata;
+      const companyId = Number(metaData?.id);
+      const company = await Company.findByPk(companyId);
+      const paymentId: any = invoice?.subscription;
+      if (company && paymentId) {
+        switch (metaData?.subPlan) {
           case PlansEnum.BASIC: {
             await Payments.create({
-              invoice: invoice.subscription as string,
+              invoice: paymentId as string,
               paymentDate: new Date() as any,
-              plan: invoice.subscription_details?.metadata?.subPlan,
+              plan: "subscription",
               status: invoice.status as any,
               companyId: company.id,
-              invoicePDF: invoice.invoice_pdf as any,
-              amountPaid: invoice.amount_paid
-                ? invoice.amount_paid / 100
+              invoicePDF: invoice.invoice_pdf ? invoice.invoice_pdf : undefined,
+              amountPaid: invoice?.amount_paid
+                ? invoice?.amount_paid / 100
                 : undefined,
-              description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
+              description: `Mail room subscription completed`,
             });
-            if (pricids.find((el) => el === BASIC_PLAN_FEE_PRICEID)) {
-              company.regPaymentStatus = true;
-              await Payments.create({
-                invoice: invoice.subscription as string,
-                paymentDate: new Date() as any,
-                plan: invoice.subscription_details?.metadata?.subPlan,
-                status: invoice.status as any,
-                companyId: company.id,
-                invoicePDF: invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid
-                  ? invoice.amount_paid / 100
-                  : undefined,
-                description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
-              });
-            }
-            if (pricids.find((el) => el === BASIC_PLAN_SUB_PRICEID)) {
-              await Payments.create({
-                invoice: invoice.subscription as string,
-                paymentDate: new Date() as any,
-
-                plan: invoice.subscription_details?.metadata?.subPlan,
-                status: invoice.status as any,
-                companyId: company.id,
-                invoicePDF: invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid
-                  ? invoice.amount_paid / 100
-                  : undefined,
-                description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
-              });
-              company.subsriptionPaymentStatus = true;
-            }
+            company.regPaymentStatus = true;
             company.paymentLink = null as any;
             await company.save();
             break;
           }
           case PlansEnum.PRO: {
-            if (pricids.find((el) => el === PRO_PLAN_FEE_PRICEID)) {
-              company.regPaymentStatus = true;
-              await Payments.create({
-                invoice: invoice.subscription as string,
-                paymentDate: new Date() as any,
-
-                plan: invoice.subscription_details?.metadata?.subPlan,
-                status: invoice.status as any,
-                companyId: company.id,
-                invoicePDF: invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid
-                  ? invoice.amount_paid / 100
-                  : undefined,
-
-                description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
-              });
-            }
-            if (pricids.find((el) => el === PRO_PLAN_SUB_PRICEID)) {
-              await Payments.create({
-                invoice: invoice.subscription as string,
-                paymentDate: new Date() as any,
-
-                plan: invoice.subscription_details?.metadata?.subPlan,
-                status: invoice.status as any,
-                companyId: company.id,
-                invoicePDF: invoice.invoice_pdf as any,
-                amountPaid: invoice.amount_paid
-                  ? invoice.amount_paid / 100
-                  : undefined,
-
-                description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
-              });
-              company.subsriptionPaymentStatus = true;
-            }
+            await Payments.create({
+              invoice: paymentId as string,
+              paymentDate: new Date() as any,
+              plan: "subscription",
+              status: invoice.status as any,
+              companyId: company.id,
+              invoicePDF: invoice.invoice_pdf ? invoice.invoice_pdf : undefined,
+              amountPaid: invoice?.amount_paid
+                ? invoice?.amount_paid / 100
+                : undefined,
+              description: `Mail room subscription completed`,
+            });
+            company.subsriptionPaymentStatus = true;
             company.paymentLink = null as any;
             await company.save();
-
             break;
           }
         }
       }
+      break;
+      // const invoice = event.data.object;
+
+      // const company = await Company.findByPk(
+      //   invoice.subscription_details?.metadata?.id
+      // );
+      // if (company) {
+      // const pricids = invoice.lines.data.map((el) => el.price?.id);
+      // switch (invoice.subscription_details?.metadata?.subPlan) {
+      //   case PlansEnum.BASIC: {
+      //     await Payments.create({
+      //       invoice: invoice.subscription as string,
+      //       paymentDate: new Date() as any,
+      //       plan: invoice.subscription_details?.metadata?.subPlan,
+      //       status: invoice.status as any,
+      //       companyId: company.id,
+      //       invoicePDF: invoice.invoice_pdf as any,
+      //       amountPaid: invoice.amount_paid
+      //         ? invoice.amount_paid / 100
+      //         : undefined,
+      //       description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
+      //     });
+      //     if (pricids.find((el) => el === BASIC_PLAN_FEE_PRICEID)) {
+      //       company.regPaymentStatus = true;
+      //       await Payments.create({
+      //         invoice: invoice.subscription as string,
+      //         paymentDate: new Date() as any,
+      //         plan: invoice.subscription_details?.metadata?.subPlan,
+      //         status: invoice.status as any,
+      //         companyId: company.id,
+      //         invoicePDF: invoice.invoice_pdf as any,
+      //         amountPaid: invoice.amount_paid
+      //           ? invoice.amount_paid / 100
+      //           : undefined,
+      //         description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
+      //       });
+      //     }
+      //     if (pricids.find((el) => el === BASIC_PLAN_SUB_PRICEID)) {
+      //       await Payments.create({
+      //         invoice: invoice.subscription as string,
+      //         paymentDate: new Date() as any,
+
+      //         plan: invoice.subscription_details?.metadata?.subPlan,
+      //         status: invoice.status as any,
+      //         companyId: company.id,
+      //         invoicePDF: invoice.invoice_pdf as any,
+      //         amountPaid: invoice.amount_paid
+      //           ? invoice.amount_paid / 100
+      //           : undefined,
+      //         description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
+      //       });
+      //       company.subsriptionPaymentStatus = true;
+      //     }
+      //     company.paymentLink = null as any;
+      //     await company.save();
+      //     break;
+      //   }
+      //   case PlansEnum.PRO: {
+      //     if (pricids.find((el) => el === PRO_PLAN_FEE_PRICEID)) {
+      //       company.regPaymentStatus = true;
+      //       await Payments.create({
+      //         invoice: invoice.subscription as string,
+      //         paymentDate: new Date() as any,
+
+      //         plan: invoice.subscription_details?.metadata?.subPlan,
+      //         status: invoice.status as any,
+      //         companyId: company.id,
+      //         invoicePDF: invoice.invoice_pdf as any,
+      //         amountPaid: invoice.amount_paid
+      //           ? invoice.amount_paid / 100
+      //           : undefined,
+
+      //         description: `${invoice.subscription_details?.metadata?.subPlan} fee payment completed`,
+      //       });
+      //     }
+      //     if (pricids.find((el) => el === PRO_PLAN_SUB_PRICEID)) {
+      //       await Payments.create({
+      //         invoice: invoice.subscription as string,
+      //         paymentDate: new Date() as any,
+
+      //         plan: invoice.subscription_details?.metadata?.subPlan,
+      //         status: invoice.status as any,
+      //         companyId: company.id,
+      //         invoicePDF: invoice.invoice_pdf as any,
+      //         amountPaid: invoice.amount_paid
+      //           ? invoice.amount_paid / 100
+      //           : undefined,
+
+      //         description: `${invoice.subscription_details?.metadata?.subPlan} subscription payment completed`,
+      //       });
+      //       company.subsriptionPaymentStatus = true;
+      //     }
+      //     company.paymentLink = null as any;
+      //     await company.save();
+
+      //     break;
+      //   }
+      // }
+      // }
 
       break;
     }

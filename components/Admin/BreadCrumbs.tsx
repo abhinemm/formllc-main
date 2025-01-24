@@ -9,7 +9,6 @@ const BreadCrumbs = () => {
     if (pathName) {
       let itemsArray: any = [];
       let segment = pathName.split("/");
-      console.log("the setgments is", segment);
 
       if (segment[1] === "admin") {
         const obj = [

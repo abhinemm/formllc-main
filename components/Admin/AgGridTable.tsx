@@ -64,20 +64,7 @@ const AgGridTable: React.FC<IAgGridTable> = ({
   const handleRowClick = (event: RowClickedEvent<any>) => {
     const rowDetails = event.data; // Access the row's data
     onRowClick(rowDetails);
-    console.log("Row clicked:", rowDetails);
   };
-
-  const handleEdit = useCallback((rowData: any) => {
-    console.log("Edit clicked for:", rowData);
-
-    // Implement your edit logic here
-  }, []);
-
-  const handleDelete = useCallback((rowData: any) => {
-    console.log("Delete clicked for:", rowData);
-
-    // Implement your delete logic here
-  }, []);
 
   return (
     <div

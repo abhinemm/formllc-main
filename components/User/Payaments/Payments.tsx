@@ -6,6 +6,8 @@ import { useAppContext } from "../../Context/AppContext";
 import axios from "axios";
 import Loader from "../../Loader";
 import NoData from "../../NoData";
+import dayjs from "dayjs";
+import { Spin } from "antd";
 
 const planDetails = {
   PRO: {
@@ -18,12 +20,18 @@ const planDetails = {
     sub: "$25",
     total: "$224",
   },
+  subscription: {
+    fee: "$199",
+    sub: "$25",
+    total: "$224",
+  },
 };
 
 const Payments = () => {
   const { contextOptions } = useAppContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [allPayment, setAllPayment] = useState<any>([]);
+  const [downloadLoader, setDownloadLoader] = useState<boolean>(false);
   const [allFees, setAllFees] = useState<any>([]);
   useEffect(() => {
     (async () => {
@@ -41,31 +49,7 @@ const Payments = () => {
           console.log("the response is", res);
           if (res?.data?.length) {
             const allPayments: any = res?.data;
-            let subScription: any = [];
-            let fees: any = [];
-
-            allPayments?.map((el: any) => {
-              if (el.description?.toLowerCase().includes("subscription")) {
-                subScription = [...subScription, el];
-              } else {
-                fees = [...fees, el];
-              }
-            });
-
-            let finalFilter = subScription?.map((el: any) => {
-              const findone = fees?.find(
-                (data: any) => data.invoice === el.invoice
-              );
-              if (findone) {
-                findone.sub = el;
-                return findone;
-              } else {
-                el;
-              }
-            });
-
-            setAllPayment(finalFilter);
-
+            setAllPayment(allPayments);
             setLoading(false);
           }
         })
@@ -79,7 +63,7 @@ const Payments = () => {
     }
   };
 
-  const handleDownload = (url: any) => {
+  const handleDownload = async (paymentId: string, url: any) => {
     if (url) {
       const pdfUrl = url; // Replace with your PDF URL
       const link = document.createElement("a");
@@ -89,29 +73,39 @@ const Payments = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    } else {
+      setDownloadLoader(true);
+      const body = {
+        paymentId: paymentId,
+      };
+      await axios
+        .post("/api/updateInvoicepdf", body, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          setDownloadLoader(false);
+          console.log(" the response isdsd", res);
+        })
+        .catch((err) => {
+          setDownloadLoader(false);
+          console.log("err", err);
+        });
     }
   };
 
   const convertDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-
-    // Format the date and time
-    const options: any = {
-      day: "2-digit",
-      month: "short",
-      year: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    };
-    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(
-      date
-    );
-    return formattedDate;
+    if (dateStr) {
+      const formattedDate = dayjs(dateStr).format("YYYY MMM DD h:mm a");
+      return formattedDate;
+    } else {
+      return "";
+    }
   };
 
   return (
-    <div className="container">
+    <div className="containerUser">
       {loading ? (
         <Loader />
       ) : (
@@ -124,18 +118,32 @@ const Payments = () => {
                   style={
                     {
                       "--status-color":
-                        el?.status === "paid" ? "#63ff23" : "#e44646",
+                        el?.status === "paid" ? "#28a745" : "#dc3545",
                     } as React.CSSProperties
                   }
                 >
                   <div className={styles.header}>
                     <div className={styles.leftSide}>
-                      <h3>{el?.plan} Plan</h3>
+                      {el?.plan === "subscription" ? (
+                        <h3>Mial room subscription</h3>
+                      ) : (
+                        <h3>{el?.plan} Plan</h3>
+                      )}
+
                       <p>Paid Date: {convertDate(el?.paymentDate)}</p>
                     </div>
                     <div className={styles.rightSide}>
-                      <button onClick={() => handleDownload(el?.invoicePDF)}>
-                        <DownloadOutlined /> Download Invoice
+                      <button
+                        onClick={() => handleDownload(el?.id, el?.invoicePDF)}
+                      >
+                        {downloadLoader ? (
+                          <Spin />
+                        ) : (
+                          <>
+                            <DownloadOutlined style={{ fontSize: "18px" }} />{" "}
+                            <b>Download Invoice</b>
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>
@@ -150,7 +158,7 @@ const Payments = () => {
                       </button>
                     </div>
                   </div>
-                  <div className={styles.bodyContent}>
+                  {/* <div className={styles.bodyContent}>
                     <div className={styles.leftWrapper}>
                       {el?.sub && <p>Fee:</p>}
                       <p>Subscription Amount: </p>
@@ -159,18 +167,18 @@ const Payments = () => {
                       {el?.sub && <p>{planDetails[el?.plan].fee}</p>}
                       <p>{planDetails[el?.plan].sub}</p>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className={styles.footerConetentWrapper}>
                     <div className={styles.footerLeft}>
                       <h2>Total:</h2>
                     </div>
                     <div className={styles.footerRight}>
-                      <h2>
-                        {el?.sub
-                          ? planDetails[el?.plan].total
-                          : planDetails[el?.plan].sub}
-                      </h2>
+                      {el?.plan === "subscription" ? (
+                        <h2>$25</h2>
+                      ) : (
+                        <h2>{planDetails[el?.plan].fee}</h2>
+                      )}
                     </div>
                   </div>
                 </div>

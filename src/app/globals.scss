@@ -49,6 +49,16 @@ a {
   padding: 0 15px;
 }
 
+.containerUser {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  @media screen and (max-width: 572px) {
+    padding: 0px;
+  }
+}
+
 //header drawer style
 
 .headerDrawerStyle {
@@ -246,7 +256,6 @@ a {
     }
   }
 }
-
 
 .o-circle {
   display: flex;

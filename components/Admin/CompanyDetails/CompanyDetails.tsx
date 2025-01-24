@@ -75,7 +75,6 @@ const CompanyDetails = () => {
             }));
             setCompanyDetails(details[0]);
           }
-          console.log("the company is ", details);
         }
       })
       .catch((err: any) => {
@@ -161,7 +160,6 @@ const CompanyDetails = () => {
   };
 
   const handleMenuClick = (e: any) => {
-    console.log("the event is", e);
     if (e.key) {
       const type = e.key?.split("/")[0];
       const stepId = Number(e.key?.split("/")[1]);
@@ -201,7 +199,6 @@ const CompanyDetails = () => {
       await axios
         .patch(`/api/stepsTaken?stepId=${stepId}&companyId=${companyId}`, body)
         .then((res: any) => {
-          console.log("the responsde isdsdsd", res);
           openNotification({
             type: "success",
             message: "Status Updated successfully",
@@ -210,7 +207,6 @@ const CompanyDetails = () => {
           setActionLoader(false);
         })
         .catch((err: any) => {
-          console.log("the erris", err);
           openNotification({
             type: "error",
             message: "Something went wrong!",
@@ -225,7 +221,6 @@ const CompanyDetails = () => {
         placement: "topRight",
       });
       setActionLoader(false);
-      console.log("the error is ", error);
     }
   };
 

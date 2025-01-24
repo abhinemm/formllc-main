@@ -18,7 +18,7 @@ const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
   const [collapsed, setCollapsed] = useState(false);
   const { contextOptions } = useAppContext();
   const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
-  const [paymentError, setPaymentError] = useState<boolean>(true);
+  const [paymentError, setPaymentError] = useState<boolean>(false);
   const pathName = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -41,6 +41,17 @@ const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
     if (key !== "company") {
       router.push(key);
     }
+  };
+
+  const handleClosePayment = () => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    // Delete the "status" parameter
+    params.delete("status");
+    // Update the URL without refreshing the page
+    router.replace(`?${params.toString()}`);
+    setPaymentSuccess(false);
+    setPaymentError(false);
   };
 
   return (
@@ -95,16 +106,10 @@ const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
         </Layout>
       </Layout>
       {paymentSuccess && (
-        <PaymentSuccess
-          onClose={() => setPaymentSuccess(false)}
-          open={paymentSuccess}
-        />
+        <PaymentSuccess onClose={handleClosePayment} open={paymentSuccess} />
       )}
       {paymentError && (
-        <PaymentError
-          onClose={() => setPaymentError(false)}
-          open={paymentError}
-        />
+        <PaymentError onClose={handleClosePayment} open={paymentError} />
       )}
     </>
   );

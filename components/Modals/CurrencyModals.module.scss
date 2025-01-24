@@ -48,7 +48,7 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 20px;
-
+    color: var(--white-color) !important;
     box-shadow: 0 4px 60px #00000005;
     transition: background-color var(--transition-delay) ease,
       color var(--transition-delay) ease, border var(--transition-delay) ease,

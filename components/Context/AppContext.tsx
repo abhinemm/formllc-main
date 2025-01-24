@@ -1,5 +1,17 @@
 // AppContext.js
-import React, { ReactNode, createContext, useContext, useState } from "react";
+import { useSession } from "next-auth/react";
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import {
+  DashboardOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
 
 interface ContextOptions {
   userData: any;
@@ -7,6 +19,10 @@ interface ContextOptions {
   allCompanies: any;
   campanyName: any;
   selectedCompanyDetails: any;
+  userSession: any;
+  loading: boolean;
+  isAuth: boolean;
+  sideMenus: any;
 }
 
 interface AppContextProps {
@@ -27,6 +43,16 @@ export const AppProvider: React.FC<{
     allCompanies: [],
     campanyName: null,
     selectedCompanyDetails: null,
+    userSession: {},
+    loading: true,
+    isAuth: false,
+    sideMenus: [
+      {
+        key: "/user",
+        icon: <DashboardOutlined />,
+        label: "Dashboard",
+      },
+    ],
   });
 
   return (

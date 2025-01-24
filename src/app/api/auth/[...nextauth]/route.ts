@@ -41,6 +41,7 @@ export const authOptions: AuthOptions = {
           email: user.email,
           fistName: user.firstName,
           lastName: user.lastName,
+          type: user.type,
         } as any;
       },
     }),
@@ -55,11 +56,7 @@ export const authOptions: AuthOptions = {
       const { user, account, profile } = data;
       // For Google Sign-In
       if (account?.provider === "google") {
-        console.log("accountaccountaccountaccount");
-
         const userExist = await UserService.findOne({ email: user.email });
-        console.log("userExist", userExist);
-
         if (userExist) {
           return true; // Allow sign-in for existing users
         }
@@ -67,7 +64,7 @@ export const authOptions: AuthOptions = {
         await UserService.createUser({
           email: user.email,
           gid: user.id,
-          profilePic:user.image,
+          profilePic: user.image,
           firstName: user.name,
           // profilePic: d,
         });

@@ -5,8 +5,7 @@ import axios from "axios";
 import { Spin } from "antd";
 import { createAccountSchema } from "@/helpers/validationSchema";
 
-
-const CreateAccount = ({ onCreateAccount, handleSignIn, openNotification }) => {
+const CreateAccount = ({ onCreateAccount, openNotification }) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const initialValues = {
@@ -18,7 +17,6 @@ const CreateAccount = ({ onCreateAccount, handleSignIn, openNotification }) => {
     confirmPassword: "",
     agreeTerms: false,
   };
-
 
   const onSubmit = async (values: any) => {
     setLoading(true);
@@ -34,13 +32,12 @@ const CreateAccount = ({ onCreateAccount, handleSignIn, openNotification }) => {
         .post(`/api/users`, requestValue)
         .then((res: any) => {
           setLoading(false);
-          console.log("the response", res);
-          onCreateAccount();
+          onCreateAccount(res);
         })
         .catch((err: any) => {
           setLoading(false);
           openNotification({
-            type: 'error',
+            type: "error",
             message: err?.response?.data?.message ?? "Something went wrong",
             placement: "topRight",
           });
@@ -204,9 +201,7 @@ const CreateAccount = ({ onCreateAccount, handleSignIn, openNotification }) => {
         )}
       </Formik>
 
-      <div className={styles.signUpOptions}>
-
-      </div>
+      <div className={styles.signUpOptions}></div>
     </div>
   );
 };

@@ -5,12 +5,14 @@ interface IRegistrationState {
   setCompanyLocation: any;
   companyLocation: any;
   setPlan: any;
+  setActiveTabNumber: any;
 }
 
 const RegistrationState: React.FC<IRegistrationState> = ({
   setCompanyLocation,
   companyLocation,
   setPlan,
+  setActiveTabNumber,
 }) => {
   return (
     <div className={styles.registrationMainWrapper}>
@@ -26,9 +28,9 @@ const RegistrationState: React.FC<IRegistrationState> = ({
         >
           <h5>Montana</h5>
           <p>
-            Recommended for C-Corps due to strong legal protections for
-            shareholders and strong business laws. No state income tax if you
-            operate in other states.
+            Affordable option at <b>$199</b> with no state income tax if
+            operating outside Montana. Suitable for businesses seeking lower
+            upfront costs.
           </p>
         </div>
         <div
@@ -40,11 +42,19 @@ const RegistrationState: React.FC<IRegistrationState> = ({
         >
           <h5>Wyoming </h5>
           <p>
-            Recommended for LLCs due to lower annual operating costs and
-            flexibility. No corporate income tax or annual franchise tax..
+            Best for e-commerce LLCs with no state income tax or annual
+            franchise tax. Costs <b>$299</b>.
           </p>
 
           <div className={styles.absoluteContainer}>RECOMMENDED FOR LLC</div>
+        </div>
+      </div>
+      <div className={styles.buttonContainer}>
+        <div className={styles.btnWrapper}>
+          <button type="button" onClick={() => setActiveTabNumber(3)}>
+            <span> Continue </span>
+            <span></span>
+          </button>
         </div>
       </div>
     </div>

@@ -7,6 +7,9 @@ import { loginSchema } from "@/helpers/validationSchema";
 import { useEffect, useState } from "react";
 import { notification, Spin } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
+import { ApiStatus, UserTypesEnum } from "@/utils/constants";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 type NotificationType = "success" | "info" | "warning" | "error";
 
 type NotificationMessage = {
@@ -17,6 +20,8 @@ type NotificationMessage = {
 
 const SignIn = () => {
   const [loading, setLoading] = useState<any>(false);
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [initialValues, setInitialValues] = useState({
     email: "",
     password: "",
@@ -32,9 +37,23 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    const data: any = localStorage.getItem("credentials");
-    console.log("datadatadatadatadata", data);
+    if (status === "authenticated") {
+      const user: any = session.user;
+      if (
+        user?.type === UserTypesEnum.admin ||
+        user?.type === UserTypesEnum.admin
+      ) {
+        router.push("/admin");
+        return;
+      } else {
+        router.push("/user");
+        return;
+      }
+    }
+  }, [session?.user, status]);
 
+  useEffect(() => {
+    const data: any = localStorage.getItem("credentials");
     if (data) {
       try {
         const values = JSON.parse(data);
@@ -72,6 +91,17 @@ const SignIn = () => {
               password: values?.password,
             };
             localStorage.setItem("credentials", JSON.stringify(obj));
+          }
+          console.log("the resposndefnjfnnxcxc", res, status, session);
+
+          if (res.status === ApiStatus.success && status === "authenticated") {
+            console.log("sessionsessionsession", session);
+            const data: any = session?.user;
+            if (data.type === "admin") {
+              router?.push("/admin");
+            } else {
+              router?.push("/user");
+            }
           }
           setLoading(false);
         }
@@ -122,7 +152,7 @@ const SignIn = () => {
         <div className={styles.signinWithGoogleWrapper}>
           {" "}
           <div className={styles.authHeaderItem}>
-            <h2>Welcome to Firstbase</h2>
+            <h2>Welcome to Formllc</h2>
             <p title="Don’t have an account?">
               Don’t have an account?
               <a

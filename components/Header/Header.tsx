@@ -38,8 +38,11 @@ const Header = () => {
               <li>
                 <Link href="#partners">Partners</Link>
               </li> */}
-              <li>
+              {/* <li>
                 <Link href="/contact-us">Contact Us</Link>
+              </li> */}
+              <li>
+                <Link href="/pricing">Contact Us</Link>
               </li>
               {session?.data?.user ? (
                 <>
@@ -49,7 +52,10 @@ const Header = () => {
                     </Link>
                   </li>
                   <li>
-                    <a onClick={() => signOut({ callbackUrl: "/" })} className={styles.signIn}>
+                    <a
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                      className={styles.signIn}
+                    >
                       Logout
                     </a>
                   </li>

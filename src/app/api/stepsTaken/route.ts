@@ -23,6 +23,7 @@ export async function GET(req: Request) {
 
 export async function PATCH(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
+
   if (!data || !data.user) {
     return NextResponse.json(
       { message: "User not authenticated" },
@@ -30,16 +31,25 @@ export async function PATCH(req: Request) {
     );
   }
   const url = new URL(req.url);
-  const id: any = url.searchParams.get("id");
+  const searchParams = url.searchParams;
+  const where: any = {};
+  searchParams.forEach((value, key) => {
+    where[key] = +value;
+  });
+  console.log("the where is ", where);
+
   const body = await req.json();
 
-  const stepsTaken = await StepsTaken.findOne({ where: { id: +id } });
+  const stepsTaken = await StepsTaken.findOne({ where: where });
   if (!stepsTaken) {
     return NextResponse.json(
       { message: "Steps Taken not Found" },
       { status: 404 }
     );
   }
+  const id: any = stepsTaken?.id;
+  console.log("idididididididid", id, stepsTaken);
+
   try {
     await StepsTaken.update(body, { where: { id } });
     return NextResponse.json(

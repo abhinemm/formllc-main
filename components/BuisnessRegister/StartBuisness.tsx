@@ -10,7 +10,6 @@ import { useSession } from "next-auth/react";
 import CurrencyModals from "../Modals/CurrencyModals";
 import SignIn from "../CreateAccount/SignIn";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
-import PlansSelection from "./components/PlansSelection";
 import { useSearchParams } from "next/navigation";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { notification } from "antd";
@@ -33,7 +32,7 @@ const StartBusinessTabs: React.FC = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [currencyPopup, setCurrencyPopup] = useState<any>(false);
   // signIn => for sihn in the page and signUp for sign up
-  const [viewPage, setViewPage] = useState<string>("signUp");
+  const [viewPage, setViewPage] = useState<string>("signIn");
   const [plan, setPlan] = useState<any>();
 
   const [api, contextHolder] = notification.useNotification();
@@ -62,15 +61,19 @@ const StartBusinessTabs: React.FC = () => {
   const handleContinue = () => {
     if (!session?.data?.user) {
       setIsAuth(true);
-      setActiveTabNumber(5);
+      setActiveTabNumber(4);
     } else {
       setCurrencyPopup(true);
     }
   };
-  const haddleNewAccount = () => {
+  const haddleNewAccount = (res: any) => {
     setIsAuth(false);
     setActiveTabNumber(3);
     setCurrencyPopup(true);
+  };
+
+  const handleNewAccountTest = (res: any) => {
+    setViewPage("signIn");
   };
 
   const handleSignIn = (event: string) => {
@@ -104,8 +107,9 @@ const StartBusinessTabs: React.FC = () => {
                 onClick={() => setActiveTabNumber(1)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${activeTabNumber > 0 ? styles.selectedTab : ""
-                    }`}
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 0 ? styles.selectedTab : ""
+                  }`}
                 >
                   <div className={styles.Number}>
                     <span>1</span>
@@ -123,8 +127,9 @@ const StartBusinessTabs: React.FC = () => {
                 onClick={() => setActiveTabNumber(2)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${activeTabNumber > 1 ? styles.selectedTab : ""
-                    }`}
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 1 ? styles.selectedTab : ""
+                  }`}
                 >
                   <div className={styles.Number}>
                     <span>2</span>
@@ -134,13 +139,14 @@ const StartBusinessTabs: React.FC = () => {
                   <h5>Registration State</h5>
                 </div>
               </div>
-              <div
+              {/* <div
                 className={styles.tabListItem}
                 onClick={() => setActiveTabNumber(3)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${activeTabNumber > 2 ? styles.selectedTab : ""
-                    }`}
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 2 ? styles.selectedTab : ""
+                  }`}
                 >
                   <div className={styles.Number}>
                     <span>3</span>
@@ -149,17 +155,18 @@ const StartBusinessTabs: React.FC = () => {
                 <div className={styles.itemContentWrapper}>
                   <h5>Choose Plan</h5>
                 </div>
-              </div>
+              </div> */}
               <div
                 className={styles.tabListItem}
-                onClick={() => setActiveTabNumber(4)}
+                onClick={() => setActiveTabNumber(3)}
               >
                 <div
-                  className={`${styles.numberWrapper} ${activeTabNumber > 3 ? styles.selectedTab : ""
-                    }`}
+                  className={`${styles.numberWrapper} ${
+                    activeTabNumber > 2 ? styles.selectedTab : ""
+                  }`}
                 >
                   <div className={styles.Number}>
-                    <span>4</span>
+                    <span>3</span>
                   </div>
                 </div>
                 <div className={styles.itemContentWrapper}>
@@ -169,11 +176,12 @@ const StartBusinessTabs: React.FC = () => {
               {isAuth && (
                 <div
                   className={styles.tabListItem}
-                  onClick={() => setActiveTabNumber(5)}
+                  onClick={() => setActiveTabNumber(4)}
                 >
                   <div
-                    className={`${styles.numberWrapper} ${activeTabNumber > 3 ? styles.selectedTab : ""
-                      }`}
+                    className={`${styles.numberWrapper} ${
+                      activeTabNumber > 2 ? styles.selectedTab : ""
+                    }`}
                   >
                     <div className={styles.Number}>
                       <span>4</span>
@@ -205,11 +213,6 @@ const StartBusinessTabs: React.FC = () => {
               )}
               {activeTabNumber == 3 && (
                 <div className={styles.rightHeaderWrapper}>
-                  <h1>Plan Selected</h1>
-                </div>
-              )}
-              {activeTabNumber == 4 && (
-                <div className={styles.rightHeaderWrapper}>
                   <h1>Review and Pay </h1>
                   <p>
                     {" "}
@@ -220,7 +223,7 @@ const StartBusinessTabs: React.FC = () => {
               )}
               {isAuth && (
                 <>
-                  {activeTabNumber == 5 && (
+                  {activeTabNumber == 4 && (
                     <div className={styles.rightHeaderWrapper}>
                       <h1>
                         {viewPage === "signUp"
@@ -250,6 +253,7 @@ const StartBusinessTabs: React.FC = () => {
                   <CompanyType
                     companyType={companyType}
                     setCompanyType={setCompanyType}
+                    setActiveTabNumber={setActiveTabNumber}
                   />
                 </div>
               )}
@@ -259,20 +263,20 @@ const StartBusinessTabs: React.FC = () => {
                     setCompanyLocation={setCompanyLocation}
                     companyLocation={companyLocation}
                     setPlan={setPlan}
+                    setActiveTabNumber={setActiveTabNumber}
                   />
                 </div>
               )}
-              {activeTabNumber == 3 && (
+              {/* {activeTabNumber == 3 && (
                 <div className={styles.accordionStyles}>
                   <PlansSelection
                     plan={plan}
                     setPlan={setPlan}
                     setCompanyLocation={setCompanyLocation}
-
                   />
                 </div>
-              )}
-              {activeTabNumber == 4 && (
+              )} */}
+              {activeTabNumber == 3 && (
                 <div className={styles.accordionStyles}>
                   <ReviewandPay
                     companyType={companyType}
@@ -285,18 +289,18 @@ const StartBusinessTabs: React.FC = () => {
               )}
               {isAuth && (
                 <>
-                  {activeTabNumber == 5 && (
+                  {activeTabNumber == 4 && (
                     <div className={styles.accordionStyles}>
                       {viewPage === "signUp" ? (
                         <CreateAccount
-                          onCreateAccount={haddleNewAccount}
-                          handleSignIn={handleSignIn}
+                          onCreateAccount={handleNewAccountTest}
                           openNotification={openNotification}
                         />
                       ) : (
                         <SignIn
                           onCreateAccount={haddleNewAccount}
                           handleSignIn={handleSignIn}
+                          openNotification={openNotification}
                         />
                       )}
                     </div>

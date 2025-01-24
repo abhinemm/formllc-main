@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useAppContext } from "../../Context/AppContext";
 import { useRouter } from "next/navigation";
 import MyAccountModal from "../../Modals/ProfileModal/MyAccountModal";
+import { SideMenuHelper } from "@/helpers/helper";
 const { Header } = Layout;
 
 const UserHeader = () => {
@@ -39,15 +40,18 @@ const UserHeader = () => {
       const selectedCompany = contextOptions?.allCompanies?.find(
         (el: any) => el.id == e.key
       );
+      const menu = SideMenuHelper(selectedCompany);
       const obj = {
         id: selectedCompany?.id,
         name: `${selectedCompany?.companyName ?? ""} ${selectedCompany?.type}`,
       };
+
       localStorage.setItem("company", selectedCompany?.id);
       setContextOptions((prev) => ({
         ...prev,
         selectedCompany: obj,
         selectedCompanyDetails: selectedCompany,
+        sideMenus: menu,
       }));
     }
   };

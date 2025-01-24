@@ -26,6 +26,7 @@ export interface CompanyAttributes {
   plan?: string;
   subsriptionPaymentStatus?: boolean;
   regPaymentStatus?: boolean;
+  stripeEmailId?: string;
 
   document?: string;
 }
@@ -68,7 +69,7 @@ class Company
   public plan?: string;
   public subsriptionPaymentStatus?: boolean;
   public regPaymentStatus?: boolean;
-
+  public stripeEmailId?: string;
 
   public user?: User;
 }
@@ -170,6 +171,10 @@ Company.init(
       allowNull: true,
     },
     plan: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    stripeEmailId: {
       type: DataTypes.STRING,
       allowNull: true,
     },

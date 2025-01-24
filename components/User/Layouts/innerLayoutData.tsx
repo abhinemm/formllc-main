@@ -1,10 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import UserHeader from "../Header/UserHeader";
 import Link from "next/link";
+import { useAppContext } from "../../Context/AppContext";
+import PaymentSuccess from "../../Modals/PaymentSuccess";
+import PaymentError from "../../Modals/PaymentError";
 const { Sider, Content } = Layout;
 interface IInnerLayout {
   children: React.ReactNode;
@@ -13,8 +16,22 @@ interface IInnerLayout {
 
 const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
   const [collapsed, setCollapsed] = useState(false);
+  const { contextOptions } = useAppContext();
+  const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
+  const [paymentError, setPaymentError] = useState<boolean>(false);
   const pathName = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const paymentStatus = searchParams.get("status");
+
+  useEffect(() => {
+    if (paymentStatus === "success") {
+      setPaymentSuccess(true);
+    }
+    if (paymentStatus === "failed") {
+      setPaymentError(true);
+    }
+  }, [paymentStatus]);
 
   const toggle = () => {
     setCollapsed(!collapsed);
@@ -26,56 +43,75 @@ const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
     }
   };
 
-  return (
-    <Layout style={{ minHeight: "100vh" }}>
-      {/* Sidebar */}
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={toggle}
-        breakpoint="lg"
-        collapsedWidth="100"
-        style={{
-          background: "#161618",
-        }}
-      >
-        <div
-          style={{
-            margin: 16,
-            color: "#fff",
-            fontSize: "18px",
-            textAlign: "left",
-            lineHeight: "32px",
-          }}
-        >
-          <Link href="/">Formllc</Link>
-        </div>
-        <Menu
-          theme="dark"
-          mode="inline"
-          // defaultSelectedKeys={["0"]}
-          selectedKeys={[pathName]}
-          onClick={({ key }) => {
-            handleClickMenu(key);
-            // Navigate to corresponding route
-          }}
-          items={menues}
-        />
-      </Sider>
+  const handleClosePayment = () => {
+    const params = new URLSearchParams(searchParams.toString());
 
-      {/* Main Content */}
-      <Layout>
-        <UserHeader />
-        <Content
+    // Delete the "status" parameter
+    params.delete("status");
+    // Update the URL without refreshing the page
+    router.replace(`?${params.toString()}`);
+    setPaymentSuccess(false);
+    setPaymentError(false);
+  };
+
+  return (
+    <>
+      <Layout style={{ minHeight: "100vh" }}>
+        {/* Sidebar */}
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={toggle}
+          breakpoint="lg"
+          collapsedWidth="100"
           style={{
-            padding: " 30px 20px 20px 20px",
             background: "#161618",
           }}
         >
-          {children}
-        </Content>
+          <div
+            style={{
+              margin: 16,
+              color: "#fff",
+              fontSize: "18px",
+              textAlign: "left",
+              lineHeight: "32px",
+            }}
+          >
+            <Link href="/">Formllc</Link>
+          </div>
+          <Menu
+            theme="dark"
+            mode="inline"
+            // defaultSelectedKeys={["0"]}
+            selectedKeys={[pathName]}
+            onClick={({ key }) => {
+              handleClickMenu(key);
+              // Navigate to corresponding route
+            }}
+            items={contextOptions?.sideMenus}
+          />
+        </Sider>
+
+        {/* Main Content */}
+        <Layout>
+          <UserHeader />
+          <Content
+            style={{
+              padding: " 30px 20px 20px 20px",
+              background: "#161618",
+            }}
+          >
+            {children}
+          </Content>
+        </Layout>
       </Layout>
-    </Layout>
+      {paymentSuccess && (
+        <PaymentSuccess onClose={handleClosePayment} open={paymentSuccess} />
+      )}
+      {paymentError && (
+        <PaymentError onClose={handleClosePayment} open={paymentError} />
+      )}
+    </>
   );
 };
 

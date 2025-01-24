@@ -47,7 +47,7 @@ const CompanyRegistration = () => {
     zipCode: "",
     country: "",
     proofOfAddress: "",
-    countryCode: "",
+    countryCode: "+91",
     phone: "",
     agreeTerms: false,
   };
@@ -347,7 +347,7 @@ const CompanyRegistration = () => {
                       className={styles.fbinput}
                       id="confirm-email"
                       type="text"
-                      placeholder="john.doe@mail.com"
+                      placeholder="City / Town"
                       name="city"
                       onChange={handleChange}
                       value={values.city}
@@ -364,7 +364,7 @@ const CompanyRegistration = () => {
                       className={styles.fbinput}
                       id="email"
                       type="text"
-                      placeholder="john.doe@mail.com"
+                      placeholder="State / Province / Region"
                       name="state"
                       onChange={handleChange}
                       value={values.state}
@@ -383,7 +383,7 @@ const CompanyRegistration = () => {
                       className={styles.fbinput}
                       id="confirm-email"
                       type="text"
-                      placeholder="john.doe@mail.com"
+                      placeholder="Postal / ZIP Code"
                       name="zipCode"
                       onChange={handleChange}
                       value={values.zipCode}

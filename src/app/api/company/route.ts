@@ -33,9 +33,11 @@ export async function GET(req: Request) {
     searchParams.forEach((value, key) => {
       where[key] = value;
     });
+    console.log("searchParamssearchParams", searchParams);
 
     const companies = await Company.findAll({
       where: where,
+      order: [["id", "desc"]],
     });
 
     if (where.id && companies?.length) {
@@ -59,6 +61,8 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
+  console.log("datadatadatadatadata", data);
+
   if (!data || !data.user) {
     return NextResponse.json(
       { message: "User not authenticated" },
@@ -82,7 +86,8 @@ export async function POST(req: Request) {
     status,
     mailingAdress,
     phone,
-    countryCode
+    countryCode,
+    stripeEmailId,
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
@@ -112,7 +117,8 @@ export async function POST(req: Request) {
       status,
       mailingAdress,
       phone,
-      countryCode
+      countryCode,
+      stripeEmailId: stripeEmailId ? stripeEmailId : companyEmail,
     });
     try {
       const steps = await Steps.findAll({});

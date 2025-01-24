@@ -8,11 +8,11 @@ const page = () => {
                 <h1>Privacy Policy</h1>
                 <div className={styles.date}><p><strong>Last Modified:</strong> November 5, 2021</p></div>
                 <p>
-                    Thank you for choosing Firstbase.io, Inc. We value your privacy and recognize your right to protect and secure your personal data.
+                    Thank you for choosing Formllc.io, Inc. We value your privacy and recognize your right to protect and secure your personal data.
                 </p>
                 <p>
                     By using or accessing our services, you agree to the terms of this Privacy Policy. Updates will be posted at{' '}
-                    <a href="">https://www.firstbase.io/privacy-policy</a>.
+                    <a href="">https://www.Formllc.io/privacy-policy</a>.
                 </p>
 
                 <div>
@@ -88,7 +88,7 @@ const page = () => {
                     <h2>Data Retention</h2>
                     <p>
                         We retain your data as long as necessary for legal, tax, or business purposes. Requests for deletion can be sent to{' '}
-                        <a href="">support@firstbase.io</a>.
+                        <a href="">support@Formllc.io</a>.
                     </p>
 
                     <h2>Security</h2>
@@ -99,10 +99,10 @@ const page = () => {
                     <h2>Contact Us</h2>
                     <p>
                         For questions or concerns, contact us at{' '}
-                        <a href="">support@firstbase.io</a>.
+                        <a href="">support@Formllc.io</a>.
                     </p>
 
-                    <p>©2024 Firstbase.io. All Rights Reserved.</p>
+                    <p>©2024 Formllc.io. All Rights Reserved.</p>
                 </div>
             </div>
         </section>

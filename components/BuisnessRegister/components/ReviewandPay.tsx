@@ -83,7 +83,7 @@ const ReviewandPay: React.FC<IReviewandPay> = ({
           </div>
         </div>
       </div>
-      <div className={styles.reviewListItem}>
+      {/* <div className={styles.reviewListItem}>
         <div className={styles.reviewTitle}>
           <h5>Plan Selected</h5>
           <p className={styles.textCapitalize}>{plan}</p>
@@ -115,7 +115,7 @@ const ReviewandPay: React.FC<IReviewandPay> = ({
             </svg>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className={styles.btnWrapper}>
         <button type="button" onClick={onContinue}>
           <span>Continue </span>

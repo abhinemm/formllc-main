@@ -2,7 +2,6 @@
 import { Modal, Select, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import styles from "./CurrencyModals.module.scss";
-import { CURRENCIES } from "@/constants/constants";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -28,17 +27,21 @@ const SubscriptionRenew: React.FC<SubscriptionRenewProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
 
   const handlePayment = async (companyId: number, plan: string) => {
+    setLoading(true);
     const body = {
       plan: plans[plan],
       companyId: companyId,
-      register: true,
+      sub: true,
+      redirectUrl: `${process.env.BASEURL}/user?status=success`,
     };
+
     try {
       await axios
         .post(`/api/generatePaymentLink`, body)
         .then((res: any) => {
           console.log("the response is", res);
           if (res?.data?.url) {
+            console.log("statusstatusstatus", status);
             router.push(res?.data?.url);
             setLoading(false);
           }

@@ -72,7 +72,6 @@ const Companies: React.FC = () => {
   };
 
   const handleRowClick = (e: any) => {
-    console.log("the evet is", e);
     if (e.id) {
       const selectedCompany = allCompanies?.find((el: any) => el.id === e.id);
       setContextOptions((prev) => ({

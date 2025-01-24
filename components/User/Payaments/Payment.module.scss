@@ -11,17 +11,23 @@
     background: var(--body-color);
     border-radius: 4px;
     border: 2px solid #3f3f3f;
-
+    @media screen and (max-width: 572px) {
+      width: 100%;
+    }
     .header {
       width: 100%;
       display: flex;
       padding: 10px 20px;
       background: #161618;
       border-bottom: 2px solid #3f3f3f;
-
+      @media screen and (max-width: 572px) {
+        padding: 10px !important;
+      }
       .leftSide {
         width: 70%;
-
+        @media screen and (max-width: 572px) {
+          width: 75%;
+        }
         h3 {
           color: #ffffff;
           font-size: 23px;
@@ -29,6 +35,9 @@
           padding: 0;
           margin: 0;
           text-transform: capitalize;
+          @media screen and (max-width: 572px) {
+            font-size: 16px;
+          }
         }
 
         p {
@@ -43,7 +52,9 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-
+        @media screen and (max-width: 572px) {
+          width: 25%;
+        }
         button {
           padding: 10px 14px;
           border: none;
@@ -55,6 +66,11 @@
           font-weight: 500;
           transition: all 0.3s linear;
           font-size: 15px;
+          b {
+            @media screen and (max-width: 572px) {
+              display: none;
+            }
+          }
 
           &:hover {
             background: #ad3016;
@@ -69,6 +85,9 @@
       display: flex;
       align-items: center;
       padding: 10px 20px;
+      @media screen and (max-width: 572px) {
+        padding: 10px;
+      }
       .leftWrapper {
         width: 70%;
         display: flex;
@@ -102,6 +121,10 @@
           font-weight: 500;
           transition: all 0.3s linear;
           font-size: 15px;
+          @media screen and (max-width: 572px) {
+            padding: 5px;
+            font-size: 13px;
+          }
         }
         p {
           color: #dcdcdc;

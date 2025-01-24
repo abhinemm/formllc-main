@@ -6,13 +6,34 @@ import Loader from "../../Loader";
 import axios from "axios";
 import { StepsAttributes } from "@/models/steps";
 import { StepsTakenStatusEnum, StepsView } from "@/utils/constants";
+import { notification, Spin } from "antd";
+import { NotificationPlacement } from "antd/es/notification/interface";
+import { useRouter } from "next/navigation";
+
+type NotificationType = "success" | "info" | "warning" | "error";
+
+type NotificationMessage = {
+  type: NotificationType;
+  message: string;
+  placement: NotificationPlacement;
+};
 
 const DashBoard = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [allSteps, setAllSteps] = useState<any>([]);
+  const [loadingSub, setLoadingSub] = useState<boolean>(false);
   const [appiCalledStatus, setAppiCalledStatus] = useState<boolean>(false);
   const { contextOptions } = useAppContext();
+  const router = useRouter();
+
+  const [api, contextHolder] = notification.useNotification();
+  const openNotification = (data: NotificationMessage) => {
+    api[data.type]({
+      message: data.message,
+      placement: data?.placement,
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -80,8 +101,48 @@ const DashBoard = () => {
     }
   };
 
+  const handlePayment = async (companyId: number) => {
+    setLoadingSub(true);
+    const body = {
+      plan: "PRO",
+      companyId: companyId,
+      sub: true,
+      redirectUrl: `${process.env.BASEURL}/user?status=success`,
+    };
+
+    try {
+      await axios
+        .post(`/api/generatePaymentLink`, body)
+        .then((res: any) => {
+          console.log("the response is", res);
+          if (res?.data?.url) {
+            console.log("statusstatusstatus", status);
+            router.push(res?.data?.url);
+            setLoadingSub(false);
+          }
+        })
+        .catch((err) => {
+          setLoadingSub(false);
+          openNotification({
+            type: "error",
+            message: err?.response?.data?.message ?? "Something went wrong",
+            placement: "topRight",
+          });
+          console.log("the error in payment", err);
+        });
+    } catch (error: any) {
+      openNotification({
+        type: "error",
+        message: error?.response?.data?.message ?? "Something went wrong",
+        placement: "topRight",
+      });
+      setLoadingSub(false);
+    }
+  };
+
   return (
     <section className={styles.userDashSection}>
+      {contextHolder}
       {loading ? (
         <Loader />
       ) : (
@@ -143,9 +204,38 @@ const DashBoard = () => {
               ))}
             </ul>
           </div>
-
         </>
       )}
+      {}
+      <div className={styles.actionWrapper}>
+        {!contextOptions?.selectedCompanyDetails?.subsriptionPaymentStatus && (
+          <div className={styles.innerWrapper}>
+            <div className={styles.contentWrapper}>
+              <h2>Activate Your Mailroom Address</h2>
+              <p>
+                To receive your dedicated mailroom address, please subscribe to
+                the Mailroom Service for <b>$25</b>. This ensures seamless
+                handling of your correspondence.
+              </p>
+            </div>
+            <div className={styles.actionBtnWrapper}>
+              <button
+                type="button"
+                onClick={() => {
+                  handlePayment(contextOptions?.selectedCompany?.id);
+                }}
+                disabled={loadingSub}
+              >
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                {loadingSub ? <Spin /> : "Subscribe"}
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 };

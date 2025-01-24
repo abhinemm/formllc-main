@@ -31,6 +31,11 @@
       overflow: hidden;
       transition: all 0.3s ease;
 
+      --gradient-01: #a66bfe;
+  
+      --gradient-02: #ff71bc;
+      --gradient-03: #ffa76a;
+
       .question {
         display: flex;
         justify-content: space-between;
@@ -47,7 +52,8 @@
 
             &:last-child{
 
-              background: linear-gradient(84deg, #22a3ff, #ff90c9 25%, #4d54ff);
+              background: linear-gradient(90deg, var(--gradient-01), var(--gradient-02) 49%, var(--gradient-03));
+
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
 

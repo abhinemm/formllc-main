@@ -18,10 +18,18 @@
     }
 
     &::before {
+
+        --gradient-01: #a66bfe;
+  
+        --gradient-02: #ff71bc;
+        --gradient-03: #ffa76a;
         content: '';
         position: absolute;
         inset: -1px -1px 0px -1px;
-        background: linear-gradient(84deg, #22a3ff, #ff90c9 25%, #4d54ff);
+
+        background-image: linear-gradient(90deg, var(--gradient-01), var(--gradient-02) 49%, var(--gradient-03));
+
+        // background: linear-gradient(84deg, #22a3ff, #ff90c9 25%, #4d54ff);
         border-top-left-radius: 40px;
         border-top-right-radius: 40px;
         z-index: -0;

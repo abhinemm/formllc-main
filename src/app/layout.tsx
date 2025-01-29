@@ -4,6 +4,8 @@ import "./globals.scss";
 import InnerLayout from "../../components/Layout/InnerLayout";
 import syncDatabase from "../lib/sync";
 import AuthProvider from "../../components/auth-provider";
+import Link from "next/link";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -62,6 +64,19 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable}  ${notoSans.variable}`}
       >
+        <Link
+          href="https://api.whatsapp.com/send?phone=447386909426"
+          target="_blank"
+          className="link-block"
+        >
+          <Image
+            src="/images/download.png"
+            width={50}
+            height={50}
+            alt="whatsapp"
+            className="whatsapp"
+          />
+        </Link>
         <AuthProvider>
           <InnerLayout>{children}</InnerLayout>
         </AuthProvider>

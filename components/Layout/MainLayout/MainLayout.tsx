@@ -22,6 +22,19 @@ const MainLayout = ({ children }: ChildProps) => {
     return <Header />;
   };
 
+  const renderFooter = () => {
+    if (pathName?.includes("/admin")) {
+      return null;
+    }
+    if (pathName?.includes("/user")) {
+      return null;
+    }
+    if (pathName?.includes("/api")) {
+      return null;
+    }
+    return <Foooter />;
+  };
+
   const checkUserLayout = () => {
     if (pathName?.includes("/admin") || pathName?.includes("/user")) {
       return true;
@@ -35,11 +48,8 @@ const MainLayout = ({ children }: ChildProps) => {
       <div className={checkUserLayout() ? "" : "childrenWrapper"}>
         <div> {children}</div>
 
-        <div className="footerWrapper">
-          {!pathName?.includes("/admin") && <Foooter />}
-        </div>
+        <div className="footerWrapper">{renderFooter()}</div>
       </div>
-
     </section>
   );
 };

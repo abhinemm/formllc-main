@@ -12,10 +12,10 @@ import Payments from "@/models/payments.model";
 const syncDatabase = async () => {
   try {
     await sequelize.authenticate();
-    await Payments.sync({ alter: true });
+    await Payments.sync({ alter: false });
 
-    await Company.sync({ alter: true });
-    await User.sync({ alter: true });
+    await Company.sync({ alter: false });
+    await User.sync({ alter: false });
     await Company.belongsTo(User, { foreignKey: "userId", as: "userData" });
     await User.hasOne(Company, { foreignKey: "userId", as: "companyData" });
     await ContactUs.sync({ alter: false });
@@ -35,34 +35,26 @@ const syncDatabase = async () => {
       allowNull: true,
       defaultValue: false,
     });
-  } catch (error) {
-    
-  }
+  } catch (error) {}
   try {
     await queryInterface.addColumn("companies", "paymentLink", {
       type: DataTypes.STRING,
       allowNull: true,
     });
-  } catch (error) {
-    
-  }
+  } catch (error) {}
   try {
     await queryInterface.addColumn("companies", "subsriptionPaymentStatus", {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
     });
-  } catch (error) {
-    
-  }
+  } catch (error) {}
   try {
     await queryInterface.addColumn("companies", "plan", {
       type: DataTypes.STRING,
       allowNull: true,
     });
-  } catch (error) {
-    
-  }
+  } catch (error) {}
 };
 
 export default syncDatabase;

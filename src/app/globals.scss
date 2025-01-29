@@ -105,6 +105,39 @@ a {
   padding: 0; /* Chrome, Safari, Edge: Hide scrollbar */
 }
 
+.link-block {
+  z-index: 9999;
+  margin-bottom: 20px;
+  margin-right: 40px;
+  position: fixed;
+  top: auto;
+  bottom: 0%;
+  left: auto;
+  right: 0%;
+  .whatsapp {
+    max-width: 100%;
+    border-radius: 100px;
+    margin-bottom: 0;
+    margin-right: 0;
+    transition: all 0.25s;
+    position: static;
+    top: auto;
+    bottom: 0%;
+    left: auto;
+    right: 0%;
+    box-shadow: 2px 0 40px 20px rgba(172, 172, 172, 0.25);
+  }
+
+  .whatsapp:hover {
+    transform: scale(1.2);
+  }
+}
+
+.w-inline-block {
+  max-width: 100%;
+  display: inline-block;
+}
+
 .currencyModal {
   .ant-modal-content {
     background: #090a15 !important;

@@ -11,8 +11,8 @@ const HomePage = () => {
   const steps: any = [
     {
       icon: "/images/icon-company-type.png",
-      title: "Choose a Company Type",
-      description: "LLC or C-Corp? Align your choice with your goals.",
+      title: "Choose a Company Name",
+      description: "Make sure it's the Perfect Business Name.",
       step: "Step 1",
       svgIcon: (
         <svg
@@ -311,7 +311,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section>
+      <section className={styles.sectionWrapper}>
         <div className="container">
           <div className={styles.registerSection}>
             <div className={styles.header}>
@@ -340,7 +340,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section>
+      <section className={styles.sectionWrapper}>
         <div className="container">
           {/* <div className={styles?.companyStructure}>
             <div className={styles.header}>
@@ -378,7 +378,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section>
+      <section className={styles.sectionWrapper}>
         <div className="container">
           <div className={styles.wyomingDelawareSection}>
             <div className={styles.header}>
@@ -434,7 +434,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section>
+      <section className={styles.sectionWrapper}>
         <div className="container">
           <div className={styles.manageBusinessSection}>
             <div className={styles.content}>

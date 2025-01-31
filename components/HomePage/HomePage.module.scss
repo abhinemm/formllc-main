@@ -1,6 +1,15 @@
 $highlight-color: #ff5a5f;
 $secondary-color: #622774;
 
+
+.sectionWrapper,.sectionOne,.sectionTwo{
+
+*{ 
+   color: #fff;
+  }
+ 
+}
+
 .sectionOne {
   .registrationSection {
     display: flex;
@@ -449,6 +458,10 @@ $secondary-color: #622774;
       color: #bdbdbd;
       line-height: 1.6;
     }
+  }
+
+  p{
+    color: #fff;
   }
 
   .cards {

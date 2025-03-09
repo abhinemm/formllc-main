@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import styles from "../company.module.scss";
 import { useAppContext } from "../../../../../components/Context/AppContext";
@@ -25,6 +25,16 @@ const page = () => {
   const [showDocumentViewer, setShowDocumentViewer] = useState<boolean>(false);
   const [docUrl, setDocUrl] = useState<string>("");
   const [subStatus, setSubStatus] = useState<boolean>(false);
+  const [documents, setDocuments] = useState<any>([]);
+  useEffect(() => {
+    if (contextOptions?.selectedCompanyDetails?.document) {
+      const splited =
+        contextOptions?.selectedCompanyDetails?.document?.split(",");
+      if (splited?.length) {
+        setDocuments(splited);
+      }
+    }
+  }, [contextOptions?.selectedCompanyDetails?.document]);
 
   const handleSubscription = async () => {
     setSubStatus(true);
@@ -37,6 +47,7 @@ const page = () => {
       placement: data?.placement,
     });
   };
+
   return (
     <section className={styles.deatialsMainWrapper}>
       {contextHolder}
@@ -203,19 +214,20 @@ const page = () => {
               {/* <iframe
                 src={contextOptions?.selectedCompanyDetails?.document}
               ></iframe> */}
-              {contextOptions?.selectedCompanyDetails?.document && (
+              {documents?.map((el: any, idx: number) => (
                 <Image
-                  src={contextOptions?.selectedCompanyDetails?.document}
+                  key={idx}
+                  src={el}
                   alt="proof of address"
                   width={100}
                   height={100}
                   className={styles.document}
                   onClick={() => {
-                    setDocUrl(contextOptions?.selectedCompanyDetails?.document);
+                    setDocUrl(el);
                     setShowDocumentViewer(true);
                   }}
                 />
-              )}
+              ))}
             </label>
           </div>
         </div>

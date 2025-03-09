@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 import styles from "./company-registration.module.scss";
 import { Formik } from "formik";
 
-import { InputNumber, notification, Select, Spin } from "antd";
+import { InputNumber, Modal, notification, Select, Spin } from "antd";
 import { ALLCOUNTRIES, COUNTRYCODE } from "@/constants/constants";
 import axios from "axios";
+import { UploadOutlined } from "@ant-design/icons";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loader from "../../../components/Loader";
 import { registerSchema } from "@/helpers/validationSchema";
+import ImageUploadComponent from "../../../components/ImageUploadComponent/ImageUploadComponent";
+import Image from "next/image";
 const { Option } = Select;
 
 type NotificationType = "success" | "info" | "warning" | "error";
@@ -28,6 +31,7 @@ const CompanyRegistration = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
@@ -35,6 +39,7 @@ const CompanyRegistration = () => {
       placement: data?.placement,
     });
   };
+  const [fileArray, setFileArray] = useState<any>([]);
 
   const initialValues = {
     firstName: "",
@@ -137,9 +142,9 @@ const CompanyRegistration = () => {
 
   const onSubmit = async (values: any) => {
     setUpdateLoading(true);
-    const file = await handleFileUpload();
+    // const file = await handleFileUpload();
     const data = {
-      document: file?.url,
+      document: values.proofOfAddress,
       ownerFname: values?.firstName,
       ownerLname: values?.lastName,
       companyName: values?.companyName,
@@ -180,6 +185,17 @@ const CompanyRegistration = () => {
       setUpdateLoading(false);
     }
     // Handle form submission logic here
+  };
+
+  const onSubmitImg = (urls: any, setFieldValue: any) => {
+    console.log("urls", urls);
+    if (urls.length) {
+      setFieldValue("proofOfAddress", urls.join(","));
+      setFileArray(urls);
+      setOpenModal(false);
+    } else {
+      setFieldValue("proofOfAddress", "");
+    }
   };
 
   return (
@@ -419,19 +435,32 @@ const CompanyRegistration = () => {
                     )}
                   </div>
                 </div>
+
                 <div className={styles.doubleFlex}>
                   {" "}
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>Proof of Address</label>
                     <div className={styles.fileUpload}>
-                      <input
-                        className={styles.fbinput}
-                        id="confirm-email"
-                        type="file"
-                        name="proofOfAddress"
-                        accept="image/*"
-                        onChange={(e) => handleFileChange(e, setFieldValue)}
-                      />
+                      <div className={styles.proofOfAddressWrapper}>
+                        {fileArray?.map((el: any, idx: number) => (
+                          <div className={styles.imageWrapper} key={idx}>
+                            <Image
+                              width={50}
+                              height={50}
+                              src={el}
+                              alt="image"
+                            />
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => setOpenModal(true)}
+                          className={styles.addBtn}
+                        >
+                          <UploadOutlined />
+                          Add
+                        </button>
+                      </div>
                       {errors.proofOfAddress && touched.proofOfAddress && (
                         <p className={styles.errorWarning}>
                           {errors.proofOfAddress}
@@ -478,6 +507,22 @@ const CompanyRegistration = () => {
                     </li>
                   </ul>
                 </div>
+
+                <Modal
+                  open={openModal}
+                  onCancel={() => setOpenModal(false)}
+                  footer={null}
+                  closable={true}
+                  maskClosable={false}
+                >
+                  <ImageUploadComponent
+                    openNotification={openNotification}
+                    onSubmitImg={(data: any) =>
+                      onSubmitImg(data, setFieldValue)
+                    }
+                    fileArray={fileArray}
+                  />
+                </Modal>
               </form>
             )}
           </Formik>

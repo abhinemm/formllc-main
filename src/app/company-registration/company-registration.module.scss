@@ -117,12 +117,31 @@
         font-size: 13px;
         color: var(--white-color);
       }
+      .proofOfAddressWrapper {
+        width: 100%;
+        background: #181429;
+        padding: 16px;
+        border-radius: 7px;
+        gap: 12px;
+        display: flex;
+        align-items: center;
+        .addBtn {
+          font-size: 14px;
+          padding: 6px 12px;
+          background: #82316f;
+          border: 1px solid #f15561;
+          display: flex;
+          gap: 10px;
+          border-radius: 4px;
+          cursor: pointer;
+          outline: none;
+        }
+      }
     }
     input[type="text"],
     input[type="password"],
     select {
       width: 100%;
-
       position: relative;
       display: flex;
       flex-direction: row;

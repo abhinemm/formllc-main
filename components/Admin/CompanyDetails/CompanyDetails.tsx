@@ -10,12 +10,14 @@ import {
   VerticalAlignBottomOutlined,
   EditOutlined,
   MoreOutlined,
+  DownloadOutlined,
 } from "@ant-design/icons";
 import { Dropdown, notification, Spin } from "antd";
 import { SLIDEACTTION } from "@/constants/constants";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import TransparentLoader from "../../TransparentLoader";
 import ActionPopup from "./ActionPopup";
+import DocumentPreview from "../../Modals/DocumentPreview";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -31,7 +33,9 @@ const CompanyDetails = () => {
   const router = useRouter();
   const { contextOptions, setContextOptions } = useAppContext();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [docUrl, setDocUrl] = useState<string>("");
   const [appiCalledStatus, setAppiCalledStatus] = useState<boolean>(false);
+  const [showDocumentViewer, setShowDocumentViewer] = useState<boolean>(false);
   const [allSteps, setAllSteps] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [companyDetails, setCompanyDetails] = useState<any>(null);
@@ -39,6 +43,7 @@ const CompanyDetails = () => {
   const [api, contextHolder] = notification.useNotification();
   const [actionLoader, setActionLoader] = useState<boolean>(false);
   const [modalStatus, setModalStatus] = useState<any>(false);
+  const [docUrls, setDocUrls] = useState<any>([]);
   const [stepId, setStepId] = useState<any>();
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
@@ -61,6 +66,16 @@ const CompanyDetails = () => {
       }
     })();
   }, [id]);
+
+  useEffect(() => {
+    if (companyDetails?.document) {
+      const splited =
+        contextOptions?.selectedCompanyDetails?.document?.split(",");
+      if (splited?.length) {
+        setDocUrls(splited);
+      }
+    }
+  }, [companyDetails?.document]);
 
   const getCompanyDetails = async (companyId: number) => {
     await axios
@@ -139,24 +154,32 @@ const CompanyDetails = () => {
 
   const handleDownload = async (imageUrl) => {
     try {
-      setDownloadLoading(true);
       const response = await fetch(imageUrl);
       const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
+      // Get the file extension from MIME type
+      const mimeType = blob.type; // e.g., "image/jpeg"
+      const extension = mimeType.split("/")[1]; // Extract "jpeg" from "image/jpeg"
+      // Create a downloadable file
+      const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement("a");
-      link.href = url;
-      link.download = "image.png"; // Set the desired file name
+      link.href = blobUrl;
+      const fileName = getFileNameFromUrl(imageUrl);
+
+      link.download = `${companyDetails?.ownerFname}-${
+        companyDetails.companyName
+      }-${fileName?.split(".")[0]}.${extension}`; // Dynamic file extension
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
 
-      // Revoke the object URL after download
-      URL.revokeObjectURL(url);
-      setDownloadLoading(false);
+      // Cleanup
+      window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
-      setDownloadLoading(false);
-      console.error("Error downloading the image:", error);
+      console.error("Download failed:", error);
     }
+  };
+  const getFileNameFromUrl = (url: string) => {
+    return url.split("/").pop()?.split("?")[0] || "default.jpg";
   };
 
   const handleMenuClick = (e: any) => {
@@ -297,7 +320,7 @@ const CompanyDetails = () => {
                   <h6>Company Name</h6>
                   <div>
                     <label htmlFor="">
-                      <span>{`${contextOptions?.selectedCompanyDetails?.companyName} ${contextOptions?.selectedCompanyDetails?.type}`}</span>
+                      <span>{`${companyDetails.companyName} ${companyDetails.type}`}</span>
                     </label>
                   </div>
                 </div>
@@ -385,17 +408,37 @@ const CompanyDetails = () => {
                   <h6>Proof of address</h6>
                   <div>
                     <label htmlFor="" className={styles.documentWrapper}>
-                      {companyDetails?.document && (
-                        <Image
-                          src={companyDetails?.document}
-                          alt="proof of address"
-                          width={100}
-                          height={100}
-                          className={styles.document}
-                          onClick={() => {}}
-                        />
-                      )}
-                      <div className={styles.actionBtnWrapper}>
+                      {docUrls?.map((el: any, idx: number) => (
+                        <div className={styles.imageWrapper}>
+                          <Image
+                            key={idx}
+                            src={el}
+                            alt="proof of address"
+                            width={100}
+                            height={100}
+                            className={styles.document}
+                            onClick={() => {
+                              setDocUrl(el);
+                              setShowDocumentViewer(true);
+                            }}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleDownload(el)}
+                          >
+                            {downloadLoading ? (
+                              <Spin />
+                            ) : (
+                              <>
+                                <DownloadOutlined />
+                                Download
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      ))}
+
+                      {/* <div className={styles.actionBtnWrapper}>
                         <button
                           type="button"
                           onClick={() =>
@@ -413,7 +456,7 @@ const CompanyDetails = () => {
                         <button type="button">
                           <EditOutlined style={{ fontSize: "20px" }} />
                         </button>
-                      </div>
+                      </div> */}
                     </label>
                   </div>
                 </div>
@@ -437,6 +480,11 @@ const CompanyDetails = () => {
           )}
         </>
       )}
+      <DocumentPreview
+        onClose={() => setShowDocumentViewer(false)}
+        open={showDocumentViewer}
+        url={docUrl}
+      />
       <ActionPopup open={modalStatus} onClose={() => setModalStatus(false)} />
     </section>
   );

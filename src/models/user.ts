@@ -70,7 +70,8 @@ User.init(
       type: DataTypes.ENUM(
         UserTypesEnum.admin,
         UserTypesEnum.customer,
-        UserTypesEnum.manager
+        UserTypesEnum.manager,
+        UserTypesEnum.member
       ),
       allowNull: true,
       defaultValue: UserTypesEnum.customer,

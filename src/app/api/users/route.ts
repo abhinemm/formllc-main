@@ -1,14 +1,25 @@
 import { NextResponse } from "next/server";
 import User, { UserAttributes } from "../../../models/user";
 import { createPassword } from "@/utils/helper";
+import { UserTypesEnum } from "@/utils/constants";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const id = url.searchParams.get("id");
+  const user: any = url.searchParams.get("user");
+  if (!UserTypesEnum[user]) {
+    return NextResponse.json(
+      { error: "Failed to fetch users" },
+      { status: 500 }
+    );
+  }
   const where: any = {};
   try {
     if (id) {
       where.id = id;
+    }
+    if (user) {
+      where.type = user;
     }
     const users = await User.findAll({ where });
     return NextResponse.json(users);
@@ -53,6 +64,8 @@ export async function POST(req: Request) {
     newUser.password = undefined;
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
+    console.log("Failed to create userFailed to create user", error);
+
     return NextResponse.json(
       { error: "Failed to create user" },
       { status: 500 }

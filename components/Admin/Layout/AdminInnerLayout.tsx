@@ -12,7 +12,6 @@ import AdminHeader from "./Header/AdminHeader";
 const { Header, Sider, Content } = Layout;
 
 const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
-  
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
 
@@ -64,9 +63,9 @@ const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
               label: "Orders",
             },
             {
-              key: "/admin/products",
+              key: "/admin/affiliates",
               icon: <UploadOutlined />,
-              label: "Products",
+              label: "Affiliates",
             },
           ]}
         />
@@ -77,7 +76,6 @@ const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
         <AdminHeader />
         <Content
           style={{
-         
             padding: 24,
             background: "#fff",
           }}

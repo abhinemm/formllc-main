@@ -10,6 +10,7 @@ import { NotificationPlacement } from "antd/es/notification/interface";
 import { ApiStatus, UserTypesEnum } from "@/utils/constants";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useAppContext } from "../../../../../components/Context/AppContext";
 type NotificationType = "success" | "info" | "warning" | "error";
 
 type NotificationMessage = {
@@ -27,6 +28,7 @@ const SignIn = () => {
     password: "",
     rememberMe: false,
   });
+  const { setContextOptions } = useAppContext();
 
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (data: NotificationMessage) => {
@@ -92,11 +94,12 @@ const SignIn = () => {
             };
             localStorage.setItem("credentials", JSON.stringify(obj));
           }
-          console.log("the resposndefnjfnnxcxc", res, status, session);
-
           if (res.status === ApiStatus.success && status === "authenticated") {
-            console.log("sessionsessionsession", session);
             const data: any = session?.user;
+            setContextOptions((prev) => ({
+              ...prev,
+              userData: data,
+            }));
             if (data.type === "admin") {
               router?.push("/admin");
             } else {

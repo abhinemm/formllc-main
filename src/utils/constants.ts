@@ -3,6 +3,7 @@ export enum UserTypesEnum {
   customer = "customer",
   manager = "manager",
   admin = "admin",
+  member = "member", // for affiliate user
 }
 
 export enum CompanyStatus {
@@ -30,7 +31,6 @@ export enum StepsView {
   actionRequired = "Action Required",
   pending = "Pending",
 }
-
 
 export enum PlansEnum {
   BASIC = "BASIC",

@@ -1,14 +1,18 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "../../Header/Header";
 import Foooter from "../../Footer/Foooter";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useAppContext } from "../../Context/AppContext";
 type ChildProps = {
   children: React.ReactNode;
 };
 
 const MainLayout = ({ children }: ChildProps) => {
   const pathName = usePathname();
+  const session = useSession();
+  const { setContextOptions, contextOptions } = useAppContext();
   const renderHeader = () => {
     if (pathName?.includes("/admin")) {
       return null;
@@ -21,6 +25,17 @@ const MainLayout = ({ children }: ChildProps) => {
     }
     return <Header />;
   };
+
+  useEffect(() => {
+    if (session?.data?.user) {
+      setContextOptions((prev) => ({
+        ...prev,
+        userData: session?.data?.user,
+      }));
+    }
+  }, [session]);
+
+  console.log("contextOptionscontextOptionscontextOptions", contextOptions);
 
   const renderFooter = () => {
     if (pathName?.includes("/admin")) {
@@ -42,6 +57,7 @@ const MainLayout = ({ children }: ChildProps) => {
       return false;
     }
   };
+
   return (
     <section className="siteLayout">
       <div className="headerDiv">{renderHeader()}</div>

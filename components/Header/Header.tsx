@@ -5,10 +5,12 @@ import { Drawer } from "antd";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { useAppContext } from "../Context/AppContext";
+import { UserTypesEnum } from "@/utils/constants";
 
 const Header = () => {
   const [sideDrawer, setSideDrawer] = useState(false);
-  const session = useSession();
+  const { contextOptions } = useAppContext();
   const pathName = usePathname();
   useLayoutEffect(() => {
     setSideDrawer(false);
@@ -44,12 +46,18 @@ const Header = () => {
               <li>
                 <Link href="/pricing">Contact Us</Link>
               </li>
-              {session?.data?.user ? (
+              {contextOptions?.userData ? (
                 <>
                   <li>
-                    <Link href="/user" className={styles.signIn}>
-                      My Account
-                    </Link>
+                    {contextOptions?.userData.type == UserTypesEnum.customer ? (
+                      <Link href="/user" className={styles.signIn}>
+                        My Account
+                      </Link>
+                    ) : (
+                      <Link href="/admin" className={styles.signIn}>
+                        My Account
+                      </Link>
+                    )}
                   </li>
                   <li>
                     <a
@@ -100,10 +108,18 @@ const Header = () => {
               <Link href="/contact-us">Contact Us</Link>
             </li>
             <li>
-              {session?.data?.user ? (
-                <Link href="/user" className={styles.signIn}>
-                  My Account
-                </Link>
+              {contextOptions?.userData ? (
+                <>
+                  {contextOptions?.userData.type == UserTypesEnum.customer ? (
+                    <Link href="/user" className={styles.signIn}>
+                      My Account
+                    </Link>
+                  ) : (
+                    <Link href="/admin" className={styles.signIn}>
+                      My Account
+                    </Link>
+                  )}
+                </>
               ) : (
                 <Link href="/api/auth/signin" className={styles.signIn}>
                   Sign in

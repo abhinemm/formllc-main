@@ -41,6 +41,20 @@ const Companies: React.FC = () => {
       filter: true,
     },
     { headerName: "Phone", field: "phone", sortable: true, filter: true },
+    {
+      headerName: "Payment Status",
+      field: "paymentStatus",
+      sortable: true,
+      filter: true,
+      cellRenderer: (params) => {
+        const value = params.value ? params.value.toLowerCase() : "";
+        const color = value === "paid" ? "green" : "red";
+        const label = value === "paid" ? "Paid" : "Not Paid";
+        return (
+          <span style={{ color: color, fontWeight: "bold" }}>{label}</span>
+        );
+      },
+    },
   ]);
   useEffect(() => {
     (async () => {
@@ -62,6 +76,7 @@ const Companies: React.FC = () => {
           }`,
           companyEmail: `${el?.ownerFname ?? "--"} ${el?.ownerLname ?? "--"}`,
           phone: `${el?.countryCode ?? "--"} ${el?.phone}`,
+          paymentStatus: el?.regPaymentStatus ? "paid" : "notPaid",
         }));
         setAllCompanies(res?.data);
         setRowData(filterData);

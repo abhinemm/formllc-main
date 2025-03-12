@@ -35,8 +35,6 @@ const MainLayout = ({ children }: ChildProps) => {
     }
   }, [session]);
 
-  console.log("contextOptionscontextOptionscontextOptions", contextOptions);
-
   const renderFooter = () => {
     if (pathName?.includes("/admin")) {
       return null;

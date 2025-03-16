@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import UserListPage from "../../../../components/Admin/Users/UserListPage";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <UserListPage />
+    </div>
+  );
+};
 
-export default page
+export default page;

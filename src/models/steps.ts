@@ -6,8 +6,8 @@ export interface StepsAttributes {
   title?: string;
   description?: string;
   position?: number;
+  status?: boolean;
 }
-
 
 interface StepsCreationAttributes extends Optional<StepsAttributes, "id"> {}
 
@@ -19,6 +19,7 @@ class Steps
   public title?: string;
   public description?: string;
   public position?: number;
+  public status?: boolean;
 }
 
 Steps.init(
@@ -39,6 +40,11 @@ Steps.init(
     position: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: true,
     },
   },
   {

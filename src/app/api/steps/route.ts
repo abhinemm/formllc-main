@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET() {
-  const steps = await Steps.findAll({});
+  const steps = await Steps.findAll({ where: { status: true } });
   return NextResponse.json(steps);
 }
 

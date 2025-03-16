@@ -7,21 +7,24 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const id = url.searchParams.get("id");
   const user: any = url.searchParams.get("user");
-  if (!UserTypesEnum[user]) {
-    return NextResponse.json(
-      { error: "Failed to fetch users" },
-      { status: 500 }
-    );
-  }
+
   const where: any = {};
   try {
+    if (user) {
+      if (!UserTypesEnum[user]) {
+        return NextResponse.json(
+          { error: "Failed to fetch users" },
+          { status: 500 }
+        );
+      }
+    }
     if (id) {
       where.id = id;
     }
     if (user) {
       where.type = user;
     }
-    const users = await User.findAll({ where });
+    const users = await User.findAll({ where, order: [["createdAt", "DESC"]] });
     return NextResponse.json(users);
   } catch (error) {
     return NextResponse.json(

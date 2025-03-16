@@ -94,6 +94,17 @@ export const profileSchema = yup.object().shape({
     .required("Email is required"),
 });
 
+export const uploadDocumentSchems = yup.object().shape({
+  type: yup.string().required("Heading Type is required"),
+  description: yup
+    .string()
+    .trim()
+    .min(10, "Description must be at least 10 characters")
+    .max(500, "Description cannot exceed 500 characters"),
+  file: yup.string().required("File is required"),
+  docType: yup.string().required("Document type is required"),
+});
+
 export const filedActionSchema = yup.object().shape({
   description: yup.string().required("Description is required"),
   fields: yup.string().required("Fields is required"),

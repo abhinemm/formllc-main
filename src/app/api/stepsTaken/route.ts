@@ -14,10 +14,12 @@ export async function GET(req: Request) {
   const url = new URL(req.url);
   const searchParams = url.searchParams;
   const where: any = {};
+
   searchParams.forEach((value, key) => {
-    where[key] = value;
+    where[key] = Number(value) ? Number(value) : value;
   });
-  const stepsTaken = await StepsTaken.findAll(where);
+  const stepsTaken = await StepsTaken.findAll({ where: where });
+
   return NextResponse.json(stepsTaken);
 }
 
@@ -48,7 +50,6 @@ export async function PATCH(req: Request) {
     );
   }
   const id: any = stepsTaken?.id;
-  console.log("idididididididid", id, stepsTaken);
 
   try {
     await StepsTaken.update(body, { where: { id } });

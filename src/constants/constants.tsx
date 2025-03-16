@@ -1,3 +1,4 @@
+import { StepsTakenStatusEnum } from "@/utils/constants";
 import {
   DashboardOutlined,
   HomeOutlined,
@@ -1605,30 +1606,44 @@ export const VERIFIED = [
 export const SLIDEACTTION = {
   1: [
     {
-      key: "verified-1",
-      label: "Verified",
+      key: `${StepsTakenStatusEnum.completed}`,
+      label: "Completed",
     },
     {
-      key: "actionRequired-1",
-      label: "Action Required",
+      key: `${StepsTakenStatusEnum.pending}`,
+      label: "In Progress",
     },
   ],
   2: [
     {
-      key: "uploadDoc-2",
-      label: "Upload Document",
+      key: `${StepsTakenStatusEnum.completed}`,
+      label: "Completed",
+    },
+    {
+      key: `${StepsTakenStatusEnum.pending}`,
+      label: "In Progress",
     },
   ],
   3: [
     {
-      key: "getAccountEmail-3",
-      label: "Verify Account Email",
+      key: `${StepsTakenStatusEnum.completed}`,
+      label: "Completed",
+    },
+    {
+      key: `${StepsTakenStatusEnum.contactSupport}`,
+      label: "Contact Support",
     },
   ],
   4: [
     {
-      key: "getAccountEmail-3",
-      label: "Verify Account Email",
+      key: `${StepsTakenStatusEnum.documents}`,
+      label: "Upload Documents",
+    },
+  ],
+  5: [
+    {
+      key: `${StepsTakenStatusEnum.documents}`,
+      label: "Upload Documents",
     },
   ],
 };
@@ -1678,4 +1693,64 @@ export const COMPANYDETAILS = [
     value: "phone",
     label: "Phone",
   },
+];
+
+export const DEFAULTDOCUMENT = [
+  "Articles of Organization",
+  "Initial Resolution",
+  "Operating Agreement",
+  "EIN",
+];
+
+export const BTNCOLORS = {
+  completed: {
+    textColor: "#ffffff",
+    bgColor: "#198754",
+  },
+  inReview: {
+    textColor: "#212529",
+    bgColor: "#ffc107",
+  },
+  actionRequired: {
+    textColor: "#ffffff",
+    bgColor: "#dc3545",
+  },
+  pending: {
+    textColor: "#ffffff",
+    bgColor: "#fd7e14",
+  },
+  contactSupport: {
+    textColor: "#ffffff",
+    bgColor: "#0dcaf0",
+  },
+  documents: {
+    textColor: "#ffffff",
+    bgColor: "#6610f2",
+  },
+};
+
+export const DEFAULT_EXTENTIONS = [
+  {
+    label: "IMAGE",
+    value: "img",
+  },
+  {
+    label: "Document",
+    value: "doc",
+  },
+  {
+    label: "PDF",
+    value: "pdf",
+  },
+];
+
+export const nextImageFormats = [
+  "jpg",
+  "jpeg",
+  "png",
+  "webp",
+  "gif",
+  "svg",
+  "ico",
+  "avif",
 ];

@@ -37,9 +37,10 @@ const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
             height: 64,
             margin: 16,
             color: "#fff",
-            fontSize: "20px",
             textAlign: "center",
             lineHeight: "32px",
+            fontSize: "1.5rem",
+            fontWeight: 700,
           }}
         >
           Formllc

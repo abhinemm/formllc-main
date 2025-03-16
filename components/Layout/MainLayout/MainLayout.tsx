@@ -32,10 +32,13 @@ const MainLayout = ({ children }: ChildProps) => {
         ...prev,
         userData: session?.data?.user,
       }));
+    } else {
+      setContextOptions((prev) => ({
+        ...prev,
+        userData: null,
+      }));
     }
   }, [session]);
-
-  console.log("contextOptionscontextOptionscontextOptions", contextOptions);
 
   const renderFooter = () => {
     if (pathName?.includes("/admin")) {

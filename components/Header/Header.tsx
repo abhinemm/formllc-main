@@ -28,21 +28,6 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className={`${styles.nav} ${styles.desktopNav}`}>
             <ul>
-              {/* <li>
-                <Link href="#products">Products</Link>
-              </li>
-              <li>
-                <Link href="#pricing">Pricing</Link>
-              </li>
-              <li>
-                <Link href="#rewards">Rewards</Link>
-              </li>
-              <li>
-                <Link href="#partners">Partners</Link>
-              </li> */}
-              {/* <li>
-                <Link href="/contact-us">Contact Us</Link>
-              </li> */}
               <li>
                 <Link href="/pricing">Contact Us</Link>
               </li>

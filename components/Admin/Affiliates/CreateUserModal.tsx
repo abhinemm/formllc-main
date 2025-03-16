@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styles from "./Affiliates.module.scss";
-import { Modal, notification, Spin } from "antd";
+import { Modal, Spin } from "antd";
 import { Formik } from "formik";
 import Image from "next/image";
 import { createUserAccountSchema } from "@/helpers/validationSchema";
 import axios from "axios";
 import { UserTypesEnum } from "@/utils/constants";
 
-const CreateUserModal = ({ onClose, open, onSubmit }) => {
+const CreateUserModal = ({ onClose, open, onSubmit, openNotification }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const initialValues = {
     firstName: "",
@@ -34,7 +34,7 @@ const CreateUserModal = ({ onClose, open, onSubmit }) => {
         })
         .catch((err: any) => {
           setLoading(false);
-          notification.open({
+          openNotification({
             type: "error",
             message: err?.response?.data?.message ?? "Something went wrong",
             placement: "topRight",
@@ -53,6 +53,7 @@ const CreateUserModal = ({ onClose, open, onSubmit }) => {
       footer={null}
       closable={true}
       className="userModal"
+      maskClosable={false}
     >
       <div className={styles.formWrapper}>
         <h3>Create User</h3>

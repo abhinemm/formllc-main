@@ -12,13 +12,12 @@ import Company from "@/models/company";
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const searchParams = url.searchParams;
-
   const data = (await getServerSession(authOptions)) as any;
   if (!data || !data.user) {
-    // return NextResponse.json(
-    //   { message: "User not authenticated" },
-    //   { status: 401 }
-    // );
+    return NextResponse.json(
+      { message: "User not authenticated" },
+      { status: 401 }
+    );
   }
 
   try {
@@ -46,10 +45,10 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
   if (!data || !data.user) {
-    // return NextResponse.json(
-    //   { message: "User not authenticated" },
-    //   { status: 401 }
-    // );
+    return NextResponse.json(
+      { message: "User not authenticated" },
+      { status: 401 }
+    );
   }
   const payload: CompanyDocumentsAttributes = await req.json();
   const step = await Steps.findByPk(payload.stepId);

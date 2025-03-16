@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./common.module.scss";
+import styles from "./common.module.scss";
 
 const NoData = () => {
-  return <div>NoData</div>;
+  return <div className={styles.noDataWrapper}>No Data Found</div>;
 };
 
 export default NoData;

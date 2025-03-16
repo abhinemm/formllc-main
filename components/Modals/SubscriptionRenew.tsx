@@ -32,7 +32,7 @@ const SubscriptionRenew: React.FC<SubscriptionRenewProps> = ({
       plan: plans[plan],
       companyId: companyId,
       sub: true,
-      redirectUrl: `${process.env.BASEURL}/user?status=success`,
+      redirectUrl: `${process.env.NEXT_PUBLIC_BASEURL}/user?status=success`,
     };
 
     try {
@@ -76,7 +76,7 @@ const SubscriptionRenew: React.FC<SubscriptionRenewProps> = ({
       <div className={styles.modalContentWrapper}>
         <h3>Activate Your Mailroom Address</h3>
         <p className={styles.modalDescription}>
-          To receive your dedicated mailroom address, please subscribe to the
+          To receive your mailroom address, please subscribe to the
           Mailroom Service for <b>$25</b>. This ensures seamless handling of
           your correspondence.
         </p>

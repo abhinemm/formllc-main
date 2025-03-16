@@ -23,11 +23,11 @@
     li {
       list-style: none;
       flex-shrink: 0;
-
       padding: 20px;
       max-width: 350px;
       min-width: 350px;
       cursor: pointer;
+      position: relative;
 
       @media screen and (max-width: 480px) {
         max-width: 292px;
@@ -112,7 +112,7 @@
 
       .stepContent {
         color: #ededed;
-
+        margin-bottom: 40px;
         .underlined {
           text-decoration: underline;
           color: inherit;
@@ -136,6 +136,24 @@
         color: #76767b !important;
       }
     }
+  }
+}
+
+.buttonAbsoluteWarpper {
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
+  button {
+    all: unset;
+    cursor: pointer;
+    background-color: var(--btn-bg, #db4c2a);
+    color: var(--text-color, #fff);
+    text-transform: capitalize;
+    font-size: 12px;
+    padding: 15px 20px;
+    line-height: 0;
+    border-radius: 4px;
+    float: right;
   }
 }
 

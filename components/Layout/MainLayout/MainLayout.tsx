@@ -32,6 +32,11 @@ const MainLayout = ({ children }: ChildProps) => {
         ...prev,
         userData: session?.data?.user,
       }));
+    } else {
+      setContextOptions((prev) => ({
+        ...prev,
+        userData: null,
+      }));
     }
   }, [session]);
 

@@ -20,16 +20,6 @@ type NotificationMessage = {
 
 const AffiliatesList = () => {
   const [showUserModal, setShowUserModal] = useState<boolean>(false);
-  const staticData: any = [
-    {
-      id: 1,
-      slno: 1,
-      name: "Christin KF",
-      email: "christin@gmail.com",
-      status: "",
-      action: "",
-    },
-  ];
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
@@ -37,7 +27,7 @@ const AffiliatesList = () => {
       placement: data?.placement,
     });
   };
-  const [rowData, setRowData] = useState<any>(staticData);
+  const [rowData, setRowData] = useState<any>([]);
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     { headerName: "Sl.No", field: "slno", sortable: true, filter: true },
     {

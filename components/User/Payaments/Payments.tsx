@@ -46,12 +46,11 @@ const Payments = () => {
       await axios
         .get(`/api/payment?companyId=${companyId}`)
         .then((res: any) => {
-          console.log("the response is", res);
           if (res?.data?.length) {
             const allPayments: any = res?.data;
             setAllPayment(allPayments);
-            setLoading(false);
           }
+          setLoading(false);
         })
         .catch((err: any) => {
           console.log("the errorr", err);

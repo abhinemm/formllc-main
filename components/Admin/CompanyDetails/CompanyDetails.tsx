@@ -1,23 +1,28 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./CompanyDetails.module.scss";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { useAppContext } from "../../Context/AppContext";
-import { StepsTakenStatusEnum, StepsView } from "@/utils/constants";
-import Image from "next/image";
 import {
-  VerticalAlignBottomOutlined,
-  EditOutlined,
-  MoreOutlined,
-  DownloadOutlined,
-} from "@ant-design/icons";
-import { Dropdown, notification, Spin } from "antd";
-import { SLIDEACTTION } from "@/constants/constants";
+  StepsTakenStatusEnum,
+  StepsTakenStatusViewEnum,
+} from "@/utils/constants";
+import Image from "next/image";
+import { MoreOutlined, DownloadOutlined } from "@ant-design/icons";
+import { Dropdown, notification, Skeleton, Spin } from "antd";
+import {
+  BTNCOLORS,
+  nextImageFormats,
+  SLIDEACTTION,
+} from "@/constants/constants";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import TransparentLoader from "../../TransparentLoader";
 import ActionPopup from "./ActionPopup";
 import DocumentPreview from "../../Modals/DocumentPreview";
+import UploadDocument from "./UploadDocument";
+import DocumentViewer from "../../DocumentViewer/DocumentViewer";
+import { getFileExtensionFromUrl } from "@/helpers/helper";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -27,11 +32,19 @@ type NotificationMessage = {
   placement: NotificationPlacement;
 };
 
+type DocumentViewer = {
+  open: boolean;
+  companyId: number | null;
+  stepId: number | null;
+};
+
 const CompanyDetails = () => {
   const params = useParams();
   const id = params?.id;
   const router = useRouter();
   const { contextOptions, setContextOptions } = useAppContext();
+  const [documentUploadStatus, setDocumentUploadStatus] =
+    useState<boolean>(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [docUrl, setDocUrl] = useState<string>("");
   const [appiCalledStatus, setAppiCalledStatus] = useState<boolean>(false);
@@ -45,6 +58,13 @@ const CompanyDetails = () => {
   const [modalStatus, setModalStatus] = useState<any>(false);
   const [docUrls, setDocUrls] = useState<any>([]);
   const [stepId, setStepId] = useState<any>();
+  const [stepTakes, setStepTakes] = useState<any>({});
+  const [stepTakenLoading, setStepTakenLoading] = useState<boolean>(false);
+  const [documentViewer, setDocumentViewer] = useState<DocumentViewer>({
+    open: false,
+    companyId: null,
+    stepId: null,
+  });
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
       message: data.message,
@@ -65,7 +85,7 @@ const CompanyDetails = () => {
         router.push("/admin");
       }
     })();
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     if (companyDetails?.document) {
@@ -98,6 +118,7 @@ const CompanyDetails = () => {
   };
 
   const getAllSteps = async (id: any) => {
+    setStepTakenLoading(true);
     await axios
       .get(`/api/steps`)
       .then((res: any) => {
@@ -105,9 +126,10 @@ const CompanyDetails = () => {
           const sortedData = res?.data.sort(
             (a: any, b: any) => a.position - b.position
           );
+          setAllSteps(sortedData);
           setAppiCalledStatus(true);
           if (id && id != 0) {
-            getAllTakenSteps(sortedData, id);
+            getAllTakenSteps(id);
           } else {
             setAllSteps(sortedData);
           }
@@ -118,29 +140,30 @@ const CompanyDetails = () => {
       });
   };
 
-  const getAllTakenSteps = async (sortedData: any, companyId: number) => {
+  const getAllTakenSteps = async (companyId: number) => {
     await axios
       .get(`/api/stepsTaken?companyId=${companyId}`)
       .then((res: any) => {
         if (res?.data?.length) {
           const assignedData = res?.data;
-          const finalSteps = sortedData?.map((el: any) => ({
-            ...el,
-            stepTaken: assignedData?.find(
-              (data: any) => data?.stepId === el.id
-            ),
-          }));
+          let sorted: any = {};
+          assignedData?.map((el: any) => {
+            sorted = {
+              ...sorted,
+              [el?.stepId]: el,
+            };
+          });
+          setStepTakenLoading(false);
+          console.log("sortedsortedsortedsorted", sorted);
 
-          // const sortedData: StepsAttributes[] = res?.data.sort(
-          //   (a: any, b: any) => a.position - b.position
-          // );
-          setAllSteps(finalSteps);
+          setStepTakes(sorted);
         } else {
-          setAllSteps(sortedData);
+          setStepTakenLoading(false);
         }
         setLoading(false);
       })
       .catch((err: any) => {
+        setStepTakenLoading(false);
         setLoading(false);
       });
   };
@@ -184,21 +207,46 @@ const CompanyDetails = () => {
 
   const handleMenuClick = (e: any) => {
     if (e.key) {
-      const type = e.key?.split("/")[0];
-      const stepId = Number(e.key?.split("/")[1]);
+      console.log("e.keye.keye.keye.keye.keye.key", e.key);
+
+      const type = e.key?.split("-")[0];
+      const stepId = Number(e.key?.split("-")[1]);
       let body: any;
-      switch (type) {
-        case "verified-1":
+      switch (stepId) {
+        case 1:
           body = {
-            status: StepsTakenStatusEnum?.completed,
+            status: type,
+          };
+          if (stepTakes[stepId].status !== type) {
+            updateStepStatus(stepId, body, Number(id));
+          }
+          break;
+        case 2:
+          body = {
+            status: type,
+          };
+          if (stepTakes[stepId].status !== type) {
+            updateStepStatus(stepId, body, Number(id));
+          }
+          break;
+        case 3:
+          body = {
+            status: type,
+          };
+          if (stepTakes[stepId].status !== type) {
+            updateStepStatus(stepId, body, Number(id));
+          }
+          break;
+        case 4:
+          setStepId(stepId);
+          setDocumentUploadStatus(true);
+          break;
+        case 5:
+          body = {
+            status: type,
           };
           updateStepStatus(stepId, body, Number(id));
           break;
-
-        case "actionRequired-1":
-          setStepId(stepId);
-          break;
-
         default:
           break;
       }
@@ -207,7 +255,7 @@ const CompanyDetails = () => {
 
   const handleGetmenu = (stepId: number, menus: any = []) => {
     return menus?.map((el: any) => ({
-      key: `${el.key}/${stepId}`,
+      key: `${el.key}-${stepId}`,
       label: el.label,
     }));
   };
@@ -218,7 +266,6 @@ const CompanyDetails = () => {
     companyId: number
   ) => {
     try {
-      setActionLoader(true);
       await axios
         .patch(`/api/stepsTaken?stepId=${stepId}&companyId=${companyId}`, body)
         .then((res: any) => {
@@ -228,6 +275,7 @@ const CompanyDetails = () => {
             placement: "topRight",
           });
           setActionLoader(false);
+          getAllTakenSteps(Number(id));
         })
         .catch((err: any) => {
           openNotification({
@@ -247,26 +295,55 @@ const CompanyDetails = () => {
     }
   };
 
+  const checkCompleted = (status: any) => {
+    if (status === StepsTakenStatusEnum.completed) {
+      return true;
+    }
+    if (status === StepsTakenStatusEnum.documents) {
+      return true;
+    }
+    return false;
+  };
+
+  const onCompleteUpload = (stepId: number) => {
+    if (stepTakes[stepId].status !== StepsTakenStatusEnum.documents) {
+      const body = {
+        status: StepsTakenStatusEnum.documents,
+      };
+      updateStepStatus(stepId, body, Number(id));
+    }
+    setDocumentUploadStatus(false);
+  };
+
+  const handleClickViewDoc = (stepId: number, status: string) => {
+    if (StepsTakenStatusEnum.documents === status) {
+      console.log("inside");
+
+      setDocumentViewer(() => ({
+        open: true,
+        companyId: Number(id),
+        stepId: stepId,
+      }));
+    }
+  };
+
   return (
     <section className={styles.userDashSection}>
+      {contextHolder}
       {actionLoader ? (
         <TransparentLoader />
       ) : (
         <>
           <div
             ref={scrollRef}
-            onWheel={handleWheel}
+            // onWheel={handleWheel}
             className={styles.userStepsMainWrapper}
           >
             <ul>
-              {/* <li className={styles.StepCompleted}> 
-            if a step is completed add this class to the li for the style 
-              */}
-
               {allSteps?.map((item: any, index: number) => (
                 <li
                   className={`${
-                    item?.stepTaken?.status == StepsTakenStatusEnum.completed
+                    checkCompleted(stepTakes[item?.id]?.status ?? null)
                       ? styles.StepCompleted
                       : ""
                   }`}
@@ -293,20 +370,45 @@ const CompanyDetails = () => {
                     ) : (
                       ""
                     )}
-
-                    {/* {item?.stepTaken && (
-                    <span className={styles[item?.stepTaken?.status]}>
-                      {StepsView[item?.stepTaken?.status]}
-                    </span>
-                  )} */}
                   </div>
                   <div className={styles.stepContent}>
                     <h6>{item.title}</h6>
-
                     <p className={styles.underlined}>{item.description}</p>
                   </div>
-
-                  <button> button </button>
+                  {stepTakenLoading ? (
+                    <Skeleton.Button
+                      active={true}
+                      size={"default"}
+                      shape={"default"}
+                    />
+                  ) : (
+                    <div
+                      className={styles.buttonAbsoluteWarpper}
+                      style={
+                        {
+                          "--btn-bg":
+                            BTNCOLORS[stepTakes[item?.id]?.status]?.bgColor,
+                          "--text-color":
+                            BTNCOLORS[stepTakes[item?.id]?.status]?.textColor,
+                        } as React.CSSProperties
+                      }
+                    >
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleClickViewDoc(
+                            item?.id,
+                            stepTakes[item?.id]?.status
+                          )
+                        }
+                      >
+                        {" "}
+                        {StepsTakenStatusViewEnum[
+                          stepTakes[item?.id]?.status
+                        ] ?? ""}{" "}
+                      </button>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -409,54 +511,128 @@ const CompanyDetails = () => {
                   <div>
                     <label htmlFor="" className={styles.documentWrapper}>
                       {docUrls?.map((el: any, idx: number) => (
-                        <div className={styles.imageWrapper}>
-                          <Image
-                            key={idx}
-                            src={el}
-                            alt="proof of address"
-                            width={100}
-                            height={100}
-                            className={styles.document}
-                            onClick={() => {
-                              setDocUrl(el);
-                              setShowDocumentViewer(true);
-                            }}
-                          />
-                          <button
-                            type="button"
-                            onClick={() => handleDownload(el)}
-                          >
-                            {downloadLoading ? (
-                              <Spin />
-                            ) : (
-                              <>
-                                <DownloadOutlined />
-                                Download
-                              </>
-                            )}
-                          </button>
-                        </div>
-                      ))}
-
-                      {/* <div className={styles.actionBtnWrapper}>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            handleDownload(companyDetails?.document)
-                          }
-                        >
-                          {downloadLoading ? (
-                            <Spin />
+                        <>
+                          {nextImageFormats.includes(
+                            getFileExtensionFromUrl(el)
+                          ) ? (
+                            <div className={styles.imageWrapper} key={idx}>
+                              <Image
+                                key={idx}
+                                src={el}
+                                alt="proof of address"
+                                width={100}
+                                height={100}
+                                className={styles.document}
+                                onClick={() => {
+                                  setDocUrl(el);
+                                  setShowDocumentViewer(true);
+                                }}
+                              />
+                              <button
+                                type="button"
+                                onClick={() => handleDownload(el)}
+                              >
+                                {downloadLoading ? (
+                                  <Spin />
+                                ) : (
+                                  <>
+                                    <DownloadOutlined />
+                                    Download
+                                  </>
+                                )}
+                              </button>
+                            </div>
                           ) : (
-                            <VerticalAlignBottomOutlined
-                              style={{ fontSize: "20px" }}
-                            />
+                            <>
+                              {getFileExtensionFromUrl(el) === "pdf" ? (
+                                <div className={styles.imageWrapper} key={idx}>
+                                  <Image
+                                    key={idx}
+                                    src="/images/PdfIcon.png"
+                                    alt="proof of address"
+                                    width={100}
+                                    height={100}
+                                    className={styles.document}
+                                    onClick={() => {
+                                      setDocUrl(el);
+                                      setShowDocumentViewer(true);
+                                    }}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDownload(el)}
+                                  >
+                                    {downloadLoading ? (
+                                      <Spin />
+                                    ) : (
+                                      <>
+                                        <DownloadOutlined />
+                                        Download
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                              ) : getFileExtensionFromUrl(el) === "doc" ? (
+                                <div className={styles.imageWrapper} key={idx}>
+                                  <Image
+                                    key={idx}
+                                    src="/images/documentIcon.png"
+                                    alt="proof of address"
+                                    width={100}
+                                    height={100}
+                                    className={styles.document}
+                                    onClick={() => {
+                                      setDocUrl(el);
+                                      setShowDocumentViewer(true);
+                                    }}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDownload(el)}
+                                  >
+                                    {downloadLoading ? (
+                                      <Spin />
+                                    ) : (
+                                      <>
+                                        <DownloadOutlined />
+                                        Download
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                              ) : (
+                                <div className={styles.imageWrapper} key={idx}>
+                                  <Image
+                                    key={idx}
+                                    src="/images/imageIcon.png"
+                                    alt="proof of address"
+                                    width={100}
+                                    height={100}
+                                    className={styles.document}
+                                    onClick={() => {
+                                      setDocUrl(el);
+                                      setShowDocumentViewer(true);
+                                    }}
+                                  />
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDownload(el)}
+                                  >
+                                    {downloadLoading ? (
+                                      <Spin />
+                                    ) : (
+                                      <>
+                                        <DownloadOutlined />
+                                        Download
+                                      </>
+                                    )}
+                                  </button>
+                                </div>
+                              )}
+                            </>
                           )}
-                        </button>
-                        <button type="button">
-                          <EditOutlined style={{ fontSize: "20px" }} />
-                        </button>
-                      </div> */}
+                        </>
+                      ))}
                     </label>
                   </div>
                 </div>
@@ -485,6 +661,29 @@ const CompanyDetails = () => {
         open={showDocumentViewer}
         url={docUrl}
       />
+      {documentUploadStatus && (
+        <UploadDocument
+          open={documentUploadStatus}
+          onClose={() => setDocumentUploadStatus(false)}
+          stepId={stepId}
+          openNotification={openNotification}
+          companyId={Number(id)}
+          onCompleted={onCompleteUpload}
+        />
+      )}
+      {documentViewer?.open && (
+        <DocumentViewer
+          open={documentViewer?.open}
+          companyId={documentViewer.companyId}
+          stepId={documentViewer.stepId}
+          onClose={() =>
+            setDocumentViewer((prev) => ({
+              ...prev,
+              open: false,
+            }))
+          }
+        />
+      )}
       <ActionPopup open={modalStatus} onClose={() => setModalStatus(false)} />
     </section>
   );

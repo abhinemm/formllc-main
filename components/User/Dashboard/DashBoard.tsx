@@ -5,10 +5,16 @@ import { useAppContext } from "../../Context/AppContext";
 import Loader from "../../Loader";
 import axios from "axios";
 import { StepsAttributes } from "@/models/steps";
-import { StepsTakenStatusEnum, StepsView } from "@/utils/constants";
-import { notification, Spin } from "antd";
+import {
+  StepsTakenStatusEnum,
+  StepsTakenStatusViewEnum,
+  StepsView,
+} from "@/utils/constants";
+import { notification, Skeleton, Spin } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRouter } from "next/navigation";
+import { BTNCOLORS, SLIDEACTTION } from "@/constants/constants";
+import DocumentViewer from "../../DocumentViewer/DocumentViewer";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -16,6 +22,12 @@ type NotificationMessage = {
   type: NotificationType;
   message: string;
   placement: NotificationPlacement;
+};
+
+type DocumentViewer = {
+  open: boolean;
+  companyId: number | null;
+  stepId: number | null;
 };
 
 const DashBoard = () => {
@@ -26,6 +38,13 @@ const DashBoard = () => {
   const [appiCalledStatus, setAppiCalledStatus] = useState<boolean>(false);
   const { contextOptions } = useAppContext();
   const router = useRouter();
+  const [stepTakes, setStepTakes] = useState<any>({});
+  const [stepTakenLoading, setStepTakenLoading] = useState<boolean>(false);
+  const [documentViewer, setDocumentViewer] = useState<DocumentViewer>({
+    open: false,
+    companyId: null,
+    stepId: null,
+  });
 
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (data: NotificationMessage) => {
@@ -48,12 +67,13 @@ const DashBoard = () => {
       .get(`/api/steps`)
       .then((res: any) => {
         if (res?.data?.length) {
-          const sortedData: StepsAttributes[] = res?.data.sort(
+          const sortedData = res?.data.sort(
             (a: any, b: any) => a.position - b.position
           );
+          setAllSteps(sortedData);
           setAppiCalledStatus(true);
           if (companyDetails?.id && companyDetails?.id != 0) {
-            getAllTakenSteps(sortedData, companyDetails.id);
+            getAllTakenSteps(companyDetails?.id);
           } else {
             setAllSteps(sortedData);
           }
@@ -64,32 +84,29 @@ const DashBoard = () => {
       });
   };
 
-  const getAllTakenSteps = async (
-    sortedData: StepsAttributes[],
-    companyId: number
-  ) => {
+  const getAllTakenSteps = async (companyId: number) => {
     await axios
       .get(`/api/stepsTaken?companyId=${companyId}`)
       .then((res: any) => {
         if (res?.data?.length) {
           const assignedData = res?.data;
-          const finalSteps = sortedData?.map((el: any) => ({
-            ...el,
-            stepTaken: assignedData?.find(
-              (data: any) => data?.stepId === el.id
-            ),
-          }));
-
-          // const sortedData: StepsAttributes[] = res?.data.sort(
-          //   (a: any, b: any) => a.position - b.position
-          // );
-          setAllSteps(finalSteps);
+          let sorted: any = {};
+          assignedData?.map((el: any) => {
+            sorted = {
+              ...sorted,
+              [el?.stepId]: el,
+            };
+          });
+          console.log("sortedsortedsortedsortedsorted", sorted);
+          setStepTakenLoading(false);
+          setStepTakes(sorted);
         } else {
-          setAllSteps(sortedData);
+          setStepTakenLoading(false);
         }
         setLoading(false);
       })
       .catch((err: any) => {
+        setStepTakenLoading(false);
         setLoading(false);
       });
   };
@@ -107,7 +124,7 @@ const DashBoard = () => {
       plan: "PRO",
       companyId: companyId,
       sub: true,
-      redirectUrl: `${process.env.BASEURL}/user?status=success`,
+      redirectUrl: `${process.env.NEXT_PUBLIC_BASEURL}/user?status=success`,
     };
 
     try {
@@ -140,6 +157,27 @@ const DashBoard = () => {
     }
   };
 
+  const checkCompleted = (status: any) => {
+    if (status === StepsTakenStatusEnum.completed) {
+      return true;
+    }
+    if (status === StepsTakenStatusEnum.documents) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleClickViewDoc = (stepId: number, status: string) => {
+    if (StepsTakenStatusEnum.documents === status) {
+      console.log("inside");
+      setDocumentViewer(() => ({
+        open: true,
+        companyId: Number(contextOptions?.selectedCompany?.id),
+        stepId: stepId,
+      }));
+    }
+  };
+
   return (
     <section className={styles.userDashSection}>
       {contextHolder}
@@ -149,39 +187,14 @@ const DashBoard = () => {
         <>
           <div
             ref={scrollRef}
-            onWheel={handleWheel}
+            // onWheel={handleWheel}
             className={styles.userStepsMainWrapper}
           >
             <ul>
-              {/* <li className={styles.StepCompleted}> 
-            if a step is completed add this class to the li for the style 
-              */}
-
-              {/* {[1, 2, 3, 4, 5, 6, 7, 8].map((item, index) => (
-                <li
-                  className={`${item % 2 == 0 ? styles.StepCompleted : ""}`}
-                  key={index}
-                >
-                  <div className={styles.stepCountWrapper}>
-                    <h5>step {item}</h5>
-
-                    {item % 2 == 0 && <span>completed</span>}
-                  </div>
-                  <div className={styles.stepContent}>
-                    <h6>Company steps content</h6>
-
-                    <p className={styles.underlined}>
-                      By default, the mouse wheel scrolls vertically. Even if
-                      your section has overflow-x: scroll, the mouse wheel won't
-                      scroll horizontally unless:
-                    </p>
-                  </div>
-                </li>
-              ))} */}
               {allSteps?.map((item: any, index: number) => (
                 <li
                   className={`${
-                    item?.stepTaken?.status == StepsTakenStatusEnum.completed
+                    checkCompleted(stepTakes[item?.id]?.status ?? null)
                       ? styles.StepCompleted
                       : ""
                   }`}
@@ -189,17 +202,47 @@ const DashBoard = () => {
                 >
                   <div className={styles.stepCountWrapper}>
                     <h5>step {item.position}</h5>
-                    {item?.stepTaken && (
-                      <span className={styles[item?.stepTaken?.status]}>
-                        {StepsView[item?.stepTaken?.status]}
-                      </span>
-                    )}
                   </div>
                   <div className={styles.stepContent}>
                     <h6>{item.title}</h6>
-
                     <p className={styles.underlined}>{item.description}</p>
                   </div>
+                  {stepTakenLoading ? (
+                    <Skeleton.Button
+                      active={true}
+                      size={"default"}
+                      shape={"default"}
+                    />
+                  ) : (
+                    <div
+                      className={styles.buttonAbsoluteWarpper}
+                      style={
+                        {
+                          "--btn-bg":
+                            BTNCOLORS[stepTakes[item?.id]?.status]?.bgColor,
+                          "--text-color":
+                            BTNCOLORS[stepTakes[item?.id]?.status]?.textColor,
+                        } as React.CSSProperties
+                      }
+                    >
+                      {Object.keys(stepTakes)?.length > 0 && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            handleClickViewDoc(
+                              item?.id,
+                              stepTakes[item?.id]?.status
+                            )
+                          }
+                        >
+                          {" "}
+                          {StepsTakenStatusViewEnum[
+                            stepTakes[item?.id]?.status
+                          ] ?? "ctsdbvsd"}{" "}
+                        </button>
+                      )}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -236,6 +279,20 @@ const DashBoard = () => {
           </div>
         )}
       </div>
+
+      {documentViewer?.open && (
+        <DocumentViewer
+          open={documentViewer?.open}
+          companyId={documentViewer.companyId}
+          stepId={documentViewer.stepId}
+          onClose={() =>
+            setDocumentViewer((prev) => ({
+              ...prev,
+              open: false,
+            }))
+          }
+        />
+      )}
     </section>
   );
 };

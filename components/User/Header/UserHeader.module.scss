@@ -7,6 +7,7 @@
   padding-inline: 15px;
   gap: 40px;
   border-bottom: 1px solid #272729;
+  min-height: 75px !important;
   :global {
     .ant-dropdown-menu-item-selected {
       background: #c6c6c6 !important;

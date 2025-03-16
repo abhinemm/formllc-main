@@ -20,7 +20,7 @@ const UserHeader = () => {
     if (contextOptions?.allCompanies?.length) {
       const itemlist = contextOptions?.allCompanies?.map((el: any) => ({
         key: el.id,
-        label: `${el?.companyName ?? "Campany Name"} ${el?.type}`,
+        label: `${el?.companyName ?? "Company"} ${el?.type}`,
       }));
       setItemList([...itemlist, { key: "0", label: "+ Add new Company" }]);
     }
@@ -55,21 +55,6 @@ const UserHeader = () => {
       }));
     }
   };
-
-  // const itemList: MenuProps["items"] = [
-  //   {
-  //     key: "Option 1",
-  //     label: "Option 1",
-  //   },
-  //   {
-  //     key: "Option 2",
-  //     label: "Option 2",
-  //   },
-  //   {
-  //     key: "Option 3",
-  //     label: "Option 3",
-  //   },
-  // ];
 
   const handleAccountClick = (e: any) => {
     setAccountKey(e.key);

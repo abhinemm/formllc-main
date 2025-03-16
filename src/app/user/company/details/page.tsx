@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import SubscriptionRenew from "../../../../../components/Modals/SubscriptionRenew";
 import { notification } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
+import { nextImageFormats } from "@/constants/constants";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -46,6 +47,10 @@ const page = () => {
       message: data.message,
       placement: data?.placement,
     });
+  };
+
+  const getFileExtensionFromUrl = (url: string) => {
+    return url.split(".").pop()?.split("?")[0] || "jpg";
   };
 
   return (
@@ -215,18 +220,65 @@ const page = () => {
                 src={contextOptions?.selectedCompanyDetails?.document}
               ></iframe> */}
               {documents?.map((el: any, idx: number) => (
-                <Image
-                  key={idx}
-                  src={el}
-                  alt="proof of address"
-                  width={100}
-                  height={100}
-                  className={styles.document}
-                  onClick={() => {
-                    setDocUrl(el);
-                    setShowDocumentViewer(true);
-                  }}
-                />
+                <>
+                  {nextImageFormats.includes(getFileExtensionFromUrl(el)) ? (
+                    <Image
+                      key={idx}
+                      src={el}
+                      alt="proof of address"
+                      width={100}
+                      height={100}
+                      className={styles.document}
+                      onClick={() => {
+                        setDocUrl(el);
+                        setShowDocumentViewer(true);
+                      }}
+                    />
+                  ) : (
+                    <>
+                      {getFileExtensionFromUrl(el) === "pdf" ? (
+                        <Image
+                          key={idx}
+                          src="/images/PdfIcon.png"
+                          alt="proof of address"
+                          width={100}
+                          height={100}
+                          className={styles.document}
+                          onClick={() => {
+                            setDocUrl(el);
+                            setShowDocumentViewer(true);
+                          }}
+                        />
+                      ) : getFileExtensionFromUrl(el) === "doc" ? (
+                        <Image
+                          key={idx}
+                          src="/images/documentIcon.png"
+                          alt="proof of address"
+                          width={100}
+                          height={100}
+                          className={styles.document}
+                          onClick={() => {
+                            setDocUrl(el);
+                            setShowDocumentViewer(true);
+                          }}
+                        />
+                      ) : (
+                        <Image
+                          key={idx}
+                          src="/images/imageIcon.png"
+                          alt="proof of address"
+                          width={100}
+                          height={100}
+                          className={styles.document}
+                          onClick={() => {
+                            setDocUrl(el);
+                            setShowDocumentViewer(true);
+                          }}
+                        />
+                      )}
+                    </>
+                  )}
+                </>
               ))}
             </label>
           </div>

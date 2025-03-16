@@ -23,6 +23,17 @@ export enum StepsTakenStatusEnum {
   inReview = "inReview",
   actionRequired = "actionRequired",
   pending = "pending",
+  contactSupport = "contactSupport",
+  documents = "documents",
+}
+
+export enum StepsTakenStatusViewEnum {
+  completed = "Completed",
+  inReview = "In Review",
+  actionRequired = "Action Required",
+  pending = "Pending",
+  contactSupport = "Contact Support",
+  documents = "View Documents",
 }
 
 export enum StepsView {
@@ -40,4 +51,10 @@ export enum PlansEnum {
 export enum ApiStatus {
   success = 200,
   error = 501,
+}
+
+export enum DOCTYPE {
+  img = "img",
+  pdf = "pdf",
+  doc = "doc",
 }

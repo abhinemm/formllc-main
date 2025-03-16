@@ -14,12 +14,17 @@
     }
   }
 }
-.profileName {
-  color: var(--white-color) !important;
+.profileWrapper {
   display: flex;
+  gap: 13px;
   align-items: center;
-  gap: 10px;
+  margin-right: 15px;
   img {
     border-radius: 50%;
+  }
+  span {
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 500;
   }
 }

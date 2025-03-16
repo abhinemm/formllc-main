@@ -1,102 +1,121 @@
 "use client";
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import styles from "./header.module.scss";
-import { Button, Drawer, DrawerProps, Space } from "antd";
+import { Drawer } from "antd";
+import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { useAppContext } from "../Context/AppContext";
+import { UserTypesEnum } from "@/utils/constants";
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [open, setOpen] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const [sideDrawer, setSideDrawer] = useState(false);
+  const { contextOptions } = useAppContext();
+  const pathName = usePathname();
+  useLayoutEffect(() => {
+    setSideDrawer(false);
+  }, [pathName]);
 
   return (
     <header className={styles.header}>
-      <div className={styles.container}>
-        {/* Logo Section */}
-        <div className={styles.logo}>
-          <a href="/">firstbase</a>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className={`${styles.nav} ${styles.desktopNav}`}>
-          <ul>
-            <li>
-              <a href="#products">Products</a>
-            </li>
-            <li>
-              <a href="#pricing">Pricing</a>
-            </li>
-            <li>
-              <a href="#rewards">Rewards</a>
-            </li>
-            <li>
-              <a href="#partners">Partners</a>
-            </li>
-            <li>
-              <a href="#resources">Resources</a>
-            </li>
-            <li>
-              <a href="#company">Company</a>
-            </li>
-          </ul>
-          <div className={styles.authButtons}>
-            <a href="#signin" className={styles.signIn}>
-              Sign in
-            </a>
-            <a href="#start" className={styles.startBusiness}>
-              Start my business
-            </a>
+      <div className="container">
+        <div className={styles.container}>
+          {/* Logo Section */}
+          <div className={styles.logo}>
+            <Link href="/">Formllc</Link>
           </div>
-        </nav>
 
-        {/* Mobile Menu Button */}
-        <div className={styles.mobileMenu} onClick={showDrawer}>
-          <div className={styles.burger}></div>
-          <div className={styles.burger}></div>
-          <div className={styles.burger}></div>
+          {/* Desktop Navigation */}
+          <nav className={`${styles.nav} ${styles.desktopNav}`}>
+            <ul>
+              <li>
+                <Link href="/pricing">Contact Us</Link>
+              </li>
+              {contextOptions?.userData ? (
+                <>
+                  <li>
+                    {contextOptions?.userData.type == UserTypesEnum.customer ? (
+                      <Link href="/user" className={styles.signIn}>
+                        My Account
+                      </Link>
+                    ) : (
+                      <Link href="/admin" className={styles.signIn}>
+                        My Account
+                      </Link>
+                    )}
+                  </li>
+                  <li>
+                    <a
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                      className={styles.signIn}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </>
+              ) : (
+                <li>
+                  <Link href="/api/auth/signin" className={styles.signIn}>
+                    Sign in
+                  </Link>
+                </li>
+              )}
+            </ul>
+            <div className={styles.authButtons}>
+              <Link href="/start-buisness" className={styles.startBusiness}>
+                Start my business
+              </Link>
+            </div>
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <div
+            className={styles.mobileMenu}
+            onClick={() => setSideDrawer(true)}
+          >
+            <div className={styles.burger}></div>
+            <div className={styles.burger}></div>
+            <div className={styles.burger}></div>
+          </div>
         </div>
       </div>
 
       <Drawer
         placement={"right"}
-        width={'60%'}
-        onClose={() => setOpen(false)}
-        open={open}
+        width={"60%"}
+        onClose={() => setSideDrawer(false)}
+        open={sideDrawer}
         className={"headerDrawerStyle"}
       >
         <nav className={styles.navMobile}>
           <ul>
             <li>
-              <a href="#products">Products</a>
+              <Link href="/contact-us">Contact Us</Link>
             </li>
             <li>
-              <a href="#pricing">Pricing</a>
-            </li>
-            <li>
-              <a href="#rewards">Rewards</a>
-            </li>
-            <li>
-              <a href="#partners">Partners</a>
-            </li>
-            <li>
-              <a href="#resources">Resources</a>
-            </li>
-            <li>
-              <a href="#company">Company</a>
+              {contextOptions?.userData ? (
+                <>
+                  {contextOptions?.userData.type == UserTypesEnum.customer ? (
+                    <Link href="/user" className={styles.signIn}>
+                      My Account
+                    </Link>
+                  ) : (
+                    <Link href="/admin" className={styles.signIn}>
+                      My Account
+                    </Link>
+                  )}
+                </>
+              ) : (
+                <Link href="/api/auth/signin" className={styles.signIn}>
+                  Sign in
+                </Link>
+              )}
             </li>
           </ul>
           <div className={styles.authButtons}>
-            <a href="#signin" className={styles.signIn}>
-              Sign in
-            </a>
-            <a href="#start" className={styles.startBusiness}>
+            <Link href="/start-buisness" className={styles.startBusiness}>
               Start my business
-            </a>
+            </Link>
           </div>
         </nav>
       </Drawer>

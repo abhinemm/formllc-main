@@ -2,8 +2,8 @@ import HomePage from "../../components/HomePage/HomePage";
 
 export default function Home() {
   return (
-    <div className="container">
-      <HomePage />;
-    </div>
+    // <div className="container">
+    <HomePage />
+    // </div>
   );
 }

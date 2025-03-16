@@ -19,7 +19,7 @@ const FAQSection = () => {
     {
       question: "How long does the company formation process take?",
       answer:
-        "It typically takes between 7-14 business days, depending on the state and filing method.",
+        "The company formation process typically takes 3-5 business days in Wyoming and 7-10 business days in Montana, depending on the filing method.",
     },
     {
       question: "Am I required to visit US for company formation?",
@@ -43,12 +43,12 @@ const FAQSection = () => {
     },
     {
       question:
-        "Can Clemta help me with additional services after company formation?",
+        "Can Formllc help me with additional services after company formation?",
       answer:
-        "Yes, Clemta offers various services such as bookkeeping, tax filing, and compliance management to support your business.",
+        "Yes, Formllc offers various services such as bookkeeping, tax filing, and compliance management to support your business.",
     },
   ];
-
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toggleFAQ = (index: any) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
@@ -66,6 +66,10 @@ const FAQSection = () => {
         {faqs.map((faq, index) => (
           <div
             key={index}
+            // initial={{ opacity: 0, y: 50 }}
+            // whileInView={{ opacity: 1, y: 0 }}
+            // viewport={{ once: true }}
+            // transition={{ duration: 0.5, delay: index * 0.3 }}
             className={`${styles.faqItem} ${
               activeIndex === index ? styles.active : ""
             }`}

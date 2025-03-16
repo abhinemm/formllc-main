@@ -1,0 +1,152 @@
+$page-bg: #020314;
+$primary-gradient: linear-gradient(45deg, #ff5a5f, #622774);
+$text-color: #ffffff;
+$card-bg: #1b1d29;
+$highlight-color: #ff5a5f;
+$secondary-color: #622774;
+
+.pageContainer {
+  background-color: $page-bg;
+  color: $text-color;
+  padding: 2rem;
+
+  /* Hero Section */
+  .heroSection {
+    text-align: center;
+    margin-bottom: 3rem;
+
+    .heroHeading {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: $primary-gradient;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      span {
+        color: #ff5a5f;
+      }
+    }
+
+    .heroSubtext {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #ddd;
+    }
+
+    .ctaButton {
+      background: $primary-gradient;
+      color: $text-color;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0px 4px 8px rgba(255, 90, 95, 0.6);
+      }
+    }
+  }
+
+  /* Form Section */
+  .formSection {
+    .sectionHeading {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #ff5a5f;
+      text-align: center;
+    }
+
+    .sectionSubtext {
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      color: #bbb;
+      text-align: center;
+    }
+  }
+
+  /* Why Trust Us Section */
+  .trustSection {
+    margin: 3rem 0;
+
+    .sectionHeading {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .trustGrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+
+      .trustCard {
+        background: $card-bg;
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+        }
+
+        span {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+          display: block;
+          color: #ff5a5f;
+        }
+
+        h3 {
+          margin-bottom: 0.5rem;
+          font-size: 1.2rem;
+          color: #ff5a5f;
+        }
+
+        p {
+          font-size: 0.9rem;
+          color: #ccc;
+        }
+      }
+    }
+  }
+}
+
+// success modal
+
+.modalTitle {
+  font-size: 24px;
+  text-align: center;
+  color: $text-color;
+  font-weight: bold;
+}
+
+.modalContent {
+  text-align: center;
+  color: #ccc;
+  font-size: 16px;
+
+  p {
+    margin: 10px 0;
+  }
+}
+
+.modalButton {
+  text-decoration: none;
+  background: linear-gradient(45deg, $highlight-color, $secondary-color);
+  color: $text-color;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-weight: bold;
+
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      $highlight-color,
+      $secondary-color
+    ) !important;
+  }
+}

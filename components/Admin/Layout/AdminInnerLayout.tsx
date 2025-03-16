@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import {
   UserOutlined,
-  VideoCameraOutlined,
+  UnorderedListOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
@@ -55,13 +55,13 @@ const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
           items={[
             {
               key: "/admin",
-              icon: <UserOutlined />,
+              icon: <UnorderedListOutlined />,
               label: "Dashboard",
             },
             {
-              key: "/admin/buisness-request",
-              icon: <VideoCameraOutlined />,
-              label: "Orders",
+              key: "/admin/users",
+              icon: <UserOutlined />,
+              label: "Users",
             },
             {
               key: "/admin/affiliates",

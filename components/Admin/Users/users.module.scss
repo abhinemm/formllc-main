@@ -1,0 +1,36 @@
+section {
+  .headerWrapper {
+    width: 100%;
+    margin-bottom: 20px;
+    .actionFlex {
+      display: flex;
+      width: 100%;
+      background: #7077a1;
+      border-radius: 16px;
+      justify-content: flex-end;
+      button {
+        padding: 7px 15px;
+        border-radius: 16px;
+        border: none;
+        outline: none;
+        background: transparent;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: all 0.2s linear;
+        &:hover {
+          background: #f6b17a;
+          color: #2d3250;
+        }
+        &:last-child {
+          margin-left: -26px;
+        }
+      }
+      .active {
+        background: #f6b17a !important;
+        color: #2d3250 !important;
+      }
+    }
+  }
+}

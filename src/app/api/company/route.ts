@@ -4,7 +4,11 @@ import UserService from "@/services/user.model.service";
 import CompanyService from "@/services/company.model.service";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
-import { CompanyStatus, StepsTakenStatusEnum } from "@/utils/constants";
+import {
+  CompanyStatus,
+  StepsTakenStatusEnum,
+  UserTypesEnum,
+} from "@/utils/constants";
 import StepsTaken from "@/models/stepsTaken";
 import Steps from "@/models/steps";
 
@@ -19,22 +23,22 @@ export async function GET(req: Request) {
       { status: 401 }
     );
   }
+  console.log("datadatadatadatadatadatadatadatadatadatadatadata", data);
 
   try {
-    const adminUser: any = await UserService.findOne({ type: "admin" });
+    // const adminUser: any = await UserService.findOne({ type: "admin" });
     const where: any = {};
-
     // Add default where condition for userId if not admin
-    if (adminUser?.id !== data.user.id) {
+    if (
+      data.user?.type === UserTypesEnum.customer ||
+      data.user?.type === UserTypesEnum.member
+    ) {
       where.userId = data.user.id;
     }
-
     // Dynamically add all query params to the where condition
     searchParams.forEach((value, key) => {
       where[key] = value;
     });
-    console.log("searchParamssearchParams", searchParams);
-
     const companies = await Company.findAll({
       where: where,
       order: [["id", "desc"]],
@@ -194,13 +198,8 @@ export async function PATCH(req: Request) {
   }
   const updatedCompany = await CompanyService.update(companyData.id!, body);
   try {
-    console.log("inside the condition list", body);
-
     const steps = await Steps.findAll({});
-    console.log("stepsstepssteps", steps);
-
     const firstStep = steps.find((el) => el.position === 1);
-    console.log("firstStepfirstStep", firstStep);
 
     if (firstStep) {
       if (body.status === 1) {

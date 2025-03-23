@@ -7,7 +7,13 @@ import { createUserAccountSchema } from "@/helpers/validationSchema";
 import axios from "axios";
 import { UserTypesEnum } from "@/utils/constants";
 
-const CreateUserModal = ({ onClose, open, onSubmit, openNotification }) => {
+const CreateUserModal = ({
+  onClose,
+  open,
+  onSubmit,
+  openNotification,
+  userType,
+}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const initialValues = {
     firstName: "",
@@ -23,7 +29,7 @@ const CreateUserModal = ({ onClose, open, onSubmit, openNotification }) => {
       lastName: values?.lastName,
       email: values?.email,
       password: values?.password,
-      type: UserTypesEnum.member,
+      type: userType,
     };
     try {
       await axios
@@ -56,7 +62,7 @@ const CreateUserModal = ({ onClose, open, onSubmit, openNotification }) => {
       maskClosable={false}
     >
       <div className={styles.formWrapper}>
-        <h3>Create User</h3>
+        <h3>Create {userType}</h3>
         <Formik
           initialValues={initialValues}
           validationSchema={createUserAccountSchema}

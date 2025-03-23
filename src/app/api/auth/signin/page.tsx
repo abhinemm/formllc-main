@@ -43,7 +43,8 @@ const SignIn = () => {
       const user: any = session.user;
       if (
         user?.type === UserTypesEnum.admin ||
-        user?.type === UserTypesEnum.admin
+        user?.type === UserTypesEnum.manager ||
+        user?.type === UserTypesEnum.member
       ) {
         router.push("/admin");
         return;

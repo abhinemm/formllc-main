@@ -15,6 +15,7 @@ type IAgGridTable = {
   rowData: any;
   columnDefs: any;
   onRowClick?: any;
+  loading?: boolean;
 };
 
 type RowData = {
@@ -59,12 +60,8 @@ const AgGridTable: React.FC<IAgGridTable> = ({
   rowData = [],
   columnDefs = [],
   onRowClick,
+  loading,
 }) => {
-  const handleRowClick = (event: RowClickedEvent<any>) => {
-    const rowDetails = event.data; // Access the row's data
-    onRowClick(rowDetails);
-  };
-
   return (
     <div
       style={{
@@ -79,8 +76,17 @@ const AgGridTable: React.FC<IAgGridTable> = ({
         theme={myTheme}
         pagination={true}
         paginationPageSize={10}
-        onRowClicked={handleRowClick}
-        paginationPageSizeSelector={[10, 25, 50]}
+        paginationPageSizeSelector={[10, 25, 50, 100, 200]}
+        loading={loading ? true : false}
+        onCellClicked={(params: any) => {
+          console.log("paramsparamsparamsparams", params);
+          if (params.column?.colId === "action") {
+            params.event.stopPropagation();
+          } else {
+            const rowDetails = params.data; // Access the row's data
+            onRowClick(rowDetails);
+          }
+        }}
       />
     </div>
   );

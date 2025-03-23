@@ -207,8 +207,6 @@ const CompanyDetails = () => {
 
   const handleMenuClick = (e: any) => {
     if (e.key) {
-      console.log("e.keye.keye.keye.keye.keye.key", e.key);
-
       const type = e.key?.split("-")[0];
       const stepId = Number(e.key?.split("-")[1]);
       let body: any;

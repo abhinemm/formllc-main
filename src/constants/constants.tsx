@@ -1,8 +1,10 @@
-import { StepsTakenStatusEnum } from "@/utils/constants";
+import { StepsTakenStatusEnum, UserTypesEnum } from "@/utils/constants";
 import {
   DashboardOutlined,
   HomeOutlined,
   UnorderedListOutlined,
+  UploadOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 export const CURRENCIES = [
@@ -1754,3 +1756,30 @@ export const nextImageFormats = [
   "ico",
   "avif",
 ];
+
+export const USERMANUES = {
+  [UserTypesEnum.admin]: [
+    {
+      key: "/admin",
+      icon: <UnorderedListOutlined />,
+      label: "Dashboard",
+    },
+    {
+      key: "/admin/users",
+      icon: <UserOutlined />,
+      label: "Users",
+    },
+    {
+      key: "/admin/affiliates",
+      icon: <UploadOutlined />,
+      label: "Affiliates",
+    },
+  ],
+  [UserTypesEnum.manager]: [
+    {
+      key: "/admin",
+      icon: <UnorderedListOutlined />,
+      label: "Dashboard",
+    },
+  ],
+};

@@ -23,13 +23,32 @@ section {
           background: #f6b17a;
           color: #2d3250;
         }
-        &:last-child {
-          margin-left: -26px;
-        }
       }
       .active {
         background: #f6b17a !important;
         color: #2d3250 !important;
+      }
+    }
+    .createUser {
+      margin-bottom: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 5px;
+      button {
+        padding: 10px;
+        font-size: 16px;
+        display: flex;
+        gap: 6px;
+        border: none;
+        border-radius: 5px;
+        background: #7077a1;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          background: #f6b17a !important;
+        }
       }
     }
   }

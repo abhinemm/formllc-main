@@ -1,5 +1,5 @@
 "use client";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import AdminInnerLayout from "../../../components/Admin/Layout/AdminInnerLayout";
 import { useAppContext } from "../../../components/Context/AppContext";
 import Loader from "../../../components/Loader";
@@ -9,6 +9,8 @@ import { useSession } from "next-auth/react";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession();
+
+  const [userType, setUserType] = useState(null);
 
   const { contextOptions, setContextOptions } = useAppContext();
   const router = useRouter();
@@ -29,11 +31,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         userInfo?.type === UserTypesEnum.admin ||
         userInfo?.type === UserTypesEnum.manager
       ) {
+        setUserType(userInfo?.type);
         setContextOptions((prev) => ({
           ...prev,
           isAuth: true,
           loading: false,
           userSession: session,
+          userData: session?.user,
         }));
       } else {
         router.push("/");
@@ -46,7 +50,11 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       {contextOptions?.loading ? (
         <Loader />
       ) : (
-        <AdminInnerLayout>{children}</AdminInnerLayout>
+        <>
+          {userType && (
+            <AdminInnerLayout userType={userType}>{children}</AdminInnerLayout>
+          )}
+        </>
       )}
     </>
   );

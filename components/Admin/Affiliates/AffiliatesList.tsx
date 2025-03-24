@@ -125,6 +125,7 @@ const AffiliatesList = () => {
           onSubmit={handleSubmit}
           open={showUserModal}
           openNotification={openNotification}
+          userType={UserTypesEnum.member}
         />
       )}
     </div>

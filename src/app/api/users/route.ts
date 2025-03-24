@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import User, { UserAttributes } from "../../../models/user";
 import { createPassword } from "@/utils/helper";
 import { UserTypesEnum } from "@/utils/constants";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -71,6 +73,66 @@ export async function POST(req: Request) {
 
     return NextResponse.json(
       { error: "Failed to create user" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(req: Request) {
+  const data = (await getServerSession(authOptions)) as any;
+  if (!data || !data.user) {
+    return NextResponse.json(
+      { message: "User not authenticated" },
+      { status: 401 }
+    );
+  }
+  console.log("datadatadatadatadata", data);
+  const userCheck = await User.findOne({ where: { email: data.user?.email } });
+  if (!userCheck) {
+    return NextResponse.json(
+      { message: "User not authenticated" },
+      { status: 401 }
+    );
+  }
+  if (
+    userCheck?.type === UserTypesEnum.admin ||
+    userCheck?.type === UserTypesEnum.manager
+  ) {
+    const url = new URL(req.url);
+    const id = url.searchParams.get("id");
+    const body = await req.json();
+    if (!id) {
+      return NextResponse.json(
+        {
+          error: "id is required!",
+        },
+        { status: 404 }
+      );
+    }
+    const updateUser = await User.findOne({ where: { id: id } });
+    console.log("updateUserupdateUser", updateUser);
+    if (!updateUser) {
+      return NextResponse.json(
+        { message: "Failed to fetch users" },
+        { status: 401 }
+      );
+    }
+    const updatedUser = await User.update(body, { where: { id: id } });
+    console.log("updatedUser", updatedUser);
+    return NextResponse.json(
+      {
+        message: "Status updated successfully!",
+        data: updatedUser,
+      },
+      { status: 200 }
+    );
+  }
+  try {
+  } catch (error) {
+    console.log("Failed to create userFailed to create user", error);
+
+    return NextResponse.json(
+      { error: "Failed to update status" },
       { status: 500 }
     );
   }

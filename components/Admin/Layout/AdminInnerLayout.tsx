@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import {
   UserOutlined,
-  VideoCameraOutlined,
+  UnorderedListOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import AdminHeader from "./Header/AdminHeader";
+import { USERMANUES } from "@/constants/constants";
 
 const { Header, Sider, Content } = Layout;
 
-const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
+const AdminInnerLayout = ({ userType, children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const router = useRouter();
 
@@ -52,23 +53,7 @@ const AdminInnerLayout = ({ children }: { children: React.ReactNode }) => {
           onClick={({ key }) => {
             router.push(key); // Navigate to corresponding route
           }}
-          items={[
-            {
-              key: "/admin",
-              icon: <UserOutlined />,
-              label: "Dashboard",
-            },
-            {
-              key: "/admin/buisness-request",
-              icon: <VideoCameraOutlined />,
-              label: "Orders",
-            },
-            {
-              key: "/admin/affiliates",
-              icon: <UploadOutlined />,
-              label: "Affiliates",
-            },
-          ]}
+          items={USERMANUES[userType!]}
         />
       </Sider>
 

@@ -14,6 +14,7 @@ export interface UserAttributes {
   currency?: string;
   gid?: string;
   profilePic?: string;
+  status?: number;
   // paymentStatus?: boolean;
   // paymentLink?: string;
   // plan?: string;
@@ -41,6 +42,7 @@ class User
   // public paymentLink?: string;
   // public plan?: string;
   // public subsriptionPaymentStatus?: boolean;
+  public status?: number;
 }
 
 User.init(
@@ -94,6 +96,11 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 1,
     },
 
     // paymentStatus: {

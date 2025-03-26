@@ -65,7 +65,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable}  ${notoSans.variable}`}
       >
         <Link
-          href="https://api.whatsapp.com/send?phone=447386909426"
+          href="https://api.whatsapp.com/send?phone=447909729519"
           target="_blank"
           className="link-block"
         >

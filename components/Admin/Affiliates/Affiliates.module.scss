@@ -131,3 +131,42 @@
     color: red;
   }
 }
+
+// ........................................create user modal page end......................................
+
+// ........................................affliate user details page start......................................
+
+.affiliatesDetails {
+  width: 100%;
+  .headerWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .cardsWrapper {
+      display: flex;
+      justify-content: space-around;
+      .card {
+        background: #727272;
+        position: relative;
+        padding: 10px;
+        border-top: 14px solid;
+        border-radius: 5px;
+        border-top-color: #00a173;
+        box-shadow: 2px 10px 20px rgb(159 159 159 / 10%);
+        .absoluteWrapper {
+          position: absolute;
+          top: 6px;
+          width: calc(100% - 20px);
+          z-index: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          svg {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+}

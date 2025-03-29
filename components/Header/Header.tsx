@@ -29,7 +29,10 @@ const Header = () => {
           <nav className={`${styles.nav} ${styles.desktopNav}`}>
             <ul>
               <li>
-                <Link href="/pricing">Contact Us</Link>
+                <Link href="/contact-us">Contact Us</Link>
+              </li>
+              <li>
+                <Link href="/pricing">Pricing</Link>
               </li>
               {contextOptions?.userData ? (
                 <>

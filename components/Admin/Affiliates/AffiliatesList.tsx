@@ -9,6 +9,7 @@ import axios from "axios";
 import { UserTypesEnum } from "@/utils/constants";
 import { notification } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
+import { useRouter } from "next/navigation";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -19,6 +20,7 @@ type NotificationMessage = {
 };
 
 const AffiliatesList = () => {
+  const router = useRouter();
   const [showUserModal, setShowUserModal] = useState<boolean>(false);
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (data: NotificationMessage) => {
@@ -92,6 +94,7 @@ const AffiliatesList = () => {
   };
   const handleRowClick = (e: any) => {
     if (e.id) {
+      router.push(`/admin/affiliates/${e.id}`);
       console.log("e.id", e.id);
       //   const selectedCompany = allCompanies?.find((el: any) => el.id === e.id);
       //   setContextOptions((prev) => ({

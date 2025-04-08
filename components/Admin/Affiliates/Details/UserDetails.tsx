@@ -1,59 +1,104 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AgGridTable from "../../AgGridTable";
 import { ColDef } from "ag-grid-community";
 import styles from "../Affiliates.module.scss";
 import { Tooltip } from "antd";
+import DashboardCard from "../../../Common/DashboardCard";
+import axios from "axios";
+import { UserTypesEnum } from "@/utils/constants";
+import { useParams } from "next/navigation";
+import { useAppContext } from "../../../Context/AppContext";
+import { encryptURL } from "@/helpers/CryptoHelper";
+import CopyLinkModal from "../../../Modals/CopyLinkModal/CopyLinkModal";
 
 const UserDetails = () => {
-  const staticData: any = [
-    {
-      id: 1,
-      slno: 1,
-      fname: "christin",
-      lname: "kf",
-      email: "christin@gmail.com",
-      // status: "",
-      // action: "",
-    },
-  ];
-  const [rowData, setRowData] = useState<any>(staticData);
+  const params = useParams();
+  const id = params?.id;
+  const [loading, setLoading] = useState(true);
+  const [rowData, setRowData] = useState<any>([]);
+  const { contextOptions } = useAppContext();
+  const [userDetails, setUserDetails] = useState<any>(null);
+  const [userId, setUserId] = useState<number | null>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [fullUrl, setFullUrl] = useState<any>(null);
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     { headerName: "Sl.No", field: "slno", sortable: true, filter: true },
     {
-      headerName: "First Name",
-      field: "fname",
+      headerName: "Company Name",
+      field: "companyName",
       sortable: true,
       filter: true,
     },
     {
-      headerName: "Last Name",
-      field: "lname",
+      headerName: "Registration State",
+      field: "registrationState",
       sortable: true,
       filter: true,
     },
     {
-      headerName: "Email",
-      field: "email",
+      headerName: "Owner Name",
+      field: "ownerAndCompany",
       sortable: true,
       filter: true,
     },
-
-    // {
-    //   headerName: "Status",
-    //   field: "status",
-    //   sortable: true,
-    //   filter: true,
-    //   cellRenderer: (params) => {
-    //     const value = params.value ? params.value.toLowerCase() : "";
-    //     const color = value === "active" ? "green" : "red";
-    //     const label = value === "active" ? "Active" : "Inactive";
-    //     return (
-    //       <span style={{ color: color, fontWeight: "bold" }}>{label}</span>
-    //     );
-    //   },
-    // },
+    {
+      headerName: "Company Email",
+      field: "companyEmail",
+      sortable: true,
+      filter: true,
+    },
+    {
+      headerName: "Credit Amount",
+      field: "creditAmount",
+      sortable: true,
+      filter: true,
+    },
   ]);
+
+  useEffect(() => {
+    (async () => {
+      if (Number(id)) {
+        setUserId(Number(id));
+        await fetchMembersDetails(id);
+      } else {
+        if (contextOptions?.userData?.type === UserTypesEnum.member) {
+          setUserId(contextOptions?.userData?.id ?? null);
+          await fetchMembersDetails(contextOptions?.userData?.id);
+        }
+      }
+    })();
+  }, [id]);
+
+  const fetchMembersDetails = async (id) => {
+    setLoading(true);
+    await axios
+      .get(`/api/affiliates?referId=${id}`)
+      .then((res: any) => {
+        console.log("resresresresresresres", res);
+        setUserDetails(res?.data);
+        const filterData = res?.data?.companies?.map(
+          (el: any, idx: number) => ({
+            id: el.id,
+            slno: idx + 1,
+            companyName: `${el?.companyName ?? "--"} ${el?.type}`,
+            registrationState: el?.registrationState ?? "--",
+            ownerAndCompany: `${el?.ownerFname ?? "--"} ${
+              el?.ownerLname ?? "--"
+            }`,
+            companyEmail: `${el?.ownerFname ?? "--"} ${el?.ownerLname ?? "--"}`,
+            creditAmount: `$ ${res?.data?.amountPerCompany}`,
+          })
+        );
+
+        setRowData(filterData);
+        setLoading(false);
+      })
+      .catch((err: any) => {
+        console.log("errerrerrerr", err);
+        setLoading(false);
+      });
+  };
 
   const handleRowClick = (e: any) => {
     if (e.id) {
@@ -66,82 +111,59 @@ const UserDetails = () => {
       //   router.push(`/admin/company-details/${e.id}`);
     }
   };
+
+  const onCreateLink = async () => {
+    const origin = window?.location?.origin;
+    const encriptUrl = await encryptURL(`${userId}`);
+    const fullUrl = `${origin}/${encriptUrl}`;
+    setFullUrl(fullUrl);
+    setOpenModal(true);
+  };
   return (
     <div className={styles.affiliatesDetails}>
       <div className={styles.headerWrapper}>
         <div className={styles.cardsWrapper}>
-          <div className={styles.card}>
-            <div className={styles.absoluteWrapper}>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <Tooltip title="prompt text">
-              <span>
-                <svg
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  role="presentation"
-                  width={20}
-                  height={20}
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
-                </svg>
-              </span>
-            </Tooltip>
-            <h3>Total Profit</h3>
-            <p>
-              <span>$</span>100
-            </p>
-          </div>
-          <div className={styles.card}>
-            <div className={styles.absoluteWrapper}>
-              <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <div></div>
-            <Tooltip title="prompt text">
-              <span>
-                <svg
-                  focusable="false"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  role="presentation"
-                  width={20}
-                  height={20}
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path>
-                </svg>
-              </span>
-            </Tooltip>
-            <h3>Total Profit</h3>
-            <p>
-              <span>$</span>100
-            </p>
-          </div>
+          <DashboardCard
+            title="Total Revenue"
+            value={`$ ${userDetails?.totalAmountCredit ?? 0}`}
+            change="16%"
+            isPositive={true}
+          />
+          <DashboardCard
+            title="Company Registrations (Total)"
+            value={`${userDetails?.totalCompanies ?? 0}`}
+            change="0.4%"
+            isPositive={false}
+          />
+          <DashboardCard
+            title="Commission per New Company"
+            value={`$ ${userDetails?.amountPerCompany ?? 0}`}
+            change="8%"
+            isPositive={true}
+          />
+          {/* <DashboardCard
+            title="Total Product"
+            value="2,63,783"
+            change="4%"
+            isPositive={true}
+          /> */}
         </div>
-        <div className={styles.actionWrapper}>
-          <button>Create List</button>
-        </div>
+        {contextOptions?.userData?.type === UserTypesEnum.member && (
+          <div className={styles.actionWrapper}>
+            <button onClick={() => onCreateLink()}>Create Link</button>
+          </div>
+        )}
       </div>
       <AgGridTable
         columnDefs={columnDefs}
         rowData={rowData}
         onRowClick={handleRowClick}
+        loading={loading}
+      />
+      <CopyLinkModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        link={fullUrl}
       />
     </div>
   );

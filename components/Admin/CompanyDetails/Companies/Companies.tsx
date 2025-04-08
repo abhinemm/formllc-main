@@ -9,7 +9,7 @@ import { useAppContext } from "../../../Context/AppContext";
 
 const Companies: React.FC = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState<boolean>(true);
   const [allCompanies, setAllCompanies] = useState<any>();
   const { setContextOptions } = useAppContext();
   const [rowData, setRowData] = useState<any>([]);
@@ -63,6 +63,7 @@ const Companies: React.FC = () => {
   }, []);
 
   const fetchCompanies = async () => {
+    setLoading(true);
     await axios
       .get(`/api/company`)
       .then((res: any) => {
@@ -80,10 +81,13 @@ const Companies: React.FC = () => {
         }));
         setAllCompanies(res?.data);
         setRowData(filterData);
+        setLoading(false);
       })
       .catch((err: any) => {
+        setLoading(false);
         console.log("errerrerrerr", err);
       });
+    setLoading(false);
   };
 
   const handleRowClick = (e: any) => {
@@ -102,6 +106,7 @@ const Companies: React.FC = () => {
       columnDefs={columnDefs}
       rowData={rowData}
       onRowClick={handleRowClick}
+      loading={loading}
     />
   );
 };

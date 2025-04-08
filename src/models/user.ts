@@ -14,6 +14,7 @@ export interface UserAttributes {
   currency?: string;
   gid?: string;
   profilePic?: string;
+  commission?: string;
   status?: number;
   // paymentStatus?: boolean;
   // paymentLink?: string;
@@ -38,6 +39,7 @@ class User
   public gid?: string;
   public profilePic?: string;
   public company?: Company;
+  public commission?: string;
   // public paymentStatus?: boolean;
   // public paymentLink?: string;
   // public plan?: string;
@@ -96,6 +98,10 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
       unique: true,
+    },
+    commission: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     status: {
       type: DataTypes.INTEGER,

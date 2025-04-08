@@ -104,7 +104,7 @@ const page = () => {
       <div>
         <PricingCards />
       </div>
-      <div className={styles.compareWrapper}>
+      {/* <div className={styles.compareWrapper}>
         <div className={styles.mainStickyWrapper}>
           <div className={styles.emptyContainer}></div>
           <div className={styles.headContainer}>
@@ -114,7 +114,6 @@ const page = () => {
             </div>
             <div>
               <h3>$199</h3>
-              {/* <h5>year + state fee</h5> */}
             </div>
             <button>Get Started</button>
           </div>
@@ -127,7 +126,6 @@ const page = () => {
             </div>
             <div>
               <h3>$299</h3>
-              {/* <h5>year + state fee</h5> */}
             </div>
             <button>Get Started</button>
           </div>
@@ -243,7 +241,7 @@ const page = () => {
             </div>
           </div>
         </>
-      </div>
+      </div> */}
     </section>
   );
 };

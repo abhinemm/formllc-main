@@ -1782,4 +1782,11 @@ export const USERMANUES = {
       label: "Dashboard",
     },
   ],
+  [UserTypesEnum.member]: [
+    {
+      key: "/admin/myaffiliates",
+      icon: <UnorderedListOutlined />,
+      label: "My Affiliates",
+    },
+  ],
 };

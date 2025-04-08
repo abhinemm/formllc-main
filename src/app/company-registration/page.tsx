@@ -13,6 +13,7 @@ import Loader from "../../../components/Loader";
 import { registerSchema } from "@/helpers/validationSchema";
 import ImageUploadComponent from "../../../components/ImageUploadComponent/ImageUploadComponent";
 import Image from "next/image";
+import { getCookie } from "@/helpers/CookieHelper";
 const { Option } = Select;
 
 type NotificationType = "success" | "info" | "warning" | "error";
@@ -143,7 +144,7 @@ const CompanyRegistration = () => {
   const onSubmit = async (values: any) => {
     setUpdateLoading(true);
     // const file = await handleFileUpload();
-    const data = {
+    let data: any = {
       document: values.proofOfAddress,
       ownerFname: values?.firstName,
       ownerLname: values?.lastName,
@@ -158,6 +159,12 @@ const CompanyRegistration = () => {
       phone: values?.phone,
       status: 1,
     };
+    const referId = getCookie("referId");
+    if (referId) {
+      if (Number(referId)) {
+        data.referId = Number(referId);
+      }
+    }
     try {
       await axios
         .patch(`/api/company?id=${id}`, data)

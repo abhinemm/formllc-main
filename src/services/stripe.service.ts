@@ -63,9 +63,6 @@ export default class StripeService {
         metadata: subdata,
       };
     }
-    console.log(listItems);
-
-    console.log(subdata);
     const paymentLink = await stripe.paymentLinks.create(paymentData);
 
     return paymentLink.url;

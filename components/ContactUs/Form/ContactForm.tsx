@@ -48,7 +48,6 @@ const ContactForm = () => {
     { resetForm }: any
   ) => {
     setLoading(true);
-    console.log("Submitted values:", values);
     const data = {
       subject: values.name,
       email: values.email,
@@ -59,7 +58,6 @@ const ContactForm = () => {
       await axios
         .post(`/api/contactus`, data)
         .then((res: any) => {
-          console.log("the response", res);
           resetForm();
           setLoading(false);
           setSuccess(true);

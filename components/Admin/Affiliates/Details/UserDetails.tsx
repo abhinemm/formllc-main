@@ -75,7 +75,6 @@ const UserDetails = () => {
     await axios
       .get(`/api/affiliates?referId=${id}`)
       .then((res: any) => {
-        console.log("resresresresresresres", res);
         setUserDetails(res?.data);
         const filterData = res?.data?.companies?.map(
           (el: any, idx: number) => ({
@@ -148,7 +147,7 @@ const UserDetails = () => {
             isPositive={true}
           /> */}
         </div>
-        {contextOptions?.userData?.type === UserTypesEnum.member && (
+        {contextOptions?.userData?.type === UserTypesEnum.admin && (
           <div className={styles.actionWrapper}>
             <button onClick={() => onCreateLink()}>Create Link</button>
           </div>

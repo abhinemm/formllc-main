@@ -71,7 +71,6 @@ const CompanyRegistration = () => {
             } else {
               router.push("/");
             }
-            console.log("the response", res);
           })
           .catch((err: any) => {
             setLoading(false);
@@ -104,40 +103,6 @@ const CompanyRegistration = () => {
       }
     } else {
       setFieldValue("proofOfAddress", "");
-    }
-  };
-
-  const handleFileUpload = async () => {
-    if (!file) {
-      openNotification({
-        type: "error",
-        message: "No file selected.",
-        placement: "topRight",
-      });
-
-      return;
-    }
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const response = await axios.post(
-        "https://utility.formllc.io/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("File uploaded successfully:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      openNotification({
-        type: "error",
-        message: "Error uploading file. Please try again.",
-        placement: "topRight",
-      });
     }
   };
 
@@ -195,7 +160,6 @@ const CompanyRegistration = () => {
   };
 
   const onSubmitImg = (urls: any, setFieldValue: any) => {
-    console.log("urls", urls);
     if (urls.length) {
       setFieldValue("proofOfAddress", urls.join(","));
       setFileArray(urls);

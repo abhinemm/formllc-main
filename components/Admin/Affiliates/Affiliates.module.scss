@@ -62,6 +62,14 @@
           white-space: nowrap;
           margin-bottom: 12px;
           display: block;
+          position: relative;
+          span {
+            position: absolute;
+            right: 0;
+            svg {
+              fill: #fff;
+            }
+          }
         }
         input[type="text"],
         input[type="password"] {
@@ -144,27 +152,29 @@
     gap: 10px;
     .cardsWrapper {
       display: flex;
+      gap: 20px;
       justify-content: space-around;
-      .card {
-        background: #727272;
-        position: relative;
+      padding: 40px;
+      flex-wrap: wrap;
+    }
+    .actionWrapper {
+      width: 100%;
+      display: flex;
+      padding-block: 12px;
+      justify-content: flex-end;
+      button {
         padding: 10px;
-        border-top: 14px solid;
+        font-size: 16px;
+        display: flex;
+        gap: 6px;
+        border: none;
         border-radius: 5px;
-        border-top-color: #00a173;
-        box-shadow: 2px 10px 20px rgb(159 159 159 / 10%);
-        .absoluteWrapper {
-          position: absolute;
-          top: 6px;
-          width: calc(100% - 20px);
-          z-index: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        background: #7077a1;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
 
-          svg {
-            opacity: 0.5;
-          }
+        &:hover {
+          background: #f6b17a !important;
         }
       }
     }

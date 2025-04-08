@@ -16,14 +16,12 @@ const AddDocument = ({ isAddModalOpen, handleAddCancel }) => {
               <label className={styles.fblabel}>Document</label>
               <Select
                 defaultValue="lucy"
-                options={[
-                  { value: "jack", label: "Jack" },
-                ]}
+                options={[{ value: "jack", label: "Jack" }]}
               />
             </div>
 
             <div className={styles.fileUpload}>
-                <input type="file" />
+              <input type="file" />
             </div>
           </div>
 

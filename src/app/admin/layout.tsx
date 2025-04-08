@@ -29,7 +29,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       const userInfo: any = session.user;
       if (
         userInfo?.type === UserTypesEnum.admin ||
-        userInfo?.type === UserTypesEnum.manager
+        userInfo?.type === UserTypesEnum.manager ||
+        userInfo?.type === UserTypesEnum.member
       ) {
         setUserType(userInfo?.type);
         setContextOptions((prev) => ({
@@ -39,6 +40,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           userSession: session,
           userData: session?.user,
         }));
+        if (userInfo?.type === UserTypesEnum.member) {
+          router.push("/admin/myaffiliates");
+        }
       } else {
         router.push("/");
       }

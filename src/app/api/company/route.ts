@@ -23,7 +23,6 @@ export async function GET(req: Request) {
       { status: 401 }
     );
   }
-  console.log("datadatadatadatadatadatadatadatadatadatadatadata", data);
 
   try {
     // const adminUser: any = await UserService.findOne({ type: "admin" });

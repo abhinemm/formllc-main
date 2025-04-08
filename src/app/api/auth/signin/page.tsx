@@ -101,7 +101,11 @@ const SignIn = () => {
               ...prev,
               userData: data,
             }));
-            if (data.type === "admin") {
+            if (
+              data.type === UserTypesEnum.admin ||
+              data.type === UserTypesEnum.member ||
+              data.type === UserTypesEnum.manager
+            ) {
               router?.push("/admin");
             } else {
               router?.push("/user");

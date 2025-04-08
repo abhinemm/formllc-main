@@ -23,6 +23,7 @@ const AffiliatesList = () => {
   const router = useRouter();
   const [showUserModal, setShowUserModal] = useState<boolean>(false);
   const [api, contextHolder] = notification.useNotification();
+  const [loading, setLoading] = useState(true);
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
       message: data.message,
@@ -74,6 +75,7 @@ const AffiliatesList = () => {
   }, []);
 
   const fetchMembers = async () => {
+    setLoading(true);
     await axios
       .get(`/api/users?user=${UserTypesEnum.member}`)
       .then((res: any) => {
@@ -87,9 +89,11 @@ const AffiliatesList = () => {
         }));
 
         setRowData(filterData);
+        setLoading(false);
       })
       .catch((err: any) => {
         console.log("errerrerrerr", err);
+        setLoading(false);
       });
   };
   const handleRowClick = (e: any) => {
@@ -121,6 +125,7 @@ const AffiliatesList = () => {
         columnDefs={columnDefs}
         rowData={rowData}
         onRowClick={handleRowClick}
+        loading={loading}
       />
       {showUserModal && (
         <CreateUserModal

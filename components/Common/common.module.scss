@@ -1,0 +1,53 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  transition: 0.3s;
+  width: 260px;
+  height: 140px;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+}
+
+.header {
+  font-size: 14px;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+  }
+}
+
+.change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+
+  svg {
+    stroke-width: 2.5;
+  }
+
+  &.positive {
+    color: #28a745; // Green for positive
+  }
+
+  &.negative {
+    color: #dc3545; // Red for negative
+  }
+}

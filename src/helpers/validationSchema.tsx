@@ -70,19 +70,42 @@ export const createAccountSchema = yup.object().shape({
 });
 
 export const createUserAccountSchema = yup.object().shape({
-  firstName: yup.string().required("First Name is required"),
-  lastName: yup.string().required("Last Name is required"),
-  email: yup.string().email("Invalid email").required("Email is required"),
-  password: yup
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .matches(/[0-9]/, "Password must contain at least one number")
+  firstName: yup.string()
+    .trim("First Name cannot include leading or trailing spaces")
     .matches(
-      /[!@#$%^&*(),.?":{}|<>]/,
-      "Password must contain at least one special character"
+      /^[A-Za-z\s'-]+$/,
+      "First Name cannot contain numbers or special characters"
     )
-    .required("Password is required"),
+    .required("First Name is required"),
+  lastName: yup.string()
+    .trim("Last Name cannot include leading or trailing spaces")
+    .matches(
+      /^[A-Za-z\s'-]+$/,
+      "Last Name cannot contain numbers or special characters"
+    )
+    .required("Last Name is required"),
+  email: yup.string()
+    .trim("Email cannot include leading or trailing spaces")
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: yup.string()
+    .trim("Password cannot include leading or trailing spaces")
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters"),
+  commission: yup.number()
+    .typeError("Commission must be a number")
+    .positive("Commission must be a positive number")
+    .test(
+      "is-decimal",
+      "Commission must be a valid number (e.g., 10.5, 20.5)",
+      (value) =>
+        value === undefined || /^\d+(\.\d{1,2})?$/.test(value.toString())
+    )
+    .when("userType", {
+      is: (userType: string) => userType === "member",
+      then: (schema) => schema.required("Commission is required for members"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
 });
 
 export const profileSchema = yup.object().shape({

@@ -45,10 +45,9 @@ export async function POST(req: Request) {
     currency,
     password,
     type,
+    commission,
   }: UserAttributes = await req.json();
   try {
-    console.log("firstNamefirstName", firstName);
-
     const userExist = await User.findOne({ where: { email } });
     if (userExist) {
       return NextResponse.json(
@@ -57,7 +56,7 @@ export async function POST(req: Request) {
       );
     }
     const hashed = await createPassword(password);
-    const newUser = await User.create({
+    let createObj: any = {
       firstName,
       lastName,
       middleName,
@@ -65,7 +64,11 @@ export async function POST(req: Request) {
       email,
       type,
       password: hashed,
-    });
+    };
+    if (type === UserTypesEnum.member) {
+      createObj.commission = commission;
+    }
+    const newUser = await User.create(createObj);
     newUser.password = undefined;
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {

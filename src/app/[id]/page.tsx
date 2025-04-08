@@ -12,7 +12,6 @@ const page = () => {
   useEffect(() => {
     if (id) {
       const userId = decryptURL(id);
-      console.log("userIduserIduserIduserIduserId", userId);
       if (userId) {
         setCookie("referId", userId);
         router.push("/");

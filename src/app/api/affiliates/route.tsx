@@ -16,9 +16,6 @@ export async function GET(req: Request) {
       { status: 401 }
     );
   }
-
-  console.log("data.userdata.userdata.user", data.user);
-
   try {
     // const adminUser: any = await UserService.findOne({ type: "admin" });
     const where: any = {};
@@ -43,7 +40,6 @@ export async function GET(req: Request) {
         id: searchParams.get("referId"),
       });
     }
-    console.log("userDatauserDatauserData", userData);
 
     // Dynamically add all query params to the where condition
 
@@ -53,7 +49,6 @@ export async function GET(req: Request) {
     });
 
     const commissionAmount = userData?.commission;
-    console.log("commissionAmountcommissionAmount", commissionAmount);
 
     let Obj: any = {
       totalCompanies: companies?.length,

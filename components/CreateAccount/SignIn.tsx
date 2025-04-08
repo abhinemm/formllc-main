@@ -49,7 +49,6 @@ const SignIn = ({ onCreateAccount, handleSignIn, openNotification }) => {
           }
           setLoading(false);
         }
-        console.log("the result", res);
       })
       .catch((err) => {
         console.log("the error", err);

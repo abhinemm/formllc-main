@@ -99,7 +99,6 @@ const AffiliatesList = () => {
   const handleRowClick = (e: any) => {
     if (e.id) {
       router.push(`/admin/affiliates/${e.id}`);
-      console.log("e.id", e.id);
       //   const selectedCompany = allCompanies?.find((el: any) => el.id === e.id);
       //   setContextOptions((prev) => ({
       //     ...prev,

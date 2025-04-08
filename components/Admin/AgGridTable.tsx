@@ -79,7 +79,6 @@ const AgGridTable: React.FC<IAgGridTable> = ({
         paginationPageSizeSelector={[10, 25, 50, 100, 200]}
         loading={loading ? true : false}
         onCellClicked={(params: any) => {
-          console.log("paramsparamsparamsparams", params);
           if (params.column?.colId === "action") {
             params.event.stopPropagation();
           } else {

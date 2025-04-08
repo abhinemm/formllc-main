@@ -20,7 +20,6 @@ export const config = {
 };
 
 export async function POST(req: NextRequest) {
-  console.log("the resquest", req);
 
   if (!endpointSecret) {
     return NextResponse.json(
@@ -38,7 +37,6 @@ export async function POST(req: NextRequest) {
 
     // Validate and parse the event
     event = stripe.webhooks.constructEvent(rawBody, signature, endpointSecret);
-    console.log("eventeventeventtheevent", event.data.object);
   } catch (err: any) {
     return NextResponse.json(
       { error: `Webhook Error: ${err.message}` },

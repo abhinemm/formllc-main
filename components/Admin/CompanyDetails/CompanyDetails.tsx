@@ -154,7 +154,7 @@ const CompanyDetails = () => {
             };
           });
           setStepTakenLoading(false);
-          console.log("sortedsortedsortedsorted", sorted);
+         
 
           setStepTakes(sorted);
         } else {
@@ -316,8 +316,6 @@ const CompanyDetails = () => {
       const companyName = companyDetails.companyName;
       const ownerName = `${companyDetails?.ownerFname} ${companyDetails?.ownerLname}`;
       const finalName = ownerName?.replace(" ", "%20");
-      console.log("finalNamefinalNamefinalName", finalName);
-
       window.open(
         `https://api.whatsapp.com/send?phone=447909729519&text=Hello,%20I%20need%20assistance%20with%20creating%20a%20bank%20account%20for%20my%20LLC.%20Could%20you%20please%20help%20me%20with%20this?%0A%0ALLC%20Name:%20${companyName}%0AOwner%20Name:%20${finalName}%0ACompany%20Email:%20${companyDetails?.companyEmail}`,
         "_blank"
@@ -325,8 +323,6 @@ const CompanyDetails = () => {
       return;
     }
     if (StepsTakenStatusEnum.documents === status) {
-      console.log("inside");
-
       setDocumentViewer(() => ({
         open: true,
         companyId: Number(id),

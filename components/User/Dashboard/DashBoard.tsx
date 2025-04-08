@@ -97,7 +97,6 @@ const DashBoard = () => {
               [el?.stepId]: el,
             };
           });
-          console.log("sortedsortedsortedsortedsorted", sorted);
           setStepTakenLoading(false);
           setStepTakes(sorted);
         } else {

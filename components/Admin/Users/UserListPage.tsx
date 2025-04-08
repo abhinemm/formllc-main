@@ -205,7 +205,6 @@ const UserListPage = () => {
   };
 
   const handleMenuClick = (e: any) => {
-    console.log("eeeeee", e);
     setActionId(e?.key);
   };
 
@@ -230,7 +229,6 @@ const UserListPage = () => {
           message: res?.data?.message ?? "Status Updated",
           placement: "topRight",
         });
-        console.log("resresresresres", res);
       })
       .catch((err: any) => {
         openNotification({

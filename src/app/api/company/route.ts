@@ -64,7 +64,6 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
-  console.log("datadatadatadatadata", data);
 
   if (!data || !data.user) {
     return NextResponse.json(

@@ -89,7 +89,6 @@ export async function PATCH(req: Request) {
       { status: 401 }
     );
   }
-  console.log("datadatadatadatadata", data);
   const userCheck = await User.findOne({ where: { email: data.user?.email } });
   if (!userCheck) {
     return NextResponse.json(
@@ -113,7 +112,6 @@ export async function PATCH(req: Request) {
       );
     }
     const updateUser = await User.findOne({ where: { id: id } });
-    console.log("updateUserupdateUser", updateUser);
     if (!updateUser) {
       return NextResponse.json(
         { message: "Failed to fetch users" },
@@ -121,7 +119,6 @@ export async function PATCH(req: Request) {
       );
     }
     const updatedUser = await User.update(body, { where: { id: id } });
-    console.log("updatedUser", updatedUser);
     return NextResponse.json(
       {
         message: "Status updated successfully!",

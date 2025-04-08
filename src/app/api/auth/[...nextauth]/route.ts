@@ -20,7 +20,6 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials): Promise<any> {
-        console.log("inside the confition");
 
         const { email, password } = credentials!;
         // Find the user in your database
@@ -51,7 +50,6 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async signIn(data: any): Promise<any> {
-      console.log("accountaccount", data);
 
       const { user, account, profile } = data;
       // For Google Sign-In
@@ -83,7 +81,6 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session(data: any): Promise<any> {
-      console.log("session data", data);
 
       const { session, token } = data;
       session.accessToken = token.accessToken;

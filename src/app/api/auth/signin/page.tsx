@@ -113,7 +113,6 @@ const SignIn = () => {
           }
           setLoading(false);
         }
-        console.log("the result", res);
       })
       .catch((err) => {
         console.log("the error", err);

@@ -38,7 +38,6 @@ export async function PATCH(req: Request) {
   searchParams.forEach((value, key) => {
     where[key] = +value;
   });
-  console.log("the where is ", where);
 
   const body = await req.json();
 

@@ -45,7 +45,6 @@ const CreateUserModal = ({
     if (userType === UserTypesEnum.member) {
       requestValue.commission = values.commission;
     }
-    console.log("requestValuerequestValue", requestValue);
 
     try {
       await axios

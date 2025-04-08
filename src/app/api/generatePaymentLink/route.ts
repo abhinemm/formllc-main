@@ -10,7 +10,6 @@ const PRO_PLAN_SUB_PRICEID = process.env.PRO_PLAN_SUB_PRICEID;
 
 export async function POST(req: Request) {
   const body: any = await req.json();
-  console.log("the body is", body);
 
   const company = await Company.findByPk(body.companyId);
   if (!company) {
@@ -50,7 +49,6 @@ export async function POST(req: Request) {
   if (body?.sub) {
     body.redirecturl = `${process.env.BASEURL}/user?status=success`;
   }
-  console.log("paymentPricespaymentPrices", paymentPrices);
 
   const paymentLink = await StripeService.createLink(
     company.id!,
@@ -58,7 +56,6 @@ export async function POST(req: Request) {
     body.redirecturl ? body.redirecturl : null,
     body.register ? true : false
   );
-  console.log("paymentLinkpaymentLinkpaymentLink", paymentLink);
 
   company.paymentLink = paymentLink;
   company.plan = body.plan;

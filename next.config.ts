@@ -15,7 +15,11 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true, // Suppresses ESLint warnings during the build process
   },
   images: {
-    domains: ["lh3.googleusercontent.com", "utility.formllc.io"],
+    domains: [
+      "lh3.googleusercontent.com",
+      "utility.formllc.io",
+      "utilitymain.formllc.io",
+    ],
   },
 };
 

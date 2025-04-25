@@ -123,7 +123,7 @@ export async function POST(req: Request) {
       stripeEmailId: stripeEmailId ? stripeEmailId : companyEmail,
     });
     try {
-      const steps = await Steps.findAll({ where: { status: true } });
+      const steps = await Steps.findAll({ where: { status: 1 } });
       for (const step of steps) {
         if (step.position === 1 && status === CompanyStatus.active) {
           await StepsTaken.create({

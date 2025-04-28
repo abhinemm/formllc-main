@@ -96,17 +96,31 @@ const Header = () => {
               <Link href="/contact-us">Contact Us</Link>
             </li>
             <li>
+              <Link href="/pricing">Pricing</Link>
+            </li>
+
+            <li>
               {contextOptions?.userData ? (
                 <>
-                  {contextOptions?.userData.type == UserTypesEnum.customer ? (
-                    <Link href="/user" className={styles.signIn}>
-                      My Account
-                    </Link>
-                  ) : (
-                    <Link href="/admin" className={styles.signIn}>
-                      My Account
-                    </Link>
-                  )}
+                  <li>
+                    {contextOptions?.userData.type == UserTypesEnum.customer ? (
+                      <Link href="/user" className={styles.signIn}>
+                        My Account
+                      </Link>
+                    ) : (
+                      <Link href="/admin" className={styles.signIn}>
+                        My Account
+                      </Link>
+                    )}
+                  </li>
+                  <li>
+                    <a
+                      onClick={() => signOut({ callbackUrl: "/" })}
+                      className={styles.signIn}
+                    >
+                      Logout
+                    </a>
+                  </li>
                 </>
               ) : (
                 <Link href="/api/auth/signin" className={styles.signIn}>

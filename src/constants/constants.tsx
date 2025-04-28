@@ -1790,3 +1790,9 @@ export const USERMANUES = {
     },
   ],
 };
+
+
+export const RegistrationStation = {
+  mexico_state: "Mexico",
+  wyoming_state: "Wyoming"
+}

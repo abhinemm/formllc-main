@@ -13,6 +13,7 @@ import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { useSearchParams } from "next/navigation";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { notification } from "antd";
+import { RegistrationStation } from "@/constants/constants";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -46,12 +47,12 @@ const StartBusinessTabs: React.FC = () => {
   useLayoutEffect(() => {
     if (planUrl && planUrl === "pro") {
       setPlan(planUrl);
-      setCompanyLocation("Wyoming");
+      setCompanyLocation(RegistrationStation?.wyoming_state);
     } else if (planUrl && planUrl === "basic") {
       setPlan(planUrl);
-      setCompanyLocation("Montana");
+      setCompanyLocation(RegistrationStation?.mexico_state);
     } else {
-      setCompanyLocation("Wyoming");
+      setCompanyLocation(RegistrationStation?.wyoming_state);
       setPlan("pro");
     }
   }, [planUrl]);
@@ -118,7 +119,7 @@ const StartBusinessTabs: React.FC = () => {
                 <div className={styles.itemContentWrapper}>
                   <h5>Company Type</h5>
                   <p>
-                    Choose your business entity. Unsure? We’ll help you choose.
+                    Choose your business entity. Unsure? We&apos;ll help you choose.
                   </p>
                 </div>
               </div>

@@ -19,7 +19,7 @@ const FAQSection = () => {
     {
       question: "How long does the company formation process take?",
       answer:
-        "The company formation process typically takes 3-5 business days in Wyoming and 7-10 business days in Montana, depending on the filing method.",
+        "The company formation process typically takes 3-5 business days in Wyoming and 7-10 business days in New Mexico, depending on the filing method.",
     },
     {
       question: "Am I required to visit US for company formation?",

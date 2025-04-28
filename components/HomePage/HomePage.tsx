@@ -35,7 +35,7 @@ const HomePage = () => {
     {
       icon: "/images/icon-state.png",
       title: "Select your company state",
-      description: "Montana or Wyoming? Find your company's best fit.",
+      description: "New Mexico or Wyoming? Find your company's best fit.",
       step: "Step 2",
       svgIcon: (
         <svg
@@ -198,14 +198,14 @@ const HomePage = () => {
       ),
     },
     {
-      title: "Montana",
+      title: "New Mexico",
       icon: "/images/icon-Montana.png",
       points: [
-        "Strong asset protection laws",
-        "No state sales tax",
-        "Cost-effective registration process",
-        "Privacy for business owners",
-        "Flexible management options",
+        "Strong privacy for business owners (anonymous LLCs)",
+        "No annual reporting requirements (no annual report fees",
+        "No state income tax if operating outside New Mexico",
+        "Very low startup and maintenance costs",
+        "Flexible management structure for LLCs",
       ],
       svgIcon: (
         <svg
@@ -241,8 +241,8 @@ const HomePage = () => {
               <p className={styles.description}>
                 From anywhere in the world, our complete platform simplifies the
                 USA company registration, allowing you to establish your
-                business as an LLC in globally recognized states like Montana or
-                Wyoming.
+                business as an LLC in globally recognized states like New Mexico
+                or Wyoming.
               </p>
               <div className={styles.ctaButtons}>
                 <a
@@ -382,12 +382,12 @@ const HomePage = () => {
         <div className="container">
           <div className={styles.wyomingDelawareSection}>
             <div className={styles.header}>
-              <h2>Wyoming vs. Montana: Which to Choose?</h2>
+              <h2>Wyoming vs. New Mexico: Which to Choose?</h2>
               <p>
                 State selection can shape your business. With Wyoming&apos;s
-                cost-effectiveness and Montana&apos;s investor appeal, choose
-                wisely to set your business on its path. Assess each
-                state&apos;s benefits to find where your company fits best.
+                cost-effectiveness and New Mexico&apos;s privacy protection,
+                choose wisely to set your business on its path. Assess each
+                state's benefits to find where your company fits best.
               </p>
             </div>
             <div className={styles.cards}>

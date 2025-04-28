@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../StartBusiness.module.scss";
+import { RegistrationStation } from "@/constants/constants";
 
 interface IRegistrationState {
   setCompanyLocation: any;
@@ -20,23 +21,31 @@ const RegistrationState: React.FC<IRegistrationState> = ({
 
       <div className={styles.stateContainer}>
         <div
-          className={companyLocation === "Montana" ? styles.selectedState : ""}
+          className={
+            companyLocation === RegistrationStation?.mexico_state
+              ? styles.selectedState
+              : ""
+          }
           onClick={() => {
-            setCompanyLocation("Montana");
+            setCompanyLocation(RegistrationStation?.mexico_state);
             setPlan("basic");
           }}
         >
-          <h5>Montana</h5>
+          <h5>New Mexico</h5>
           <p>
-            Affordable option at <b>$199</b> with no state income tax if
-            operating outside Montana. Suitable for businesses seeking lower
-            upfront costs.
+            Affordable option at <b>$99</b> with no state income tax if
+            operating outside New Mexico. Suitable for businesses seeking
+            lower upfront costs.
           </p>
         </div>
         <div
-          className={companyLocation === "Wyoming" ? styles.selectedState : ""}
+          className={
+            companyLocation === RegistrationStation?.wyoming_state
+              ? styles.selectedState
+              : ""
+          }
           onClick={() => {
-            setCompanyLocation("Wyoming");
+            setCompanyLocation(RegistrationStation?.wyoming_state);
             setPlan("pro");
           }}
         >

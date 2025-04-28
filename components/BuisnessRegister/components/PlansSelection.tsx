@@ -4,6 +4,7 @@ import styles from "../StartBusiness.module.scss";
 
 import { Collapse, Space } from "antd";
 import Link from "next/link";
+import { RegistrationStation } from "@/constants/constants";
 
 interface IPlansSelection {
   plan: any;
@@ -25,10 +26,10 @@ const PlansSelection: React.FC<IPlansSelection> = ({
   const handleChecked = (event: any, type: string) => {
     if (event.target.checked) {
       if (type === "pro") {
-        setCompanyLocation("Wyoming");
+        setCompanyLocation(RegistrationStation?.wyoming_state);
       }
       if (type === "basic") {
-        setCompanyLocation("Montana");
+        setCompanyLocation(RegistrationStation?.mexico_state);
       }
       setPlan(type);
     }
@@ -44,7 +45,7 @@ const PlansSelection: React.FC<IPlansSelection> = ({
               <div className={styles.accordionHeader}>
                 <h5>Basic</h5>
                 <div>
-                  <p>The plan is used to for register buisness in Montana</p>
+                  <p>The plan is used to for register buisness in New Mexico</p>
                   <input
                     type="checkbox"
                     checked={plan === "basic"}

@@ -1,6 +1,7 @@
 import React from "react";
 
 import styles from "./pricingComponent.module.scss";
+import { RegistrationStation } from "@/constants/constants";
 
 const ProSvg = () => {
   return (
@@ -43,16 +44,19 @@ const PricingCards = () => {
           </div>
 
           <div className={styles.description}>
-            <p>Get Started: Register Your Business in Montana</p>
+            <p>
+              Get Started: Register Your Business in New{" "}
+              {RegistrationStation?.mexico_state}
+            </p>
           </div>
           <div className={styles.priceWrapper}>
             <div>
               <h2>
-                $199{" "}
-                <span>
+                $99{" "}
+                {/* <span>
                   /One Time Fee
                   <br />
-                </span>
+                </span> */}
               </h2>
             </div>
 
@@ -68,16 +72,16 @@ const PricingCards = () => {
           <div className={styles.serviceList}>
             <h6>Everything in </h6>
             <ul>
-              <li>Company formation in Montana</li>
+              <li>Company formation in New Mexico</li>
               <li>Expedited Tax ID (EIN) setup</li>
-              <li>Register buisness with 7-10 days</li>
+              <li>Register business within 7-10 days</li>
               <li>
                 Open a business bank account with one of our banking partners
               </li>
               <li>All essential and important documents</li>
               <li>
-                All essential and important documents - e.g. stock purchase
-                agreement, bylaws, etc
+                All essential and important documents – e.g., operating
+                agreement, articles of organization, EIN letter, etc.
               </li>
               <li>Lifetime expert support</li>
             </ul>
@@ -97,16 +101,19 @@ const PricingCards = () => {
           </div>
 
           <div className={styles.description}>
-            <p>Get Started: Register Your Business in Wyoming</p>
+            <p>
+              Get Started: Register Your Business in New{" "}
+              {RegistrationStation.wyoming_state}
+            </p>
           </div>
           <div className={styles.priceWrapper}>
             <div>
               <h2>
                 $299{" "}
-                <span>
+                {/* <span>
                   /One Time Fee
                   <br />
-                </span>
+                </span> */}
               </h2>
             </div>
 
@@ -123,7 +130,7 @@ const PricingCards = () => {
             <h6>Everything in </h6>
 
             <ul>
-              <li>Company formation in Montana</li>
+              <li>Company formation in Wyoming</li>
               <li>Expedited Tax ID (EIN) setup</li>
               <li>Register buisness with 3-5 days</li>
               <li>

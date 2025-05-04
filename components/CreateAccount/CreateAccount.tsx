@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import axios from "axios";
 import { Spin } from "antd";
 import { createAccountSchema } from "@/helpers/validationSchema";
+import Link from "next/link";
 
 const CreateAccount = ({ onCreateAccount, openNotification }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -178,13 +179,21 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
                   onChange={handleChange}
                 />
                 <span> I read and agree with the </span>
-                <a className={styles.fblink} href="" target="_blank">
+                <Link
+                  className={styles.fblink}
+                  href="/terms-conditions"
+                  target="_blank"
+                >
                   Terms of Use
-                </a>{" "}
+                </Link>{" "}
                 <span> and </span>
-                <a className={styles.fblink} href="" target="_blank">
+                <Link
+                  className={styles.fblink}
+                  href="/privacy-policy"
+                  target="_blank"
+                >
                   Privacy Policy
-                </a>
+                </Link>
                 .
               </label>
               {errors.agreeTerms && touched.agreeTerms && (

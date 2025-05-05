@@ -1,164 +1,75 @@
 .termsWrapper {
+  color: #fff;
+  padding-top: 30px;
+
+  h1 {
     color: #fff;
-    padding-top: 30px;
-  
-    h1 {
-      color: #fff;
-  
-      letter-spacing: -0.025em;
-      margin-top: 0;
-      margin-bottom: 0;
-      padding-top: 0;
-      padding-bottom: 0;
-      font-size: 2.25rem;
-      font-weight: 600;
-      line-height: 2.5rem;
-      text-align: center;
-  
-      &:first-child {
-        margin-bottom: 30px;
-      }
-    }
-  
-    :global {
-      .ant-tabs-nav {
-        width: 100% !important;
-        margin-inline: auto !important;
-      }
-  
-      .ant-tabs-nav-wrap {
-        overflow: auto !important;
-        width: 100%;
-        justify-content: center;
-        padding-inline: 80px;
-  
-        @media screen and (max-width: 768px) {
-          justify-content: flex-start;
-          padding-inline: 20px;
-        }
-      }
-  
-      .ant-tabs-nav-list {
-        gap: 15px;
-      }
-  
-      .ant-tabs-tab {
-        border-bottom: none !important;
-        color: #a09fa6 !important;
-        margin: 0 !important;
-        padding-bottom: 1em !important;
-      }
-  
-      .ant-tabs-tab-active {
-        border-bottom: 1px solid #fff !important;
-      }
-  
-      .ant-tabs-tab-active .ant-tabs-tab-btn {
-        color: #fff !important;
-        border-bottom: none !important;
-      }
-      .ant-tabs-ink-bar {
-        background: #fff !important;
-      }
-  
-      .ant-tabs-nav::before {
-        display: none !important;
-      }
+
+    letter-spacing: -0.025em;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 2.5rem;
+    text-align: center;
+
+    &:first-child {
+      margin-bottom: 30px;
     }
   }
-  
-  .policyWrapper {
-    color: #fff;
-  
-    padding-block: 60px 0px;
-    padding-inline: 20px;
-  
-    a {
-      color: #a09fa6;
-      &:hover {
-        text-decoration: underline !important;
-      }
-    }
-  
-    h1 {
-      &:first-child {
-        text-align: center;
-        margin-bottom: 50px;
-      }
-    }
-  
-    h1,
-    h2 {
-      letter-spacing: -0.025em;
-      margin-top: 0;
-      margin-bottom: 0;
-      font-size: 30px;
-      font-weight: 600;
-      line-height: 20px;
-    }
-  
-    h3 {
-      letter-spacing: -0.025em;
-      margin-top: 0;
-      margin-bottom: 0;
-      font-size: 24px;
-      font-weight: 600;
-      line-height: 20px;
-    }
-  
-    ul {
-      li {
-        font-size: 14px;
-      }
-    }
-  
-    p {
-      margin-top: 0.5rem;
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      font-weight: 400;
-      line-height: 1.5rem;
-    }
-  
-    .date {
-      color: #ffffff99;
-      margin-bottom: 0.5em;
-      font-size: 0.75rem;
-      line-height: 1rem;
-      border: none;
-      padding: 0;
-      margin: 0;
-  
-      p {
-        margin: 0;
-        padding: 0;
-      }
-    }
-  
-    > div {
-      padding-block: 20px;
-      border-top: 1px solid #ffffff1f;
-  
-      &:nth-child(2) {
-        border: none;
-      }
-  
-      h2 {
-        padding-block: 20px;
-      }
-  
-      h3 {
-        padding-bottom: 15px;
-      }
-  
-      p {
-        padding-left: 30px;
-      }
-  
-      ul {
-        padding-left: 50px;
-      }
+}
+
+.terms {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Segoe UI", sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.date {
+  font-size: 0.95rem;
+  color: #d8d1d1 !important;
+  margin-bottom: 2rem;
+}
+
+.intro {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #d8d1d1 !important;
+}
+
+.section {
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #f0f0f0;
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: #d8d1d1 !important;
+  }
+
+  ul {
+    margin-left: 1.5rem;
+    list-style: disc;
+
+    li {
+      margin: 0.4rem 0;
+      color: #d8d1d1 !important;
     }
   }
-  
-  
+}

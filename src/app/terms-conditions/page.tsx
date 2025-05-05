@@ -2,9 +2,19 @@ import React from "react";
 
 import styles from "./terms.module.scss";
 
-import { Tabs } from "antd";
-import type { TabsProps } from "antd";
-import Link from "next/link";
+export const metadata = {
+  title: "Terms of Service | FormLLC.io",
+  description:
+    "Review the legal terms and conditions for using FormLLC.io’s LLC formation services.",
+  robots: "index, follow",
+  openGraph: {
+    title: "Terms of Service | FormLLC.io",
+    description:
+      "Please read these terms carefully before using our LLC formation platform.",
+    url: "https://formllc.io/terms-conditions",
+    siteName: "FormLLC.io",
+  },
+};
 
 const page = () => {
   return (
@@ -12,7 +22,9 @@ const page = () => {
       <div className={styles.termsWrapper}>
         <h1>Terms of Service</h1>
         <div className={styles.terms}>
-          <p className={styles.date}><strong>Effective Date:</strong> May 5, 2025</p>
+          <p className={styles.date}>
+            <strong>Effective Date:</strong> May 5, 2025
+          </p>
           <p className={styles.intro}>
             Welcome to FormLLC LLC ("FormLLC," "we," "our," or "us"). By
             accessing or using our website and services, you agree to be bound

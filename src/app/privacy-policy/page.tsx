@@ -2,6 +2,20 @@ import React from "react";
 import styles from "./privacy.module.scss";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Privacy Policy | FormLLC.io",
+  description:
+    "Read how FormLLC.io handles and protects your personal information. We are committed to your privacy.",
+  robots: "index, follow",
+  openGraph: {
+    title: "Privacy Policy | FormLLC.io",
+    description:
+      "Learn about the personal data we collect, how we use it, and your rights.",
+    url: "https://formllc.io/privacy-policy",
+    siteName: "FormLLC.io",
+  },
+};
+
 const page = () => {
   return (
     <section className="container">

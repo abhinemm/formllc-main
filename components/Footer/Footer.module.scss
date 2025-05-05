@@ -49,3 +49,44 @@
     }
   }
 }
+.linkWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 15px;
+  @media screen and (max-width: 576px) {
+    flex-wrap: wrap;
+  }
+  a {
+    color: #a09fa6;
+    transition: all ease-in-out 0.5ms;
+    position: relative;
+    &::after {
+      content: "";
+      width: 1.5px;
+      height: 15px;
+      position: absolute;
+      top: 4px;
+      z-index: 3;
+      right: -10px;
+      color: #534f4f;
+      background: #9b9393;
+    }
+    &:nth-of-type(2) {
+      @media screen and (max-width: 576px) {
+        &::after {
+          display: none;
+        }
+      }
+    }
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
+}

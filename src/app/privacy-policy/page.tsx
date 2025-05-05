@@ -6,108 +6,112 @@ const page = () => {
   return (
     <section className="container">
       <div className={styles.policyWrapper}>
-        <h1>Privacy Policy</h1>
-        {/* <div className={styles.date}><p><strong>Last Modified:</strong> November 5, 2021</p></div> */}
-        <p>
-          Thank you for choosing Formllc.io, Inc. We value your privacy and
-          recognize your right to protect and secure your personal data.
-        </p>
-        <p>
-          By using or accessing our services, you agree to the terms of this
-          Privacy Policy. Updates will be posted at{" "}
-          <Link href="https://formllc.io/privacy-policy" target="_black">
-            https://formllc.io/privacy-policy
-          </Link>
-        </p>
-
-        <div>
-          <h2>About This Policy</h2>
-          <p>This policy aims to:</p>
-          <ul>
-            <li>Explain what personal data we collect and why.</li>
-            <li>Describe how we use your data for better services.</li>
-            <li>Clarify your rights regarding your personal data.</li>
-          </ul>
-        </div>
-        <div>
-          <h2>Children</h2>
+        <div className={styles.privacyPolicy}>
+          <h1>Privacy Policy</h1>
           <p>
-            Our services are not intended for children under 13. If we discover
-            such data has been collected, we will promptly delete it.
+            <strong>Effective Date:</strong> May 5, 2025
           </p>
 
-          <h2>Personal Information We Collect</h2>
-          <ul>
-            <li>Name</li>
-            <li>Email Address</li>
-            <li>Phone Number</li>
-            <li>Geolocation Data</li>
-            <li>Social Security Number</li>
-            <li>Bank Account & Credit/Debit Card Numbers</li>
-          </ul>
-        </div>
-
-        <div>
-          <h2>Information Provided Directly</h2>
-          <p>We collect information when you:</p>
-          <ul>
-            <li>Register for an account.</li>
-            <li>Subscribe to newsletters.</li>
-            <li>Make purchases.</li>
-            <li>Participate in surveys or events.</li>
-          </ul>
-
-          <h2>Automatic Data Collection</h2>
           <p>
-            We use cookies and tracking technologies to collect data such as:
-          </p>
-          <ul>
-            <li>Navigation patterns.</li>
-            <li>Interactions with emails.</li>
-            <li>Error logs.</li>
-          </ul>
-        </div>
-        <div>
-          <h2>Third-Party Cookies</h2>
-          <p>
-            Third parties may use cookies for advertising or analytics. We
-            recommend reviewing their privacy policies directly.
+            Thank you for choosing <strong>FormLLC.io</strong>. We respect your
+            privacy and are committed to protecting your personal information.
           </p>
 
-          <h2>Data Usage</h2>
-          <p>We use your data to:</p>
-          <ul>
-            <li>Provide and improve our services.</li>
-            <li>Send updates and notifications.</li>
-            <li>Enforce our agreements.</li>
-          </ul>
-        </div>
-
-        <div>
-          <h2>Data Retention</h2>
           <p>
-            We retain your data as long as necessary for legal, tax, or business
-            purposes. Requests for deletion can be sent to{" "}
+            By using our website or services, you agree to the terms of this
+            Privacy Policy. Updates will be posted at:{" "}
+            <Link href="https://formllc.io/privacy-policy" target="_blank">
+              https://formllc.io/privacy-policy
+            </Link>
+          </p>
+
+          <h2>1. Information We Collect</h2>
+          <ul>
+            <li>Full name</li>
+            <li>Email address</li>
+            <li>Phone number</li>
+            <li>IP address</li>
+            <li>Payment details (bank account, credit/debit card numbers)</li>
+            <li>Government-issued ID or SSN (for EIN filings)</li>
+          </ul>
+
+          <h2>2. How We Collect It</h2>
+          <ul>
+            <li>Register an account</li>
+            <li>Place an order</li>
+            <li>Contact support or submit forms</li>
+            <li>Request our LLC filing services</li>
+          </ul>
+
+          <h2>3. How We Use Your Data</h2>
+          <ul>
+            <li>Provide LLC formation services</li>
+            <li>
+              Deliver required documents (e.g., EIN, Articles of Organization)
+            </li>
+            <li>Send important notifications or updates</li>
+            <li>Fulfill legal and regulatory obligations</li>
+          </ul>
+
+          <h2>4. No Cookies or Tracking</h2>
+          <p>
+            We do <strong>not</strong> use cookies, analytics, tracking pixels,
+            or third-party ad services on our website.
+          </p>
+
+          <h2>5. Sharing with Third Parties</h2>
+          <p>We only share data with essential service providers such as:</p>
+          <ul>
+            <li>Payment processors (e.g., Stripe, Paddle)</li>
+            <li>IRS or related agencies (for EIN filing)</li>
+          </ul>
+          <p>
+            We do <strong>not</strong> sell or rent your data.
+          </p>
+
+          <h2>6. Data Retention</h2>
+          <p>
+            We retain your data only as long as necessary to deliver services or
+            comply with legal obligations.
+          </p>
+
+          <h2>7. Security</h2>
+          <p>
+            We implement administrative, technical, and physical safeguards to
+            protect your data. However, no system is entirely secure.
+          </p>
+
+          <h2>8. Your Rights</h2>
+          <p>You have the right to:</p>
+          <ul>
+            <li>Access or correct your personal information</li>
+            <li>Request deletion (where legally allowed)</li>
+          </ul>
+          <p>
+            Contact us at{" "}
             <Link href="mailto:support@formllc.com" target="_blank">
               support@formllc.com
-            </Link>
+            </Link>{" "}
+            for any privacy-related requests.
           </p>
 
-          <h2>Security</h2>
+          <h2>9. Children</h2>
           <p>
-            We use physical, electronic, and managerial safeguards to protect
-            your data. However, no system is entirely secure.
+            Our services are not intended for individuals under 13 years old. If
+            we discover such data has been submitted, it will be deleted
+            immediately.
           </p>
 
-          <h2>Contact Us</h2>
+          <h2>10. Contact</h2>
           <p>
-            For questions or concerns, contact us at{" "}
-            <Link href="mailto:contact@formllc.com" target="_blank">
-              contact@formllc.com
-            </Link>
+            <strong>Email:</strong>{" "}
+            <Link href="mailto:support@formllc.com">support@formllc.com</Link>
+            <br />
+            <strong>Business Address:</strong> 30 N GOULD ST STE R, SHERIDAN, WY
+            82801
           </p>
 
-          <p>©2024 Formllc.io. All Rights Reserved.</p>
+          <p>&copy; 2025 FormLLC.io. All rights reserved.</p>
         </div>
       </div>
     </section>

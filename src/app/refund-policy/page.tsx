@@ -2,6 +2,20 @@ import React from "react";
 import styles from "./refundPolicy.module.scss";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Refund Policy | FormLLC.io",
+  description:
+    "Understand our refund policy, eligibility criteria, and how to request a refund from FormLLC.io.",
+  robots: "index, follow",
+  openGraph: {
+    title: "Refund Policy | FormLLC.io",
+    description:
+      "We offer full refunds for issues with service delivery or filing errors. Read more here.",
+    url: "https://formllc.io/refund-policy",
+    siteName: "FormLLC.io",
+  },
+};
+
 const page = () => {
   return (
     <section className="container">

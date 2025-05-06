@@ -132,7 +132,7 @@ const page = () => {
           <h2>10. Contact</h2>
           <p>
             <strong>Email:</strong>{" "}
-            <Link href="mailto:support@formllc.com">support@formllc.com</Link>
+            <Link href="mailto:support@formllc.in">support@formllc.in</Link>
             <br />
             <strong>Business Address:</strong> 30 N GOULD ST STE R, SHERIDAN, WY
             82801

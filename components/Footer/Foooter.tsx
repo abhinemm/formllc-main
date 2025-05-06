@@ -10,8 +10,11 @@ const Foooter = () => {
           <h2>Formllc</h2>
           <p>
             Have any questions or valuable feedback? Don't hesitate to reach out
-            to our dedicated support team at <a href="">support@formllc.com</a>.
-            Your input is important to us!
+            to our dedicated support team at{" "}
+            <Link href="mailto:support@formllc.io" target="_blank">
+              support@formllc.io
+            </Link>{" "}
+            . Your input is important to us!
           </p>
           <div className={styles.linkWrapper}>
             <Link href="/terms-conditions" target="_blank">

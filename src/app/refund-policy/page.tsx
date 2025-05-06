@@ -24,6 +24,9 @@ const page = () => {
         <p>
           <strong>Effective Date:</strong> May 5, 2025
         </p>
+        <p>
+          <strong>Last Updated:</strong> May 5, 2025
+        </p>
 
         <p>
           At <strong>FormLLC.io</strong>, customer satisfaction is important to
@@ -48,26 +51,33 @@ const page = () => {
         </ul>
 
         <h2>2. Non-Refundable Situations</h2>
+        <p>Refunds are not available in the following situations:</p>
         <ul>
           <li>Once filings have been submitted to state agencies</li>
-          <li>Services already rendered (e.g., EIN application completed)</li>
-          <li>Customer provides incorrect or fraudulent information</li>
+          <li>
+            If services have already been rendered (e.g., EIN application
+            completed)
+          </li>
+          <li>
+            {" "}
+            If incorrect or fraudulent information was provided by the customer
+          </li>
         </ul>
 
         <h2>3. How to Request a Refund</h2>
         <p>
           To request a refund, contact our support team at{" "}
-          <Link href="mailto:support@formllc.com" target="_blank">
-            support@formllc.com
+          <Link href="mailto:support@formllc.io" target="_blank">
+            support@formllc.io
           </Link>{" "}
-          within 7 days of your order. Include your order number and reason for
-          the request.
+          within <strong>30 days</strong> of your order. Include your order
+          number and the reason for your request.
         </p>
 
         <h2>4. Processing Time</h2>
         <p>
-          Approved refunds are processed within 5–10 business days to the
-          original payment method.
+          Approved refunds are processed within{" "}
+          <strong>5–10 business days</strong> to the original payment method.
         </p>
 
         <h2>5. Contact</h2>
@@ -75,8 +85,8 @@ const page = () => {
           For any refund-related questions, contact us at:
           <br />
           <strong>Email:</strong>{" "}
-          <Link href="mailto:support@formllc.com" target="_blank">
-            support@formllc.com
+          <Link href="mailto:support@formllc.io" target="_blank">
+            support@formllc.io
           </Link>
           <br />
           <strong>Business Address:</strong> 30 N GOULD ST STE R, SHERIDAN, WY

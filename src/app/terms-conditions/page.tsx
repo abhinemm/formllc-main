@@ -1,6 +1,7 @@
 import React from "react";
 
 import styles from "./terms.module.scss";
+import { Link } from "lucide-react";
 
 export const metadata = {
   title: "Terms of Service | FormLLC.io",
@@ -132,6 +133,15 @@ const page = () => {
             <p>
               We may update these Terms at any time. Your continued use of the
               service constitutes acceptance of the updated Terms.
+            </p>
+          </div>
+          <div className={styles.section}>
+            <h2>12. Changes to Terms</h2>
+            <p>
+              If you have any questions about these Terms, please contact us at{" "}
+              <Link href="mailto:support@formllc.io" target="_blank">
+                support@formllc.io
+              </Link>{" "}
             </p>
           </div>
         </div>

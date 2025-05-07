@@ -1,7 +1,7 @@
 import React from "react";
 
 import styles from "./terms.module.scss";
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 export const metadata = {
   title: "Terms of Service | FormLLC.io",

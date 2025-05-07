@@ -11,7 +11,7 @@ const ContactUsComponent: React.FC = () => {
     router.push(url);
   };
   return (
-    <div className={styles.pageContainer}>
+    <div className={`${styles.pageContainer} container`}>
       {/* Hero Section */}
       <section className={styles.heroSection}>
         <h1 className={styles.heroHeading}>

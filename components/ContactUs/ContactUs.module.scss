@@ -16,9 +16,9 @@ $secondary-color: #622774;
     margin-bottom: 3rem;
 
     .heroHeading {
-      font-size: 3rem;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
-      background: $primary-gradient;
+      background: linear-gradient(45deg, #ffffff, #1a081f);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
 
@@ -53,9 +53,11 @@ $secondary-color: #622774;
   /* Form Section */
   .formSection {
     .sectionHeading {
-      font-size: 2.5rem;
+      font-size: 2rem;
       margin-bottom: 1rem;
-      color: #ff5a5f;
+      background: #ffffff;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       text-align: center;
     }
 

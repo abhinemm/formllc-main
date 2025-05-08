@@ -36,10 +36,7 @@ const Foooter = () => {
             </div>
             <div className={styles.contentWrapper}>
               <h2>Support</h2>
-              <Link
-                href="https://api.whatsapp.com/send?phone=447909729519"
-                target="_blank"
-              >
+              <Link href="/contact-us" target="_blank">
                 Contact us
               </Link>
               <Link href="mailto:support@formllc.io" target="_blank">

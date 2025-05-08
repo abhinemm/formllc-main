@@ -67,6 +67,17 @@ const ContactUsComponent: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <div className={styles.contact}>
+        <h3 className={styles.subtitle}>Get in Touch</h3>
+        <p>
+          Have questions or need assistance? We’re here to help and would love
+          to hear from you.
+        </p>
+        <p>Address: 30 N GOULD ST STE R, SHERIDAN, WY 82801</p>
+        <p>Email: support@formllc.io</p>
+        <p>Phone (WhatsApp): +44 7909729519</p>
+      </div>
     </div>
   );
 };

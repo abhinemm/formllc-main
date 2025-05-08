@@ -47,6 +47,12 @@ const Foooter = () => {
               </Link>
             </div>
             <div className={styles.contentWrapper}>
+              <h2>Company</h2>
+              <Link href="/about-us" target="_blank">
+                About Us
+              </Link>
+            </div>
+            <div className={styles.contentWrapper}>
               <h2>Legal</h2>
               <Link href="/terms-conditions" target="_blank">
                 Terms of Service

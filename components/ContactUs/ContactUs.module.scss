@@ -6,9 +6,9 @@ $highlight-color: #ff5a5f;
 $secondary-color: #622774;
 
 .pageContainer {
-  background-color: $page-bg;
-  color: $text-color;
-  padding: 2rem;
+  background-color: #020314;
+  color: #ffffff;
+  padding-top: 2rem;
 
   /* Hero Section */
   .heroSection {
@@ -151,4 +151,24 @@ $secondary-color: #622774;
       $secondary-color
     ) !important;
   }
+}
+
+.contact {
+  margin-top: 30px;
+  background-color: transparent;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  h3 {
+    font-size: 24px;
+    color: #e5e5e5;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+}
+
+.contact p {
+  font-size: 16px;
+  color: #e5e5e5;
+  margin-bottom: 10px;
 }

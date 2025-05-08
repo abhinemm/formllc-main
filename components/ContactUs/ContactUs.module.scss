@@ -84,6 +84,10 @@ $secondary-color: #622774;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
 
+      @media screen and (max-width: 678px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+
       .trustCard {
         background: $card-bg;
         padding: 1.5rem;
@@ -159,6 +163,10 @@ $secondary-color: #622774;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  @media screen and (max-width: 678px) {
+    padding: 0px;
+    padding-inline: 15px;
+  }
   h3 {
     font-size: 24px;
     color: #e5e5e5;

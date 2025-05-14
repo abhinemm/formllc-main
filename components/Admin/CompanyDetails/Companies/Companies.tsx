@@ -1,7 +1,7 @@
 "use client";
 
 import { ColDef } from "ag-grid-community";
-import Reac, { useEffect, useState } from "react";
+import Reac, { useEffect, useRef, useState } from "react";
 import AgGridTable from "../../AgGridTable";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -28,6 +28,7 @@ const Companies: React.FC = () => {
   const [rowData, setRowData] = useState<any>([]);
   const [updateCompany, setUpdateCompany] = useState<any>(null);
   const [showCreateCompany, setShowCreateCompany] = useState<boolean>(false);
+  const allCompaniesRef = useRef<any>([]);
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     { headerName: "Sl.No", field: "slno", sortable: true, filter: true },
     {
@@ -102,10 +103,11 @@ const Companies: React.FC = () => {
       cellRenderer: (params) => {
         const data = params?.data;
         let menu: any = [];
+
         menu = [
           {
             key: `${data?.id}-1`,
-            label: "Activate",
+            label: "Edit",
             onClick: (event: any) => {
               // Prevent row click
               handleMenuClick(event);
@@ -158,6 +160,9 @@ const Companies: React.FC = () => {
           paymentStatus: el?.regPaymentStatus ? "paid" : "notPaid",
           subscriptionStatus: el?.subsriptionPaymentStatus ? "paid" : "notPaid",
         }));
+        allCompaniesRef.current = res?.data;
+        console.log("res?.datares?.datares?.data", res?.data);
+
         setAllCompanies(res?.data);
         setRowData(filterData);
         setLoading(false);
@@ -180,19 +185,41 @@ const Companies: React.FC = () => {
     }
   };
 
-  const handleMenuClick = (e: any) => {
-    console.log("updateCompany", e?.key);
-    const companyId = e?.key?.split("-")[1];
-    console.log("companyId-------------", companyId);
-    const findCompanyDetails = allCompanies?.find(
-      (el: any) => el?.id === companyId
-    );
-    setUpdateCompany(
-      Object.keys(findCompanyDetails)?.length > 0 ? findCompanyDetails : null
-    );
-    console.log("findCompanyDetails", findCompanyDetails);
-  };
+  // const handleMenuClick = (e: any) => {
+  //   console.log("updateCompany", e?.key);
+  //   const companyId = e?.key?.split("-")[0];
+  //   console.log("companyId-------------", companyId);
+  //   const splitedNumber = Number(companyId);
+  //   console.log("splitedNumbersplitedNumber", splitedNumber);
+  //   console.log("allCompaniesallCompaniesallCompanies", allCompanies);
+  //   const findCompanyDetails = allCompanies?.find(
+  //     (el: any) => el?.id === splitedNumber
+  //   );
+  //   console.log("findCompanyDetailsfindCompanyDetails", findCompanyDetails);
 
+  //   setUpdateCompany(
+  //     Object.keys(findCompanyDetails)?.length > 0 ? findCompanyDetails : null
+  //   );
+  //   console.log("findCompanyDetails", findCompanyDetails);
+  // };
+  const handleMenuClick = (e: any) => {
+    console.log("INSIDE handleMenuClick", allCompaniesRef.current);
+    const companies = allCompaniesRef.current;
+    if (!companies?.length) {
+      console.warn("allCompanies is undefined at click time!");
+      return;
+    }
+
+    const companyId = e?.key?.split("-")[0];
+    const splitedNumber = Number(companyId);
+    const findCompanyDetails = companies?.find(
+      (el: any) => el?.id === splitedNumber
+    );
+
+    console.log("Matched Company:", findCompanyDetails);
+    setUpdateCompany(findCompanyDetails || null);
+    setShowCreateCompany(true);
+  };
   return (
     <div>
       {contextHolder}
@@ -210,20 +237,22 @@ const Companies: React.FC = () => {
         onRowClick={handleRowClick}
         loading={loading}
       />
-      <CreateCompany
-        open={showCreateCompany}
-        onClose={() => {
-          setShowCreateCompany(false);
-          setUpdateCompany(null);
-        }}
-        openNotification={openNotification}
-        updateCompany={updateCompany}
-        onSuccess={async () => {
-          setShowCreateCompany(false);
-          setUpdateCompany(null);
-          await fetchCompanies();
-        }}
-      />
+      {showCreateCompany && (
+        <CreateCompany
+          open={showCreateCompany}
+          onClose={() => {
+            setShowCreateCompany(false);
+            setUpdateCompany(null);
+          }}
+          openNotification={openNotification}
+          updateCompany={updateCompany}
+          onSuccess={async () => {
+            setShowCreateCompany(false);
+            setUpdateCompany(null);
+            await fetchCompanies();
+          }}
+        />
+      )}
     </div>
   );
 };

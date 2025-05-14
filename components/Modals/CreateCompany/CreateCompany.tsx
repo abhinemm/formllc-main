@@ -20,7 +20,13 @@ import axios from "axios";
 
 const { Option } = Select;
 
-const CreateCompany = ({ open, onClose, openNotification, updateCompany, onSuccess }) => {
+const CreateCompany = ({
+  open,
+  onClose,
+  openNotification,
+  updateCompany,
+  onSuccess,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalWidth, setModalWidth] = useState("70%");
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -28,7 +34,6 @@ const CreateCompany = ({ open, onClose, openNotification, updateCompany, onSucce
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [userList, setUserList] = useState<any>([]);
-  console.log("updateCompanyupdateCompanyupdateCompany", updateCompany);
 
   const companyType = [
     {
@@ -66,14 +71,13 @@ const CreateCompany = ({ open, onClose, openNotification, updateCompany, onSucce
     companyName: updateCompany?.companyName ?? "",
     email: updateCompany?.companyEmail ?? "",
     streetAddress: updateCompany?.streetAddress ?? "",
-    city: updateCompany?.Kodungallur ?? "",
-    state: updateCompany?.Kerala ?? "",
+    city: updateCompany?.city ?? "",
+    state: updateCompany?.state ?? "",
     zipCode: updateCompany?.zipCode ?? "",
-    country: updateCompany?.India ?? "",
+    country: updateCompany?.country ?? "",
     proofOfAddress: updateCompany?.document ?? "",
     countryCode: updateCompany?.countryCode ?? "+91",
     phone: updateCompany?.phone ?? "",
-    agreeTerms: false,
   };
 
   useEffect(() => {
@@ -117,6 +121,7 @@ const CreateCompany = ({ open, onClose, openNotification, updateCompany, onSucce
   };
 
   const onSubmit = async (values: any) => {
+    setUpdateLoading(true);
     let obj: any = {
       type: values?.companyType,
       registrationState: values?.registrationState,
@@ -251,13 +256,21 @@ const CreateCompany = ({ open, onClose, openNotification, updateCompany, onSucce
                       <AutoComplete
                         options={userList}
                         style={{ width: 300 }}
-                        placeholder="Select Customer"
+                        placeholder={
+                          updateCompany
+                            ? updateCompany?.email
+                            : "Select Customer"
+                        }
                         filterOption={(input, option) =>
                           (option?.label as string)
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
-                        value={values?.customerId}
+                        value={
+                          userList.find(
+                            (user: any) => user.value === values.customerId
+                          )?.label || ""
+                        }
                         onChange={(val) => setFieldValue("customerId", val)}
                         disabled={updateCompany ? true : false}
                       />
@@ -332,7 +345,7 @@ const CreateCompany = ({ open, onClose, openNotification, updateCompany, onSucce
                         onChange={(value: any) => {
                           setFieldValue("isSubscribed", value);
                         }}
-                        options={companyStates}
+                        options={paymenyStatus}
                         style={{ width: "100%" }}
                         placeholder="Select Company Type"
                       />
@@ -579,29 +592,6 @@ const CreateCompany = ({ open, onClose, openNotification, updateCompany, onSucce
                         <div className=""></div>
                       </div>
                     </div>
-                  </div>
-
-                  <div className={styles.fbformitem}>
-                    <label className={styles.fbcheckboxlabel}>
-                      <input
-                        className={styles.fbcheckbox}
-                        type="checkbox"
-                        name="agreeTerms"
-                        onChange={handleChange}
-                      />
-                      <span> I read and agree with the </span>
-                      <a className={styles.fblink} href="" target="_blank">
-                        Terms of Use
-                      </a>{" "}
-                      <span> and </span>
-                      <a className={styles.fblink} href="" target="_blank">
-                        Privacy Policy
-                      </a>
-                      .
-                    </label>
-                    <p className={styles.errorWarning}>
-                      {touched.agreeTerms && getIn(errors, "agreeTerms")}
-                    </p>
                   </div>
 
                   <div className={styles.signUpOptions}>

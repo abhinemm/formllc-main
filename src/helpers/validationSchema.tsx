@@ -26,7 +26,37 @@ export const registerSchema = yup.object().shape({
     .oneOf([true], "You must accept the terms and conditions"),
   proofOfAddress: yup.string().required("Proof is required"),
 });
-
+export const registerSchemaAdmin = yup.object().shape({
+  customerId: yup.string().required("Required Filed"),
+  companyType: yup.string().required("Company Type is required"),
+  registrationState: yup.string().required("Registration State is required"),
+  isPaid: yup.string().required("Required field"),
+  isSubscribed: yup.string().required("Required field"),
+  firstName: yup.string().required("First name is required"),
+  lastName: yup.string().required("Last name is required"),
+  companyName: yup.string().required("Company name is required"),
+  email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  phone: yup
+    .string()
+    .matches(
+      /^\+?[1-9]\d{1,14}$/,
+      "Please enter a valid international phone number"
+    )
+    .required("Phone number is required"),
+  countryCode: yup.string().required("Country Code is required"),
+  streetAddress: yup.string().required("Street address is required"),
+  city: yup.string().required("City is required"),
+  state: yup.string().required("State is required"),
+  zipCode: yup.string().required("ZIP code is required"),
+  country: yup.string().required("Country is required"),
+  agreeTerms: yup
+    .boolean()
+    .oneOf([true], "You must accept the terms and conditions"),
+  proofOfAddress: yup.string().required("Proof is required"),
+});
 export const loginSchema = yup.object().shape({
   email: yup
     .string()
@@ -70,29 +100,34 @@ export const createAccountSchema = yup.object().shape({
 });
 
 export const createUserAccountSchema = yup.object().shape({
-  firstName: yup.string()
+  firstName: yup
+    .string()
     .trim("First Name cannot include leading or trailing spaces")
     .matches(
       /^[A-Za-z\s'-]+$/,
       "First Name cannot contain numbers or special characters"
     )
     .required("First Name is required"),
-  lastName: yup.string()
+  lastName: yup
+    .string()
     .trim("Last Name cannot include leading or trailing spaces")
     .matches(
       /^[A-Za-z\s'-]+$/,
       "Last Name cannot contain numbers or special characters"
     )
     .required("Last Name is required"),
-  email: yup.string()
+  email: yup
+    .string()
     .trim("Email cannot include leading or trailing spaces")
     .email("Invalid email format")
     .required("Email is required"),
-  password: yup.string()
+  password: yup
+    .string()
     .trim("Password cannot include leading or trailing spaces")
     .required("Password is required")
     .min(6, "Password must be at least 6 characters"),
-  commission: yup.number()
+  commission: yup
+    .number()
     .typeError("Commission must be a number")
     .positive("Commission must be a positive number")
     .test(

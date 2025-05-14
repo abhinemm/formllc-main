@@ -154,7 +154,6 @@ const CompanyDetails = () => {
             };
           });
           setStepTakenLoading(false);
-         
 
           setStepTakes(sorted);
         } else {
@@ -215,7 +214,11 @@ const CompanyDetails = () => {
           body = {
             status: type,
           };
-          if (stepTakes[stepId].status !== type) {
+          if (stepTakes[stepId]?.status) {
+            if (stepTakes[stepId]?.status !== type) {
+              updateStepStatus(stepId, body, Number(id));
+            }
+          } else {
             updateStepStatus(stepId, body, Number(id));
           }
           break;
@@ -223,7 +226,9 @@ const CompanyDetails = () => {
           body = {
             status: type,
           };
-          if (stepTakes[stepId].status !== type) {
+          if (stepTakes[stepId]?.status !== type) {
+            updateStepStatus(stepId, body, Number(id));
+          } else {
             updateStepStatus(stepId, body, Number(id));
           }
           break;
@@ -231,7 +236,9 @@ const CompanyDetails = () => {
           body = {
             status: type,
           };
-          if (stepTakes[stepId].status !== type) {
+          if (stepTakes[stepId]?.status !== type) {
+            updateStepStatus(stepId, body, Number(id));
+          } else {
             updateStepStatus(stepId, body, Number(id));
           }
           break;
@@ -302,10 +309,12 @@ const CompanyDetails = () => {
   };
 
   const onCompleteUpload = (stepId: number) => {
-    if (stepTakes[stepId].status !== StepsTakenStatusEnum.documents) {
-      const body = {
-        status: StepsTakenStatusEnum.documents,
-      };
+    const body = {
+      status: StepsTakenStatusEnum.documents,
+    };
+    if (stepTakes[stepId]?.status !== StepsTakenStatusEnum.documents) {
+      updateStepStatus(stepId, body, Number(id));
+    } else {
       updateStepStatus(stepId, body, Number(id));
     }
     setDocumentUploadStatus(false);

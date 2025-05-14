@@ -52,9 +52,7 @@ export const registerSchemaAdmin = yup.object().shape({
   state: yup.string().required("State is required"),
   zipCode: yup.string().required("ZIP code is required"),
   country: yup.string().required("Country is required"),
-  agreeTerms: yup
-    .boolean()
-    .oneOf([true], "You must accept the terms and conditions"),
+
   proofOfAddress: yup.string().required("Proof is required"),
 });
 export const loginSchema = yup.object().shape({

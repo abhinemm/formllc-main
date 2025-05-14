@@ -23,10 +23,7 @@ export async function POST(req: Request) {
       { status: 401 }
     );
   }
-  if (
-    data.user.type != UserTypesEnum.admin ||
-    data.user.type != UserTypesEnum.manager
-  ) {
+  if (data.user.type != UserTypesEnum.admin) {
     return NextResponse.json(
       { message: "User does not have permission to perform this action" },
       { status: 403 }
@@ -121,7 +118,18 @@ export async function PATCH(req: Request) {
       { status: 401 }
     );
   }
-  const adminUser: any = await UserService.findOne({ type: "admin" });
+  console.log("data.user.typedata.user.type", data.user.type);
+
+  if (data.user.type != UserTypesEnum.admin) {
+    console.log(
+      "data.user.typedata.user.typedata.user.typedata.user.type---------------------"
+    );
+
+    return NextResponse.json(
+      { message: "User does not have permission to perform this action" },
+      { status: 403 }
+    );
+  }
 
   const url = new URL(req.url);
   const id = url.searchParams.get("id");
@@ -147,14 +155,7 @@ export async function PATCH(req: Request) {
     );
   }
   // || data.user.id !== adminUser?.id
-  if (companyData?.userId !== data.user.id) {
-    return NextResponse.json(
-      {
-        error: "User have no permission to do this operation!",
-      },
-      { status: 403 }
-    );
-  }
+
   const updatedCompany = await CompanyService.update(companyData.id!, body);
   try {
     const steps = await Steps.findAll({});

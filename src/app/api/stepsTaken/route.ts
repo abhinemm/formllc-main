@@ -2,6 +2,8 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import StepsTaken from "@/models/stepsTaken";
+import CompanyService from "@/services/company.model.service";
+import Steps from "@/models/steps";
 
 export async function GET(req: Request) {
   const data = (await getServerSession(authOptions)) as any;
@@ -40,13 +42,31 @@ export async function PATCH(req: Request) {
   });
 
   const body = await req.json();
-
   const stepsTaken = await StepsTaken.findOne({ where: where });
   if (!stepsTaken) {
-    return NextResponse.json(
-      { message: "Steps Taken not Found" },
-      { status: 404 }
-    );
+    try {
+      const company = await CompanyService.findOne({ id: +where.companyId });
+
+      await StepsTaken.create({
+        companyId: +where.companyId,
+        status: body.status,
+        stepId: +where.stepId,
+        userId: company?.userId,
+      });
+      return NextResponse.json(
+        { message: "Step taken Updated successfukly" },
+        { status: 200 }
+      );
+    } catch (error) {
+      return NextResponse.json(
+        { message: "Something went wrong!" },
+        { status: 500 }
+      );
+    }
+    // return NextResponse.json(
+    //   { message: "Steps Taken not Found" },
+    //   { status: 404 }
+    // );
   }
   const id: any = stepsTaken?.id;
 

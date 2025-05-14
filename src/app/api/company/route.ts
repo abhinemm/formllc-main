@@ -11,6 +11,8 @@ import {
 } from "@/utils/constants";
 import StepsTaken from "@/models/stepsTaken";
 import Steps from "@/models/steps";
+import sequelize from "@/lib/sequelize";
+import { QueryTypes } from "sequelize";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -38,10 +40,28 @@ export async function GET(req: Request) {
     searchParams.forEach((value, key) => {
       where[key] = value;
     });
-    const companies = await Company.findAll({
-      where: where,
-      order: [["id", "desc"]],
-    });
+    let companies: any;
+    if (
+      data.user?.type === UserTypesEnum.customer ||
+      data.user?.type === UserTypesEnum.member
+    ) {
+      companies = await Company.findAll({
+        where: where,
+        order: [["id", "desc"]],
+      });
+    } else {
+      companies = await sequelize.query(
+        `
+        SELECT companies.*, users."firstName", users.email, users."middleName", users."lastName"
+        FROM companies
+        INNER JOIN users ON users.id = companies."userId"
+        ORDER BY companies.id DESC
+      `,
+        {
+          type: QueryTypes.SELECT, // ✅ this now works
+        }
+      );
+    }
 
     if (where.id && companies?.length) {
       try {

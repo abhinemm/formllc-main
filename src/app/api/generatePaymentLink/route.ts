@@ -91,7 +91,7 @@ export async function POST(req: Request) {
     }
   }
 
-  company.paymentLink = paymentLink;
+  // company.paymentLink = paymentLink;
   company.plan = body.plan;
   await company.save();
   return NextResponse.json({ url: paymentLink }, { status: 200 });

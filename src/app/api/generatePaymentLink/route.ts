@@ -80,12 +80,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Plan is required!" }, { status: 400 });
   }
   let paymentLink: string = "";
+
   switch (body.plan) {
     case PlansEnum.BASIC: {
       paymentLink = BASIC_PLAN_DODO_PAYLINK + `${body.companyId}`;
+      break;
     }
     case PlansEnum.PRO: {
       paymentLink = PRO_PLAN_DODO_PAYLINK + `${body.companyId}`;
+      break;
     }
   }
 

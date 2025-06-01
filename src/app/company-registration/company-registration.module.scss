@@ -115,7 +115,7 @@
         border-radius: 8px;
         box-sizing: border-box;
         font-size: 13px;
-        color: var(--white-color);
+        color: #fff !important;
       }
       .proofOfAddressWrapper {
         width: 100%;
@@ -153,6 +153,7 @@
       border-radius: 8px;
       box-sizing: border-box;
       font-size: 13px;
+      color: #fff !important;
     }
   }
 

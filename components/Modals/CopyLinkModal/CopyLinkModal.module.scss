@@ -1,0 +1,35 @@
+.headerWrapper {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h2 {
+    color: #fff;
+    padding-bottom: 20px;
+  }
+}
+.linkWrapper {
+  width: 100%;
+  display: flex;
+  margin-bottom: 22px;
+  input {
+    width: 90%;
+    padding: 10px;
+    outline: none;
+    border: none;
+    background: #dbdbdb;
+    border-radius: 5px 0px 0px 5px;
+    font-size: 16px;
+    color: #000000;
+  }
+  button {
+    padding: 10px;
+    padding-inline: 20px;
+    border-radius: 0px 5px 5px 0px;
+    border-left: none;
+    outline: none;
+    background: #000000;
+    cursor: pointer;
+  }
+}

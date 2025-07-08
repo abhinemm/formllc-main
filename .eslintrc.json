@@ -1,0 +1,25 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:eslint-comments/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint", "eslint-comments"],
+  "rules": {
+    "eslint-comments/no-unused-disable": "off", // Suppress unused ESLint disable directive warnings
+    "@typescript-eslint/no-explicit-any": "off", // Allow usage of 'any' type
+    "@typescript-eslint/explicit-module-boundary-types": "off", // Disable boundary type requirements
+    "prettier/prettier": "warn" // Highlight Prettier formatting issues
+  }
+}

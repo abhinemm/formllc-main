@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 3003",
+    "start": "next start -p 8080",
+    "deploy":"npm run build && gcloud app deploy",
     "lint": "next lint"
   },
   "dependencies": {

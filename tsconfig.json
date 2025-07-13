@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2021", // Updated to a more recent version for modern features
-    "lib": ["dom", "dom.iterable", "esnext"], // Includes necessary libraries for Next.js and ES features
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ], // Includes necessary libraries for Next.js and ES features
     "allowJs": true, // Allow JavaScript files for compatibility with JS and TS files
     "skipLibCheck": true, // Skips type checking of declaration files (useful for large projects)
     "strict": true, // Enables strict type-checking options
@@ -19,16 +23,20 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"] // Aliases the `@` symbol to the `src` folder for easier imports
+      "@/*": [
+        "./src/*"
+      ] // Aliases the `@` symbol to the `src` folder for easier imports
     },
     "noImplicitAny": false, // Keeps `any` type usage, could be adjusted as needed
     "skipDefaultLibCheck": true // Skip checking of default libraries to speed up the build
   },
   "include": [
-    "next-env.d.ts", // Include Next.js environment types
-    "**/*.ts", // Include all TypeScript files
-    "**/*.tsx", // Include all TypeScript React files
-    ".next/types/**/*.ts" // Ensure Next.js generated types are included
+    "**/*.ts", // Include Next.js environment types
+    "**/*.tsx", // Include all TypeScript files
+    ".next/types/**/*.ts", // Include all TypeScript React files
+    "next-env.d.ts" // Ensure Next.js generated types are included
+    ,
+    "build/types/**/*.ts"
   ],
   "exclude": [
     "node_modules" // Exclude node_modules from the build process

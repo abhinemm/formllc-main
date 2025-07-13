@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true, // Suppresses TypeScript build errors
   },
+  distDir: 'build',
   eslint: {
     ignoreDuringBuilds: true, // Suppresses ESLint warnings during the build process
   },
@@ -19,6 +20,7 @@ const nextConfig: NextConfig = {
       "lh3.googleusercontent.com",
       "utility.formllc.io",
       "utilitymain.formllc.io",
+      "utility-dot-getllc-465714.uc.r.appspot.com"
     ],
   },
 };

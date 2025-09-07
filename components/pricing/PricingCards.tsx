@@ -52,7 +52,7 @@ const PricingCards = () => {
           <div className={styles.priceWrapper}>
             <div>
               <h2>
-                $99{" "}
+                $199{" "}
                 {/* <span>
                   /One Time Fee
                   <br />

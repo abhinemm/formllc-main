@@ -1,10 +1,12 @@
-import React from 'react'
-import PaymentSuccess from '../../../components/PaymentSuccess/PaymentSuccess';
+import React from "react";
+import PaymentSuccess from "../../../components/PaymentSuccess/PaymentSuccess";
+import PaymentTemp from "../../../components/PaymentSuccess/PaymentTemp";
 
 const page = () => {
-    return (
-        <PaymentSuccess />
-    );
-}
+  return (
+    // <PaymentSuccess />
+    <PaymentTemp />
+  );
+};
 
-export default page
+export default page;

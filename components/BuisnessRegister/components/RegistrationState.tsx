@@ -33,7 +33,7 @@ const RegistrationState: React.FC<IRegistrationState> = ({
         >
           <h5>New Mexico</h5>
           <p>
-            Affordable option at <b>$99</b> with no state income tax if
+            Affordable option at <b>$199</b> with no state income tax if
             operating outside New Mexico. Suitable for businesses seeking
             lower upfront costs.
           </p>

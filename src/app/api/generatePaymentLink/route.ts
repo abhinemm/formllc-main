@@ -10,7 +10,8 @@ const PRO_PLAN_SUB_PRICEID = process.env.PRO_PLAN_SUB_PRICEID;
 
 const BASIC_PLAN_DODO_PAYLINK = `https://checkout.dodopayments.com/buy/pdt_561m2wwjPAeq8u9tUj3VV?quantity=1&country=United+States&addressLine=245+Market+ST&city=San+Francisco+&zipCode=94105&state=California&disableAddressLine=true&disableState=true&disableCity=true&disableZipCode=true&redirect_url=${process.env.NEXTAUTH_URL}%2Fpayment-success/`;
 const PRO_PLAN_DODO_PAYLINK = `https://checkout.dodopayments.com/buy/pdt_SmaZ2En8Lrmim6uwN7Njs?quantity=1&country=United+States&addressLine=245+Market+ST&city=San+Francisco+&zipCode=94105&state=California&disableAddressLine=true&disableState=true&disableCity=true&disableZipCode=true&redirect_url=${process.env.NEXTAUTH_URL}%2Fpayment-success/`;
-
+const WyomingLink = "https://www.fanbasis.com/agency-checkout/formllc/mZJmE";
+const Mexico = "https://www.fanbasis.com/agency-checkout/formllc/YE6Q9";
 // export async function POST(req: Request) {
 //   const body: any = await req.json();
 
@@ -83,11 +84,13 @@ export async function POST(req: Request) {
 
   switch (body.plan) {
     case PlansEnum.BASIC: {
-      paymentLink = BASIC_PLAN_DODO_PAYLINK + `${body.companyId}`;
+      // paymentLink = BASIC_PLAN_DODO_PAYLINK + `${body.companyId}`;
+      paymentLink = Mexico;
       break;
     }
     case PlansEnum.PRO: {
-      paymentLink = PRO_PLAN_DODO_PAYLINK + `${body.companyId}`;
+      // paymentLink = PRO_PLAN_DODO_PAYLINK + `${body.companyId}`;
+      paymentLink = WyomingLink;
       break;
     }
   }

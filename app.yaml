@@ -10,6 +10,7 @@ env_variables:
   DATABASE_HOST: 34.171.8.184
   DATABASE_PORT: 5432
   DATABASE_DIALECT: postgres
+  
 
   GOOGLE_CLIENT_ID: 19034276532-asonmi5m8b9dlgbr8h7pu8dfl7jcrku1.apps.googleusercontent.com
   GOOGLE_CLIENT_SECRET: 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

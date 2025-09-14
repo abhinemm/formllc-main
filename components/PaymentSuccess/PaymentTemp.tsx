@@ -41,14 +41,14 @@ const PaymentTemp = () => {
 
   const handleSupport = () => {
     if (paymentId) {
-      const phoneNumber = "13322615671";
+      const phoneNumber = "447909729519";
       window.open(
         `https://api.whatsapp.com/send?phone=${phoneNumber}&text=I%20have%20completed%20the%20payment%20for%20my%20company.%20My%20Transaction%20ID%20is%20${paymentId}.%20Please%20continue%20with%20the%20registration.`,
         "_blank"
       );
       return;
     }
-    window.open(`https://api.whatsapp.com/send?phone=13322615671`, "_blank");
+    window.open(`https://api.whatsapp.com/send?phone=447909729519`, "_blank");
     return;
   };
 

@@ -65,7 +65,7 @@ const UploadDocument = ({
     formData.append("file", file);
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_UPLOADURL!,
+        `${process.env.NEXT_PUBLIC_UPLOADURL!}`,
         formData,
         {
           headers: {

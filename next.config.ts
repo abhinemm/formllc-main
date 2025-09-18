@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
       "lh3.googleusercontent.com",
       "utility.formllc.io",
       "utilitymain.formllc.io",
+      "storage.googleapis.com",
     ],
   },
 };

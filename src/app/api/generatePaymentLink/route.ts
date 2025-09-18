@@ -1,3 +1,4 @@
+import { encryptURL } from "@/helpers/CryptoHelper";
 import Company from "@/models/company";
 import StripeService from "@/services/stripe.service";
 import { PlansEnum } from "@/utils/constants";
@@ -12,6 +13,9 @@ const BASIC_PLAN_DODO_PAYLINK = `https://checkout.dodopayments.com/buy/pdt_561m2
 const PRO_PLAN_DODO_PAYLINK = `https://checkout.dodopayments.com/buy/pdt_SmaZ2En8Lrmim6uwN7Njs?quantity=1&country=United+States&addressLine=245+Market+ST&city=San+Francisco+&zipCode=94105&state=California&disableAddressLine=true&disableState=true&disableCity=true&disableZipCode=true&redirect_url=${process.env.NEXTAUTH_URL}%2Fpayment-success/`;
 const WyomingLink = "https://www.fanbasis.com/agency-checkout/formllc/mZJmE";
 const Mexico = "https://www.fanbasis.com/agency-checkout/formllc/YE6Q9";
+
+const WyomingLinkSub = "https://www.fanbasis.com/agency-checkout/formllc/Z5RJ";
+const MexicoSub = "https://www.fanbasis.com/agency-checkout/formllc/zpZg7";
 // export async function POST(req: Request) {
 //   const body: any = await req.json();
 
@@ -80,17 +84,38 @@ export async function POST(req: Request) {
   if (!body.plan) {
     return NextResponse.json({ message: "Plan is required!" }, { status: 400 });
   }
+  let data = {
+    companyId: body.companyId,
+    type: body.sub ? "sub" : "oneTime",
+  };
+
+  const encryptData = encryptURL(JSON.stringify(data));
   let paymentLink: string = "";
 
   switch (body.plan) {
     case PlansEnum.BASIC: {
       // paymentLink = BASIC_PLAN_DODO_PAYLINK + `${body.companyId}`;
-      paymentLink = Mexico;
+      if (body.sub) {
+        paymentLink = encryptData
+          ? `${MexicoSub}?uid=${encryptData}`
+          : MexicoSub;
+      } else {
+        paymentLink = encryptData ? `${Mexico}?uid=${encryptData}` : Mexico;
+      }
       break;
     }
     case PlansEnum.PRO: {
       // paymentLink = PRO_PLAN_DODO_PAYLINK + `${body.companyId}`;
-      paymentLink = WyomingLink;
+      if (body.sub) {
+        paymentLink = encryptData
+          ? `${WyomingLinkSub}?uid=${encryptData}`
+          : WyomingLinkSub;
+      } else {
+        paymentLink = encryptData
+          ? `${WyomingLink}?uid=${encryptData}`
+          : WyomingLink;
+      }
+
       break;
     }
   }

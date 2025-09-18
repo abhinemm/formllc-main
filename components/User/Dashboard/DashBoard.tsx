@@ -130,9 +130,7 @@ const DashBoard = () => {
       await axios
         .post(`/api/generatePaymentLink`, body)
         .then((res: any) => {
-          console.log("the response is", res);
           if (res?.data?.url) {
-            console.log("statusstatusstatus", status);
             router.push(res?.data?.url);
             setLoadingSub(false);
           }
@@ -282,7 +280,7 @@ const DashBoard = () => {
                 <span></span>
                 <span></span>
                 <span></span>
-                {loadingSub ? <Spin /> : "Subscribe"}
+                {loadingSub ? "Loading..": "Subscribe"}
               </button>
             </div>
           </div>

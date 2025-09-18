@@ -473,7 +473,7 @@ const CompanyRegistration = () => {
                         className={styles.signInBtn}
                         disabled={updateLoading}
                       >
-                        {updateLoading ? <Spin /> : "Register"}
+                        {updateLoading ? "Loading..." : "Register"}
                       </button>
                     </li>
                   </ul>

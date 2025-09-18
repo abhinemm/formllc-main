@@ -30,6 +30,12 @@
       width: 100% !important;
       border-radius: 5px;
     }
+    label{
+      color: #fff;
+    }
+     &::placeholder {
+        color: #5a5962 !important;
+      }
     :global(.ant-select-selection-item) {
       color: #fff !important;
     }

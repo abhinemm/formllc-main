@@ -11,6 +11,9 @@
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 16px;
+    @media screen and (max-width: 992px) {
+        flex-direction: column;
+    }
     > div {
       width: 100%;
     }

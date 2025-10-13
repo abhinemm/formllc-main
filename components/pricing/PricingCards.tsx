@@ -1,7 +1,9 @@
+"use client";
 import React from "react";
 
 import styles from "./pricingComponent.module.scss";
 import { RegistrationStation } from "@/constants/constants";
+import { useRouter } from "next/navigation";
 
 const ProSvg = () => {
   return (
@@ -32,6 +34,10 @@ const ProSvg = () => {
 };
 
 const PricingCards = () => {
+  const router = useRouter();
+  const handleRedirect = (url: string) => {
+    router.push(url);
+  };
   return (
     <div className={styles.cardsContainer}>
       <div className={styles.mainCradWrapper}>
@@ -67,7 +73,9 @@ const PricingCards = () => {
             </div> */}
           </div>
 
-          <button>Get Started</button>
+          <button onClick={() => handleRedirect("/start-buisness?plan=basic")}>
+            Get Started
+          </button>
 
           <div className={styles.serviceList}>
             <h6>Everything in </h6>
@@ -124,7 +132,9 @@ const PricingCards = () => {
             </div> */}
           </div>
 
-          <button>Get Started</button>
+          <button onClick={() => handleRedirect("/start-buisness?plan=pro")}>
+            Get Started
+          </button>
 
           <div className={styles.serviceList}>
             <h6>Everything in </h6>

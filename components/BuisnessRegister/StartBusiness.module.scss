@@ -770,4 +770,7 @@ $highlight-color: #ff5a5f;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  p {
+    text-align: center;
+  }
 }

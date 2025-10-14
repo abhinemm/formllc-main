@@ -280,7 +280,7 @@ const DashBoard = () => {
                 <span></span>
                 <span></span>
                 <span></span>
-                {loadingSub ? "Loading..": "Subscribe"}
+                {loadingSub ? "Loading.." : "Subscribe"}
               </button>
             </div>
           </div>
@@ -297,6 +297,12 @@ const DashBoard = () => {
               ...prev,
               open: false,
             }))
+          }
+          openNotification={openNotification}
+          stepDetails={
+            documentViewer.stepId
+              ? allSteps?.find((el: any) => el.id == documentViewer.stepId)
+              : null
           }
         />
       )}

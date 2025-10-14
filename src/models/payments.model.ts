@@ -5,6 +5,7 @@ export interface PaymentsAttributes {
   id?: number;
   companyId?: number;
   invoice?: string;
+  transactionID?: string;
   paymentDate?: string;
   plan?: string;
   paymentMethod?: string;
@@ -12,6 +13,9 @@ export interface PaymentsAttributes {
   description?: string;
   invoicePDF?: string;
   amountPaid?: number;
+  type?: string;
+  paymentInfo?: string;
+  currency?: string;
 }
 
 interface PaymentsCreationAttributes
@@ -24,6 +28,7 @@ class Payments
   public id?: number;
   public companyId?: number;
   public invoice?: string;
+  public transactionID?: string;
   public paymentDate?: string;
   public plan?: string;
   public paymentMethod?: string;
@@ -31,6 +36,9 @@ class Payments
   public description?: string;
   public invoicePDF?: string;
   public amountPaid?: number;
+  public type?: string;
+  public paymentInfo?: string;
+  public currency?: string;
 }
 
 Payments.init(
@@ -46,6 +54,11 @@ Payments.init(
       allowNull: true,
     },
     invoice: {
+      type: DataTypes.STRING,
+
+      allowNull: true,
+    },
+    transactionID: {
       type: DataTypes.STRING,
 
       allowNull: true,
@@ -82,6 +95,20 @@ Payments.init(
     },
     amountPaid: {
       type: DataTypes.DOUBLE,
+      allowNull: true,
+    },
+    type: {
+      type: DataTypes.STRING,
+
+      allowNull: true,
+    },
+    paymentInfo: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    currency: {
+      type: DataTypes.STRING,
+
       allowNull: true,
     },
   },

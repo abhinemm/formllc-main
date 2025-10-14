@@ -4,14 +4,24 @@ import styles from "./DocumentViewer.module.scss";
 import Image from "next/image";
 import axios from "axios";
 import Loader from "../Loader";
-import { DOCTYPE } from "@/utils/constants";
+import { CompanyStatus, DOCTYPE, UserTypesEnum } from "@/utils/constants";
 import DocumentPreview from "../Modals/DocumentPreview";
+import { DeleteOutlined } from "@ant-design/icons";
+import { useAppContext } from "../Context/AppContext";
 
-const DocumentViewer = ({ open, onClose, stepId, companyId }) => {
+const DocumentViewer = ({
+  open,
+  onClose,
+  stepId,
+  companyId,
+  openNotification,
+  stepDetails,
+}) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [downloadLoading, setDownloadLoading] = useState<boolean>(false);
   const [documents, setDocuments] = useState<any>([]);
   const [viewDocumentUrl, setViewDocumentUrl] = useState<any>(null);
+  const { contextOptions } = useAppContext();
 
   useEffect(() => {
     (async () => {
@@ -36,11 +46,9 @@ const DocumentViewer = ({ open, onClose, stepId, companyId }) => {
         };
         final = [...final, obj];
       });
-      console.log("finalfinalfinalfinalfinal", final);
       setDocuments(final);
     } catch (error) {
       console.log("error", error);
-
       setDocuments([]);
     }
   };
@@ -51,6 +59,8 @@ const DocumentViewer = ({ open, onClose, stepId, companyId }) => {
       .then((res: any) => {
         if (res?.data?.length) {
           convertReponse(res?.data);
+          setLoading(false);
+        } else {
           setLoading(false);
         }
       })
@@ -81,6 +91,40 @@ const DocumentViewer = ({ open, onClose, stepId, companyId }) => {
     }
   };
 
+  const onChangeStatus = async (id, status) => {
+    const body = {
+      status: status,
+    };
+    setLoading(true);
+    await axios
+      .patch(`/api/companyDocuments?id=${id}`, body)
+      .then((res: any) => {
+        openNotification({
+          type: "success",
+          message:
+            status === CompanyStatus.deleted
+              ? "The company document has been deleted successfully."
+              : "The company document has been restored successfully.",
+          placement: "topRight",
+        });
+        getCompanyDocument(stepId, companyId);
+      })
+      .catch((err) => {
+        openNotification({
+          type: "success",
+          message: "Oops! Something went wrong. Please try again later.",
+          placement: "topRight",
+        });
+      });
+  };
+
+  const handleRedirection = () => {
+    const test = `I’m unable to see any documents for my ${contextOptions?.selectedCompanyDetails?.companyName} ${contextOptions?.selectedCompanyDetails?.type} under the ‘${stepDetails?.title}’ step.`;
+    const msg = encodeURIComponent(test);
+    window.open(`https://wa.me/447909729519?text=${msg}`, "_blank");
+    return;
+  };
+
   return (
     <Modal
       open={open}
@@ -101,6 +145,39 @@ const DocumentViewer = ({ open, onClose, stepId, companyId }) => {
               <>
                 {documents?.map((el: any, idx: number) => (
                   <div className={styles.cardWarpper} key={idx}>
+                    {contextOptions?.userData?.type !==
+                      UserTypesEnum.customer && (
+                      <>
+                        {el?.status === CompanyStatus.active && (
+                          <div
+                            className={styles?.deleteWrapper}
+                            onClick={() =>
+                              onChangeStatus(el.id, CompanyStatus.deleted)
+                            }
+                          >
+                            <DeleteOutlined />
+                          </div>
+                        )}
+                        {el?.status === CompanyStatus.deleted && (
+                          <>
+                            <div className={styles.deleteMention}>
+                              <h5>Deleted</h5>
+                            </div>
+                            <div className={styles?.deleteWrapper}>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  onChangeStatus(el.id, CompanyStatus.active)
+                                }
+                              >
+                                Recover
+                              </button>
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
+
                     <h4>{el?.value?.title}</h4>
                     <p>{el?.value?.decription}</p>
                     <div className={styles.documentWrapper}>
@@ -159,8 +236,11 @@ const DocumentViewer = ({ open, onClose, stepId, companyId }) => {
                 ))}
               </>
             ) : (
-              <div>
+              <div className={styles.noDataWrapper}>
                 <h6>No Document Found</h6>
+                <button type="button" onClick={handleRedirection}>
+                  Contact Support
+                </button>
               </div>
             )}
           </>

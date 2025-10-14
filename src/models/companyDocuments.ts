@@ -2,6 +2,7 @@ import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../lib/sequelize";
 import Steps from "./steps";
 import Company from "./company";
+import { CompanyStatus } from "@/utils/constants";
 
 export interface CompanyDocumentsAttributes {
   id?: number;
@@ -11,6 +12,7 @@ export interface CompanyDocumentsAttributes {
   value?: string;
   action?: string;
   actiontype?: string;
+  status?: number;
 }
 
 interface CompanyDocumentsCreationAttributes
@@ -27,6 +29,7 @@ class CompanyDocuments
   public value?: string;
   public action?: string;
   public actiontype?: string;
+  public status?: number;
 }
 
 CompanyDocuments.init(
@@ -63,6 +66,11 @@ CompanyDocuments.init(
     action: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: CompanyStatus.active,
     },
     actiontype: {
       type: DataTypes.STRING,

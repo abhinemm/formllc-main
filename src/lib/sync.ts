@@ -7,6 +7,7 @@ import Steps from "@/models/steps";
 import StepsTaken from "@/models/stepsTaken";
 import { DataTypes } from "sequelize";
 import Payments from "@/models/payments.model";
+import CompanyDocuments from "@/models/companyDocuments";
 // import { DataTypes } from "sequelize";
 
 const syncDatabase = async () => {
@@ -19,13 +20,13 @@ const syncDatabase = async () => {
     await ContactUs.sync({ alter: false });
     await Steps.sync({ alter: false });
     await StepsTaken.sync({ alter: false });
+    await CompanyDocuments.sync({ alter: false });
     // Sync all models
     await sequelize.sync({ alter: false }); // use { : true } to drop and recreate tables
     console.log("All models were synchronized successfully.");
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
-  
 };
 
 export default syncDatabase;

@@ -695,6 +695,12 @@ const CompanyDetails = () => {
               open: false,
             }))
           }
+          openNotification={openNotification}
+          stepDetails={
+            documentViewer.stepId
+              ? allSteps?.find((el: any) => el.id == documentViewer.stepId)
+              : null
+          }
         />
       )}
       <ActionPopup open={modalStatus} onClose={() => setModalStatus(false)} />

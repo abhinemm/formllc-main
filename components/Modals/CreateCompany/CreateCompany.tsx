@@ -253,27 +253,28 @@ const CreateCompany = ({
                   <div className={styles.doubleFlex}>
                     <div className={styles.fbformitem}>
                       <label className={styles.fblabel}>Customer Name</label>
-                      <AutoComplete
-                        options={userList}
-                        style={{ width: 300 }}
-                        placeholder={
-                          updateCompany
-                            ? updateCompany?.email
-                            : "Select Customer"
-                        }
-                        filterOption={(input, option) =>
-                          (option?.label as string)
+
+                      <Select
+                        showSearch
+                        placeholder="Select a Customer"
+                        optionFilterProp="children"
+                        onChange={(e) => {
+                          setFieldValue("customerId", e);
+                        }}
+                        filterOption={(input: any, option: any) =>
+                          (option?.children as string)
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
-                        value={
-                          userList.find(
-                            (user: any) => user.value === values.customerId
-                          )?.label || ""
-                        }
-                        onChange={(val) => setFieldValue("customerId", val)}
+                        style={{ width: 300 }}
                         disabled={updateCompany ? true : false}
-                      />
+                      >
+                        {userList?.map((user) => (
+                          <Option key={user.value} value={user.value}>
+                            {user.label}
+                          </Option>
+                        ))}
+                      </Select>
 
                       <p className={styles.errorWarning}>
                         {touched.companyType && getIn(errors, "companyType")}

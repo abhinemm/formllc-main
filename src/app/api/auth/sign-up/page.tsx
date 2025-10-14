@@ -24,7 +24,7 @@ const page = () => {
   };
   const haddleNewAccount = (res: any) => {
     if (res.data) {
-      router.push("/user");
+      router.push("/api/auth/signin");
     }
   };
   const handleSignIn = () => {};

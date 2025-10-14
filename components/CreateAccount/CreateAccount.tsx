@@ -28,26 +28,27 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
       password: values?.password,
       type: "customer",
     };
-    try {
-      await axios
-        .post(`/api/users`, requestValue)
-        .then((res: any) => {
-          setLoading(false);
-          onCreateAccount(res);
-        })
-        .catch((err: any) => {
-          setLoading(false);
-          openNotification({
-            type: "error",
-            message: err?.response?.data?.message ?? "Something went wrong",
-            placement: "topRight",
-          });
-          console.log("the error is ", err);
+    // try {
+    await axios
+      .post(`/api/users`, requestValue)
+      .then((res: any) => {
+        setLoading(false);
+        onCreateAccount(res);
+      })
+      .catch((err: any) => {
+        setLoading(false);
+        openNotification({
+          type: "error",
+          message: err?.response?.data?.message ?? "Something went wrong",
+          placement: "topRight",
         });
-    } catch (error) {
-      console.log("the error", error);
-      setLoading(false);
-    }
+        console.log("the error is ", err?.response?.data?.message);
+      });
+    // } catch (error) {
+
+    //   console.log("the error", error);
+    //   setLoading(false);
+    // }
   };
 
   return (

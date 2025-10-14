@@ -41,7 +41,7 @@ const StartBusinessTabs: React.FC = () => {
   // signIn => for sihn in the page and signUp for sign up
   const [viewPage, setViewPage] = useState<string>("signIn");
   const [plan, setPlan] = useState<any>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (data: NotificationMessage) => {

@@ -42,7 +42,7 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
           message: err?.response?.data?.message ?? "Something went wrong",
           placement: "topRight",
         });
-        console.log("the error is ", err);
+        console.log("the error is ", err?.response?.data?.message);
       });
     // } catch (error) {
 

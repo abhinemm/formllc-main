@@ -31,6 +31,7 @@ const page = () => {
   return (
     <div className="sign-up-wrapper">
       {" "}
+      {contextHolder}
       <div className={"authHeaderItem"}>
         <h2>Welcome to Formllc</h2>
       </div>

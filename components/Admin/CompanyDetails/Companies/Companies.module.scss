@@ -22,3 +22,122 @@
     }
   }
 }
+
+.updatePaymentWrapper {
+  h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .fbform {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    .doubleFlex {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 16px;
+
+      @media screen and (max-width: 678px) {
+        flex-wrap: wrap;
+      }
+      > div {
+        width: 100%;
+      }
+
+      .fbformitem {
+        .fbcheckboxlabel {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+        }
+
+        label {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 20px;
+          color: #ffffff;
+          white-space: nowrap;
+          margin-bottom: 12px;
+          display: block;
+        }
+        select {
+          width: 100%;
+          padding: 13px;
+          outline: none;
+          border-radius: 8px;
+        }
+        input[type="text"],
+        input[type="file"] {
+          width: 100%;
+          height: 48px;
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: center;
+          padding: 16px 8px 16px 20px;
+          background-color: transparent;
+          border: 1px solid #857474;
+          border-radius: 8px;
+          box-sizing: border-box;
+          color: var(--white-color);
+        }
+      }
+    }
+  }
+  .btnWrapper {
+    width: 100%;
+    button {
+      width: 100%;
+      --button-bg: #020314;
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      margin: 1px;
+      border: none;
+      outline: none;
+      text-decoration: none;
+      user-select: none;
+      cursor: pointer;
+      font-family: acumin-pro, sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      color: var(--white-color);
+      box-shadow: 0 4px 60px #00000005;
+      transition: background-color var(--transition-delay) ease,
+        color var(--transition-delay) ease, border var(--transition-delay) ease,
+        border-color var(--transition-delay) ease;
+      zoom: 105%;
+      background-color: var(--button-bg);
+      border: solid 1px transparent;
+      border-radius: 8px;
+      background-image: linear-gradient(var(--button-bg), var(--button-bg)),
+        linear-gradient(
+          to right,
+          #8a2387 0%,
+          rgba(233, 64, 87, 0.5) 36.98%,
+          #f27121 100%
+        );
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+    }
+  }
+
+  .errorWarning {
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    font-size: 12px;
+    color: red;
+  }
+}

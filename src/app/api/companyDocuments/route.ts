@@ -8,6 +8,7 @@ import CompanyDocuments, {
   CompanyDocumentsAttributes,
 } from "@/models/companyDocuments";
 import Company from "@/models/company";
+import { UserTypesEnum } from "@/utils/constants";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
@@ -26,6 +27,9 @@ export async function GET(req: Request) {
     searchParams.forEach((value, key) => {
       where[key] = value;
     });
+    if (data.user?.type == UserTypesEnum.customer) {
+      where.status = 1;
+    }
 
     const companiesDocs = await CompanyDocuments.findAll({
       where: where,

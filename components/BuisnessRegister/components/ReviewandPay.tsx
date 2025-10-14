@@ -22,7 +22,7 @@ const ReviewandPay: React.FC<IReviewandPay> = ({
           <h5>Company Type</h5>
           <p>{companyType}</p>
         </div>
-        <div className={styles.reviewIconWrapper}>
+        {/* <div className={styles.reviewIconWrapper}>
           <div onClick={() => setActiveTabNumber(1)}>
             <svg
               data-v-ebc36e23=""
@@ -48,7 +48,7 @@ const ReviewandPay: React.FC<IReviewandPay> = ({
               ></path>
             </svg>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className={styles.reviewListItem}>
         <div className={styles.reviewTitle}>

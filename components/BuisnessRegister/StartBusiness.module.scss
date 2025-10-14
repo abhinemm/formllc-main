@@ -525,6 +525,7 @@ $highlight-color: #ff5a5f;
     .selectedState {
       background-color: #1f1c29;
       border-color: var(--input-active-border-color);
+      border: 1px solid #fff;
     }
   }
 }
@@ -757,4 +758,15 @@ $highlight-color: #ff5a5f;
       background-clip: padding-box, border-box;
     }
   }
+}
+.paymentLoading {
+  width: 100%;
+  background: #fff;
+  height: 100vh;
+  position: absolute;
+  z-index: 1000000000;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

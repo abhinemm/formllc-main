@@ -16,7 +16,7 @@ const PaymentSuccess = () => {
 
 
   const handleRedirection = () => {
-    debugger;
+
     if (!isSuccess) {
       window.open("https://api.whatsapp.com/send?phone=447909729519", "_blank");
       return;

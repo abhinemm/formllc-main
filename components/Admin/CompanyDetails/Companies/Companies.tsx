@@ -12,6 +12,7 @@ import { NotificationPlacement } from "antd/es/notification/interface";
 import styles from "./Companies.module.scss";
 import CreateCompany from "../../../Modals/CreateCompany/CreateCompany";
 import { SubscriptIcon } from "lucide-react";
+import UpdatePaymentStatus from "./UpdatePaymentStatus";
 type NotificationType = "success" | "info" | "warning" | "error";
 
 type NotificationMessage = {
@@ -26,6 +27,7 @@ const Companies: React.FC = () => {
   const [allCompanies, setAllCompanies] = useState<any>();
   const { setContextOptions } = useAppContext();
   const [rowData, setRowData] = useState<any>([]);
+  const [updatePaymentStatus, setUpdatePaymentStatus] = useState(false);
   const [updateCompany, setUpdateCompany] = useState<any>(null);
   const [showCreateCompany, setShowCreateCompany] = useState<boolean>(false);
   const allCompaniesRef = useRef<any>([]);
@@ -113,6 +115,22 @@ const Companies: React.FC = () => {
               handleMenuClick(event);
             },
           },
+          {
+            key: `${data?.id}-2`,
+            label: "Whatsapp",
+            onClick: (event: any) => {
+              // Prevent row click
+              handleWhatsapp(data?.phone);
+            },
+          },
+          {
+            key: `${data?.id}-3`,
+            label: "Update Payment",
+            onClick: (event: any) => {
+              // Prevent row click
+              handleUpdatePayment(data.id);
+            },
+          },
         ];
         return (
           <Dropdown
@@ -185,6 +203,20 @@ const Companies: React.FC = () => {
     }
   };
 
+  const handleWhatsapp = (phone: any) => {
+    if (phone) {
+      const number = phone.replace(/\s+/g, "").replace(/\+/g, "");
+      const link = `https://wa.me/${number}`;
+      window.open(link, "_blank");
+    } else {
+      openNotification({
+        type: "error",
+        message: "No phone number found",
+        placement: "topRight",
+      });
+    }
+  };
+
   // const handleMenuClick = (e: any) => {
   //   console.log("updateCompany", e?.key);
   //   const companyId = e?.key?.split("-")[0];
@@ -220,6 +252,22 @@ const Companies: React.FC = () => {
     setUpdateCompany(findCompanyDetails || null);
     setShowCreateCompany(true);
   };
+
+  const handleUpdatePayment = (id: number) => {
+    const companies = allCompaniesRef.current;
+    if (!companies?.length) {
+      console.warn("allCompanies is undefined at click time!");
+      return;
+    }
+    if (id) {
+      const splitedNumber = Number(id);
+      const findCompanyDetails = companies?.find(
+        (el: any) => el?.id === splitedNumber
+      );
+      setUpdateCompany(findCompanyDetails || null);
+      setUpdatePaymentStatus(true);
+    }
+  };
   return (
     <div>
       {contextHolder}
@@ -251,6 +299,19 @@ const Companies: React.FC = () => {
             setUpdateCompany(null);
             await fetchCompanies();
           }}
+        />
+      )}
+      {updatePaymentStatus && (
+        <UpdatePaymentStatus
+          onClose={() => setUpdatePaymentStatus(false)}
+          open={updatePaymentStatus}
+          companyDetails={updateCompany}
+          onSuccess={async () => {
+            setUpdatePaymentStatus(false);
+            setUpdateCompany(null);
+            await fetchCompanies();
+          }}
+          openNotification={openNotification}
         />
       )}
     </div>

@@ -179,7 +179,6 @@ const Companies: React.FC = () => {
           subscriptionStatus: el?.subsriptionPaymentStatus ? "paid" : "notPaid",
         }));
         allCompaniesRef.current = res?.data;
-        console.log("res?.datares?.datares?.data", res?.data);
 
         setAllCompanies(res?.data);
         setRowData(filterData);

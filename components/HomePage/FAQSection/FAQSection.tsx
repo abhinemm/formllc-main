@@ -47,6 +47,11 @@ const FAQSection = () => {
       answer:
         "Yes, Formllc offers various services such as bookkeeping, tax filing, and compliance management to support your business.",
     },
+    {
+      question: "Is a U.S. business address mandatory for forming LLC?",
+      answer:
+        "Yes. A U.S. address is mandatory for all LLCs. We include it with every formation package to keep things simple and compliant. The service is $25/month and covers address maintenance, legal correspondence, and mail forwarding.",
+    },
   ];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const toggleFAQ = (index: any) => {

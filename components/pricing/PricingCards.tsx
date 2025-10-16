@@ -59,10 +59,10 @@ const PricingCards = () => {
             <div>
               <h2>
                 $199{" "}
-                {/* <span>
-                  /One Time Fee
+                <span>
+                  + $25/mo
                   <br />
-                </span> */}
+                </span>
               </h2>
             </div>
 
@@ -118,10 +118,10 @@ const PricingCards = () => {
             <div>
               <h2>
                 $299{" "}
-                {/* <span>
-                  /One Time Fee
+                <span>
+                  + $25/mo
                   <br />
-                </span> */}
+                </span>
               </h2>
             </div>
 

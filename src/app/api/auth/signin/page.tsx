@@ -11,6 +11,7 @@ import { ApiStatus, UserTypesEnum } from "@/utils/constants";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "../../../../../components/Context/AppContext";
+import Link from "next/link";
 type NotificationType = "success" | "info" | "warning" | "error";
 
 type NotificationMessage = {
@@ -56,7 +57,7 @@ const SignIn = () => {
   }, [session?.user, status]);
 
   useEffect(() => {
-    const data: any = localStorage.getItem("credentials");
+    const data: any = localStorage.getItem("credentialsformllc");
     if (data) {
       try {
         const values = JSON.parse(data);
@@ -93,7 +94,7 @@ const SignIn = () => {
               email: values?.email,
               password: values?.password,
             };
-            localStorage.setItem("credentials", JSON.stringify(obj));
+            localStorage.setItem("credentialsformllc", JSON.stringify(obj));
           }
           if (res.status === ApiStatus.success && status === "authenticated") {
             const data: any = session?.user;
@@ -269,9 +270,9 @@ const SignIn = () => {
                         Remember me
                       </span>
                     </label>
-                    <a>
+                    <Link href="/forgot-password">
                       <p title="Forgot password">Forgot password</p>
-                    </a>
+                    </Link>
                   </div>
 
                   <div className={styles.formActions}>

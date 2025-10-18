@@ -75,10 +75,8 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
               message: err?.response?.data?.message ?? "Something went wrong",
               placement: "topRight",
             });
-            console.log("the error is ", err);
           });
       } catch (error: any) {
-        console.log("the error", error);
         openNotification({
           type: "error",
           message: error?.response?.data?.message ?? "Something went wrong",
@@ -99,7 +97,6 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
       await axios
         .post(`/api/generatePaymentLink`, body)
         .then((res: any) => {
-          console.log("the response is", res);
           if (res?.data?.url) {
             router.push(res?.data?.url);
             setLoading(false);
@@ -112,7 +109,6 @@ const CurrencyModals: React.FC<CurrencyModalsProps> = ({
             message: err?.response?.data?.message ?? "Something went wrong",
             placement: "topRight",
           });
-          console.log("the error in payment", err);
         });
     } catch (error: any) {
       openNotification({

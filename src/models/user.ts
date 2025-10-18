@@ -16,6 +16,9 @@ export interface UserAttributes {
   profilePic?: string;
   commission?: string;
   status?: number;
+  otp?: number | null;
+  otpcount?: number;
+  expireAt?: Date | null;
   // paymentStatus?: boolean;
   // paymentLink?: string;
   // plan?: string;
@@ -44,7 +47,10 @@ class User
   // public paymentLink?: string;
   // public plan?: string;
   // public subsriptionPaymentStatus?: boolean;
+  public otp?: number | null;
+  public otpcount?: number;
   public status?: number;
+  public expireAt?: Date | null;
 }
 
 User.init(
@@ -107,6 +113,19 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 1,
+    },
+    otpcount: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0,
+    },
+    otp: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    expireAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
 
     // paymentStatus: {

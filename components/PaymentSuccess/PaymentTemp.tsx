@@ -38,7 +38,6 @@ const PaymentTemp = () => {
     null
   );
 
-  console.log("companyDetailscompanyDetails",companyDetails);
   
 
   const [retryLoading, setRetryLoading] = useState<boolean>(false);
@@ -81,7 +80,6 @@ const PaymentTemp = () => {
                 message: err?.response?.data?.message ?? "Something went wrong",
                 placement: "topRight",
               });
-              console.log("the error in payment", err);
             });
         } catch (error: any) {
           openNotification({
@@ -176,7 +174,6 @@ const PaymentTemp = () => {
             message: err?.response?.data?.message ?? "Something went wrong",
             placement: "topRight",
           });
-          console.log("the error in payment", err);
         });
     } catch (error: any) {
       openNotification({

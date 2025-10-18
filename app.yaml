@@ -36,7 +36,7 @@ env_variables:
   SMTP_PORT: 465
   SMTP_SECURE: true
   SMTP_USER: support@formllc.io
-  SMTP_PASS: @Formllc9846987903
+  SMTP_PASS: '@Formllc9846987903'
   FROM_EMAIL: support@formllc.io
   JWT_SECRET: Golden_123
 

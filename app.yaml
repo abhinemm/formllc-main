@@ -32,6 +32,14 @@ env_variables:
   UPLOADURL: http://utility.getllc.io/upload
   NEXT_PUBLIC_BASEURL: https://formllc.io
 
+  SMTP_HOST: smtpout.secureserver.net
+  SMTP_PORT: 465
+  SMTP_SECURE: true
+  SMTP_USER: support@formllc.io
+  SMTP_PASS: @Formllc9846987903
+  FROM_EMAIL: support@formllc.io
+  JWT_SECRET: Golden_123
+
 automatic_scaling:
   min_instances: 1
   max_instances: 5

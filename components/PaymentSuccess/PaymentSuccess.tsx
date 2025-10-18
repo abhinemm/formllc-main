@@ -35,7 +35,6 @@ const PaymentSuccess = () => {
           );
           setSuccess(resp.isVerified);
         } catch (err) {
-          console.log(err);
           setSuccess(false)
         }
       });

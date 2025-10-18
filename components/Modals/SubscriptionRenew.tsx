@@ -39,9 +39,7 @@ const SubscriptionRenew: React.FC<SubscriptionRenewProps> = ({
       await axios
         .post(`/api/generatePaymentLink`, body)
         .then((res: any) => {
-          console.log("the response is", res);
           if (res?.data?.url) {
-            console.log("statusstatusstatus", status);
             router.push(res?.data?.url);
             setLoading(false);
           }
@@ -53,7 +51,6 @@ const SubscriptionRenew: React.FC<SubscriptionRenewProps> = ({
             message: err?.response?.data?.message ?? "Something went wrong",
             placement: "topRight",
           });
-          console.log("the error in payment", err);
         });
     } catch (error: any) {
       openNotification({

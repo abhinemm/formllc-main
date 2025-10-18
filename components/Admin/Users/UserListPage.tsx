@@ -188,7 +188,6 @@ const UserListPage = () => {
       })
       .catch((err: any) => {
         setLoading(false);
-        console.log("errerrerrerr", err);
       });
   };
 
@@ -236,7 +235,6 @@ const UserListPage = () => {
           message: err?.response?.data?.message ?? "Something went wrong",
           placement: "topRight",
         });
-        console.log("errerrerrerr", err);
       });
   };
 

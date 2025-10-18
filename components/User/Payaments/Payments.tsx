@@ -85,7 +85,6 @@ const Payments = () => {
         })
         .then((res) => {
           setDownloadLoader(false);
-          console.log(" the response isdsd", res);
         })
         .catch((err) => {
           setDownloadLoader(false);

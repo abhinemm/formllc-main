@@ -75,7 +75,6 @@ const CompanyRegistration = () => {
           .catch((err: any) => {
             setLoading(false);
             router.push("/");
-            console.log("the error is ", err);
           });
       } else {
         router.push("/");

@@ -70,10 +70,8 @@ const ContactForm = () => {
             message: message,
             placement: "topRight",
           });
-          console.log("the error is ", err);
         });
     } catch (error) {
-      console.log("the error is ", error);
       setLoading(false);
     }
   };

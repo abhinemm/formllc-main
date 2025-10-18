@@ -92,7 +92,6 @@ const AffiliatesList = () => {
         setLoading(false);
       })
       .catch((err: any) => {
-        console.log("errerrerrerr", err);
         setLoading(false);
       });
   };

@@ -44,7 +44,6 @@ const CommonAction: React.FC<ICommonAction> = ({
 
   const redirectToPayment = () => {
     if (redirectUrl === "payment") {
-      console.log("redirectUrl");
       handlePayment(contextOptions?.selectedCompanyDetails.id,contextOptions?.selectedCompanyDetails.plan)
     } else {
       router.push(redirectUrl); // Replace with your actual payment page route
@@ -62,7 +61,6 @@ const CommonAction: React.FC<ICommonAction> = ({
       await axios
         .post(`/api/generatePaymentLink`, body)
         .then((res: any) => {
-          console.log("the response is", res);
           if (res?.data?.url) {
             router.push(res?.data?.url);
             setLoading(false);
@@ -75,7 +73,6 @@ const CommonAction: React.FC<ICommonAction> = ({
             message: err?.response?.data?.message ?? "Something went wrong",
             placement: "topRight",
           });
-          console.log("the error in payment", err);
         });
     } catch (error: any) {
       openNotification({

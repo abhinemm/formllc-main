@@ -165,3 +165,43 @@ export const filedActionSchema = yup.object().shape({
   description: yup.string().required("Description is required"),
   fields: yup.string().required("Fields is required"),
 });
+
+export const emailOnlySchema = yup.object({
+  emailData: yup
+    .string()
+    .trim()
+    .email("Enter a valid email address")
+    .required("Email is required"),
+  password: yup.string().notRequired(),
+  cpassword: yup.string().notRequired(),
+});
+
+export const withPasswordSchema = yup.object({
+  emailData: yup
+    .string()
+    .trim()
+    .email("Enter a valid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Use at least 8 characters")
+    .matches(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/, "Use letters and numbers")
+    .required("Password is required"),
+  cpassword: yup
+    .string()
+    .oneOf([yup.ref("password")], "Passwords must match")
+    .required("Confirm password is required"),
+});
+
+export const otpSchema = yup.object({
+  otp: yup.string().required("OTP is required"),
+});
+
+export const emailSendSchema = yup.object().shape({
+  subject: yup.string().required("Subject is required"),
+  content: yup
+    .string()
+    .trim()
+    .min(30, "Description must be at least 30 characters"),
+  template: yup.string().required("Template is required"),
+});

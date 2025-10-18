@@ -48,7 +48,6 @@ const DocumentViewer = ({
       });
       setDocuments(final);
     } catch (error) {
-      console.log("error", error);
       setDocuments([]);
     }
   };

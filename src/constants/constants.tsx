@@ -1704,6 +1704,13 @@ export const DEFAULTDOCUMENT = [
   "EIN",
 ];
 
+export const EMAIL_Template = [
+  {
+    label: "Subscription renewal",
+    value: "subscription.renewal",
+  },
+];
+
 export const BTNCOLORS = {
   completed: {
     textColor: "#ffffff",
@@ -1791,8 +1798,12 @@ export const USERMANUES = {
   ],
 };
 
-
 export const RegistrationStation = {
   mexico_state: "Mexico",
-  wyoming_state: "Wyoming"
-}
+  wyoming_state: "Wyoming",
+};
+
+export const WyomingLinkSub =
+  "https://www.fanbasis.com/agency-checkout/formllc/Z5RJ";
+export const MexicoSub =
+  "https://www.fanbasis.com/agency-checkout/formllc/zpZg7";

@@ -12,8 +12,6 @@ const UpdatePaymentStatus = ({
   openNotification,
   onSuccess,
 }) => {
-  console.log("companyDetailscompanyDetails", companyDetails);
-
   const [loading, setloading] = useState<boolean>(false);
   const initialValues = {
     isPaid: companyDetails?.regPaymentStatus ? "yes" : "no",
@@ -46,10 +44,8 @@ const UpdatePaymentStatus = ({
             message: message,
             placement: "topRight",
           });
-          console.log("the error is ", err);
         });
     } catch (error) {
-      console.log("the error is ", error);
       setloading(false);
     }
   };

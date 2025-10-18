@@ -122,7 +122,6 @@ const UploadDocument = ({
             message: message,
             placement: "topRight",
           });
-          console.log("the error is ", err);
         });
     } catch (error: any) {
       setLoading(false);

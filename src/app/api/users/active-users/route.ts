@@ -18,7 +18,6 @@ export async function GET(req: Request) {
     status: 1,
     type: UserTypesEnum.customer,
   };
-  console.log("wherewherewherewhere", where);
 
   try {
     const users = await User.findAll({
@@ -35,7 +34,6 @@ export async function GET(req: Request) {
     });
     return NextResponse.json(users);
   } catch (error) {
-    console.log("errorerrorerrorerror", error);
     return NextResponse.json(
       { error: "Failed to fetch users" },
       { status: 500 }

@@ -65,7 +65,6 @@ Payments.init(
     },
     paymentDate: {
       type: DataTypes.DATE,
-
       allowNull: true,
     },
     description: {

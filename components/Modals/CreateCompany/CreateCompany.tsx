@@ -115,7 +115,6 @@ const CreateCompany = ({
       })
       .catch((err: any) => {
         setLoading(false);
-        console.log("errerrerrerr", err);
       });
     setLoading(false);
   };
@@ -171,10 +170,8 @@ const CreateCompany = ({
               message: message,
               placement: "topRight",
             });
-            console.log("the error is ", err);
           });
       } catch (error) {
-        console.log("the error is ", error);
         setUpdateLoading(false);
       }
     } else {
@@ -199,10 +196,8 @@ const CreateCompany = ({
               message: message,
               placement: "topRight",
             });
-            console.log("the error is ", err);
           });
       } catch (error) {
-        console.log("the error is ", error);
         setUpdateLoading(false);
       }
     }

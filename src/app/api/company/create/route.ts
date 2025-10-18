@@ -118,12 +118,9 @@ export async function PATCH(req: Request) {
       { status: 401 }
     );
   }
-  console.log("data.user.typedata.user.type", data.user.type);
 
   if (data.user.type != UserTypesEnum.admin) {
-    console.log(
-      "data.user.typedata.user.typedata.user.typedata.user.type---------------------"
-    );
+
 
     return NextResponse.json(
       { message: "User does not have permission to perform this action" },

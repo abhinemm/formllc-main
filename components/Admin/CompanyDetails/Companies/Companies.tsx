@@ -13,6 +13,7 @@ import styles from "./Companies.module.scss";
 import CreateCompany from "../../../Modals/CreateCompany/CreateCompany";
 import { SubscriptIcon } from "lucide-react";
 import UpdatePaymentStatus from "./UpdatePaymentStatus";
+import EmailSendModal from "./EmailSendModal";
 type NotificationType = "success" | "info" | "warning" | "error";
 
 type NotificationMessage = {
@@ -30,6 +31,7 @@ const Companies: React.FC = () => {
   const [updatePaymentStatus, setUpdatePaymentStatus] = useState(false);
   const [updateCompany, setUpdateCompany] = useState<any>(null);
   const [showCreateCompany, setShowCreateCompany] = useState<boolean>(false);
+  const [emailSendID, setEmailSendID] = useState<any>(null);
   const allCompaniesRef = useRef<any>([]);
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     { headerName: "Sl.No", field: "slno", sortable: true, filter: true },
@@ -131,6 +133,14 @@ const Companies: React.FC = () => {
               handleUpdatePayment(data.id);
             },
           },
+          {
+            key: `${data?.id}-4`,
+            label: "Send Email",
+            onClick: (event: any) => {
+              // Prevent row click
+              handleEmailSendClick(data.id);
+            },
+          },
         ];
         return (
           <Dropdown
@@ -186,7 +196,6 @@ const Companies: React.FC = () => {
       })
       .catch((err: any) => {
         setLoading(false);
-        console.log("errerrerrerr", err);
       });
     setLoading(false);
   };
@@ -216,25 +225,7 @@ const Companies: React.FC = () => {
     }
   };
 
-  // const handleMenuClick = (e: any) => {
-  //   console.log("updateCompany", e?.key);
-  //   const companyId = e?.key?.split("-")[0];
-  //   console.log("companyId-------------", companyId);
-  //   const splitedNumber = Number(companyId);
-  //   console.log("splitedNumbersplitedNumber", splitedNumber);
-  //   console.log("allCompaniesallCompaniesallCompanies", allCompanies);
-  //   const findCompanyDetails = allCompanies?.find(
-  //     (el: any) => el?.id === splitedNumber
-  //   );
-  //   console.log("findCompanyDetailsfindCompanyDetails", findCompanyDetails);
-
-  //   setUpdateCompany(
-  //     Object.keys(findCompanyDetails)?.length > 0 ? findCompanyDetails : null
-  //   );
-  //   console.log("findCompanyDetails", findCompanyDetails);
-  // };
   const handleMenuClick = (e: any) => {
-    console.log("INSIDE handleMenuClick", allCompaniesRef.current);
     const companies = allCompaniesRef.current;
     if (!companies?.length) {
       console.warn("allCompanies is undefined at click time!");
@@ -247,7 +238,6 @@ const Companies: React.FC = () => {
       (el: any) => el?.id === splitedNumber
     );
 
-    console.log("Matched Company:", findCompanyDetails);
     setUpdateCompany(findCompanyDetails || null);
     setShowCreateCompany(true);
   };
@@ -267,6 +257,16 @@ const Companies: React.FC = () => {
       setUpdatePaymentStatus(true);
     }
   };
+
+  const handleEmailSendClick = (id: number) => {
+    setEmailSendID(id);
+    // const findData = allCompanies?.find((el: any) => el.id == id);
+    // console.log("findDatafindDatafindData", findData);
+    // if (findData) {
+    //   setEmailSendID(findData);
+    // }
+  };
+
   return (
     <div>
       {contextHolder}
@@ -278,6 +278,7 @@ const Companies: React.FC = () => {
           </button>
         </div>
       </div>
+
       <AgGridTable
         columnDefs={columnDefs}
         rowData={rowData}
@@ -310,6 +311,16 @@ const Companies: React.FC = () => {
             setUpdateCompany(null);
             await fetchCompanies();
           }}
+          openNotification={openNotification}
+        />
+      )}
+      {emailSendID && (
+        <EmailSendModal
+          onClose={() => {
+            setEmailSendID(null);
+          }}
+          open={emailSendID ? true : false}
+          companyDetails={allCompanies.find((el: any) => el.id == emailSendID)}
           openNotification={openNotification}
         />
       )}

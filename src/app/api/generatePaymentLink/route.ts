@@ -1,3 +1,4 @@
+import { MexicoSub, WyomingLinkSub } from "@/constants/constants";
 import { encryptURL } from "@/helpers/CryptoHelper";
 import Company from "@/models/company";
 import StripeService from "@/services/stripe.service";
@@ -14,8 +15,6 @@ const PRO_PLAN_DODO_PAYLINK = `https://checkout.dodopayments.com/buy/pdt_SmaZ2En
 const WyomingLink = "https://www.fanbasis.com/agency-checkout/formllc/mZJmE";
 const Mexico = "https://www.fanbasis.com/agency-checkout/formllc/YE6Q9";
 
-const WyomingLinkSub = "https://www.fanbasis.com/agency-checkout/formllc/Z5RJ";
-const MexicoSub = "https://www.fanbasis.com/agency-checkout/formllc/zpZg7";
 // export async function POST(req: Request) {
 //   const body: any = await req.json();
 

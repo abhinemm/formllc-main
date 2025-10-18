@@ -72,7 +72,6 @@ export async function POST(req: Request) {
     newUser.password = undefined;
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
-    console.log("Failed to create userFailed to create user", error);
 
     return NextResponse.json(
       { error: "Failed to create user" },
@@ -129,7 +128,6 @@ export async function PATCH(req: Request) {
   }
   try {
   } catch (error) {
-    console.log("Failed to create userFailed to create user", error);
 
     return NextResponse.json(
       { error: "Failed to update status" },

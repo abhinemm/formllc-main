@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useAppContext } from "../../Context/AppContext";
 import PaymentSuccess from "../../Modals/PaymentSuccess";
 import PaymentError from "../../Modals/PaymentError";
+import { signOut } from "next-auth/react";
 const { Sider, Content } = Layout;
 interface IInnerLayout {
   children: React.ReactNode;
@@ -38,8 +39,12 @@ const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
   };
 
   const handleClickMenu = (key: any) => {
-    if (key !== "company") {
-      router.push(key);
+    if (key == "logout") {
+      signOut({ callbackUrl: "/" });
+    } else {
+      if (key !== "company") {
+        router.push(key);
+      }
     }
   };
 

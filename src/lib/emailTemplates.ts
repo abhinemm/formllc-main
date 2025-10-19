@@ -295,3 +295,74 @@ export function subscriptionRenewal({
 </html>
     `;
 }
+
+export function enqurieEmail({
+  name,
+  content,
+}: {
+  name: string;
+  content: string;
+}) {
+  return `
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>FormLLC • Subscription Renewal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body
+    style="margin:0;padding:0;background:#0B0D1A;color:#D9DFEA;font-family:Inter, -apple-system, Segoe UI, Roboto, Arial, sans-serif;"
+  >
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
+      Replay to enqurie
+    </div>
+
+    <div style="padding:32px 16px;">
+      <div
+        style="max-width:640px;margin:0 auto;background:#0F1224;border-radius:16px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.45);"
+      >
+        <div style="padding:32px 28px;">
+          <!-- Header -->
+          <div style="font-weight:800;color:#fff;font-size:18px;letter-spacing:0.2px;">
+            FormLLC
+            <span
+              style="display:inline-block;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#9C6BFF,#FF6B8A);margin-left:6px;vertical-align:middle;"
+            ></span>
+          </div>
+          <div style="color:#9AA3B2;font-size:12px;margin-top:6px;margin-bottom: 20px;">
+            USA Company Registration
+          </div>
+          <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#D9DFEA;">
+            Hi <strong>${name}</strong>.
+          </p>
+          <p style="margin:0 0 18px;font-size:15px;line-height:1.6;color:#D9DFEA;">
+            ${content}
+          </p>
+
+          <hr
+            style="border:none;border-top:1px solid rgba(255,255,255,0.08);margin:24px 0;"
+          />
+
+          <p style="font-size:13px;color:#9AA3B2;line-height:1.6;margin:0;">
+            Questions? Reply to this email or contact
+            <a
+              href="mailto:support@formllc.io"
+              style="color:#B4BEF5;text-decoration:none;"
+              >support@formllc.io</a
+            >.
+          </p>
+        </div>
+
+        <div
+          style="text-align:center;color:#7F8894;font-size:12px;padding:18px;"
+        >
+          © 2024 FormLLC • All rights reserved<br />
+          30 N GOULD ST STE R, SHERIDAN, WY 82801 (Mailing) • formllc.io
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+    `;
+}

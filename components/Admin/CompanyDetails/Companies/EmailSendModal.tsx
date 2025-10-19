@@ -9,33 +9,50 @@ import {
   MexicoSub,
   WyomingLinkSub,
 } from "@/constants/constants";
-import { subscriptionRenewal } from "@/lib/emailTemplates";
+import { enqurieEmail, subscriptionRenewal } from "@/lib/emailTemplates";
 import TemplateViewer from "./TemplateViewer";
 import { emailSendSchema, otpSchema } from "@/helpers/validationSchema";
 import axios from "axios";
+import { log } from "console";
 
-const EmailSendModal = ({
+interface IEmailSendModal {
+  open: boolean;
+  onClose: () => void;
+  companyDetails: any;
+  openNotification: (args: {
+    type: "success" | "info" | "warning" | "error";
+    message: string;
+    placement: "topRight" | "topLeft" | "bottomRight" | "bottomLeft";
+  }) => void;
+  emailType?: string;
+}
+
+const EmailSendModal: React.FC<IEmailSendModal> = ({
   open,
   onClose,
   companyDetails,
   openNotification,
+  emailType,
 }) => {
+  console.log("companyDetails", companyDetails);
   const [loading, setLoading] = useState<boolean>(false);
   const [previewHtml, setPreviewHtml] = useState<any>(null);
   const initialValues = {
     subject: "",
     content: "",
-    template: "",
+    template: emailType ? emailType : "",
   };
 
   const onSubmit = async (values: any) => {
+    console.log("valuesvaluesvalues", values);
+
     setLoading(true);
     const body = {
       to: companyDetails?.email,
       subject: values?.subject,
       content: values.content,
       emailType: values.template,
-      companyId: companyDetails?.id,
+      id: companyDetails?.id,
     };
     await axios
       .post(`/api/send`, body)
@@ -93,6 +110,14 @@ const EmailSendModal = ({
           payment_link: paymentLink,
         });
         setPreviewHtml(html);
+        break;
+      case "enquire.replay":
+        const Username = companyDetails.name;
+        const emailHtml = enqurieEmail({
+          name: Username,
+          content,
+        });
+        setPreviewHtml(emailHtml);
         break;
       default:
         break;
@@ -163,8 +188,8 @@ const EmailSendModal = ({
                     placeholder="Content"
                     style={{ height: 250, resize: "none" }}
                   />
-                  {errors.subject && touched.subject && (
-                    <p className={styles.errorWarning}>{errors.subject}</p>
+                  {errors.content && touched.content && (
+                    <p className={styles.errorWarning}>{errors.content}</p>
                   )}
                 </div>
               </div>
@@ -177,6 +202,7 @@ const EmailSendModal = ({
                     name="template"
                     onChange={handleChange}
                     value={values.template}
+                    disabled={emailType ? true : false}
                   >
                     <option value={""}>Select</option>
                     {EMAIL_Template?.map((el: any, idx: number) => (

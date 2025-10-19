@@ -7,11 +7,16 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "../../../Context/AppContext";
 import { Dropdown, notification } from "antd";
-import { UserAddOutlined, MoreOutlined } from "@ant-design/icons";
+import {
+  UserAddOutlined,
+  MoreOutlined,
+  PlusCircleOutlined,
+  CloudDownloadOutlined,
+} from "@ant-design/icons";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import styles from "./Companies.module.scss";
 import CreateCompany from "../../../Modals/CreateCompany/CreateCompany";
-import { SubscriptIcon } from "lucide-react";
+import { ArrowDownToLine, HousePlus, SubscriptIcon } from "lucide-react";
 import UpdatePaymentStatus from "./UpdatePaymentStatus";
 import EmailSendModal from "./EmailSendModal";
 type NotificationType = "success" | "info" | "warning" | "error";
@@ -33,6 +38,7 @@ const Companies: React.FC = () => {
   const [showCreateCompany, setShowCreateCompany] = useState<boolean>(false);
   const [emailSendID, setEmailSendID] = useState<any>(null);
   const allCompaniesRef = useRef<any>([]);
+  const [companyStatus, setCompanyStatus] = useState<number>(1);
   const [columnDefs, setColumnDefs] = useState<ColDef[]>([
     { headerName: "Sl.No", field: "slno", sortable: true, filter: true },
     {
@@ -155,6 +161,7 @@ const Companies: React.FC = () => {
       },
     },
   ]);
+
   const [api, contextHolder] = notification.useNotification();
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
@@ -164,14 +171,14 @@ const Companies: React.FC = () => {
   };
   useEffect(() => {
     (async () => {
-      await fetchCompanies();
+      await fetchCompanies(companyStatus);
     })();
-  }, []);
+  }, [companyStatus]);
 
-  const fetchCompanies = async () => {
+  const fetchCompanies = async (status) => {
     setLoading(true);
     await axios
-      .get(`/api/company`)
+      .get(`/api/company?status=${status}`)
       .then((res: any) => {
         const filterData = res?.data?.map((el: any, idx: number) => ({
           id: el.id,
@@ -258,6 +265,30 @@ const Companies: React.FC = () => {
     }
   };
 
+  const exportCompanies = async (status) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/company/export?status=${status}`, {
+        method: "GET",
+      });
+      if (!res.ok) throw new Error("Failed to export");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      setLoading(false);
+      a.href = url;
+      const now = new Date();
+      const iso = now.toISOString().replace(/[:.]/g, "-");
+      a.download = `company_${iso}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleEmailSendClick = (id: number) => {
     setEmailSendID(id);
     // const findData = allCompanies?.find((el: any) => el.id == id);
@@ -270,14 +301,53 @@ const Companies: React.FC = () => {
   return (
     <div>
       {contextHolder}
-      <div className={styles.actionContentWrapper}>
-        <div className={styles.createUser}>
+      <div className={styles.headerWrapper}>
+        <div className={styles.leftSide}>
+          <button
+            type="button"
+            className={companyStatus === 1 ? styles.active : ""}
+            onClick={() => setCompanyStatus(1)}
+          >
+            Active
+          </button>
+          <button
+            type="button"
+            className={companyStatus === 0 ? styles.active : ""}
+            onClick={() => setCompanyStatus(0)}
+          >
+            Inactive
+          </button>
+          <button
+            type="button"
+            className={companyStatus === 2 ? styles.active : ""}
+            onClick={() => setCompanyStatus(2)}
+          >
+            Deleted
+          </button>
+        </div>
+        <div className={styles.rightSide}>
+          <button
+            type="button"
+            onClick={() => exportCompanies(companyStatus)}
+            disabled={loading}
+          >
+            <ArrowDownToLine fontSize={16} />
+            Export
+          </button>
           <button type="button" onClick={() => setShowCreateCompany(true)}>
-            <UserAddOutlined />
-            Create Company
+            <HousePlus />
+            Create New
           </button>
         </div>
       </div>
+      {/* {companyStatus === 1 && (
+        <ActiveCompanies
+          columnDefs={columnDefs}
+          handleRowClick={handleRowClick}
+          loading={loading}
+          rowData={rowData}
+        />
+      )} */}
 
       <AgGridTable
         columnDefs={columnDefs}
@@ -297,7 +367,7 @@ const Companies: React.FC = () => {
           onSuccess={async () => {
             setShowCreateCompany(false);
             setUpdateCompany(null);
-            await fetchCompanies();
+            await fetchCompanies(companyStatus);
           }}
         />
       )}
@@ -309,7 +379,7 @@ const Companies: React.FC = () => {
           onSuccess={async () => {
             setUpdatePaymentStatus(false);
             setUpdateCompany(null);
-            await fetchCompanies();
+            await fetchCompanies(companyStatus);
           }}
           openNotification={openNotification}
         />

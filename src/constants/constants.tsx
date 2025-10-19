@@ -1,7 +1,9 @@
 import { StepsTakenStatusEnum, UserTypesEnum } from "@/utils/constants";
 import {
+  ContactsOutlined,
   DashboardOutlined,
   HomeOutlined,
+  LogoutOutlined,
   UnorderedListOutlined,
   UploadOutlined,
   UserOutlined,
@@ -1574,6 +1576,11 @@ export const UNVERIFIED = [
     icon: <DashboardOutlined />,
     label: "Dashboard",
   },
+  {
+    key: "logout",
+    icon: <LogoutOutlined />,
+    label: "Logout",
+  },
 ];
 
 export const VERIFIED = [
@@ -1602,6 +1609,11 @@ export const VERIFIED = [
     key: "/user/payments",
     icon: <DashboardOutlined />,
     label: "Payments",
+  },
+  {
+    key: "log-out",
+    icon: <LogoutOutlined />,
+    label: "Logout",
   },
 ];
 
@@ -1709,6 +1721,10 @@ export const EMAIL_Template = [
     label: "Subscription renewal",
     value: "subscription.renewal",
   },
+   {
+    label: "Enquiry Reply",
+    value: "enquire.replay",
+  },
 ];
 
 export const BTNCOLORS = {
@@ -1769,7 +1785,7 @@ export const USERMANUES = {
     {
       key: "/admin",
       icon: <UnorderedListOutlined />,
-      label: "Dashboard",
+      label: "Companies",
     },
     {
       key: "/admin/users",
@@ -1780,6 +1796,11 @@ export const USERMANUES = {
       key: "/admin/affiliates",
       icon: <UploadOutlined />,
       label: "Affiliates",
+    },
+    {
+      key: "/admin/enquries",
+      icon: <ContactsOutlined />,
+      label: "Enquiries",
     },
   ],
   [UserTypesEnum.manager]: [

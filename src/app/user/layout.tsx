@@ -9,6 +9,7 @@ import { useAppContext } from "../../../components/Context/AppContext";
 import {
   DashboardOutlined,
   HomeOutlined,
+  LogoutOutlined,
   UnorderedListOutlined,
 } from "@ant-design/icons";
 import { SideMenuHelper } from "@/helpers/helper";
@@ -25,6 +26,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       icon: <DashboardOutlined />,
       label: "Dashboard",
     },
+   
   ]);
 
   useLayoutEffect(() => {

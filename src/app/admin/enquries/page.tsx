@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import EnquriesList from "../../../../components/Admin/EnquriesList/EnquriesList";
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <EnquriesList />
+    </div>
+  );
+};
 
-export default page
+export default page;

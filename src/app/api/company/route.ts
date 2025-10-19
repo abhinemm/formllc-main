@@ -55,6 +55,7 @@ export async function GET(req: Request) {
         SELECT companies.*, users."firstName", users.email, users."middleName", users."lastName"
         FROM companies
         INNER JOIN users ON users.id = companies."userId"
+        WHERE companies.status = ${where.status || 1}
         ORDER BY companies.id DESC
       `,
         {

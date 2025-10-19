@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./company-registration.module.scss";
 import { Formik } from "formik";
 
-import { InputNumber, Modal, notification, Select, Spin } from "antd";
+import { InputNumber, Modal, notification, Popover, Select, Spin } from "antd";
 import { ALLCOUNTRIES, COUNTRYCODE } from "@/constants/constants";
 import axios from "axios";
-import { UploadOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, UploadOutlined } from "@ant-design/icons";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loader from "../../../components/Loader";
@@ -34,6 +34,7 @@ const CompanyRegistration = () => {
   const id = searchParams.get("id");
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [api, contextHolder] = notification.useNotification();
+  const [open, setOpen] = useState(false);
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
       message: data.message,
@@ -88,7 +89,6 @@ const CompanyRegistration = () => {
   ) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
-      setFieldValue("proofOfAddress", selectedFile?.name);
       const maxSizeInBytes = 1 * 1024 * 1024; // 10 MB
       if (selectedFile.size > maxSizeInBytes) {
         openNotification({
@@ -168,12 +168,36 @@ const CompanyRegistration = () => {
     }
   };
 
+  const popoverContentEin = (
+    <div className={styles.popoverEin}>
+      <p>
+        Please note: To comply with U.S. regulations, all non-resident LLCs are
+        required to maintain a valid business address within the United States.
+        This address service is mandatory and billed at $25 per month ensuring
+        your LLC stays valid and ready to operate without delays.
+      </p>
+      <div className={styles.btnWrapper}>
+        <button type="button" onClick={() => setOpen(false)}>
+          Okey
+        </button>
+      </div>
+    </div>
+  );
+
+  const handleOpenChange = (newOpen: boolean) => {
+    // Close popover when clicking outside
+    setOpen(newOpen);
+  };
+
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-        <div className={styles.fbonboardingcardwidgetcontent}>
+        <div
+          className={styles.fbonboardingcardwidgetcontent}
+          // onClick={() => setOpen(false)}
+        >
           {contextHolder}
           <Formik
             initialValues={initialValues}
@@ -380,26 +404,38 @@ const CompanyRegistration = () => {
                   </div>
                   <div className={styles.fbformitem}>
                     <label className={styles.fblabel}>Country</label>
-                    <Select
-                      showSearch
-                      placeholder="Select a country"
-                      optionFilterProp="children"
-                      onChange={(e) => {
-                        setFieldValue("country", e);
-                      }}
-                      filterOption={(input: any, option: any) =>
-                        (option?.children as string)
-                          .toLowerCase()
-                          .includes(input.toLowerCase())
-                      }
-                      style={{ width: 300 }}
+                    <Popover
+                      content={popoverContentEin}
+                      title="Mail Room Service"
+                      open={open}
                     >
-                      {ALLCOUNTRIES?.map((country) => (
-                        <Option key={country.code} value={country.name}>
-                          {country.name}
-                        </Option>
-                      ))}
-                    </Select>
+                      {/* <QuestionCircleOutlined /> */}
+                      <Select
+                        showSearch
+                        placeholder="Select a country"
+                        optionFilterProp="children"
+                        onChange={(e) => {
+                          setFieldValue("country", e);
+                          if (e === "India") {
+                            setOpen(true);
+                          } else {
+                            setOpen(false);
+                          }
+                        }}
+                        filterOption={(input: any, option: any) =>
+                          (option?.children as string)
+                            .toLowerCase()
+                            .includes(input.toLowerCase())
+                        }
+                        style={{ width: 300 }}
+                      >
+                        {ALLCOUNTRIES?.map((country) => (
+                          <Option key={country.code} value={country.name}>
+                            {country.name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Popover>
                     {errors.country && touched.country && (
                       <p className={styles.errorWarning}>{errors.country}</p>
                     )}

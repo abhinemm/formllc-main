@@ -1,0 +1,40 @@
+# .gitlab-ci.yml
+
+image: google/cloud-sdk:latest # Use the official Google Cloud SDK Docker image.
+
+stages:
+  - deploy
+
+deploy_to_app_engine:
+  stage: deploy
+  environment: Production # Or Staging, Development, etc.
+  only:
+    - main # Deploy only when changes are merged to the 'main' branch
+
+  before_script:
+    # Ensure Node.js and npm are installed in this image
+    # The google/cloud-sdk image is usually Debian/Ubuntu based, so apt works.
+    - echo "Updating apt and installing Node.js and npm..."
+    - apt-get update -qq && apt-get install -yq nodejs npm
+
+  script:
+    # 1. Authenticate with the service account
+    # The SERVICE_ACCOUNT_KEY variable is typically of type "File"
+    - echo "Authenticating with Google Cloud..."
+    - gcloud auth activate-service-account --key-file "$SERVICE_ACCOUNT_KEY" --project "$PROJECT_ID"
+
+    # 2. Set the active project
+    - gcloud config set project "$PROJECT_ID"
+
+    # 3. Install Node.js dependencies
+    - echo "Installing Node.js project dependencies..."
+    - npm install
+
+    # 4. Run your custom deploy script defined in package.json
+    - echo "Executing npm run deploy..."
+    - npm run deploy
+
+  # Optional: Cache node_modules to speed up subsequent runs
+  cache:
+    paths:
+      - node_modules/

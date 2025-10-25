@@ -14,10 +14,10 @@ import CheckoutSessions from "@/models/checkoutsessions";
 const syncDatabase = async () => {
   try {
     await sequelize.authenticate();
-    await Payments.sync({ alter:true });
-    await CheckoutSessions.sync({ alter: true });
-    await Company.sync({ alter: true });
-    await User.sync({ alter: true });
+    await Payments.sync({ alter: false });
+    await CheckoutSessions.sync({ alter: false });
+    await Company.sync({ alter: false });
+    await User.sync({ alter: false });
     await ContactUs.sync({ alter: false });
     await Steps.sync({ alter: false });
     await StepsTaken.sync({ alter: false });

@@ -3,7 +3,6 @@ import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { message } from "antd";
 import { authOptions } from "../auth/[...nextauth]/route";
-import FanbasisCheckout from "@fanbasis/checkout-sdk";
 import { client } from "@/utils/fanbasis";
 
 type Body = {

@@ -22,24 +22,6 @@ const RegistrationState: React.FC<IRegistrationState> = ({
       <div className={styles.stateContainer}>
         <div
           className={
-            companyLocation === RegistrationStation?.mexico_state
-              ? styles.selectedState
-              : ""
-          }
-          onClick={() => {
-            setCompanyLocation(RegistrationStation?.mexico_state);
-            setPlan("basic");
-          }}
-        >
-          <h5>New Mexico</h5>
-          <p>
-            Affordable option at <b>$199</b> with no state income tax if
-            operating outside New Mexico. Suitable for businesses seeking
-            lower upfront costs.
-          </p>
-        </div>
-        <div
-          className={
             companyLocation === RegistrationStation?.wyoming_state
               ? styles.selectedState
               : ""
@@ -56,6 +38,24 @@ const RegistrationState: React.FC<IRegistrationState> = ({
           </p>
 
           <div className={styles.absoluteContainer}>RECOMMENDED FOR LLC</div>
+        </div>
+        <div
+          className={
+            companyLocation === RegistrationStation?.mexico_state
+              ? styles.selectedState
+              : ""
+          }
+          onClick={() => {
+            setCompanyLocation(RegistrationStation?.mexico_state);
+            setPlan("basic");
+          }}
+        >
+          <h5>New Mexico</h5>
+          <p>
+            Affordable option at <b>$199</b> with no state income tax if
+            operating outside New Mexico. Suitable for businesses seeking
+            lower upfront costs.
+          </p>
         </div>
       </div>
       <div className={styles.buttonContainer}>

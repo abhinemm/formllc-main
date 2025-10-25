@@ -4,6 +4,9 @@
   flex-direction: column;
   align-items: center;
   margin: 40px 0 30px;
+  @media (max-width: 874px) {
+    padding-inline: 20px;
+  }
 
   .doubleFlex {
     width: 100%;
@@ -11,11 +14,12 @@
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 16px;
-    @media screen and (max-width: 992px) {
-        flex-direction: column;
+    @media (max-width: 662px) {
+      flex-direction: column;
     }
     > div {
       width: 100%;
+      position: relative;
     }
   }
   .fbform {
@@ -346,4 +350,10 @@
       cursor: pointer;
     }
   }
+}
+.popoverWrapper {
+  position: absolute;
+  right: 0;
+  color: #fff;
+  font-family: var(--font-noto-sans);
 }

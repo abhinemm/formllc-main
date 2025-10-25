@@ -27,9 +27,10 @@ export interface CompanyAttributes {
   subsriptionPaymentStatus?: boolean;
   regPaymentStatus?: boolean;
   stripeEmailId?: string;
-
   document?: string;
   referId?: number;
+  nextPayment?: string;
+  ein?: string;
 }
 export interface CompanyWithUserAttributes
   extends UserAttributes,
@@ -73,6 +74,8 @@ class Company
   public stripeEmailId?: string;
   public referId?: number;
   public user?: User;
+  public nextPayment?: string;
+  public ein?: string;
 }
 
 Company.init(
@@ -181,6 +184,14 @@ Company.init(
     },
     referId: {
       type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    nextPayment: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    ein: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
   },

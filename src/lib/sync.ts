@@ -8,13 +8,14 @@ import StepsTaken from "@/models/stepsTaken";
 import { DataTypes } from "sequelize";
 import Payments from "@/models/payments.model";
 import CompanyDocuments from "@/models/companyDocuments";
+import CheckoutSessions from "@/models/checkoutsessions";
 // import { DataTypes } from "sequelize";
 
 const syncDatabase = async () => {
   try {
     await sequelize.authenticate();
     await Payments.sync({ alter: false });
-
+    await CheckoutSessions.sync({ alter: false });
     await Company.sync({ alter: false });
     await User.sync({ alter: false });
     await ContactUs.sync({ alter: false });

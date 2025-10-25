@@ -1,0 +1,12 @@
+
+User-agent: *
+# Allow everything by default but block internal/system paths that shouldn't be crawled
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /src/
+Disallow: /node_modules/
+
+# Point to your sitemap (optional) — replace example.com with your domain
+Sitemap: https://formllc.io/sitemap.xml
+Host: https://formllc.io

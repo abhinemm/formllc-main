@@ -114,6 +114,8 @@ export async function POST(req: Request) {
   }: CompanyWithUserAttributes = await req.json();
   try {
     const userExist = await UserService.findOne({ email: data.user?.email });
+    console.log("userExistuserExist", userExist);
+
     if (!userExist) {
       return NextResponse.json(
         { message: "User not existed" },
@@ -122,6 +124,17 @@ export async function POST(req: Request) {
     }
     userExist.currency = currency;
     await userExist.save();
+
+    const where = {
+      userId: userExist?.id,
+      status: 0,
+      registrationState: registrationState,
+    };
+
+    const findCompany = await CompanyService.findOne(where);
+    if (findCompany) {
+      return NextResponse.json(findCompany, { status: 201 });
+    }
 
     const newCompany = await Company.create({
       registrationState,

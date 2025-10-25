@@ -184,8 +184,13 @@ export const withPasswordSchema = yup.object({
     .required("Email is required"),
   password: yup
     .string()
-    .min(8, "Use at least 8 characters")
-    .matches(/^(?=.*[A-Za-z])(?=.*\d).{8,}$/, "Use letters and numbers")
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    )
     .required("Password is required"),
   cpassword: yup
     .string()

@@ -1,0 +1,49 @@
+runtime: nodejs20
+env: standard
+instance_class: F1
+service: formllc
+
+env_variables:
+  DATABASE_NAME: formllc-live
+  DATABASE_USER: postgres
+  DATABASE_PASSWORD: l8,n|3XKu&#M/S2N
+  DATABASE_HOST: 34.171.8.184
+  DATABASE_PORT: 5432
+  DATABASE_DIALECT: postgres
+  
+
+  GOOGLE_CLIENT_ID: 19034276532-asonmi5m8b9dlgbr8h7pu8dfl7jcrku1.apps.googleusercontent.com
+  GOOGLE_CLIENT_SECRET: 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
+  NEXTAUTH_SECRET: Golden_123
+  NEXTAUTH_URL: https://formllc.io
+
+  STRIPE_SECRET_KEY: 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
+  STRIPE_WEBHOOK_SECRET: whsec_ii2FTtAubUD1FLkU6P3G423o6MfV3Edk
+
+  BASIC_PLAN_FEE_PRICEID: price_1RI0kPCO9VMVJ8yLSgheH9zK
+  BASIC_PLAN_SUB_PRICEID: price_1RI0wbCO9VMVJ8yLnzU0uwTT
+  PRO_PLAN_FEE_PRICEID: price_1RH1EBCO9VMVJ8yLoHIes7aM
+  PRO_PLAN_SUB_PRICEID: price_1RI0trCO9VMVJ8yLN4uLTTso
+
+  FRONTENDURL: https://formllc.io/payment-success
+  BASEURL: https://formllc.io
+  
+  NEXT_PUBLIC_UPLOADURL: http://utility.getllc.io/upload
+  UPLOADURL: http://utility.getllc.io/upload
+  NEXT_PUBLIC_BASEURL: https://formllc.io
+
+  SMTP_HOST: smtpout.secureserver.net
+  SMTP_PORT: 465
+  SMTP_SECURE: true
+  SMTP_USER: support@formllc.io
+  SMTP_PASS: '@Formllc9846987903'
+  FROM_EMAIL: support@formllc.io
+  JWT_SECRET: Golden_123
+  FORMLLC_API_KEY: Fu8PnqxEcPAiZ2DQmjsJZiqLmKIMQRfU
+  WEBHOOK_SECRET: whsk_702d2eaabfe422ab610e7a3219a1aa1b3cdfb288c5e06748cf37135ac2846fc7
+  NEXT_PUBLIC_GA_ID: G-JCF47JJMY7
+
+automatic_scaling:
+  min_instances: 1
+  max_instances: 5
+  target_cpu_utilization: 0.9

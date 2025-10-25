@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true, // Suppresses ESLint warnings during the build process
   },
+  distDir: 'build',
   images: {
     domains: [
       "lh3.googleusercontent.com",

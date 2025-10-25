@@ -39,6 +39,9 @@ env_variables:
   SMTP_PASS: '@Formllc9846987903'
   FROM_EMAIL: support@formllc.io
   JWT_SECRET: Golden_123
+  FORMLLC_API_KEY: Fu8PnqxEcPAiZ2DQmjsJZiqLmKIMQRfU
+  WEBHOOK_SECRET: whsk_702d2eaabfe422ab610e7a3219a1aa1b3cdfb288c5e06748cf37135ac2846fc7
+  NEXT_PUBLIC_GA_ID: G-JCF47JJMY7
 
 automatic_scaling:
   min_instances: 1

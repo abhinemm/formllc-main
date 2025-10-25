@@ -1721,7 +1721,7 @@ export const EMAIL_Template = [
     label: "Subscription renewal",
     value: "subscription.renewal",
   },
-   {
+  {
     label: "Enquiry Reply",
     value: "enquire.replay",
   },
@@ -1801,6 +1801,16 @@ export const USERMANUES = {
       key: "/admin/enquries",
       icon: <ContactsOutlined />,
       label: "Enquiries",
+    },
+    {
+      key: "/admin/webhooks",
+      icon: <ContactsOutlined />,
+      label: "Webhooks",
+    },
+    {
+      key: "/admin/subscription",
+      icon: <ContactsOutlined />,
+      label: "Subscriptions",
     },
   ],
   [UserTypesEnum.manager]: [

@@ -1,74 +1,16 @@
 import { MexicoSub, WyomingLinkSub } from "@/constants/constants";
 import { encryptURL } from "@/helpers/CryptoHelper";
+import CheckoutSessions from "@/models/checkoutsessions";
 import Company from "@/models/company";
 import StripeService from "@/services/stripe.service";
 import { PlansEnum } from "@/utils/constants";
+import { client } from "@/utils/fanbasis";
 import { NextResponse } from "next/server";
 
-const BASIC_PLAN_FEE_PRICEID = process.env.BASIC_PLAN_FEE_PRICEID;
-const BASIC_PLAN_SUB_PRICEID = process.env.BASIC_PLAN_SUB_PRICEID;
-const PRO_PLAN_FEE_PRICEID = process.env.PRO_PLAN_FEE_PRICEID;
-const PRO_PLAN_SUB_PRICEID = process.env.PRO_PLAN_SUB_PRICEID;
-
-const BASIC_PLAN_DODO_PAYLINK = `https://checkout.dodopayments.com/buy/pdt_561m2wwjPAeq8u9tUj3VV?quantity=1&country=United+States&addressLine=245+Market+ST&city=San+Francisco+&zipCode=94105&state=California&disableAddressLine=true&disableState=true&disableCity=true&disableZipCode=true&redirect_url=${process.env.NEXTAUTH_URL}%2Fpayment-success/`;
-const PRO_PLAN_DODO_PAYLINK = `https://checkout.dodopayments.com/buy/pdt_SmaZ2En8Lrmim6uwN7Njs?quantity=1&country=United+States&addressLine=245+Market+ST&city=San+Francisco+&zipCode=94105&state=California&disableAddressLine=true&disableState=true&disableCity=true&disableZipCode=true&redirect_url=${process.env.NEXTAUTH_URL}%2Fpayment-success/`;
-const WyomingLink = "https://www.fanbasis.com/agency-checkout/formllc/mZJmE";
 const Mexico = "https://www.fanbasis.com/agency-checkout/formllc/YE6Q9";
 
-// export async function POST(req: Request) {
-//   const body: any = await req.json();
-
-//   const company = await Company.findByPk(body.companyId);
-//   if (!company) {
-//     return NextResponse.json(
-//       { message: "company not found!" },
-//       { status: 404 }
-//     );
-//   }
-//   if (!body.plan) {
-//     return NextResponse.json({ message: "Plan is required!" }, { status: 400 });
-//   }
-//   const paymentPrices: any = {};
-//   switch (body.plan) {
-//     case PlansEnum.BASIC: {
-//       if (body.register) {
-//         paymentPrices.regPriceId = BASIC_PLAN_FEE_PRICEID;
-//       }
-//       if (body.sub) {
-//         paymentPrices.subPriceId = BASIC_PLAN_SUB_PRICEID;
-//       }
-
-//       paymentPrices.subPlan = PlansEnum.BASIC;
-//       break;
-//     }
-//     case PlansEnum.PRO: {
-//       if (body.register) {
-//         paymentPrices.regPriceId = PRO_PLAN_FEE_PRICEID;
-//       }
-//       if (body.sub) {
-//         paymentPrices.subPriceId = PRO_PLAN_SUB_PRICEID;
-//       }
-
-//       paymentPrices.subPlan = PlansEnum.PRO;
-//       break;
-//     }
-//   }
-//   if (body?.sub) {
-//     body.redirecturl = `${process.env.BASEURL}/user?status=success`;
-//   }
-
-//   const paymentLink = await StripeService.createLink(
-//     company.id!,
-//     paymentPrices,
-//     body.redirecturl ? body.redirecturl : null,
-//     body.register ? true : false
-//   );
-
-//   company.paymentLink = paymentLink;
-//   company.plan = body.plan;
-//   await company.save();
-//   return NextResponse.json({ url: paymentLink }, { status: 200 });
-// }
+const WyomingPrice = 29900;
+const MexicoPrice = 19900;
 
 export async function POST(req: Request) {
   const body: any = await req.json();
@@ -90,6 +32,121 @@ export async function POST(req: Request) {
 
   const encryptData = encryptURL(JSON.stringify(data));
   let paymentLink: string = "";
+  let response: any = null;
+
+  const checkoutSessionsData = await CheckoutSessions.findOne({
+    where: { companyId: body.companyId },
+  });
+  if (body.sub) {
+    if (checkoutSessionsData?.subSessionLink) {
+      return NextResponse.json(
+        { url: checkoutSessionsData.subSessionLink },
+        { status: 200 }
+      );
+    }
+    try {
+      const subscriptionLink = await client.checkoutSessions.create({
+        product: {
+          title: "FormLLC Subscription",
+          description: `Subscription for ${company.registrationState} Business Mail Room Service`,
+        },
+        amount_cents: 2500,
+        type: "subscription",
+        metadata: {
+          companyId: `${body.companyId}`,
+          type: body.sub ? "sub" : "oneTime",
+        },
+        subscription: {
+          frequency_days: 5,
+          initial_fee: 0,
+          free_trial_days: null,
+          initial_fee_days: 0,
+          auto_expire_after_x_periods: null,
+        },
+        success_url: encryptData
+          ? `https://formllc.io/payment-success?uid=${encryptData}`
+          : `https://formllc.io/payment-success`,
+      });
+      response = subscriptionLink;
+      if (response?.data?.payment_link) {
+        paymentLink = response?.data?.payment_link;
+
+        if (checkoutSessionsData) {
+          checkoutSessionsData.subSessionId = subscriptionLink?.data
+            ?.checkout_session_id
+            ? Number(subscriptionLink?.data?.checkout_session_id)
+            : null;
+          checkoutSessionsData.subSessionLink = response?.data?.payment_link;
+          await checkoutSessionsData.save();
+        } else {
+          await CheckoutSessions.create({
+            companyId: body.companyId,
+            subSessionId: subscriptionLink?.data?.checkout_session_id
+              ? Number(subscriptionLink?.data?.checkout_session_id)
+              : null,
+            subSessionLink: response?.data?.payment_link,
+          });
+        }
+      }
+      return NextResponse.json(
+        { url: response?.data?.payment_link },
+        { status: 200 }
+      );
+    } catch (error) {
+      response = error;
+    }
+  } else {
+    if (checkoutSessionsData?.regSessionLink) {
+      return NextResponse.json(
+        { url: checkoutSessionsData.regSessionLink },
+        { status: 200 }
+      );
+    }
+    try {
+      const subscriptionLink = await client.checkoutSessions.create({
+        product: {
+          title: `FormLLC ${company.registrationState} Registration Fee`,
+          description: `Registration fee for ${company.registrationState}`,
+        },
+        amount_cents: body.plan == PlansEnum.BASIC ? MexicoPrice : WyomingPrice,
+        type: "onetime_reusable",
+        metadata: {
+          companyId: `${body.companyId}`,
+          type: body.sub ? "sub" : "oneTime",
+        },
+        success_url: encryptData
+          ? `https://formllc.io/payment-success?uid=${encryptData}`
+          : `https://formllc.io/payment-success`,
+      });
+      response = subscriptionLink;
+      if (response?.data?.payment_link) {
+        paymentLink = response?.data?.payment_link;
+
+        if (checkoutSessionsData) {
+          checkoutSessionsData.regSessionId = subscriptionLink?.data
+            ?.checkout_session_id
+            ? Number(subscriptionLink?.data?.checkout_session_id)
+            : null;
+          checkoutSessionsData.regSessionLink = response?.data?.payment_link;
+          await checkoutSessionsData.save();
+        } else {
+          await CheckoutSessions.create({
+            companyId: body.companyId,
+            regSessionId: subscriptionLink?.data?.checkout_session_id
+              ? Number(subscriptionLink?.data?.checkout_session_id)
+              : null,
+            regSessionLink: response?.data?.payment_link,
+          });
+        }
+      }
+      return NextResponse.json(
+        { url: response?.data?.payment_link },
+        { status: 200 }
+      );
+    } catch (error) {
+      response = error;
+    }
+  }
 
   switch (body.plan) {
     case PlansEnum.BASIC: {
@@ -101,20 +158,6 @@ export async function POST(req: Request) {
       } else {
         paymentLink = encryptData ? `${Mexico}?uid=${encryptData}` : Mexico;
       }
-      break;
-    }
-    case PlansEnum.PRO: {
-      // paymentLink = PRO_PLAN_DODO_PAYLINK + `${body.companyId}`;
-      if (body.sub) {
-        paymentLink = encryptData
-          ? `${WyomingLinkSub}?uid=${encryptData}`
-          : WyomingLinkSub;
-      } else {
-        paymentLink = encryptData
-          ? `${WyomingLink}?uid=${encryptData}`
-          : WyomingLink;
-      }
-
       break;
     }
   }

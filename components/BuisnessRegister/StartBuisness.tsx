@@ -89,6 +89,7 @@ const StartBusinessTabs: React.FC = () => {
         registrationState: companyLocation,
         companyType: companyType,
         status: 0,
+        plan: plans[plan],
       };
       try {
         await axios

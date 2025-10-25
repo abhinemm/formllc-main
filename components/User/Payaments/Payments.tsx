@@ -122,15 +122,17 @@ const Payments = () => {
                 >
                   <div className={styles.header}>
                     <div className={styles.leftSide}>
-                      {el?.plan === "subscription" ? (
-                        <h3>Mial room subscription</h3>
+                      {el?.type === "sub" ? (
+                        <h3>
+                          Buisness Mail Subscription for {el.registrationState}
+                        </h3>
                       ) : (
                         <h3>{el?.plan} Plan</h3>
                       )}
 
                       <p>Paid Date: {convertDate(el?.paymentDate)}</p>
                     </div>
-                    <div className={styles.rightSide}>
+                    {/* <div className={styles.rightSide}>
                       <button
                         onClick={() => handleDownload(el?.id, el?.invoicePDF)}
                       >
@@ -143,12 +145,12 @@ const Payments = () => {
                           </>
                         )}
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                   <div className={styles.bodyContent}>
                     <div className={styles.leftWrapper}>
                       <p>{el?.description}</p>
-                      <p>Invoice Number: {el?.invoice}</p>
+                      <p>Transaction Number: {el?.transactionID}</p>
                     </div>
                     <div className={styles.rightWrapper}>
                       <button type="button">
@@ -172,11 +174,12 @@ const Payments = () => {
                       <h2>Total:</h2>
                     </div>
                     <div className={styles.footerRight}>
-                      {el?.plan === "subscription" ? (
+                      <h2>${el.amountPaid}</h2>
+                      {/* {el?.plan === "subscription" ? (
                         <h2>$25</h2>
                       ) : (
                         <h2>{planDetails[el?.plan].fee}</h2>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

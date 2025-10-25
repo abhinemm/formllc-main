@@ -4,18 +4,19 @@ import sequelize from "../lib/sequelize";
 export interface PaymentsAttributes {
   id?: number;
   companyId?: number;
-  invoice?: string;
+  paymentId?: string;
   transactionID?: string;
   paymentDate?: string;
   plan?: string;
-  paymentMethod?: string;
+  registrationState?: string;
   status?: string;
   description?: string;
   invoicePDF?: string;
   amountPaid?: number;
   type?: string;
-  paymentInfo?: string;
+  buyerInfo?: string;
   currency?: string;
+  webhookId?: string;
 }
 
 interface PaymentsCreationAttributes
@@ -27,18 +28,19 @@ class Payments
 {
   public id?: number;
   public companyId?: number;
-  public invoice?: string;
+  public paymentId?: string;
   public transactionID?: string;
   public paymentDate?: string;
   public plan?: string;
-  public paymentMethod?: string;
+  public registrationState?: string;
   public status?: string;
   public description?: string;
   public invoicePDF?: string;
   public amountPaid?: number;
   public type?: string;
-  public paymentInfo?: string;
+  public buyerInfo?: string;
   public currency?: string;
+  public webhookId?: string;
 }
 
 Payments.init(
@@ -53,7 +55,7 @@ Payments.init(
 
       allowNull: true,
     },
-    invoice: {
+    paymentId: {
       type: DataTypes.STRING,
 
       allowNull: true,
@@ -82,7 +84,7 @@ Payments.init(
 
       allowNull: true,
     },
-    paymentMethod: {
+    registrationState: {
       type: DataTypes.STRING,
 
       allowNull: true,
@@ -98,16 +100,18 @@ Payments.init(
     },
     type: {
       type: DataTypes.STRING,
-
       allowNull: true,
     },
-    paymentInfo: {
+    buyerInfo: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
     currency: {
       type: DataTypes.STRING,
-
+      allowNull: true,
+    },
+    webhookId: {
+      type: DataTypes.STRING,
       allowNull: true,
     },
   },

@@ -6,6 +6,7 @@ import Loader from "../../Loader";
 import axios from "axios";
 import { StepsAttributes } from "@/models/steps";
 import {
+  PlansEnum,
   StepsTakenStatusEnum,
   StepsTakenStatusViewEnum,
   StepsView,
@@ -13,7 +14,11 @@ import {
 import { notification, Skeleton, Spin } from "antd";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRouter } from "next/navigation";
-import { BTNCOLORS, SLIDEACTTION } from "@/constants/constants";
+import {
+  BTNCOLORS,
+  RegistrationStation,
+  SLIDEACTTION,
+} from "@/constants/constants";
 import DocumentViewer from "../../DocumentViewer/DocumentViewer";
 
 type NotificationType = "success" | "info" | "warning" | "error";
@@ -117,10 +122,15 @@ const DashBoard = () => {
     }
   };
 
-  const handlePayment = async (companyId: number) => {
+  const handlePayment = async (companyId: number, plan: any) => {
     setLoadingSub(true);
     const body = {
-      plan: "PRO",
+      plan: plan
+        ? plan
+        : contextOptions?.selectedCompany.registrationState ==
+          RegistrationStation.mexico_state
+        ? PlansEnum.PRO
+        : PlansEnum.BASIC,
       companyId: companyId,
       sub: true,
       redirectUrl: `${process.env.NEXT_PUBLIC_BASEURL}/user?status=success`,
@@ -270,7 +280,10 @@ const DashBoard = () => {
               <button
                 type="button"
                 onClick={() => {
-                  handlePayment(contextOptions?.selectedCompany?.id);
+                  handlePayment(
+                    contextOptions?.selectedCompany?.id,
+                    contextOptions?.selectedCompany?.plan ?? null
+                  );
                 }}
                 disabled={loadingSub}
               >
@@ -278,6 +291,7 @@ const DashBoard = () => {
                 <span></span>
                 <span></span>
                 <span></span>
+
                 {loadingSub ? "Loading.." : "Subscribe"}
               </button>
             </div>

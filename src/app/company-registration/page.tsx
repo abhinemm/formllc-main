@@ -168,6 +168,17 @@ const CompanyRegistration = () => {
     }
   };
 
+  const popoverContentWhatsapp = (
+    <div className={styles.popoverEin}>
+      <p>
+        WhatsApp is our primary mode of communication for important updates
+        regarding your LLC registration. By providing your WhatsApp number, you
+        ensure timely notifications and support throughout the registration
+        process.
+      </p>
+    </div>
+  );
+
   const popoverContentEin = (
     <div className={styles.popoverEin}>
       <p>
@@ -286,7 +297,16 @@ const CompanyRegistration = () => {
                 <div className={styles.doubleFlex}>
                   {" "}
                   <div className={styles.fbformitemSelect}>
-                    <label className={styles.fblabel}>Phone</label>
+                    <Popover
+                      content={popoverContentWhatsapp}
+                      title="Why Whatsapp?"
+                      trigger="hover"
+                    >
+                      <div className={styles.popoverWrapper}>
+                        Why whatsapp? <QuestionCircleOutlined />
+                      </div>
+                    </Popover>
+                    <label className={styles.fblabel}>Whatsapp Number</label>
                     <InputNumber
                       addonBefore={
                         <>

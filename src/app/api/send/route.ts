@@ -106,8 +106,6 @@ WHERE companies.id = ${body.id};`,
 
     if (htmlTemp) {
       const transporter = getTransporter();
-
-      // ensure we have a reasonable plain-text fallback (helps deliverability)
       const stripHtml = (html: string) =>
         html
           .replace(/<\/?[^>]+(>|$)/g, "") // remove tags

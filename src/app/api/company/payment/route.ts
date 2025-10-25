@@ -47,13 +47,13 @@ export async function POST(req: Request) {
     });
 
     if (!payments?.length) {
-    //   await Payments.create(requestData);
+      //   await Payments.create(requestData);
       if (body.type === "sub") {
         const date: any = new Date();
         date.setDate(date.getDate() + 30);
         company.subsriptionPaymentStatus = true;
         company.paymentStatus = 1;
-        // company.nextPayment = date;
+        company.nextPayment = date;
         await company.save();
       }
       if (body.type === "oneTime") {

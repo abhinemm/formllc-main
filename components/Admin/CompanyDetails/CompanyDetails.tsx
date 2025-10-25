@@ -99,7 +99,7 @@ const CompanyDetails = () => {
 
   const getCompanyDetails = async (companyId: number) => {
     await axios
-      .get(`/api/company?id=${companyId}`)
+      .get(`/api/company/details?id=${companyId}`)
       .then((res: any) => {
         if (res?.data?.length) {
           const details = res?.data;

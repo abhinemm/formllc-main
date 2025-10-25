@@ -6,6 +6,7 @@ import syncDatabase from "../lib/sync";
 import AuthProvider from "../../components/auth-provider";
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,8 +60,30 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   await syncDatabase();
+  const GTMID = process.env.NEXT_PUBLIC_GA_ID;
   return (
     <html lang="en">
+      <head>
+        {/* Google Analytics Scripts */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GTMID}`}
+          strategy="afterInteractive"
+        />
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GTMID}', {
+                page_path: window.location.pathname,
+              });
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable}  ${notoSans.variable}`}
       >

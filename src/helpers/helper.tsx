@@ -18,3 +18,16 @@ export const getFileExtensionFromUrl = (url: string) => {
 export function generateOTP(): string {
   return Math.floor(100000 + Math.random() * 900000).toString();
 }
+
+export function generateFixedTransactionId(): string {
+  const prefix = "TRNS-";
+  const timestamp = Date.now().toString(36).toUpperCase(); // timestamp base36
+
+  const randomLength = 16 - timestamp.length;
+  const randomPart = [...Array(randomLength)]
+    .map(() => Math.random().toString(36)[2])
+    .join("")
+    .toUpperCase();
+
+  return `${prefix}${randomPart}${timestamp}`;
+}

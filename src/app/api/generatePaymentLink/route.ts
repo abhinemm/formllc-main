@@ -54,7 +54,7 @@ export async function POST(req: Request) {
           title: "FormLLC Subscription",
           description: `Subscription for ${company.registrationState} Business Mail Room Service`,
         },
-        amount_cents: 1,
+        amount_cents: 100,
         type: "subscription",
 
         metadata: {
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
           type: body.sub ? "sub" : "oneTime",
         },
         subscription: {
-          frequency_days: 30,
+          frequency_days: 5,
           initial_fee: 0,
           free_trial_days: null,
           initial_fee_days: 0,

@@ -57,7 +57,7 @@ export async function POST(req: Request) {
           type: body.sub ? "sub" : "oneTime",
         },
         subscription: {
-          frequency_days: 5,
+          frequency_days: 30,
           initial_fee: 0,
           free_trial_days: null,
           initial_fee_days: 0,

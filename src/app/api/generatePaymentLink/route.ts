@@ -10,8 +10,8 @@ const Mexico = "https://www.fanbasis.com/agency-checkout/formllc/YE6Q9";
 // const WyomingPrice = 29900;
 // const MexicoPrice = 19900;
 
-const WyomingPrice = 1;
-const MexicoPrice = 1;
+const WyomingPrice = 100;
+const MexicoPrice = 100;
 
 export async function POST(req: Request) {
   const body: any = await req.json();

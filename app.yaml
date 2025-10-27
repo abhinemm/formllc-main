@@ -28,7 +28,7 @@ env_variables:
   FRONTENDURL: https://formllc.io/payment-success
   BASEURL: https://formllc.io
   
-  NEXT_PUBLIC_UPLOADURL: http://utility.getllc.io/upload
+  NEXT_PUBLIC_UPLOADURL: https://utility.getllc.io/upload
   UPLOADURL: http://utility.getllc.io/upload
   NEXT_PUBLIC_BASEURL: https://formllc.io
 

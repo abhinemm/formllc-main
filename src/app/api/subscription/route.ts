@@ -13,8 +13,12 @@ export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
     const searchParams = url.searchParams;
-    const webhookSubscriptions = await client.subscribers.list();
-    console.log("webhookSubscriptions", webhookSubscriptions);
+    const page = searchParams.get("page");
+    const webhookSubscriptions = await client.subscribers.list({
+      page: page ? Number(page) : 1,
+      per_page: 100,
+    });
+
     let data = webhookSubscriptions;
     let status: boolean = false;
     if (data?.status === "success") {

@@ -80,7 +80,7 @@ const ImageUploadComponent = ({ openNotification, onSubmitImg, fileArray }) => {
     formData.append("file", file);
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_UPLOADURL!}?project=formllc`,
+        `https://utility.getllc.io/upload?project=formllc`,
         formData,
         {
           headers: {

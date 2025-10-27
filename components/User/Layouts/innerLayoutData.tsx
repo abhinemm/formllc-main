@@ -9,6 +9,7 @@ import { useAppContext } from "../../Context/AppContext";
 import PaymentSuccess from "../../Modals/PaymentSuccess";
 import PaymentError from "../../Modals/PaymentError";
 import { signOut } from "next-auth/react";
+import { DashboardOutlined } from "@ant-design/icons";
 const { Sider, Content } = Layout;
 interface IInnerLayout {
   children: React.ReactNode;
@@ -17,7 +18,7 @@ interface IInnerLayout {
 
 const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
   const [collapsed, setCollapsed] = useState(false);
-  const { contextOptions } = useAppContext();
+  const { contextOptions, setContextOptions } = useAppContext();
   const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
   const [paymentError, setPaymentError] = useState<boolean>(false);
   const pathName = usePathname();
@@ -40,6 +41,26 @@ const InnerLayout: React.FC<IInnerLayout> = ({ children, menues }) => {
 
   const handleClickMenu = (key: any) => {
     if (key == "logout") {
+      setContextOptions((prev) => ({
+        ...prev,
+        userData: null,
+        selectedCompany: {
+          name: "No Company",
+        },
+        allCompanies: [],
+        campanyName: null,
+        selectedCompanyDetails: null,
+        userSession: {},
+        loading: true,
+        isAuth: false,
+        sideMenus: [
+          {
+            key: "/user",
+            icon: <DashboardOutlined />,
+            label: "Dashboard",
+          },
+        ],
+      }));
       signOut({ callbackUrl: "/" });
     } else {
       if (key !== "company") {

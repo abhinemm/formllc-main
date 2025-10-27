@@ -18,6 +18,11 @@ export enum CompanyPaymentStatus {
   failed = 2,
 }
 
+export enum paymentStatus {
+  paid = "Paid",
+  failed = "Failed",
+}
+
 export enum StepsTakenStatusEnum {
   completed = "completed",
   inReview = "inReview",

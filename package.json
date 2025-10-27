@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 8080",
-    "deploy":"npm run build && gcloud app deploy --project=$PROJECT_ID --quiet",
+    "deploy": "npm run build && gcloud app deploy --project=$PROJECT_ID --quiet",
     "lint": "next lint"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "formidable": "^3.5.2",
     "formik": "^2.4.6",
     "framer-motion": "^11.14.4",
+    "googleapis": "^164.1.0",
     "joi": "^17.13.3",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",

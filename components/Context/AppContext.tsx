@@ -1,17 +1,5 @@
-// AppContext.js
-import { useSession } from "next-auth/react";
-import React, {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import {
-  DashboardOutlined,
-  HomeOutlined,
-  UnorderedListOutlined,
-} from "@ant-design/icons";
+import React, { ReactNode, createContext, useContext, useState } from "react";
+import { DashboardOutlined } from "@ant-design/icons";
 
 interface ContextOptions {
   userData: any;

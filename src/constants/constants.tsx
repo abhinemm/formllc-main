@@ -2,6 +2,7 @@ import { StepsTakenStatusEnum, UserTypesEnum } from "@/utils/constants";
 import {
   ContactsOutlined,
   DashboardOutlined,
+  DollarOutlined,
   HomeOutlined,
   LogoutOutlined,
   UnorderedListOutlined,
@@ -1791,6 +1792,11 @@ export const USERMANUES = {
       key: "/admin/users",
       icon: <UserOutlined />,
       label: "Users",
+    },
+    {
+      key: "/admin/payments",
+      icon: <DollarOutlined />,
+      label: "Payments",
     },
     {
       key: "/admin/affiliates",

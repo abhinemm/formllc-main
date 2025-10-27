@@ -1808,16 +1808,6 @@ export const USERMANUES = {
       icon: <ContactsOutlined />,
       label: "Enquiries",
     },
-    {
-      key: "/admin/webhooks",
-      icon: <ContactsOutlined />,
-      label: "Webhooks",
-    },
-    {
-      key: "/admin/subscription",
-      icon: <ContactsOutlined />,
-      label: "Subscriptions",
-    },
   ],
   [UserTypesEnum.manager]: [
     {

@@ -7,11 +7,11 @@ import { NextResponse } from "next/server";
 
 const Mexico = "https://www.fanbasis.com/agency-checkout/formllc/YE6Q9";
 
-const WyomingPrice = 29900;
-const MexicoPrice = 19900;
+// const WyomingPrice = 29900;
+// const MexicoPrice = 19900;
 
-// const WyomingPrice = 1;
-// const MexicoPrice = 1;
+const WyomingPrice = 1;
+const MexicoPrice = 1;
 
 export async function POST(req: Request) {
   const body: any = await req.json();
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
           title: "FormLLC Subscription",
           description: `Subscription for ${company.registrationState} Business Mail Room Service`,
         },
-        amount_cents: 2500,
+        amount_cents: 1,
         type: "subscription",
 
         metadata: {
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
           type: body.sub ? "sub" : "oneTime",
         },
         subscription: {
-          frequency_days: 30,
+          frequency_days: 5,
           initial_fee: 0,
           free_trial_days: null,
           initial_fee_days: 0,

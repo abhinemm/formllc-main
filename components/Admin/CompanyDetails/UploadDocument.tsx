@@ -65,7 +65,7 @@ const UploadDocument = ({
     formData.append("file", file);
     try {
       const response = await axios.post(
-        `https://utility.getllc.io/upload`,
+        `${process.env.NEXT_PUBLIC_UPLOADURL!}?project=formllc`,
         formData,
         {
           headers: {

@@ -23,24 +23,24 @@ import { encryptURL } from "@/helpers/CryptoHelper";
 const crypto = require("crypto");
 
 export async function POST(req: NextRequest) {
-  const body: any = await req.json();
-  console.log("bodybodybodybody", body?.data);
+  const body: any = await req.json(); 
+  console.log("bodybodybodybody", body);
   console.log("body?.typebody?.type", body?.type);
 
-  const signature = req.headers.get("x-webhook-signature") || "";
-  const payload = JSON.stringify(body);
-  const expectedSignature = crypto
-    .createHmac("sha256", process.env.WEBHOOK_SECRET!)
-    .update(payload)
-    .digest("hex");
-  const tokenStatus = crypto.timingSafeEqual(
-    Buffer.from(signature),
-    Buffer.from(expectedSignature)
-  );
+  // const signature = req.headers.get("x-webhook-signature") || "";
+  // const payload = JSON.stringify(body);
+  // const expectedSignature = crypto
+  //   .createHmac("sha256", process.env.WEBHOOK_SECRET!)
+  //   .update(payload)
+  //   .digest("hex");
+  // const tokenStatus = crypto.timingSafeEqual(
+  //   Buffer.from(signature),
+  //   Buffer.from(expectedSignature)
+  // );
 
-  if (!tokenStatus) {
-    return NextResponse.json({ message: "Invalid signature" });
-  }
+  // if (!tokenStatus) {
+  //   return NextResponse.json({ message: "Invalid signature" });
+  // }
   if (!body) {
     return NextResponse.json({ message: "Body not required" });
   }
@@ -135,6 +135,8 @@ export async function POST(req: NextRequest) {
         if (!companyId) return NextResponse.json({ received: true });
 
         const company: any = await Company.findByPk(Number(companyId));
+        console.log("companycompanycompany", company);
+
         if (!company) return NextResponse.json({ received: true });
 
         const userData = await User.findByPk(company.userId);
@@ -226,9 +228,9 @@ export async function POST(req: NextRequest) {
           paymentDate: new Date(),
           plan:
             company.plan ||
-            (company.registrationState === RegistrationStation.mexico_state
-              ? PlansEnum.PRO
-              : PlansEnum.BASIC),
+            (company.registrationState == RegistrationStation.mexico_state
+              ? PlansEnum.BASIC
+              : PlansEnum.PRO),
           registrationState: company.registrationState || "",
           status: body?.data?.status === "succeeded" ? "paid" : "failed",
           description: body?.data?.item?.title || "",

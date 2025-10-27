@@ -2,6 +2,7 @@ import { StepsTakenStatusEnum, UserTypesEnum } from "@/utils/constants";
 import {
   ContactsOutlined,
   DashboardOutlined,
+  DollarOutlined,
   HomeOutlined,
   LogoutOutlined,
   UnorderedListOutlined,
@@ -1793,6 +1794,11 @@ export const USERMANUES = {
       label: "Users",
     },
     {
+      key: "/admin/payments",
+      icon: <DollarOutlined />,
+      label: "Payments",
+    },
+    {
       key: "/admin/affiliates",
       icon: <UploadOutlined />,
       label: "Affiliates",
@@ -1801,16 +1807,6 @@ export const USERMANUES = {
       key: "/admin/enquries",
       icon: <ContactsOutlined />,
       label: "Enquiries",
-    },
-    {
-      key: "/admin/webhooks",
-      icon: <ContactsOutlined />,
-      label: "Webhooks",
-    },
-    {
-      key: "/admin/subscription",
-      icon: <ContactsOutlined />,
-      label: "Subscriptions",
     },
   ],
   [UserTypesEnum.manager]: [

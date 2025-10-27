@@ -80,7 +80,7 @@ const ImageUploadComponent = ({ openNotification, onSubmitImg, fileArray }) => {
     formData.append("file", file);
     try {
       const response = await axios.post(
-        "https://utility.getllc.io/upload",
+        `${process.env.NEXT_PUBLIC_UPLOADURL!}?project=formllc`,
         formData,
         {
           headers: {
@@ -119,7 +119,10 @@ const ImageUploadComponent = ({ openNotification, onSubmitImg, fileArray }) => {
       {/* Dropzone Area */}
       <div {...getRootProps()} className={styles.dropzone}>
         <input {...getInputProps()} />
-        <p>Drag & drop passport photos here, or click to select</p>
+        <p>
+          Drag & drop your passport front and back photos here, or click to
+          upload them.
+        </p>
       </div>
 
       {/* Display Uploaded Images */}

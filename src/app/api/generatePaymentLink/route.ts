@@ -1,16 +1,17 @@
-import { MexicoSub, WyomingLinkSub } from "@/constants/constants";
 import { encryptURL } from "@/helpers/CryptoHelper";
 import CheckoutSessions from "@/models/checkoutsessions";
 import Company from "@/models/company";
-import StripeService from "@/services/stripe.service";
 import { PlansEnum } from "@/utils/constants";
 import { client } from "@/utils/fanbasis";
 import { NextResponse } from "next/server";
 
 const Mexico = "https://www.fanbasis.com/agency-checkout/formllc/YE6Q9";
 
-const WyomingPrice = 29900;
-const MexicoPrice = 19900;
+// const WyomingPrice = 29900;
+// const MexicoPrice = 19900;
+
+const WyomingPrice = 1;
+const MexicoPrice = 1;
 
 export async function POST(req: Request) {
   const body: any = await req.json();
@@ -28,6 +29,7 @@ export async function POST(req: Request) {
   let data = {
     companyId: body.companyId,
     type: body.sub ? "sub" : "oneTime",
+    comapany: "formllc", //
   };
 
   const encryptData = encryptURL(JSON.stringify(data));
@@ -37,21 +39,24 @@ export async function POST(req: Request) {
   const checkoutSessionsData = await CheckoutSessions.findOne({
     where: { companyId: body.companyId },
   });
+
   if (body.sub) {
     if (checkoutSessionsData?.subSessionLink) {
       return NextResponse.json(
-        { url: checkoutSessionsData.subSessionLink },
+        { url: `${checkoutSessionsData.subSessionLink}?uid=${encryptData}` },
         { status: 200 }
       );
     }
+
     try {
       const subscriptionLink = await client.checkoutSessions.create({
         product: {
           title: "FormLLC Subscription",
           description: `Subscription for ${company.registrationState} Business Mail Room Service`,
         },
-        amount_cents: 2500,
+        amount_cents: 100,
         type: "subscription",
+
         metadata: {
           companyId: `${body.companyId}`,
           type: body.sub ? "sub" : "oneTime",
@@ -68,6 +73,7 @@ export async function POST(req: Request) {
           : `https://formllc.io/payment-success`,
       });
       response = subscriptionLink;
+
       if (response?.data?.payment_link) {
         paymentLink = response?.data?.payment_link;
 
@@ -87,18 +93,18 @@ export async function POST(req: Request) {
             subSessionLink: response?.data?.payment_link,
           });
         }
+        return NextResponse.json(
+          { url: `${response?.data?.payment_link}?uid=${encryptData}` },
+          { status: 200 }
+        );
       }
-      return NextResponse.json(
-        { url: response?.data?.payment_link },
-        { status: 200 }
-      );
     } catch (error) {
       response = error;
     }
   } else {
     if (checkoutSessionsData?.regSessionLink) {
       return NextResponse.json(
-        { url: checkoutSessionsData.regSessionLink },
+        { url: `${checkoutSessionsData.regSessionLink}?uid=${encryptData}` },
         { status: 200 }
       );
     }
@@ -140,30 +146,12 @@ export async function POST(req: Request) {
         }
       }
       return NextResponse.json(
-        { url: response?.data?.payment_link },
+        { url: `${response?.data?.payment_link}?uid=${encryptData}` },
         { status: 200 }
       );
     } catch (error) {
       response = error;
     }
   }
-
-  switch (body.plan) {
-    case PlansEnum.BASIC: {
-      // paymentLink = BASIC_PLAN_DODO_PAYLINK + `${body.companyId}`;
-      if (body.sub) {
-        paymentLink = encryptData
-          ? `${MexicoSub}?uid=${encryptData}`
-          : MexicoSub;
-      } else {
-        paymentLink = encryptData ? `${Mexico}?uid=${encryptData}` : Mexico;
-      }
-      break;
-    }
-  }
-
-  // company.paymentLink = paymentLink;
-  company.plan = body.plan;
-  await company.save();
   return NextResponse.json({ url: paymentLink }, { status: 200 });
 }

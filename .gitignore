@@ -11,7 +11,7 @@
 !.yarn/versions
 .package-lock.json
 .gitignore
-.app.yaml
+app.yaml
 
 
 # testing

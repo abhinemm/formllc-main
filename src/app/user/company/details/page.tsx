@@ -127,31 +127,6 @@ const page = () => {
             </label>
           </div>
         </div>
-        {/* <div className={styles.deatilsItem}>
-          <h6>Industry</h6>
-          <div>
-            <label htmlFor="">
-              <span>Ecommerce</span>
-            </label>
-          </div>
-        </div> */}
-        {/* <div className={styles.deatilsItem}>
-          <h6>Website</h6>
-
-          <div className={styles.inputActionWrapper}>
-            {" "}
-            <input type="text" placeholder="website.com" />
-            <button>
-              <span>Change</span>
-              <Image
-                src="/icons/editIcon.svg"
-                width={14}
-                height={14}
-                alt="Upload Icon"
-              />
-            </button>{" "}
-          </div>
-        </div> */}
         <div className={styles.deatilsItem}>
           <h6>Responsible Party</h6>
           <div>
@@ -289,12 +264,20 @@ const page = () => {
             {contextOptions?.selectedCompanyDetails
               ?.subsriptionPaymentStatus ? (
               <>
-                <label htmlFor="">
-                  Address
-                  <span>
-                    adderss line 1 , addressline 2 <article>(100%)</article>{" "}
-                  </span>
-                </label>
+                {contextOptions?.selectedCompanyDetails?.mailingAdress ? (
+                  <label htmlFor="mail-address">
+                    <span id="mail-address">
+                      {contextOptions?.selectedCompanyDetails?.mailingAdress}
+                    </span>
+                  </label>
+                ) : (
+                  <label htmlFor="mail-address">
+                    <span id="mail-address">
+                      Your mailroom subscription is active! We’ll update your
+                      mailing address within 5–7 business days.
+                    </span>
+                  </label>
+                )}
               </>
             ) : (
               <button type="button" onClick={handleSubscription}>

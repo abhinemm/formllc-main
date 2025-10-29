@@ -58,7 +58,7 @@ const CreateUserModal = ({
           openNotification({
             type: "error",
             message: err?.response?.data?.message ?? "Something went wrong",
-            placement: "topRight",
+            placement: "top",
           });
           console.log("the error is", err);
         });

@@ -26,8 +26,18 @@
     flex-wrap: wrap;
     gap: 16px;
   }
-
+  .eyeIconWrapper {
+    padding: 12px 10px;
+    position: absolute;
+    right: 1px;
+    top: 33px;
+    z-index: 10;
+    background: #181429;
+    border-radius: 7px;
+    cursor: pointer;
+  }
   .fbformitem {
+    position: relative;
     .fbcheckboxlabel {
       display: flex;
       align-items: center;

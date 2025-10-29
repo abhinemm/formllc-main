@@ -39,7 +39,7 @@ const UploadDocument = ({
         openNotification({
           type: "warning",
           message: "File size exceeds 10 MB. Please select a smaller file.",
-          placement: "topRight",
+          placement: "top",
         });
         setFile(null);
         event.target.files = null;
@@ -57,7 +57,7 @@ const UploadDocument = ({
       openNotification({
         type: "error",
         message: "No file selected.",
-        placement: "topRight",
+        placement: "top",
       });
       return;
     }
@@ -79,7 +79,7 @@ const UploadDocument = ({
       openNotification({
         type: "error",
         message: "Error uploading file. Please try again.",
-        placement: "topRight",
+        placement: "top",
       });
     }
   };
@@ -109,8 +109,8 @@ const UploadDocument = ({
           onCompleted(stepId);
           openNotification({
             type: "success",
-            message: "Doument Upload Successfull",
-            placement: "topRight",
+            message: "Document Upload Successfull",
+            placement: "top",
           });
           resetForm();
         })
@@ -120,7 +120,7 @@ const UploadDocument = ({
           openNotification({
             type: "error",
             message: message,
-            placement: "topRight",
+            placement: "top",
           });
         });
     } catch (error: any) {
@@ -129,7 +129,7 @@ const UploadDocument = ({
       openNotification({
         type: "error",
         message: message,
-        placement: "topRight",
+        placement: "top",
       });
       console.log("the error is ", error);
     }

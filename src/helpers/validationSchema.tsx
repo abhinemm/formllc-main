@@ -210,3 +210,11 @@ export const emailSendSchema = yup.object().shape({
     .min(30, "Description must be at least 30 characters"),
   template: yup.string().required("Template is required"),
 });
+
+export const addMailAddressSchema = yup.object().shape({
+  city: yup.string().required("City is required"),
+  country: yup.string().required("Country is required"),
+  state: yup.string().required("State is required"),
+  street: yup.string().required("Street is required"),
+  zipcode: yup.string().required("Zipcode is required"),
+});

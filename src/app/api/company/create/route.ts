@@ -120,8 +120,6 @@ export async function PATCH(req: Request) {
   }
 
   if (data.user.type != UserTypesEnum.admin) {
-
-
     return NextResponse.json(
       { message: "User does not have permission to perform this action" },
       { status: 403 }
@@ -172,7 +170,14 @@ export async function PATCH(req: Request) {
         );
       }
     }
-  } catch {}
+  } catch {
+    return NextResponse.json(
+      {
+        message: "Failed to add buisness Mail address",
+      },
+      { status: 400 }
+    );
+  }
   return NextResponse.json(
     {
       message: "Company updated successfully!",

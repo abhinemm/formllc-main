@@ -5,10 +5,12 @@ import axios from "axios";
 import { Spin } from "antd";
 import { createAccountSchema } from "@/helpers/validationSchema";
 import Link from "next/link";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 const CreateAccount = ({ onCreateAccount, openNotification }) => {
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [eyeShow, setEyeShow] = useState<boolean>(false);
+  const [cEyeShow, setcEyeShow] = useState<boolean>(false);
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -140,7 +142,7 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
                 <input
                   className={styles.fbinput}
                   id="password"
-                  type="password"
+                  type={eyeShow ? "text" : "password"}
                   placeholder="●●●●●●●●●"
                   name="password"
                   value={values.password}
@@ -149,6 +151,21 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
                 {errors.password && touched.password && (
                   <p className={styles.errorWarning}>{errors.password}</p>
                 )}
+                {eyeShow ? (
+                  <div
+                    className={styles.eyeIconWrapper}
+                    onClick={() => setEyeShow(false)}
+                  >
+                    <EyeInvisibleOutlined />
+                  </div>
+                ) : (
+                  <div
+                    className={styles.eyeIconWrapper}
+                    onClick={() => setEyeShow(true)}
+                  >
+                    <EyeOutlined />
+                  </div>
+                )}
               </div>
 
               <div className={styles.fbformitem}>
@@ -156,7 +173,7 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
                 <input
                   className={styles.fbinput}
                   id="confirm-password"
-                  type="password"
+                  type={cEyeShow ? "text" : "password"}
                   placeholder="●●●●●●●●●"
                   name="confirmPassword"
                   value={values.confirmPassword}
@@ -166,6 +183,21 @@ const CreateAccount = ({ onCreateAccount, openNotification }) => {
                   <p className={styles.errorWarning}>
                     {errors.confirmPassword}
                   </p>
+                )}
+                {cEyeShow ? (
+                  <div
+                    className={styles.eyeIconWrapper}
+                    onClick={() => setcEyeShow(false)}
+                  >
+                    <EyeInvisibleOutlined />
+                  </div>
+                ) : (
+                  <div
+                    className={styles.eyeIconWrapper}
+                    onClick={() => setcEyeShow(true)}
+                  >
+                    <EyeOutlined />
+                  </div>
                 )}
               </div>
             </div>

@@ -9,7 +9,11 @@ import {
   StepsTakenStatusViewEnum,
 } from "@/utils/constants";
 import Image from "next/image";
-import { MoreOutlined, DownloadOutlined } from "@ant-design/icons";
+import {
+  MoreOutlined,
+  DownloadOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 import { Dropdown, notification, Skeleton, Spin } from "antd";
 import {
   BTNCOLORS,
@@ -23,6 +27,7 @@ import DocumentPreview from "../../Modals/DocumentPreview";
 import UploadDocument from "./UploadDocument";
 import DocumentViewer from "../../DocumentViewer/DocumentViewer";
 import { getFileExtensionFromUrl } from "@/helpers/helper";
+import CompanyUpdateModal from "./CompanyUpdateModal";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -60,6 +65,8 @@ const CompanyDetails = () => {
   const [stepId, setStepId] = useState<any>();
   const [stepTakes, setStepTakes] = useState<any>({});
   const [stepTakenLoading, setStepTakenLoading] = useState<boolean>(false);
+  const [addMailAddressStatus, setAddMailAddressStatus] =
+    useState<boolean>(false);
   const [documentViewer, setDocumentViewer] = useState<DocumentViewer>({
     open: false,
     companyId: null,
@@ -98,6 +105,7 @@ const CompanyDetails = () => {
   }, [companyDetails?.document]);
 
   const getCompanyDetails = async (companyId: number) => {
+    setLoading(true);
     await axios
       .get(`/api/company/details?id=${companyId}`)
       .then((res: any) => {
@@ -275,7 +283,7 @@ const CompanyDetails = () => {
           openNotification({
             type: "success",
             message: "Status Updated successfully",
-            placement: "topRight",
+            placement: "top",
           });
           setActionLoader(false);
           getAllTakenSteps(Number(id));
@@ -284,7 +292,7 @@ const CompanyDetails = () => {
           openNotification({
             type: "error",
             message: "Something went wrong!",
-            placement: "topRight",
+            placement: "top",
           });
           setActionLoader(false);
         });
@@ -292,7 +300,7 @@ const CompanyDetails = () => {
       openNotification({
         type: "error",
         message: "Something went wrong!",
-        placement: "topRight",
+        placement: "top",
       });
       setActionLoader(false);
     }
@@ -340,10 +348,14 @@ const CompanyDetails = () => {
     }
   };
 
+  const onCompleted = () => {
+    getCompanyDetails(Number(id));
+  };
+
   return (
     <section className={styles.userDashSection}>
       {contextHolder}
-      {actionLoader ? (
+      {actionLoader || loading ? (
         <TransparentLoader />
       ) : (
         <>
@@ -651,14 +663,26 @@ const CompanyDetails = () => {
                 </div>
                 <div className={styles.deatilsItem}>
                   <h6>Mailing Address</h6>
-                  <div>
-                    <label htmlFor="">
-                      Address
-                      <span>
-                        adderss line 1 , addressline 2 <article>(100%)</article>{" "}
-                      </span>
-                    </label>
-                  </div>
+                  {companyDetails?.mailingAdress ? (
+                    <div className={styles.addressWrapper}>
+                      <p>{companyDetails?.mailingAdress}</p>
+                      <button
+                        type="button"
+                        onClick={() => setAddMailAddressStatus(true)}
+                      >
+                        <EditOutlined />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className={styles.addAddress}>
+                      <button
+                        type="button"
+                        onClick={() => setAddMailAddressStatus(true)}
+                      >
+                        Add Address
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -682,6 +706,16 @@ const CompanyDetails = () => {
           openNotification={openNotification}
           companyId={Number(id)}
           onCompleted={onCompleteUpload}
+        />
+      )}
+      {addMailAddressStatus && (
+        <CompanyUpdateModal
+          open={addMailAddressStatus}
+          onClose={() => setAddMailAddressStatus(false)}
+          openNotification={openNotification}
+          companyId={Number(id)}
+          onCompleted={onCompleted}
+          address={companyDetails?.mailingAdress}
         />
       )}
       {documentViewer?.open && (

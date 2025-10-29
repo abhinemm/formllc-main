@@ -20,7 +20,7 @@
       width: 100%;
       margin-bottom: 16px;
     }
-    h2 {
+    h1 {
       font-size: 22px;
       line-height: 28px;
       margin-bottom: 20px;
@@ -111,11 +111,21 @@
     }
   }
 }
-
+.eyeIconWrapper {
+  padding: 5px 10px;
+  position: absolute;
+  right: 1px;
+  top: 29px;
+  z-index: 10;
+  background: #232326;
+  border-radius: 7px;
+  cursor: pointer;
+}
 .formWrapper {
   .formContent {
     .authFormItem {
       margin-bottom: 20px;
+      position: relative;
       label {
         display: block;
 
@@ -128,8 +138,7 @@
         margin-bottom: 8px;
         color: #ffffff;
       }
-      input[type="email"],
-      input[type="password"] {
+      input {
         width: 100%;
         height: 34px;
         position: relative;

@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "../../../../../components/Context/AppContext";
 import Link from "next/link";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 type NotificationType = "success" | "info" | "warning" | "error";
 
 type NotificationMessage = {
@@ -24,6 +25,7 @@ const SignIn = () => {
   const [loading, setLoading] = useState<any>(false);
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [eyeShow, setEyeShow] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState({
     email: "",
     password: "",
@@ -160,7 +162,7 @@ const SignIn = () => {
         <div className={styles.signinWithGoogleWrapper}>
           {" "}
           <div className={styles.authHeaderItem}>
-            <h2>Welcome to Formllc</h2>
+            <h1>Welcome to Formllc</h1>
             <p title="Don’t have an account?">
               Don’t have an account?
               <a
@@ -241,7 +243,7 @@ const SignIn = () => {
                     </label>
                     <input
                       id="input65"
-                      type="password"
+                      type={eyeShow ? "text" : "password"}
                       name="password"
                       placeholder="●●●●●●●●●"
                       autoComplete="off"
@@ -250,6 +252,21 @@ const SignIn = () => {
                     />
                     {errors.password && touched.password && (
                       <p className={styles.errorWarning}>{errors.password}</p>
+                    )}
+                    {eyeShow ? (
+                      <div
+                        className={styles.eyeIconWrapper}
+                        onClick={() => setEyeShow(false)}
+                      >
+                        <EyeInvisibleOutlined />
+                      </div>
+                    ) : (
+                      <div
+                        className={styles.eyeIconWrapper}
+                        onClick={() => setEyeShow(true)}
+                      >
+                        <EyeOutlined />
+                      </div>
                     )}
                   </div>
 

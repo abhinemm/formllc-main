@@ -14,6 +14,7 @@ import OtpVerificationModal from "./OtpVerificationModal";
 import { NotificationPlacement } from "antd/es/notification/interface";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "../Context/AppContext";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -36,6 +37,8 @@ const ForgotPassword = () => {
   const [isVerified, setIsVerified] = useState<boolean>(false);
   const [show, setShow] = useState<boolean>(false);
   const [api, contextHolder] = notification.useNotification();
+  const [eyeShow, setEyeShow] = useState<boolean>(false);
+  const [cEyeShow, setcEyeShow] = useState<boolean>(false);
 
   const openNotification = (data: NotificationMessage) => {
     api[data.type]({
@@ -207,7 +210,7 @@ const ForgotPassword = () => {
                         </label>
                         <input
                           id="inputgjwhqew"
-                          type="password"
+                          type={eyeShow ? "text" : "password"}
                           name="password"
                           placeholder="●●●●●●●●●"
                           autoComplete="off"
@@ -218,6 +221,21 @@ const ForgotPassword = () => {
                           <p className={styles.errorWarning}>
                             {errors.password}
                           </p>
+                        )}
+                        {eyeShow ? (
+                          <div
+                            className={styles.eyeIconWrapper}
+                            onClick={() => setEyeShow(false)}
+                          >
+                            <EyeInvisibleOutlined />
+                          </div>
+                        ) : (
+                          <div
+                            className={styles.eyeIconWrapper}
+                            onClick={() => setEyeShow(true)}
+                          >
+                            <EyeOutlined />
+                          </div>
                         )}
                       </div>
 
@@ -230,7 +248,7 @@ const ForgotPassword = () => {
                         </label>
                         <input
                           id="input655"
-                          type="password"
+                          type={cEyeShow ? "text" : "password"}
                           name="cpassword"
                           placeholder="●●●●●●●●●"
                           autoComplete="off"
@@ -241,6 +259,21 @@ const ForgotPassword = () => {
                           <p className={styles.errorWarning}>
                             {errors.cpassword}
                           </p>
+                        )}
+                        {cEyeShow ? (
+                          <div
+                            className={styles.eyeIconWrapper}
+                            onClick={() => setcEyeShow(false)}
+                          >
+                            <EyeInvisibleOutlined />
+                          </div>
+                        ) : (
+                          <div
+                            className={styles.eyeIconWrapper}
+                            onClick={() => setcEyeShow(true)}
+                          >
+                            <EyeOutlined />
+                          </div>
                         )}
                       </div>
                     </>

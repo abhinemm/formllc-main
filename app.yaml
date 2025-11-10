@@ -3,6 +3,11 @@ env: standard
 instance_class: F1
 service: formllc
 
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+
 env_variables:
   DATABASE_NAME: formllc-live
   DATABASE_USER: postgres

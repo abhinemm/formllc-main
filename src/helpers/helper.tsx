@@ -31,3 +31,13 @@ export function generateFixedTransactionId(): string {
 
   return `${prefix}${randomPart}${timestamp}`;
 }
+
+export function formatDate(inputDate: string): string {
+  const date = new Date(inputDate);
+
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "short" }); // e.g., "Mar"
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+}

@@ -44,6 +44,7 @@ export async function GET(req: Request) {
       sql += ` WHERE payments."type" = :typeFilter`;
       replacements.typeFilter = typeFilter;
     }
+    sql += ` ORDER BY payments."id" DESC`;
 
     const payments = await sequelize.query(sql, {
       type: QueryTypes.SELECT,

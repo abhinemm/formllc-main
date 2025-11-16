@@ -19,6 +19,8 @@ import { NIL } from "uuid";
 import { paymentType } from "../../PaymentSuccess/PaymentTemp";
 import dayjs from "dayjs";
 
+const { Option } = Select;
+
 const CreatePayments = ({
   open,
   onClose,
@@ -236,7 +238,6 @@ const CreatePayments = ({
       );
       if (findCompany) {
         setSelectedCompany(findCompany);
-        setFieldValue("paymentFor", findCompany.registrationState);
       }
     }
   };
@@ -279,7 +280,29 @@ const CreatePayments = ({
                       <label className={styles.fblabel}>
                         Customer Name<span>*</span>
                       </label>
-                      <AutoComplete
+                      <Select
+                        showSearch
+                        placeholder="Select a Customer"
+                        optionFilterProp="children"
+                        onChange={(e) => {
+                          setFieldValue("companyId", e);
+                          handleCompanyChange(e, setFieldValue);
+                        }}
+                        filterOption={(input: any, option: any) =>
+                          (option?.children as string)
+                            .toLowerCase()
+                            .includes(input.toLowerCase())
+                        }
+                        style={{ width: 300 }}
+                        disabled={updatePayment?.companyId ? true : false}
+                      >
+                        {companyList?.map((user) => (
+                          <Option key={user.value} value={user.value}>
+                            {user.label}
+                          </Option>
+                        ))}
+                      </Select>
+                      {/* <AutoComplete
                         options={companyList}
                         style={{ width: 300 }}
                         placeholder={
@@ -299,10 +322,10 @@ const CreatePayments = ({
                         }
                         onChange={(val) => {
                           setFieldValue("companyId", val);
-                          handleCompanyChange(val, setFieldValue);
+                          
                         }}
                         disabled={updatePayment?.companyId ? true : false}
-                      />
+                      /> */}
                       <p className={styles.errorWarning}>
                         {touched.companyId && getIn(errors, "companyId")}
                       </p>

@@ -52,7 +52,7 @@ const PaymentsList = () => {
           transID: el?.transactionID ?? "--",
           resNo: el?.paymentId ?? "--",
           pType: el?.type === "sub" ? "Subscription" : "Registration",
-          pDate: formatDate(el?.paymentDate) ?? "--",
+          pDate: el?.paymentDate ? formatDate(el?.paymentDate) : "--",
           cName: `${el?.companyName ?? ""} ${el?.ctype ?? "--"}`,
           pFor: el?.registrationState ?? "--",
           status: el?.status,

@@ -274,7 +274,6 @@ export async function PATCH(req: Request) {
 
     if (paymentDate) {
       const paymentDateNew = new Date(paymentDate);
-      console.log("paymentDateNewpaymentDateNew", paymentDateNew);
 
       if (isNaN(paymentDateNew.getTime())) {
         return NextResponse.json(

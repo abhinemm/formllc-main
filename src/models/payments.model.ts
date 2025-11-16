@@ -17,6 +17,7 @@ export interface PaymentsAttributes {
   buyerInfo?: string;
   currency?: string;
   webhookId?: string;
+  createdBy?: number;
 }
 
 interface PaymentsCreationAttributes
@@ -41,6 +42,7 @@ class Payments
   public buyerInfo?: string;
   public currency?: string;
   public webhookId?: string;
+  public createdBy?: number;
 }
 
 Payments.init(
@@ -113,6 +115,12 @@ Payments.init(
     webhookId: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    createdBy: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 1,
+      comment: "1 = auto created, 2 = manual created",
     },
   },
   {

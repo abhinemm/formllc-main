@@ -216,7 +216,7 @@ const DashBoard = () => {
                   key={index}
                 >
                   <div className={styles.stepCountWrapper}>
-                    <h5>step {item.position}</h5>
+                    <h5></h5>
                   </div>
                   <div className={styles.stepContent}>
                     <h6>{item.title}</h6>

@@ -8,34 +8,45 @@ import {
   DatePickerProps,
   Modal,
   Select,
+  Spin,
   Tooltip,
 } from "antd";
 import { Formik, getIn } from "formik";
-import { registerSchemaAdmin } from "@/helpers/validationSchema";
-import { RegistrationStation } from "@/constants/constants";
-import { paymentStatus } from "@/utils/constants";
+import { CURRENCIES, RegistrationStation } from "@/constants/constants";
+import { paymentStatus, PlansEnum } from "@/utils/constants";
+import { createPaymentSchema } from "@/helpers/validationSchema";
+import { NIL } from "uuid";
+import { paymentType } from "../../PaymentSuccess/PaymentTemp";
+import dayjs from "dayjs";
 
 const CreatePayments = ({
   open,
   onClose,
   openNotification,
-  updateCompany,
+  updatePayment,
   onSuccess,
 }) => {
   const [companyList, setCompanyList] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [modalWidth, setModalWidth] = useState("70%");
+  const [currencyList, setCurrencyList] = useState<any>([]);
+  const [allCompanyData, setAllCompanyData] = useState<any>(null);
+  const [selectedCompany, setSelectedCompany] = useState<any>(null);
+  const allCurrency = CURRENCIES;
   const initialValues: any = {
-    companyId: "",
-    paymentId: "",
-    paymentDate: "",
-    paymentType: "",
-    paymentFor: "",
-    paymentStatus: "",
-    invoiceUrl: "",
-    currency: "",
-    amount: "",
+    companyId: updatePayment?.companyId ? updatePayment.companyId : "",
+    paymentId: updatePayment?.paymentId ? updatePayment.paymentId : "",
+    paymentDate: updatePayment?.paymentDate ? updatePayment.paymentDate : "",
+    paymentType: updatePayment?.type ? updatePayment.type : "",
+    paymentStatus: updatePayment?.status ? updatePayment.status : "",
+    invoiceUrl: updatePayment?.invoicePDF ? updatePayment.invoicePDF : "",
+    amount: updatePayment?.amountPaid ? updatePayment.amountPaid : "",
+    currency: updatePayment?.currency ? updatePayment.currency : "",
+    description: updatePayment?.description ? updatePayment.description : "",
   };
+  const [createLoading, setCreateLoading] = useState<boolean>(false);
+
+  const isEdit = !!updatePayment;
   useEffect(() => {
     (async () => {
       await fetchCompanies();
@@ -43,10 +54,32 @@ const CreatePayments = ({
   }, []);
 
   useEffect(() => {
+    if (allCurrency?.length) {
+      const maped = allCurrency?.map((el: any) => ({
+        value: el?.currencyCode,
+        label: `${el?.currencyCode}(${el?.currencyName})`,
+      }));
+      setCurrencyList(maped);
+    }
+  }, [allCurrency]);
+
+  useEffect(() => {
     updateWidth();
     window.addEventListener("resize", updateWidth);
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
+
+  // When editing, preselect company in state so we don't force user to re-select
+  useEffect(() => {
+    if (isEdit && allCompanyData?.length && updatePayment?.companyId) {
+      const company = allCompanyData.find(
+        (el: any) => el.id === Number(updatePayment.companyId)
+      );
+      if (company) {
+        setSelectedCompany(company);
+      }
+    }
+  }, [isEdit, allCompanyData, updatePayment]);
 
   const updateWidth = () => {
     const width = window.innerWidth;
@@ -59,29 +92,18 @@ const CreatePayments = ({
     }
   };
 
-  const paymentType = [
+  const paymentTypeOptions = [
     {
-      value: "oneTime",
+      value: paymentType.oneTime,
       label: "Registration",
     },
     {
-      value: "sub",
+      value: paymentType.sub,
       label: "Subscription",
     },
   ];
 
-  const paymentFor = [
-    {
-      value: RegistrationStation?.wyoming_state,
-      label: RegistrationStation?.wyoming_state,
-    },
-    {
-      value: RegistrationStation?.mexico_state,
-      label: RegistrationStation?.mexico_state,
-    },
-  ];
-
-  const paymentStatusVal = [
+  const paymentStatusOptions = [
     {
       value: paymentStatus.paid,
       label: paymentStatus.paid,
@@ -93,13 +115,15 @@ const CreatePayments = ({
   ];
 
   const fetchCompanies = async () => {
+    setLoading(true);
     await axios
       .get(`/api/company`)
       .then((res: any) => {
         const filterData = res?.data?.map((el: any, idx: number) => ({
-          label: el?.companyNumber,
+          label: el?.companyName,
           value: el?.id,
         }));
+        setAllCompanyData(res?.data);
         setCompanyList(filterData);
         setLoading(false);
       })
@@ -110,50 +134,133 @@ const CreatePayments = ({
     setLoading(false);
   };
 
-  const onSubmit = async (values: any) => {
-    // setUpdateLoading(true);
-    let obj: any = {
-      type: values?.companyType,
-      registrationState: values?.registrationState,
-      document: values.proofOfAddress,
-      ownerFname: values?.firstName,
-      ownerLname: values?.lastName,
-      companyName: values?.companyName,
-      companyEmail: values?.email,
-      streetAddress: values?.streetAddress,
-      city: values?.city,
-      state: values?.state,
-      zipCode: values?.zipCode,
-      country: values?.country,
-      countryCode: values?.countryCode,
-      phone: values?.phone,
+  const getPlan = (selectedCompany) => {
+    if (
+      selectedCompany?.registrationState == RegistrationStation.wyoming_state
+    ) {
+      return PlansEnum.PRO;
+    } else {
+      return PlansEnum.BASIC;
+    }
+  };
 
-      subsriptionPaymentStatus: values?.isSubscribed == "yes" ? true : false,
-      regPaymentStatus: values?.isPaid == "yes" ? true : false,
-      status: 1,
+  const onSubmit = async (values: typeof initialValues, { resetForm }: any) => {
+    if (!selectedCompany) {
+      openNotification({
+        type: "error",
+        message: "Please select the company name and continue",
+        placement: "top",
+      });
+    }
+
+    const payload: any = {
+      companyId: updatePayment?.companyId
+        ? updatePayment?.companyId
+        : values.companyId,
+      paymentId: values?.paymentId,
+      paymentDate: values.paymentDate,
+      type: values.paymentType,
+      paymentStatus: values.paymentStatus,
+      invoiceUrl: values.invoiceUrl,
+      amount: Number(values.amount),
+      currency: values.currency,
+      description: values.description,
+      registrationState: selectedCompany?.registrationState,
+      plan: selectedCompany?.plan ?? getPlan(selectedCompany),
     };
+
+    setCreateLoading(true);
+    if (updatePayment?.companyId) {
+      try {
+        await axios
+          .patch(`/api/payment?id=${updatePayment?.id}`, payload)
+          .then((res: any) => {
+            setCreateLoading(false);
+            openNotification({
+              type: "success",
+              message: "Payment updated successfull",
+              placement: "topRight",
+            });
+            onSuccess(values.paymentType);
+          })
+          .catch((err: any) => {
+            console.log("errerrerrerr", err);
+
+            setCreateLoading(false);
+            const message =
+              err?.response?.data?.message || "Something went wrong!";
+            openNotification({
+              type: "error",
+              message: message,
+              placement: "topRight",
+            });
+          });
+      } catch (error) {
+        setCreateLoading(false);
+      }
+    } else {
+      try {
+        await axios
+          .post(`/api/payment`, payload)
+          .then((res: any) => {
+            setCreateLoading(false);
+            openNotification({
+              type: "success",
+              message: "Payment created successfull",
+              placement: "topRight",
+            });
+            onSuccess(values.paymentType);
+          })
+          .catch((err: any) => {
+            console.log("errerrerrerr", err);
+
+            setCreateLoading(false);
+            const message =
+              err?.response?.data?.message || "Something went wrong!";
+            openNotification({
+              type: "error",
+              message: message,
+              placement: "topRight",
+            });
+          });
+      } catch (error) {
+        setCreateLoading(false);
+      }
+    }
+  };
+
+  const handleCompanyChange = (companyId: any, setFieldValue) => {
+    if (companyId) {
+      const findCompany = allCompanyData?.find(
+        (el: any) => el.id == Number(companyId)
+      );
+      if (findCompany) {
+        setSelectedCompany(findCompany);
+        setFieldValue("paymentFor", findCompany.registrationState);
+      }
+    }
   };
 
   return (
-    <>
+    <Modal
+      open={open}
+      onCancel={onClose}
+      footer={null}
+      closable={true}
+      width={modalWidth}
+      className="companyModal"
+    >
       {loading ? (
         <Loader />
       ) : (
-        <Modal
-          open={open}
-          onCancel={onClose}
-          footer={null}
-          closable={true}
-          width={modalWidth}
-          className="companyModal"
-        >
+        <>
           <h2 className={styles.heading}>
-            {updateCompany ? "Update Company" : "Create Company"}
+            {updatePayment ? "Update Payment" : "Create Payment"}
           </h2>
           <div className={styles.fbonboardingcardwidgetcontent}>
             <Formik
               initialValues={initialValues}
-              //   validationSchema={registerSchemaAdmin}
+              validationSchema={createPaymentSchema}
               onSubmit={onSubmit}
               enableReinitialize={true}
             >
@@ -166,17 +273,18 @@ const CreatePayments = ({
                 touched,
               }) => (
                 <form className={styles.fbform} onSubmit={handleSubmit}>
+                  {/* Customer */}
                   <div className={styles.doubleFlex}>
                     <div className={styles.fbformitem}>
                       <label className={styles.fblabel}>
-                        Customer Number<span>*</span>
+                        Customer Name<span>*</span>
                       </label>
                       <AutoComplete
                         options={companyList}
                         style={{ width: 300 }}
                         placeholder={
-                          updateCompany
-                            ? updateCompany?.email
+                          updatePayment
+                            ? updatePayment?.email
                             : "Select Company"
                         }
                         filterOption={(input, option) =>
@@ -184,51 +292,51 @@ const CreatePayments = ({
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
-                        // value={
-                        //   companyList.find(
-                        //     (user: any) => user.value === values.customerId
-                        //   )?.label || ""
-                        // }
-                        onChange={(val) => setFieldValue("companyId", val)}
-                        disabled={updateCompany?.userId ? true : false}
+                        value={
+                          companyList.find(
+                            (company: any) => company.value === values.companyId
+                          )?.label || ""
+                        }
+                        onChange={(val) => {
+                          setFieldValue("companyId", val);
+                          handleCompanyChange(val, setFieldValue);
+                        }}
+                        disabled={updatePayment?.companyId ? true : false}
                       />
-
                       <p className={styles.errorWarning}>
-                        {touched.companyId && getIn(errors, "companyType")}
+                        {touched.companyId && getIn(errors, "companyId")}
                       </p>
                     </div>
                   </div>
 
+                  {/* Payment ID & Date */}
                   <div className={styles.doubleFlex}>
                     <div className={styles.fbformitem}>
                       <label className={styles.fblabel}>
                         Payment ID<span>*</span>
                       </label>
-                      <Tooltip title="Copy the Payment ID from the payment company's dashboard. eg:- pi_3SGu1bFK1d7mDBo71UMU2w2t">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="17"
-                          height="17"
-                          viewBox="0 0 17 17"
-                          fill="none"
-                        >
-                          <path
-                            d="M14.8736 7.08335C14.8651 5.54273 14.7971 4.70831 14.2524 4.16431C13.6305 3.54169 12.6282 3.54169 10.625 3.54169H8.5C6.49683 3.54169 5.49454 3.54169 4.87263 4.16431C4.25 4.78623 4.25 5.78852 4.25 7.79169V11.3334C4.25 13.3365 4.25 14.3388 4.87263 14.9607C5.49454 15.5834 6.49683 15.5834 8.5 15.5834H10.625C12.6282 15.5834 13.6305 15.5834 14.2524 14.9607C14.875 14.3388 14.875 13.3365 14.875 11.3334V10.625"
-                            stroke="#64B7FF"
-                            strokeWidth="1.0625"
+                      <div className={styles.tooltipWrapper}>
+                        <Tooltip title="Copy the Payment ID from the payment company's dashboard. eg:- pi_3SGu1bFK1d7mDBo71UMU2w2t">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="#ffffff"
+                            strokeWidth="2"
                             strokeLinecap="round"
-                          />
-                          <path
-                            d="M2.125 7.08335V11.3334C2.125 11.8969 2.34888 12.4374 2.7474 12.836C3.14591 13.2345 3.68641 13.4584 4.25 13.4584M12.75 3.54169C12.75 2.9781 12.5261 2.4376 12.1276 2.03909C11.7291 1.64057 11.1886 1.41669 10.625 1.41669H7.79167C5.12054 1.41669 3.78462 1.41669 2.95517 2.24685C2.49192 2.7094 2.28721 3.32919 2.19725 4.25002"
-                            stroke="#64B7FF"
-                            strokeWidth="1.0625"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                      </Tooltip>
+                            strokeLinejoin="round"
+                            className="lucide lucide-circle-question-mark-icon lucide-circle-question-mark"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                            <path d="M12 17h.01" />
+                          </svg>
+                        </Tooltip>
+                      </div>
                       <input
                         className={styles.fbinput}
-                        id="first-name"
                         type="text"
                         placeholder="eg:- pi_3SGu1bFK1d7mDBo71UMU2w2t"
                         name="paymentId"
@@ -241,371 +349,165 @@ const CreatePayments = ({
                     </div>
 
                     <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Payment Date</label>
+                      <label className={styles.fblabel}>
+                        Payment Date<span>*</span>
+                      </label>
                       <DatePicker
                         name="paymentDate"
-                        onChange={(e: DatePickerProps) => {
-                          console.log(e);
-                        }}
+                        style={{ width: "100%" }}
+                        onChange={(_, dateString) =>
+                          setFieldValue("paymentDate", dateString)
+                        }
+                        value={
+                          values.paymentDate ? dayjs(values.paymentDate) : null
+                        }
                       />
                       <p className={styles.errorWarning}>
-                        {touched.lastName && getIn(errors, "lastName")}
+                        {touched.paymentDate && getIn(errors, "paymentDate")}
                       </p>
                     </div>
                   </div>
 
+                  {/* Type & For */}
                   <div className={styles.doubleFlex}>
                     <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Payment Type</label>
+                      <label className={styles.fblabel}>
+                        Payment Type<span>*</span>
+                      </label>
                       <Select
-                        id="currency-select"
                         value={values.paymentType}
                         onChange={(value: any) => {
                           setFieldValue("paymentType", value);
                         }}
-                        options={paymentType}
+                        options={paymentTypeOptions}
                         style={{ width: "100%" }}
                         placeholder="Select Payment Type"
                       />
-
                       <p className={styles.errorWarning}>
                         {touched.paymentType && getIn(errors, "paymentType")}
                       </p>
                     </div>
                     <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Payment For</label>
+                      <label className={styles.fblabel}>
+                        Payment Status<span>*</span>
+                      </label>
                       <Select
-                        value={values.paymentFor}
-                        onChange={(value: any) => {
-                          setFieldValue("paymentFor", value);
-                        }}
-                        options={paymentFor}
-                        style={{ width: "100%" }}
-                        placeholder="Payment for"
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.paymentFor && getIn(errors, "paymentFor")}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className={styles.doubleFlex}>
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Payment Status</label>
-                      <Select
-                        id="currency-select"
                         value={values.paymentStatus}
                         onChange={(value: any) => {
                           setFieldValue("paymentStatus", value);
                         }}
-                        options={paymentStatusVal}
+                        options={paymentStatusOptions}
                         style={{ width: "100%" }}
                         placeholder="Payment Status"
                       />
-
                       <p className={styles.errorWarning}>
                         {touched.paymentStatus &&
                           getIn(errors, "paymentStatus")}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Status & Invoice URL */}
+                  <div className={styles.doubleFlex}>
+                    <div className={styles.fbformitem}>
+                      <label className={styles.fblabel}>
+                        Amount<span>*</span>
+                      </label>
+                      <input
+                        className={styles.fbinput}
+                        type="number"
+                        placeholder="Enter amount"
+                        name="amount"
+                        onChange={handleChange}
+                        value={values.amount}
+                        onWheel={(e) => (e.target as HTMLInputElement).blur()}
+                      />
+                      <p className={styles.errorWarning}>
+                        {touched.amount && getIn(errors, "amount")}
                       </p>
                     </div>
                     <div className={styles.fbformitem}>
                       <label className={styles.fblabel}>Invoice Url</label>
                       <input
                         className={styles.fbinput}
-                        id="email"
                         type="text"
-                        placeholder="Tesla"
-                        name="companyName"
+                        placeholder="https://example.com/invoice.pdf"
+                        name="invoiceUrl"
                         onChange={handleChange}
-                        value={values.companyName}
+                        value={values.invoiceUrl}
                       />
                       <p className={styles.errorWarning}>
-                        {touched.companyName && getIn(errors, "companyName")}
+                        {touched.invoiceUrl && getIn(errors, "invoiceUrl")}
                       </p>
                     </div>
                   </div>
 
+                  {/* Amount & Currency */}
                   <div className={styles.doubleFlex}>
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Owner First Name</label>
-                      <input
-                        className={styles.fbinput}
-                        id="first-name"
-                        type="text"
-                        placeholder="Type your first name here"
-                        name="firstName"
-                        onChange={handleChange}
-                        value={values.firstName}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.firstName && getIn(errors, "firstName")}
-                      </p>
-                    </div>
-
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Owner Last Name</label>
-                      <input
-                        className={styles.fbinput}
-                        id="last-name"
-                        type="text"
-                        placeholder="Type your last name here"
-                        name="lastName"
-                        onChange={handleChange}
-                        value={values.lastName}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.lastName && getIn(errors, "lastName")}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className={styles.doubleFlex}>
-                    {" "}
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Company Name</label>
-                      <input
-                        className={styles.fbinput}
-                        id="email"
-                        type="text"
-                        placeholder="Tesla"
-                        name="companyName"
-                        onChange={handleChange}
-                        value={values.companyName}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.companyName && getIn(errors, "companyName")}
-                      </p>
-                    </div>
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Email</label>
-                      <input
-                        className={styles.fbinput}
-                        id="confirm-email"
-                        type="text"
-                        placeholder="john.doe@mail.com"
-                        name="email"
-                        onChange={handleChange}
-                        value={values.email}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.email && getIn(errors, "email")}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className={styles.doubleFlex}>
-                    {" "}
-                    {/* <div className={styles.fbformitemSelect}>
-                      <label className={styles.fblabel}>Phone</label>
-                      <InputNumber
-                        addonBefore={
-                          <>
-                            <Select
-                              style={{ width: 100, color: "#fff" }}
-                              onChange={(e: any) => {
-                                setFieldValue("countryCode", e);
-                              }}
-                              value={values.countryCode}
-                              placeholder="Code"
-                            >
-                              {COUNTRYCODE?.map((el: any, index: number) => (
-                                <Option value={el?.dial_code} key={index}>
-                                  {`${el?.code}(${el?.dial_code})`}
-                                </Option>
-                              ))}
-                            </Select>
-                          </>
-                        }
-                        onChange={(e) => {
-                          setFieldValue("phone", e);
-                        }}
-                        value={values.phone}
-                        placeholder="Phone number"
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.countryCode && getIn(errors, "countryCode")}
-                      </p>
-                      <p className={styles.errorWarning}>
-                        {touched.phone && getIn(errors, "phone")}
-                      </p>
-                    </div> */}
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Street Address</label>
-                      <input
-                        className={styles.fbinput}
-                        id="email"
-                        type="text"
-                        placeholder="Address line 1"
-                        name="streetAddress"
-                        onChange={handleChange}
-                        value={values.streetAddress}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.streetAddress &&
-                          getIn(errors, "streetAddress")}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className={styles.doubleFlex}>
-                    {" "}
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>City / Town</label>
-                      <input
-                        className={styles.fbinput}
-                        id="confirm-email"
-                        type="text"
-                        placeholder="City / Town"
-                        name="city"
-                        onChange={handleChange}
-                        value={values.city}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.city && getIn(errors, "city")}
-                      </p>
-                    </div>
                     <div className={styles.fbformitem}>
                       <label className={styles.fblabel}>
-                        State / Province / Region
+                        Currency<span>*</span>
                       </label>
-                      <input
-                        className={styles.fbinput}
-                        id="email"
-                        type="text"
-                        placeholder="State / Province / Region"
-                        name="state"
-                        onChange={handleChange}
-                        value={values.state}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.state && getIn(errors, "state")}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* <div className={styles.doubleFlex}>
-                    {" "}
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>
-                        Postal / ZIP Code
-                      </label>
-                      <input
-                        className={styles.fbinput}
-                        id="confirm-email"
-                        type="text"
-                        placeholder="Postal / ZIP Code"
-                        name="zipCode"
-                        onChange={handleChange}
-                        value={values.zipCode}
-                      />
-                      <p className={styles.errorWarning}>
-                        {touched.zipCode && getIn(errors, "zipCode")}
-                      </p>
-                    </div>
-                    <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Country</label>
                       <Select
-                        showSearch
-                        placeholder="Select a country"
-                        optionFilterProp="children"
-                        onChange={(e) => {
-                          setFieldValue("country", e);
+                        value={values.currency}
+                        onChange={(value: any) => {
+                          setFieldValue("currency", value);
                         }}
-                        filterOption={(input: any, option: any) =>
-                          (option?.children as string)
-                            .toLowerCase()
-                            .includes(input.toLowerCase())
-                        }
-                        style={{ width: 300 }}
-                      >
-                        {ALLCOUNTRIES?.map((country) => (
-                          <Option key={country.code} value={country.name}>
-                            {country.name}
-                          </Option>
-                        ))}
-                      </Select>
+                        options={currencyList}
+                        style={{ width: "100%" }}
+                        placeholder="Currency"
+                      />
                       <p className={styles.errorWarning}>
-                        {touched.country && getIn(errors, "country")}
+                        {touched.currency && getIn(errors, "currency")}
                       </p>
                     </div>
-                  </div> */}
+                  </div>
 
-                  {/* <div className={styles.doubleFlex}>
-                    {" "}
+                  {/* Description */}
+                  <div className={styles.doubleFlex}>
                     <div className={styles.fbformitem}>
-                      <label className={styles.fblabel}>Proof of Address</label>
-                      <div className={styles.fileUpload}>
-                        <div className={styles.proofOfAddressWrapper}>
-                          {fileArray?.map((el: any, idx: number) => (
-                            <div className={styles.imageWrapper} key={idx}>
-                              <Image
-                                width={50}
-                                height={50}
-                                src={el}
-                                alt="image"
-                              />
-                            </div>
-                          ))}
-                          <button
-                            type="button"
-                            onClick={() => setOpenModal(true)}
-                            className={styles.addBtn}
-                          >
-                            <UploadOutlined />
-                            Add
-                          </button>
-                        </div>
-                        <p className={styles.errorWarning}>
-                          {touched.proofOfAddress &&
-                            getIn(errors, "proofOfAddress")}
-                        </p>
-                        <div className=""></div>
-                      </div>
+                      <label className={styles.fblabel}>Description</label>
+                      <input
+                        className={styles.fbinput}
+                        type="text"
+                        placeholder="Add description (optional)"
+                        name="description"
+                        onChange={handleChange}
+                        value={values.description}
+                      />
+                      <p className={styles.errorWarning}>
+                        {touched.description && getIn(errors, "description")}
+                      </p>
                     </div>
-                  </div> */}
+                  </div>
 
-                  {/* <div className={styles.signUpOptions}>
+                  {/* Submit button */}
+                  <div className={styles.signUpOptions}>
                     <ul>
                       <li>
                         <button
                           type="submit"
                           className={styles.signInBtn}
-                          disabled={updateLoading}
+                          disabled={createLoading}
                         >
-                          {updateLoading ? (
+                          {createLoading ? (
                             <Spin />
-                          ) : updateCompany ? (
+                          ) : updatePayment ? (
                             "Update"
                           ) : (
-                            "Register"
+                            "Create"
                           )}
                         </button>
                       </li>
                     </ul>
-                  </div> */}
-
-                  {/* <Modal
-                    open={openModal}
-                    onCancel={() => setOpenModal(false)}
-                    footer={null}
-                    closable={true}
-                    maskClosable={false}
-                  >
-                    <ImageUploadComponent
-                      openNotification={openNotification}
-                      onSubmitImg={(data: any) =>
-                        onSubmitImg(data, setFieldValue)
-                      }
-                      fileArray={fileArray}
-                    />
-                  </Modal> */}
+                  </div>
                 </form>
               )}
             </Formik>
           </div>
-        </Modal>
+        </>
       )}
-    </>
+    </Modal>
   );
 };
 

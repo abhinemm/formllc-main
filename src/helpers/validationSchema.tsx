@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { CompanyTypes } from "@/utils/constants";
 
 export const registerSchema = yup.object().shape({
   firstName: yup.string().required("First name is required"),
@@ -26,6 +27,130 @@ export const registerSchema = yup.object().shape({
     .oneOf([true], "You must accept the terms and conditions"),
   proofOfAddress: yup.string().required("Proof is required"),
 });
+
+// export const registerSchema = yup.object().shape({
+//   companyName: yup
+//     .string()
+//     .required("Company name is required")
+//     .max(100, "Company name must be under 100 characters"),
+
+//   companyType: yup
+//     .mixed()
+//     .oneOf([CompanyTypes.individual, CompanyTypes.partnership])
+//     .required("Company type is required"),
+
+//   // Fields for individual company
+//   firstName: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("First name is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   lastName: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("Last name is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   email: yup
+//     .string()
+//     .email("Enter a valid email")
+//     .when("companyType", {
+//       is: CompanyTypes.individual,
+//       then: (schema) => schema.required("Email is required"),
+//       otherwise: (schema) => schema.notRequired(),
+//     }),
+
+//   streetAddress: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("Street address is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   city: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("City is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   state: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("State is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   zipCode: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("ZIP code is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   country: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("Country is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   proofOfAddress: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("Proof of address is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   countryCode: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("Country code is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   phone: yup.string().when("companyType", {
+//     is: CompanyTypes.individual,
+//     then: (schema) => schema.required("Country code is required"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+
+//   agreeTerms: yup
+//     .boolean()
+//     .oneOf([true], "You must agree to the terms and privacy policy")
+//     .required("Agreement is required"),
+
+//   // Fields for partnership companies
+//   partners: yup.array().when("companyType", {
+//     is: CompanyTypes.partnership,
+//     then: (schema) =>
+//       schema
+//         .of(
+//           yup.object().shape({
+//             firstName: yup.string().required("First name is required"),
+//             lastName: yup.string().required("Last name is required"),
+//             email: yup
+//               .string()
+//               .email("Enter a valid email")
+//               .required("Email is required"),
+//             streetAddress: yup.string().required("Street address is required"),
+//             city: yup.string().required("City is required"),
+//             state: yup.string().required("State is required"),
+//             zipCode: yup.string().required("ZIP code is required"),
+//             country: yup.string().required("Country is required"),
+//             proofOfAddress: yup
+//               .string()
+//               .required("Proof of address is required"),
+//             countryCode: yup
+//               .string()
+//               .required("Country code is required")
+//               .matches(/^\+\d+$/, "Invalid country code"),
+//             phone: yup
+//               .string()
+//               .required("Phone number is required")
+//               .matches(/^[0-9]{7,15}$/, "Enter a valid phone number"),
+//           })
+//         )
+//         .min(2, "At least 2 partners are required")
+//         .max(3, "You can have up to 3 partners"),
+//     otherwise: (schema) => schema.notRequired(),
+//   }),
+// });
+
 export const registerSchemaAdmin = yup.object().shape({
   customerId: yup.string().required("Required Filed"),
   companyType: yup.string().required("Company Type is required"),
@@ -217,4 +342,24 @@ export const addMailAddressSchema = yup.object().shape({
   state: yup.string().required("State is required"),
   street: yup.string().required("Street is required"),
   zipcode: yup.string().required("Zipcode is required"),
+});
+
+export const createPaymentSchema = yup.object().shape({
+  companyId: yup.string().required("Customer is required"),
+  paymentId: yup.string().required("Payment ID is required"),
+  paymentDate: yup.string().required("Payment date is required"),
+  paymentType: yup.string().required("Payment type is required"),
+  paymentStatus: yup.string().required("Payment status is required"),
+  amount: yup
+    .number()
+    .typeError("Amount must be a number")
+    .positive("Amount must be greater than 0")
+    .required("Amount is required"),
+  currency: yup.string().required("Currency is required"),
+  invoiceUrl: yup
+    .string()
+    .url("Invoice URL must be a valid URL")
+    .nullable()
+    .notRequired(),
+  description: yup.string().max(500, "Description is too long"),
 });

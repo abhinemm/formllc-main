@@ -26,6 +26,14 @@ deploy_to_app_engine:
     # 2. Set the active project
     - gcloud config set project "$PROJECT_ID"
 
+    # Decode the base64 encoded ENV_FILE variable and create .env
+    - cp "$ENV_FILE" .env
+    - cp "$ENV_FILE" .env.local
+    - echo ".env file created from encoded variable"
+
+    # Create app.yaml from GitLab variable or string with no env_variables section
+    - cp "$APP_YAML" app.yaml
+
     # 3. Install Node.js dependencies
     - echo "Installing Node.js project dependencies..."
     - npm install

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import styles from "./ImageUploadComponent.module.scss";
@@ -11,6 +11,18 @@ const MAXFILE = 3;
 const ImageUploadComponent = ({ openNotification, onSubmitImg, fileArray }) => {
   const [uploadedImages, setUploadedImages] = useState<any>([]);
   const [uploading, setUploading] = useState(false);
+  useEffect(() => {
+    if (fileArray && fileArray?.length) {
+      const imageArray = fileArray?.map((el: any) => ({
+        file: null,
+        urlBlo: null,
+        liveUrl: el,
+        loading: false,
+        uploadStatus: true,
+      }));
+      setUploadedImages(imageArray);
+    }
+  }, []);
 
   // Handle file drop
   const onDrop = useCallback(async (acceptedFiles: File[]) => {

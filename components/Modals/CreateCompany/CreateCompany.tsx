@@ -81,6 +81,13 @@ const CreateCompany = ({
   };
 
   useEffect(() => {
+    if (updateCompany?.document) {
+      const docArray = updateCompany?.document.split(",");
+      setFileArray(docArray);
+    }
+  }, [updateCompany]);
+
+  useEffect(() => {
     (async () => {
       await fetchUsersList();
     })();
@@ -542,6 +549,7 @@ const CreateCompany = ({
                             .toLowerCase()
                             .includes(input.toLowerCase())
                         }
+                        value={values.country}
                         style={{ width: 300 }}
                       >
                         {ALLCOUNTRIES?.map((country) => (

@@ -154,7 +154,9 @@ const Payments = () => {
                     </div>
                     <div className={styles.rightWrapper}>
                       <button type="button">
-                        {el?.status === "paid" ? "Success" : "Failed"}
+                        {el?.status?.toLowerCase() === "paid"
+                          ? "Success"
+                          : "Failed"}
                       </button>
                     </div>
                   </div>

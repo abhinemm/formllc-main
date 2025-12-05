@@ -7,9 +7,9 @@ stages:
 
 deploy_to_app_engine:
   stage: deploy
-  environment: Production # Or Staging, Development, etc.
+  environment: Development # Or Staging, Development, etc.
   only:
-    - main # Deploy only when changes are merged to the 'main' branch
+    - preprod # Deploy only when changes are merged to the 'main' branch
 
   before_script:
     # Ensure Node.js and npm are installed in this image
@@ -27,12 +27,12 @@ deploy_to_app_engine:
     - gcloud config set project "$PROJECT_ID"
 
     # Decode the base64 encoded ENV_FILE variable and create .env
-    - cp "$ENV_FILE" .env
-    - cp "$ENV_FILE" .env.local
+    - cp "$ENV_FILE_PREPROD" .env
+    - cp "$ENV_FILE_PREPROD" .env.local
     - echo ".env file created from encoded variable"
 
     # Create app.yaml from GitLab variable or string with no env_variables section
-    - cp "$APP_YAML" app.yaml
+    - cp "$APP_YAML_PREPROD" app.yaml
 
     # 3. Install Node.js dependencies
     - echo "Installing Node.js project dependencies..."

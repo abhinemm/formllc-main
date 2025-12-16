@@ -38,7 +38,7 @@ const CreateUserModal = ({
     let requestValue: any = {
       firstName: values?.firstName,
       lastName: values?.lastName,
-      email: values?.email,
+      email: values?.email?.toLocaleLowerCase(),
       password: values?.password,
       type: userType,
     };

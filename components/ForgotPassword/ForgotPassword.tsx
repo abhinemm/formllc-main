@@ -75,10 +75,10 @@ const ForgotPassword = () => {
   const onSubmit = async (values) => {
     if (!isVerified) {
       const body = {
-        email: values.emailData,
+        email: values.emailData?.toLocaleLowerCase(),
       };
-      setUserEmail(values.emailData);
-      const encryptData = encryptURL(values.emailData);
+      setUserEmail(values.emailData?.toLocaleLowerCase());
+      const encryptData = encryptURL(values.emailData?.toLocaleLowerCase());
       if (encryptData) {
         localStorage.setItem("sndurp", encryptData);
       }

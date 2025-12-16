@@ -135,7 +135,7 @@ const CreateCompany = ({
       ownerFname: values?.firstName,
       ownerLname: values?.lastName,
       companyName: values?.companyName,
-      companyEmail: values?.email,
+      companyEmail: values?.email?.toLocaleLowerCase(),
       streetAddress: values?.streetAddress,
       city: values?.city,
       state: values?.state,

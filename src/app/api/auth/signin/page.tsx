@@ -79,7 +79,7 @@ const SignIn = () => {
     setLoading(true);
     await signIn("credentials", {
       redirect: false,
-      email: values.email,
+      email: values.email?.toLocaleLowerCase(),
       password: values.password,
     })
       .then((res: any) => {
@@ -93,7 +93,7 @@ const SignIn = () => {
         } else {
           if (values.rememberMe) {
             const obj: any = {
-              email: values?.email,
+              email: values.email?.toLocaleLowerCase(),
               password: values?.password,
             };
             localStorage.setItem("credentialsformllc", JSON.stringify(obj));

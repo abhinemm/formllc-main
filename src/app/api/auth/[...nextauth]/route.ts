@@ -20,13 +20,29 @@ export const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials): Promise<any> {
-
         const { email, password } = credentials!;
         // Find the user in your database
         const user = await UserService.findOne({ email });
         if (!user) {
           throw new Error("Invalid email or password");
         }
+
+        if (user.status === 2) {
+          throw new Error("Your account is Deleted. Please contact support.");
+        }
+
+        if (user.status === 0) {
+          throw new Error("Your account is Inactive. Please contact support.");
+        }
+
+        // Check if user signed up with Google (no password set)
+        if (!user.password || user.password === null) {
+          throw new Error(
+            "You are logged in to our system with Google login. Please login with Google and continue."
+          );
+        }
+
+        // Check if user status is active (status = 1)
 
         // Verify the password
         const isValidPassword = await validatePassword(password, user.password);
@@ -50,7 +66,6 @@ export const authOptions: AuthOptions = {
   },
   callbacks: {
     async signIn(data: any): Promise<any> {
-
       const { user, account, profile } = data;
       // For Google Sign-In
       if (account?.provider === "google") {
@@ -81,7 +96,6 @@ export const authOptions: AuthOptions = {
       return token;
     },
     async session(data: any): Promise<any> {
-
       const { session, token } = data;
       session.accessToken = token.accessToken;
       session.user.id = token.id;

@@ -50,10 +50,10 @@ const ContactForm = () => {
     setLoading(true);
     const data = {
       subject: values.name,
-      email: values.email,
+      email: values.email?.toLocaleLowerCase(),
       description: values?.description,
     };
-    setEmail(values.email);
+    setEmail(values.email?.toLocaleLowerCase());
     try {
       await axios
         .post(`/api/contactus`, data)

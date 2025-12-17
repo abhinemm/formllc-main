@@ -6,6 +6,7 @@ export enum UserTypesEnum {
   member = "member", // for affiliate user
 }
 
+
 export enum CompanyStatus {
   active = 1,
   inActive = 0,

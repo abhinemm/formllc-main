@@ -211,6 +211,7 @@ const CreateCompany = ({
   };
 
   const onSubmitImg = (urls: any, setFieldValue: any) => {
+    
     if (urls.length) {
       setFieldValue("proofOfAddress", urls.join(","));
       setFileArray(urls);

@@ -434,12 +434,19 @@ const CreateCompany = ({
                         addonBefore={
                           <>
                             <Select
+                              showSearch
                               style={{ width: 100, color: "#fff" }}
                               onChange={(e: any) => {
                                 setFieldValue("countryCode", e);
                               }}
+                              optionFilterProp="children"
                               value={values.countryCode}
                               placeholder="Code"
+                              filterOption={(input: any, option: any) =>
+                                (option?.children as string)
+                                  .toLowerCase()
+                                  .includes(input.toLowerCase())
+                              }
                             >
                               {COUNTRYCODE?.map((el: any, index: number) => (
                                 <Option value={el?.dial_code} key={index}>

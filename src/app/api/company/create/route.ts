@@ -23,12 +23,16 @@ export async function POST(req: Request) {
       { status: 401 }
     );
   }
-  if (data.user.type != UserTypesEnum.admin) {
+  if (
+    data.user.type === UserTypesEnum.customer ||
+    data.user.type === UserTypesEnum.member
+  ) {
     return NextResponse.json(
-      { message: "User does not have permission to perform this action" },
+      { error: "User does not have permission to perform this action" },
       { status: 403 }
     );
   }
+
   const {
     userId,
     type,
@@ -51,6 +55,34 @@ export async function POST(req: Request) {
     status,
   }: CompanyWithUserAttributes = await req.json();
   try {
+    if (companyName) {
+      const findByName = await CompanyService.findOne({
+        companyName: companyName,
+      });
+
+      if (findByName) {
+        return NextResponse.json(
+          {
+            error: "Oops! That Company name is taken. Please choose another.",
+          },
+          { status: 400 }
+        );
+      }
+    }
+    if (companyEmail) {
+      const findByEmail = await CompanyService.findOne({
+        companyEmail: companyEmail,
+      });
+
+      if (findByEmail) {
+        return NextResponse.json(
+          {
+            error: "Oops! That Company email is taken. Please choose another.",
+          },
+          { status: 400 }
+        );
+      }
+    }
     const userExist = await UserService.findOne({ id: Number(userId) });
     if (!userExist) {
       return NextResponse.json(
@@ -119,9 +151,12 @@ export async function PATCH(req: Request) {
     );
   }
 
-  if (data.user.type != UserTypesEnum.admin) {
+  if (
+    data.user.type === UserTypesEnum.customer ||
+    data.user.type === UserTypesEnum.member
+  ) {
     return NextResponse.json(
-      { message: "User does not have permission to perform this action" },
+      { error: "User does not have permission to perform this action" },
       { status: 403 }
     );
   }
@@ -140,6 +175,35 @@ export async function PATCH(req: Request) {
   const companyData = await CompanyService.findOne({
     id,
   });
+
+  if (body.companyName) {
+    const findByName = await CompanyService.findOne({
+      companyName: body.companyName,
+    });
+
+    if (findByName) {
+      return NextResponse.json(
+        {
+          error: "Oops! That Company name is taken. Please choose another.",
+        },
+        { status: 400 }
+      );
+    }
+  }
+  if (body.companyEmail) {
+    const findByEmail = await CompanyService.findOne({
+      companyEmail: body.companyEmail,
+    });
+
+    if (findByEmail) {
+      return NextResponse.json(
+        {
+          error: "Oops! That Company email is taken. Please choose another.",
+        },
+        { status: 400 }
+      );
+    }
+  }
 
   if (!companyData) {
     return NextResponse.json(

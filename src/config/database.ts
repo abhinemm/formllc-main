@@ -16,11 +16,17 @@
 import { Pool } from "pg";
 
 const pool = new Pool({
-  database: process.env.DB_NAME!,
-  user: process.env.DB_USER!,
-  password: process.env.DB_PASSWORD!,
-  host: process.env.DB_HOST,
-  port: 5432, // Change this if your port is different
+  database: process.env.DATABASE_NAME || process.env.DB_NAME,
+  user: process.env.DATABASE_USER || process.env.DB_USER,
+  password: process.env.DATABASE_PASSWORD || process.env.DB_PASSWORD,
+  host: process.env.DATABASE_HOST || process.env.DB_HOST,
+  port: Number(process.env.DATABASE_PORT || process.env.DB_PORT || 5432),
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? {
+        rejectUnauthorized: false,
+      }
+      : undefined,
 });
 
 export default pool;

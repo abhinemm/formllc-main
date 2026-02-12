@@ -1,0 +1,193 @@
+//user dashboard main styles
+
+
+
+.userStepsMainWrapper {
+  max-width: 100%;
+  overflow-x: auto;
+
+  border: 1px solid #424246;
+  border-radius: 8px;
+
+  scrollbar-width: "none";
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    justify-content: flex-start;
+    gap: 0;
+    align-items: flex-start;
+    list-style: none;
+
+    li {
+      list-style: none;
+      flex-shrink: 0;
+
+      padding: 20px;
+
+      max-width: 350px;
+      cursor: pointer;
+
+      @media screen and (max-width:480px) {
+      max-width: 292px;
+        
+      }
+
+      &:not(:last-child) {
+        border-right: 1px solid #424246;
+      }
+      &:first-child {
+        border-right: 1px solid #424246;
+      }
+
+      .stepCountWrapper {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        align-items: center;
+
+        h5 {
+          text-transform: uppercase;
+          font-size: 12px;
+          font-weight: 400;
+          color: #bbb7b7;
+        }
+
+        span {
+          padding: 8px 12px;
+          background-color: #193b1f;
+          border-radius: 4px;
+          color: #76ae7f;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 10px;
+          text-transform: capitalize;
+          font-weight: 400;
+        }
+      }
+
+      .stepContent {
+        color: #bbb7b7;
+
+        .underlined {
+          text-decoration: underline;
+          color: inherit;
+        }
+        h6 {
+          font-size: 14px;
+          font-weight: 500;
+
+          margin-bottom: 10px;
+        }
+        p {
+          font-size: 12px;
+          margin: 0;
+        }
+      }
+    }
+
+    .StepCompleted {
+      h5,
+      h6,
+      p {
+        color: #38383a !important;
+      }
+    }
+  }
+}
+
+.taskMainWrapper {
+  margin-top: 20px;
+
+  ul {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    list-style: none;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    li {
+      max-width: 400px;
+      background-color: #232325;
+      border-radius: 8px;
+      flex-shrink: 0;
+
+      @media screen and (max-width:480px) {
+        max-width:100%;
+      }
+
+      .taskHeader {
+        padding: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5px;
+
+        h6 {
+          font-size: 14px;
+          color: #bbb7b7;
+          font-weight: 400;
+        }
+        span {
+          color: #bf6469;
+          font-size: 12px;
+          line-height: 11px;
+          font-weight: 400;
+        }
+        .alertSpan {
+          background-color: #49181e;
+          padding: 6px 10px;
+          border-radius: 5px;
+        }
+        .requiredStyle {
+          margin-left: auto;
+          margin-right: 0;
+        }
+      }
+
+      p {
+        padding-inline: 20px;
+        font-size: 14px;
+        font-weight: 400;
+        color: #5d5c60;
+      }
+
+      .actionWrapper {
+        button {
+          all: unset;
+          margin-top: 20px;
+          padding: 20px 20px 20px;
+          border-top: 1px solid #5d5c60;
+          width: 100%;
+          box-sizing: border-box;
+          cursor: pointer;
+
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+
+          &:hover {
+            span {
+              color: #fff;
+            }
+          }
+
+          span {
+            color: #bf6469;
+            font-size: 12px;
+            line-height: 11px;
+            font-weight: 400;
+            transition: .3s ease-in;
+          }
+        }
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,206 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: var(--body-color);
+  text-align: center;
+}
+
+.successAnimation {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+
+  .checkmark {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #4caf50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease-out forwards;
+
+    &::before {
+      content: "";
+      width: 50px;
+      height: 25px;
+      border: 5px solid white;
+      border-width: 0 0 5px 5px;
+      transform: rotate(-45deg);
+      animation: checkmark 0.5s ease-out 0.5s forwards;
+    }
+  }
+
+  .failedMark {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: #b00020;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease-out forwards;
+    position: relative;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 5px;
+      background: white;
+      border-radius: 2px;
+      opacity: 0;
+    }
+
+    &::before {
+      transform: rotate(45deg) scaleX(0);
+      animation: xLine1 0.3s ease-out 0.3s forwards;
+    }
+
+    &::after {
+      transform: rotate(-45deg) scaleX(0);
+      animation: xLine2 0.3s ease-out 0.45s forwards;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+    width: 50px;
+    height: 25px;
+  }
+}
+
+@keyframes xLine1 {
+  to {
+    opacity: 1;
+    transform: rotate(45deg) scaleX(1);
+  }
+}
+
+@keyframes xLine2 {
+  to {
+    opacity: 1;
+    transform: rotate(-45deg) scaleX(1);
+  }
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #c0c0c0;
+  margin-bottom: 10px;
+}
+
+.message {
+  font-size: 1rem;
+  color: #a7a7a7;
+  margin-bottom: 20px;
+}
+
+.button {
+  background: linear-gradient(45deg, #ff5a5f, #622774);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+}
+
+.buttonWrapper {
+  display: flex;
+  gap: 10px;
+  .retry {
+    padding: 12px 12px;
+    border-radius: 23px;
+    text-align: center;
+    font-family: var(--font-albert-sans);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    border: none;
+    background-color: #2a9cff;
+    height: 50px;
+    min-width: 150px;
+
+    @media screen and (min-width: 978px) {
+      &:hover {
+        svg {
+          transform: rotate(233deg);
+        }
+      }
+    }
+
+    svg {
+      width: 30px;
+      fill: rgb(255, 255, 255);
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  .support {
+    padding: 12px 20px;
+    border-radius: 40px;
+    text-align: center;
+    font-family: var(--font-albert-sans);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: -0.48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #b8b8b8;
+    color: var(--Sub-Head, #626262);
+    @media screen and (min-width: 978px) {
+      &:hover {
+        svg {
+          transform: scale(1.1);
+        }
+      }
+    }
+    svg {
+      width: 30px;
+      fill: #626262;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}

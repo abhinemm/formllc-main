@@ -1,0 +1,54 @@
+.aboutUs {
+  padding-block: 40px;
+  background-color: transparent;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-size: 24px;
+  color: #e5e5e5;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 16px;
+  color: #e5e5e5;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.services,
+.benefits {
+  padding-left: 30px;
+}
+
+.services li,
+.benefits li {
+  font-size: 16px;
+  color: #e5e5e5;
+  padding: 5px 0;
+}
+
+.contact {
+  margin-top: 30px;
+  background-color: #030520;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  h3 {
+    text-align: center;
+  }
+}
+
+.contact p {
+  font-size: 16px;
+  color: #e5e5e5;
+  margin-bottom: 10px;
+}

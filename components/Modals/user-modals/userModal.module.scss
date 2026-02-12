@@ -1,0 +1,119 @@
+.deleteWrapper {
+  padding-top: 20px;
+  h6 {
+    color: #fff;
+    font-size: 18px;
+  }
+
+  .fileUpload {
+    width: 100%;
+    width: 100%;
+
+    input {
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      padding: 16px 8px 16px 20px;
+      background-color: #232326;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 13px;
+      color: #fff;
+    }
+  }
+
+  .fbformitem {
+    width: 100%;
+    :global(.ant-select) {
+      width: 100% !important;
+      cursor: pointer !important;
+    }
+    :global(.ant-select-single) {
+      cursor: pointer !important;
+      height: 54px;
+    }
+    :global(.ant-select-arrow) {
+      color: #fff !important;
+      transform: translateY(-50%);
+      cursor: pointer !important;
+    }
+    :global(.ant-select-selector) {
+      border: none !important;
+      background: #232326;
+      height: 54px;
+      cursor: pointer !important;
+      box-shadow: none !important;
+
+      span {
+        color: #fff !important;
+      }
+    }
+    .fbcheckboxlabel {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    label {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      color: #f1f1ff;
+      white-space: nowrap;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    select {
+      width: 100%;
+
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      padding: 16px 8px 16px 20px;
+      background-color: #232326;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 13px;
+    }
+  }
+
+  > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 10px;
+
+    @media screen and (max-width:480px) {
+        flex-wrap: wrap;
+    }
+
+    margin-top: 30px;
+
+    button {
+      all: unset;
+      cursor: pointer;
+      border-radius: 5px;
+      color: #fff;
+
+      padding: 5px 30px;
+
+      &:last-child {
+        background-color: #a31818;
+      }
+      &:first-child {
+        background-color: #3c9817;
+      }
+    }
+    
+  }
+}

@@ -1,0 +1,151 @@
+// Variables
+$primary-color: #1c1e26;
+$text-light: #fff;
+$highlight-color: #ff5a5f;
+$secondary-color: #622774;
+
+.header {
+  background-color: var(--body-color);
+  color: $text-light;
+  padding: 1rem 1rem;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      a {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: $text-light;
+        text-decoration: none;
+      }
+    }
+
+    // Desktop Navigation
+
+    // Mobile Menu
+  }
+
+  .mobileMenu {
+    display: none;
+    cursor: pointer;
+
+    .burger {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px 0;
+    }
+  }
+
+  // Responsive Styles
+  @media (max-width: 768px) {
+    .desktopNav {
+      display: none !important;
+    }
+
+    .mobileMenu {
+      display: block;
+    }
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      margin: 0 .5rem;
+
+      a {
+        text-decoration: none;
+        color: $text-light;
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: $highlight-color;
+        }
+      }
+    }
+  }
+
+  .authButtons {
+    display: flex;
+    align-items: center;
+    margin-left: .5rem;
+
+    .startBusiness {
+
+      
+      text-decoration: none;
+      background: linear-gradient(45deg, $highlight-color, $secondary-color);
+      color: $text-light;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navMobile {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+
+    ul {
+      display: flex;
+      list-style: none;
+      flex-direction: column;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+
+      li {
+        a {
+          text-decoration: none;
+          color: $text-light;
+          font-weight: 500;
+          transition: color 0.3s ease;
+          font-size: 16px;
+
+          &:hover {
+            color: $highlight-color;
+          }
+        }
+      }
+    }
+
+    .authButtons {
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 18px;
+
+      .signIn {
+        text-decoration: none;
+        color: $text-light;
+        margin-right: 1rem;
+        font-size: 16px;
+      }
+
+      .startBusiness {
+        text-decoration: none;
+        background: linear-gradient(45deg, $highlight-color, $secondary-color);
+        color: $text-light;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+}

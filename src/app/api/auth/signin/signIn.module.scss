@@ -1,0 +1,224 @@
+.mainSigninPageWrapper {
+  background-color: #161618;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+
+  > div {
+    min-width: 400px;
+    max-width: 400px;
+    @media screen and (max-width: 480px) {
+      padding-inline: 20px;
+      min-width: 100%;
+    }
+  }
+
+  .signinWithGoogleWrapper {
+    margin-bottom: 20px;
+    .authHeaderItem {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 22px;
+      line-height: 28px;
+      margin-bottom: 20px;
+      color: #ededef;
+    }
+    p {
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0;
+      color: #a09fa6;
+      a {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.1s ease-out;
+        color: #f16a50;
+        margin-left: 5px;
+      }
+    }
+
+    button {
+      font-size: 16px;
+      line-height: 24px;
+      min-height: 40px;
+      max-height: 40px;
+      width: 100%;
+      padding: 0 8px;
+
+      cursor: pointer;
+      background-color: #e54d2e;
+      border-radius: 6px;
+      border: 1px solid #e54d2e;
+
+      div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        gap: 4px;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+
+        svg {
+          display: inline-block;
+          font-size: inherit;
+          height: 1em;
+          overflow: visible;
+          vertical-align: -0.125em;
+        }
+      }
+    }
+
+    .orBlockWrapper {
+      width: 100%;
+      text-align: center;
+      padding-block: 20px 40px;
+      position: relative;
+      &::before {
+        content: "";
+
+        position: absolute;
+        height: 1px;
+        left: 0;
+        right: 0;
+        top: 53%;
+        transform: translateY(-50%);
+        background-color: #a09fa6;
+        z-index: 1;
+      }
+
+      span {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        line-height: 1;
+        padding-inline: 10px;
+        background-color: #161618;
+        z-index: 20;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0;
+        color: #a09fa6;
+      }
+    }
+  }
+}
+.eyeIconWrapper {
+  padding: 5px 10px;
+  position: absolute;
+  right: 1px;
+  top: 29px;
+  z-index: 10;
+  background: #232326;
+  border-radius: 7px;
+  cursor: pointer;
+}
+.formWrapper {
+  .formContent {
+    .authFormItem {
+      margin-bottom: 20px;
+      position: relative;
+      label {
+        display: block;
+
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: inherit;
+        white-space: nowrap;
+        overflow: hidden;
+        margin-bottom: 8px;
+        color: #ffffff;
+      }
+      input {
+        width: 100%;
+        height: 34px;
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        padding: 0 8px;
+        background-color: #232326;
+        border: 1px solid #34343a;
+        border-radius: 8px;
+        transition: border-color 0.1s ease;
+        overflow: hidden;
+        z-index: 1;
+        color: #ffffff;
+      }
+    }
+
+    .rememberWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      label {
+        margin: 0;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 5px;
+
+        accent-color: #e54d2e;
+
+        span {
+          color: #a09fa6;
+          font-size: 12px;
+        }
+      }
+      a {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+
+        color: #f16a50;
+        p {
+          font-size: 12px;
+          line-height: 16px;
+          letter-spacing: 0;
+        }
+      }
+    }
+  }
+
+  .formActions {
+    button {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #e54d2e;
+      color: #ededef;
+      background-color: #e54d2e;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.1s ease-out;
+      text-align: center;
+      font-size: 16px;
+      line-height: 24px;
+      min-height: 40px;
+      max-height: 40px;
+      padding: 0 16px;
+    }
+  }
+}
+
+.errorWarning {
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
+}
+
+.bButtonContent {
+  color: #ffffff !important;
+}

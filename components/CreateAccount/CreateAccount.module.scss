@@ -1,0 +1,312 @@
+.fbonboardingcardwidgetcontent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 0 30px;
+
+  .doubleFlex {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+
+    @media screen and (max-width: 678px) {
+      flex-wrap: wrap;
+    }
+    > div {
+      width: 100%;
+    }
+  }
+  .fbform {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .eyeIconWrapper {
+    padding: 12px 10px;
+    position: absolute;
+    right: 1px;
+    top: 33px;
+    z-index: 10;
+    background: #181429;
+    border-radius: 7px;
+    cursor: pointer;
+  }
+  .fbformitem {
+    position: relative;
+    .fbcheckboxlabel {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    label {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 20px;
+      color: #f1f1ff;
+      white-space: nowrap;
+      margin-bottom: 12px;
+      display: block;
+    }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      height: 48px;
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      padding: 16px 8px 16px 20px;
+      background-color: #181429;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      box-sizing: border-box;
+      color: var(--white-color);
+    }
+  }
+
+  input[type="checkbox"] {
+    height: 18px;
+    width: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid #8279a8;
+    border-radius: 4px;
+    background: transparent;
+    margin-right: 16px;
+    position: relative;
+  }
+  a {
+    font-style: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    color: #d64431;
+    text-decoration: none;
+    margin-inline: 5px;
+  }
+}
+.signUpOptions {
+  width: 100%;
+  margin-top: 30px;
+
+  ul {
+    all: unset;
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    li {
+      all: unset;
+      width: 100%;
+      div {
+        width: 100%;
+        display: block;
+
+        text-align: center;
+        position: relative;
+
+        span {
+          position: relative;
+          z-index: 10;
+          text-align: center;
+          text-transform: uppercase;
+          background-color: #090a15;
+          padding: 10px;
+          font-weight: 500;
+        }
+
+        &::before {
+          content: "";
+          height: 1px;
+          background-color: #514e4e;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          right: 0;
+          transform: translateY(-50%);
+          z-index: 2;
+        }
+      }
+
+      .signInBtn {
+        width: 100%;
+        --button-bg: #020314;
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+        margin: 1px;
+        border: none;
+        outline: none;
+        text-decoration: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        font-family: acumin-pro, sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: var(--white-color);
+        box-shadow: 0 4px 60px rgba(0, 0, 0, 0.0196078431);
+        transition: background-color var(--transition-delay) ease,
+          color var(--transition-delay) ease,
+          border var(--transition-delay) ease,
+          border-color var(--transition-delay) ease;
+        zoom: 105%;
+        background-color: var(--button-bg);
+        border: solid 1px transparent;
+        border-radius: 8px;
+        background-image: linear-gradient(var(--button-bg), var(--button-bg)),
+          linear-gradient(
+            to right,
+            #8a2387 0%,
+            rgba(233, 64, 87, 0.5) 36.98%,
+            #f27121 100%
+          );
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+      }
+
+      .signInGoogleBtn {
+        --button-bg: #020314;
+        position: relative;
+        width: 100%;
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 16px;
+        margin: 1px;
+        outline: none;
+        text-decoration: none;
+        user-select: none;
+        cursor: pointer;
+        font-family: acumin-pro, sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 20px;
+        color: var(--white-color);
+        box-shadow: 0 4px 60px #00000005;
+        transition: background-color var(--transition-delay) ease,
+          color var(--transition-delay) ease,
+          border var(--transition-delay) ease,
+          border-color var(--transition-delay) ease;
+        zoom: 105%;
+        border-radius: 8px;
+        background-image: linear-gradient(var(--button-bg), var(--button-bg)),
+          linear-gradient(
+            to right,
+            #8a2387 0%,
+            rgba(233, 64, 87, 0.5) 36.98%,
+            #f27121 100%
+          );
+        background-origin: border-box;
+        background-clip: padding-box, border-box;
+        background-color: transparent;
+        border: 1px solid #312e3b;
+        filter: drop-shadow(0px 4px 60px rgba(0, 0, 0, 0.02));
+      }
+    }
+  }
+
+  button {
+    font-size: 16px;
+    line-height: 24px;
+    min-height: 40px;
+    max-height: 40px;
+    width: 100%;
+    padding: 0 8px;
+
+    cursor: pointer;
+    background-color: #e54d2e;
+    border-radius: 6px;
+    border: 1px solid #e54d2e;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      gap: 4px;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      svg {
+        display: inline-block;
+        font-size: inherit;
+        height: 1em;
+        overflow: visible;
+        vertical-align: -0.125em;
+      }
+    }
+  }
+}
+.btnWrapper {
+  width: 100%;
+  button {
+    width: 100%;
+    --button-bg: #020314;
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    margin: 1px;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    user-select: none;
+    cursor: pointer;
+    font-family: acumin-pro, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--white-color);
+    box-shadow: 0 4px 60px #00000005;
+    transition: background-color var(--transition-delay) ease,
+      color var(--transition-delay) ease, border var(--transition-delay) ease,
+      border-color var(--transition-delay) ease;
+    zoom: 105%;
+    background-color: var(--button-bg);
+    border: solid 1px transparent;
+    border-radius: 8px;
+    background-image: linear-gradient(var(--button-bg), var(--button-bg)),
+      linear-gradient(
+        to right,
+        #8a2387 0%,
+        rgba(233, 64, 87, 0.5) 36.98%,
+        #f27121 100%
+      );
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+}
+
+.errorWarning {
+  padding: 0;
+  margin: 0;
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
+}
+
+.bButtonContent {
+  color: #ffffff !important;
+}

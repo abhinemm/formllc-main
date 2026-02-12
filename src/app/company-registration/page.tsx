@@ -1,0 +1,561 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import styles from "./company-registration.module.scss";
+import { Formik } from "formik";
+
+import { InputNumber, Modal, notification, Popover, Select, Spin } from "antd";
+import { ALLCOUNTRIES, COUNTRYCODE } from "@/constants/constants";
+import axios from "axios";
+import { QuestionCircleOutlined, UploadOutlined } from "@ant-design/icons";
+import { NotificationPlacement } from "antd/es/notification/interface";
+import { useRouter, useSearchParams } from "next/navigation";
+import Loader from "../../../components/Loader";
+import { registerSchema } from "@/helpers/validationSchema";
+import ImageUploadComponent from "../../../components/ImageUploadComponent/ImageUploadComponent";
+import Image from "next/image";
+import { getCookie } from "@/helpers/CookieHelper";
+const { Option } = Select;
+
+type NotificationType = "success" | "info" | "warning" | "error";
+
+type NotificationMessage = {
+  type: NotificationType;
+  message: string;
+  placement: NotificationPlacement;
+};
+
+const CompanyRegistration = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const router = useRouter();
+  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
+  const [companyDetails, setCompanyDetails] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [api, contextHolder] = notification.useNotification();
+  const [open, setOpen] = useState(false);
+  const openNotification = (data: NotificationMessage) => {
+    api[data.type]({
+      message: data.message,
+      placement: data?.placement,
+    });
+  };
+  const [fileArray, setFileArray] = useState<any>([]);
+
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    companyName: "",
+    email: "",
+    streetAddress: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "",
+    proofOfAddress: "",
+    countryCode: "+91",
+    phone: "",
+    agreeTerms: false,
+  };
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      if (id) {
+        await axios
+          .get(`/api/company?id=${id}`)
+          .then((res: any) => {
+            setLoading(false);
+            if (res?.data?.length) {
+              setCompanyDetails(res?.data[0]);
+            } else {
+              router.push("/");
+            }
+          })
+          .catch((err: any) => {
+            setLoading(false);
+            router.push("/");
+          });
+      } else {
+        router.push("/");
+      }
+    })();
+  }, [id]);
+
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    setFieldValue: any
+  ) => {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      const maxSizeInBytes = 1 * 1024 * 1024; // 10 MB
+      if (selectedFile.size > maxSizeInBytes) {
+        openNotification({
+          type: "warning",
+          message: "File size exceeds 10 MB. Please select a smaller file.",
+          placement: "topRight",
+        });
+        setFile(null);
+      } else {
+        setFile(selectedFile);
+      }
+    } else {
+      setFieldValue("proofOfAddress", "");
+    }
+  };
+
+  const onSubmit = async (values: any) => {
+    setUpdateLoading(true);
+    // const file = await handleFileUpload();
+    let data: any = {
+      document: values.proofOfAddress,
+      ownerFname: values?.firstName,
+      ownerLname: values?.lastName,
+      companyName: values?.companyName,
+      companyEmail: values?.email,
+      streetAddress: values?.streetAddress,
+      city: values?.city,
+      state: values?.state,
+      zipCode: values?.zipCode,
+      country: values?.country,
+      countryCode: values?.countryCode,
+      phone: values?.phone,
+      status: 1,
+    };
+    const referId = getCookie("referId");
+    if (referId) {
+      if (Number(referId)) {
+        data.referId = Number(referId);
+      }
+    }
+    try {
+      await axios
+        .patch(`/api/company?id=${id}`, data)
+        .then((res: any) => {
+          setUpdateLoading(false);
+          openNotification({
+            type: "success",
+            message: "Buisness registered sucessfully",
+            placement: "topRight",
+          });
+          router.push("/user");
+        })
+        .catch((err: any) => {
+          setUpdateLoading(false);
+          const message = err?.response?.data?.error || "Something went wrong!";
+          openNotification({
+            type: "error",
+            message: message,
+            placement: "topRight",
+          });
+          console.log("the error is ", err);
+        });
+    } catch (error) {
+      console.log("the error is ", error);
+      setUpdateLoading(false);
+    }
+    // Handle form submission logic here
+  };
+
+  const onSubmitImg = (urls: any, setFieldValue: any) => {
+    if (urls.length) {
+      setFieldValue("proofOfAddress", urls.join(","));
+      setFileArray(urls);
+      setOpenModal(false);
+    } else {
+      setFieldValue("proofOfAddress", "");
+    }
+  };
+
+  const popoverContentWhatsapp = (
+    <div className={styles.popoverEin}>
+      <p>
+        WhatsApp is our primary mode of communication for important updates
+        regarding your LLC registration. By providing your WhatsApp number, you
+        ensure timely notifications and support throughout the registration
+        process.
+      </p>
+    </div>
+  );
+
+  const popoverContentEin = (
+    <div className={styles.popoverEin}>
+      <p>
+        Please note: To comply with U.S. regulations, all non-resident LLCs are
+        required to maintain a valid business address within the United States.
+        This address service is mandatory and billed at $25 per month ensuring
+        your LLC stays valid and ready to operate without delays.
+      </p>
+      <div className={styles.btnWrapper}>
+        <button type="button" onClick={() => setOpen(false)}>
+          Okey
+        </button>
+      </div>
+    </div>
+  );
+
+  const handleOpenChange = (newOpen: boolean) => {
+    // Close popover when clicking outside
+    setOpen(newOpen);
+  };
+
+  return (
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div
+          className={styles.fbonboardingcardwidgetcontent}
+          // onClick={() => setOpen(false)}
+        >
+          {contextHolder}
+          <Formik
+            initialValues={initialValues}
+            validationSchema={registerSchema}
+            onSubmit={onSubmit}
+          >
+            {({
+              handleSubmit,
+              handleChange,
+              setFieldValue,
+              values,
+              errors,
+              touched,
+            }) => (
+              <form className={styles.fbform} onSubmit={handleSubmit}>
+                <div className={styles.doubleFlex}>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Owner First Name</label>
+                    <input
+                      className={styles.fbinput}
+                      id="first-name"
+                      type="text"
+                      placeholder="Type your first name here"
+                      name="firstName"
+                      onChange={handleChange}
+                      value={values.firstName}
+                    />
+                    {errors.firstName && touched.firstName && (
+                      <p className={styles.errorWarning}>{errors.firstName}</p>
+                    )}
+                  </div>
+
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Owner Last Name</label>
+                    <input
+                      className={styles.fbinput}
+                      id="last-name"
+                      type="text"
+                      placeholder="Type your last name here"
+                      name="lastName"
+                      onChange={handleChange}
+                      value={values.lastName}
+                    />
+                    {errors.lastName && touched.lastName && (
+                      <p className={styles.errorWarning}>{errors.lastName}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Company Name</label>
+                    <input
+                      className={styles.fbinput}
+                      id="email"
+                      type="text"
+                      placeholder="Tesla"
+                      name="companyName"
+                      onChange={handleChange}
+                      value={values.companyName}
+                    />
+                    {errors.companyName && touched.companyName && (
+                      <p className={styles.errorWarning}>
+                        {errors.companyName}
+                      </p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Email</label>
+                    <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="john.doe@mail.com"
+                      name="email"
+                      onChange={handleChange}
+                      value={values.email}
+                    />
+                    {errors.email && touched.email && (
+                      <p className={styles.errorWarning}>{errors.email}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitemSelect}>
+                    <Popover
+                      content={popoverContentWhatsapp}
+                      title="Why Whatsapp?"
+                      trigger="hover"
+                    >
+                      <div className={styles.popoverWrapper}>
+                        Why whatsapp? <QuestionCircleOutlined />
+                      </div>
+                    </Popover>
+                    <label className={styles.fblabel}>Whatsapp Number</label>
+                    <InputNumber
+                      addonBefore={
+                        <>
+                          <Select
+                            style={{ width: 100, color: "#fff" }}
+                            onChange={(e: any) => {
+                              setFieldValue("countryCode", e);
+                            }}
+                            value={values.countryCode}
+                            placeholder="Code"
+                          >
+                            {COUNTRYCODE?.map((el: any, index: number) => (
+                              <Option value={el?.dial_code} key={index}>
+                                {`${el?.code}(${el?.dial_code})`}
+                              </Option>
+                            ))}
+                          </Select>
+                        </>
+                      }
+                      onChange={(e) => {
+                        setFieldValue("phone", e);
+                      }}
+                      value={values.phone}
+                      placeholder="Phone number"
+                    />
+                    {/* <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="john.doe@mail.com"
+                      name="city"
+                      onChange={handleChange}
+                      value={values.city}
+                    /> */}
+                    {errors.countryCode && touched.countryCode && (
+                      <p className={styles.errorWarning}>
+                        {errors.countryCode}
+                      </p>
+                    )}
+                    {errors.phone && touched.phone && (
+                      <p className={styles.errorWarning}>{errors.phone}</p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Street Address</label>
+                    <input
+                      className={styles.fbinput}
+                      id="email"
+                      type="text"
+                      placeholder="Address line 1"
+                      name="streetAddress"
+                      onChange={handleChange}
+                      value={values.streetAddress}
+                    />
+                    {errors.streetAddress && touched.streetAddress && (
+                      <p className={styles.errorWarning}>
+                        {errors.streetAddress}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>City / Town</label>
+                    <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="City / Town"
+                      name="city"
+                      onChange={handleChange}
+                      value={values.city}
+                    />
+                    {errors.city && touched.city && (
+                      <p className={styles.errorWarning}>{errors.city}</p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>
+                      State / Province / Region
+                    </label>
+                    <input
+                      className={styles.fbinput}
+                      id="email"
+                      type="text"
+                      placeholder="State / Province / Region"
+                      name="state"
+                      onChange={handleChange}
+                      value={values.state}
+                    />
+                    {errors.state && touched.state && (
+                      <p className={styles.errorWarning}>{errors.state}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Postal / ZIP Code</label>
+                    <input
+                      className={styles.fbinput}
+                      id="confirm-email"
+                      type="text"
+                      placeholder="Postal / ZIP Code"
+                      name="zipCode"
+                      onChange={handleChange}
+                      value={values.zipCode}
+                    />
+                    {errors.zipCode && touched.zipCode && (
+                      <p className={styles.errorWarning}>{errors.zipCode}</p>
+                    )}
+                  </div>
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Country</label>
+                    <Popover
+                      content={popoverContentEin}
+                      title="Mail Room Service"
+                      open={open}
+                    >
+                      {/* <QuestionCircleOutlined /> */}
+                      <Select
+                        showSearch
+                        placeholder="Select a country"
+                        optionFilterProp="children"
+                        onChange={(e) => {
+                          setFieldValue("country", e);
+                          if (e === "India") {
+                            setOpen(true);
+                          } else {
+                            setOpen(false);
+                          }
+                        }}
+                        filterOption={(input: any, option: any) =>
+                          (option?.children as string)
+                            .toLowerCase()
+                            .includes(input.toLowerCase())
+                        }
+                        style={{ width: 300 }}
+                      >
+                        {ALLCOUNTRIES?.map((country) => (
+                          <Option key={country.code} value={country.name}>
+                            {country.name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Popover>
+                    {errors.country && touched.country && (
+                      <p className={styles.errorWarning}>{errors.country}</p>
+                    )}
+                  </div>
+                </div>
+
+                <div className={styles.doubleFlex}>
+                  {" "}
+                  <div className={styles.fbformitem}>
+                    <label className={styles.fblabel}>Proof of Address</label>
+                    <div className={styles.fileUpload}>
+                      <div className={styles.proofOfAddressWrapper}>
+                        {fileArray?.map((el: any, idx: number) => (
+                          <div className={styles.imageWrapper} key={idx}>
+                            <Image
+                              width={50}
+                              height={50}
+                              src={el}
+                              alt="image"
+                            />
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() => setOpenModal(true)}
+                          className={styles.addBtn}
+                        >
+                          <UploadOutlined />
+                          Add
+                        </button>
+                      </div>
+                      {errors.proofOfAddress && touched.proofOfAddress && (
+                        <p className={styles.errorWarning}>
+                          {errors.proofOfAddress}
+                        </p>
+                      )}
+                      <div className=""></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.fbformitem}>
+                  <label className={styles.fbcheckboxlabel}>
+                    <input
+                      className={styles.fbcheckbox}
+                      type="checkbox"
+                      name="agreeTerms"
+                      onChange={handleChange}
+                    />
+                    <span> I read and agree with the </span>
+                    <a className={styles.fblink} href="" target="_blank">
+                      Terms of Use
+                    </a>{" "}
+                    <span> and </span>
+                    <a className={styles.fblink} href="" target="_blank">
+                      Privacy Policy
+                    </a>
+                    .
+                  </label>
+                  {errors.agreeTerms && touched.agreeTerms && (
+                    <p className={styles.errorWarning}>{errors.agreeTerms}</p>
+                  )}
+                </div>
+
+                <div className={styles.signUpOptions}>
+                  <ul>
+                    <li>
+                      <button
+                        type="submit"
+                        className={styles.signInBtn}
+                        disabled={updateLoading}
+                      >
+                        {updateLoading ? "Loading..." : "Register"}
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                <Modal
+                  open={openModal}
+                  onCancel={() => setOpenModal(false)}
+                  footer={null}
+                  closable={true}
+                  maskClosable={false}
+                >
+                  <ImageUploadComponent
+                    openNotification={openNotification}
+                    onSubmitImg={(data: any) =>
+                      onSubmitImg(data, setFieldValue)
+                    }
+                    fileArray={fileArray}
+                  />
+                </Modal>
+              </form>
+            )}
+          </Formik>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default CompanyRegistration;

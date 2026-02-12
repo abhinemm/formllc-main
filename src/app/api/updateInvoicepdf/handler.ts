@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   // Dynamic imports to prevent build-time execution
-  const { default: Payments } = await import("@/models/payments.model");
-  const { default: StripeService } = await import("@/services/stripe.service");
+  const { default: Payments }: any = await import("@/models/payments.model");
+  const { default: StripeService }: any = await import("@/services/stripe.service");
 
   const body: any = await req.json();
 

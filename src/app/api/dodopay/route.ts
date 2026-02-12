@@ -1,10 +1,10 @@
 import Company from "@/models/company";
 import { NextResponse } from "next/server";
-import DodoPayments from "dodopayments";
 
-let _dodopayments: DodoPayments | null = null;
-function getDodoPayments() {
+let _dodopayments: any = null;
+async function getDodoPayments() {
   if (!_dodopayments) {
+    const DodoPayments = (await import("dodopayments")).default;
     _dodopayments = new DodoPayments({
       bearerToken: process.env.DODO_BEARER_TOKEN || "",
       environment: "live_mode",
@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     );
   }
   try {
-    const paymentDataResp = await getDodoPayments().payments.retrieve(
+    const paymentDataResp = await (await getDodoPayments()).payments.retrieve(
       body.paymentId
     );
     if (paymentDataResp.status === "succeeded") {

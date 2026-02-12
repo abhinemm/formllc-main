@@ -1,23 +1,23 @@
-import FanbasisCheckout from "@fanbasis/checkout-sdk";
+let _client: any = null;
 
-let _client: FanbasisCheckout | null = null;
-
-export function getClient(): FanbasisCheckout {
+async function getClient() {
   if (!_client) {
-    if (!process.env.FORMLLC_API_KEY) {
-      throw new Error("FORMLLC_API_KEY environment variable is not set");
-    }
+    const FanbasisCheckout = (await import("@fanbasis/checkout-sdk")).default;
     _client = new FanbasisCheckout({
-      apiKey: process.env.FORMLLC_API_KEY,
+      apiKey: process.env.FORMLLC_API_KEY || "",
     });
   }
   return _client;
 }
 
-// Keep backward compatibility
+// Backward-compatible async client
 export const client = {
   get checkoutSessions() {
-    return getClient().checkoutSessions;
+    return {
+      create: async (...args: any[]) => {
+        const c = await getClient();
+        return c.checkoutSessions.create(...args);
+      },
+    };
   },
 };
-

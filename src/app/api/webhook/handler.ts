@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type { Stripe } from "stripe";
 
 export async function POST(req: NextRequest) {
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;

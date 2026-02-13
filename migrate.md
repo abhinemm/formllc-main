@@ -536,9 +536,11 @@ BLOB_READ_WRITE_TOKEN=
 
 Based on patterns from previous work on this project:
 
-### 🔴 Issue 1: Upload Failures on Vercel
-**Problem:** The old upload route uses `formidable` to save files to local disk. Vercel is serverless — there's no persistent filesystem.
-**Solution:** Migrate to Vercel Blob storage. I'll handle this in the code changes.
+### 🔴 Critical Issue: Connection to Localhost (127.0.0.1)
+**Problem:** The logs show `connect ECONNREFUSED 127.0.0.1:5432`.
+**Meaning:** Your Vercel app is trying to connect to `localhost` instead of your cloud database.
+**Cause:** The `DATABASE_HOST` environment variable is missing or empty in Vercel settings.
+**Fix:** Add `DATABASE_HOST` (e.g., `ep-xyz.us-east-1.aws.neon.tech`) to Vercel Environment Variables immediately.
 
 ### 🔴 Issue 2: Vercel Body Size Limit
 **Problem:** Vercel has a 4.5 MB request body limit on serverless functions. Large file uploads will fail.
